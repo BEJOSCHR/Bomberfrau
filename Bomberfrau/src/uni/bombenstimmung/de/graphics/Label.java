@@ -54,8 +54,8 @@ public class Label extends JLabel {
 		
 		//DRAW FPS
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", Font.BOLD, 12));
-		g.drawString(""+getCurrentFPSValue(), 0+5, GraphicsHandler.HEIGHT-15);
+		g.setFont(new Font("Arial", Font.BOLD, 10));
+		g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 		
 		//CALCULATE FPS
 		calculateFPS();
