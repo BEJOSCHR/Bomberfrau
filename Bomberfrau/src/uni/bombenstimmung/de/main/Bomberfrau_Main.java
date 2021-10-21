@@ -21,7 +21,8 @@ public class Bomberfrau_Main {
 		
 		//Test edit von Tim
 		System.out.println("Laeuft");
-		
+		//Test edit von Dennis
+		System.out.println("Juhu MF");
 		System.out.println();
 		System.out.println("Test: ");
 		for(int i = 99 ; i > 0 ; i--) {
