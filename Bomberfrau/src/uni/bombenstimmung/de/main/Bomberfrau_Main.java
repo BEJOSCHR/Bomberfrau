@@ -3,6 +3,8 @@
  */
 package uni.bombenstimmung.de.main;
 
+import uni.bombenstimmung.de.graphics.GraphicsHandler;
+
 /**
  * @author BEJOSCH
  *
@@ -29,6 +31,9 @@ public class Bomberfrau_Main {
 			System.out.print(doubleWriteNumber(i)+" ");
 		}
 		System.out.println();
+		
+		//Sart Graphics
+		GraphicsHandler.initGraphics();
 		
 	}
 
