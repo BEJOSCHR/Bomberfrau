@@ -29,7 +29,7 @@ public class Bomberfrau_Main {
 		
 	}
 
-	//Beispiel wie ich mir eine Methode mit Documentation etc vorstellen würde:
+	//Beispiel wie ich mir eine Methode mit Documentation etc vorstellen würde (Ob deutsch oder english müssen wir uns noch einigen):
 	
 	/**
 	 * Stellt jede nummer mit min. 2 Stellen dar
