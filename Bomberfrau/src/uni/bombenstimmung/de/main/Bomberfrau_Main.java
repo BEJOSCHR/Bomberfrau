@@ -18,7 +18,7 @@ public class Bomberfrau_Main {
 		System.out.println("Starting Bomberfrau, juhu!");
 		
 		//Test edit von Tim
-		System.out.println("Läuft");
+		System.out.println("Laeuft");
 		
 		System.out.println();
 		System.out.println("Test: ");
@@ -32,7 +32,7 @@ public class Bomberfrau_Main {
 		
 	}
 
-	//Beispiel wie ich mir eine Methode mit Documentation etc vorstellen w�rde (Ob deutsch oder english m�ssen wir uns noch einigen):
+	//Beispiel wie ich mir eine Methode mit Documentation etc vorstellen wuerde (Ob deutsch oder english muessen wir uns noch einigen):
 	
 	/**
 	 * Stellt jede nummer mit min. 2 Stellen dar
