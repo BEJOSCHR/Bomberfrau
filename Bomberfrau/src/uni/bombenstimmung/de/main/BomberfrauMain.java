@@ -9,7 +9,7 @@ import uni.bombenstimmung.de.graphics.GraphicsHandler;
  * @author BEJOSCH
  *
  */
-public class Bomberfrau_Main {
+public class BomberfrauMain {
 
 	/**
 	 * The start of everything (in this program)
