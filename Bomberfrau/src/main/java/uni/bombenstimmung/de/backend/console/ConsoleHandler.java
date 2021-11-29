@@ -18,8 +18,8 @@ public class ConsoleHandler {
 	private static MessageType currentDebugType = MessageType.NONESPECIFIC;
 	
 	/**
-	 * 
-	 * @param message
+	 * Gibt die angegebene message via print(message, type) aus (MessageType = NONESPECIFIC)
+	 * @param message - Die Message die ausgegeben werden soll
 	 */
 	public static void print(String message) {
 		
@@ -27,6 +27,12 @@ public class ConsoleHandler {
 		
 	}
 	
+	/**
+	 * Gibt die angegebene message mit dem angegebenen type aus, wenn der Type dem derzeitigen debugType entspricht oder sich über diesen hinweg setzen kann. 
+	 * So wird ERROR immer ausgegeben und IMPORTANT wird nur nicht ausgegeben wenn currentDebugType = ERROR ist
+	 * @param message - Die Message die ausgegeben werden soll
+	 * @param type - Der {@link MessageType} der Nachricht, der die zugehörigkeit der message defeniert
+	 */
 	public static void print(String message, MessageType type) {
 		
 		if(currentDebugType == MessageType.NONESPECIFIC) {
@@ -51,6 +57,10 @@ public class ConsoleHandler {
 		
 	}
 	
+	/**
+	 * Startet den Scanner der auf Eingaben in der Console wartet und diese weiterleitet.
+	 * Wenn bereits ein Scanner gestartete wurde wird kein weiterer gestartet
+	 */
 	public static void startInputScanner() {
 		
 		if(inputScanner == null) {
@@ -75,6 +85,9 @@ public class ConsoleHandler {
 		
 	}
 	
+	/**
+	 * Stoppt den Scanner der auf Eingaben in der Console wartet und diese weiterleitet, falls dieser läuft.
+	 */
 	public static void stopInputScanner() {
 		
 		if(inputScanner != null) {
@@ -86,10 +99,17 @@ public class ConsoleHandler {
 		
 	}
 	
-	
+	/**
+	 * Verarbeitet die Eingaben die der InputScanner ausgelesen hat
+	 * @param input - Die Liste der einegegebenen Commandos (Aufgeteilt an " ")
+	 */
 	private static void handleInput(String[] input) {
 		
 		switch(input[0]) {
+		case "exit":
+			ConsoleHandler.print("Shutting down...", MessageType.IMPORTANT);
+			System.exit(0);
+			break;
 		case "debugType":
 			if(input.length >= 2) {
 				try {
@@ -110,12 +130,17 @@ public class ConsoleHandler {
 			break;
 		case "help":
 		default:
-			ConsoleHandler.print("Choose input: help ; exit ; debugType", MessageType.IMPORTANT);
+			ConsoleHandler.print("Choose input: [help,exit,debugType]", MessageType.IMPORTANT);
 			break;
 		}
 		
 	}
 	
+	/**
+	 * Ändert den derzeitigen DebugType, abhängig davon werden manche ausgeben vor der ausgabe blockiert
+	 * @param newType - Der neue currentDebugType
+	 * @see {@link MessageType}
+	 */
 	public static void switchDebugType(MessageType newType) {
 		
 		currentDebugType = newType;
