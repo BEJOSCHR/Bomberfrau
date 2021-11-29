@@ -8,6 +8,118 @@
  */
 package uni.bombenstimmung.de.backend.console;
 
-public class ConsoleHandler {
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
+public class ConsoleHandler {
+	
+	private static Timer inputScanner = null;
+	private static MessageType currentDebugType = MessageType.NONESPECIFIC;
+	
+	/**
+	 * 
+	 * @param message
+	 */
+	public static void print(String message) {
+		
+		print(message, MessageType.NONESPECIFIC);
+		
+	}
+	
+	public static void print(String message, MessageType type) {
+		
+		if(currentDebugType == MessageType.NONESPECIFIC) {
+			//PRINT EVERYTHING
+			System.out.println(type+": "+message);
+		}else if(currentDebugType == MessageType.IMPORTANT) {
+			//IMPORTANT + ERROR
+			if(type == MessageType.IMPORTANT || type == MessageType.ERROR) {
+				System.out.println(type+": "+message);
+			}
+		}else if(currentDebugType == MessageType.ERROR) {
+			//ONLY ERROR
+			if(type == MessageType.ERROR) {
+				System.out.println(type+": "+message);
+			}
+		}else {
+			//IF MATCHING TYPES
+			if(type == currentDebugType) {
+				System.out.println(type+": "+message);
+			}
+		}
+		
+	}
+	
+	public static void startInputScanner() {
+		
+		if(inputScanner == null) {
+			inputScanner = new Timer();
+			inputScanner.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					
+					@SuppressWarnings("resource") //DARF NICHT GESCHLOSSEN WERDEN!
+					Scanner consoleInput = new Scanner(System.in);
+					
+					if(consoleInput.hasNextLine()) {
+						String[] input = consoleInput.nextLine().split(" ");
+						handleInput(input);
+					}
+					
+				}
+			}, 0, 60);
+		}else {
+			ConsoleHandler.print("Couldn't init/start Inputscanner, because there is already one running!", MessageType.IMPORTANT);
+		}
+		
+	}
+	
+	public static void stopInputScanner() {
+		
+		if(inputScanner != null) {
+			inputScanner.cancel();
+			inputScanner = null;
+		}else {
+			ConsoleHandler.print("Couldn't stop Inputscanner, because there is no one running!", MessageType.IMPORTANT);
+		}
+		
+	}
+	
+	
+	private static void handleInput(String[] input) {
+		
+		switch(input[0]) {
+		case "debugType":
+			if(input.length >= 2) {
+				try {
+					MessageType newType = MessageType.valueOf(input[1]);
+					switchDebugType(newType);
+					ConsoleHandler.print("Switched DebugType to: "+currentDebugType, MessageType.IMPORTANT);
+				}catch(IllegalArgumentException error) {
+					String allDebugTypes = "";
+					for(MessageType type : MessageType.values()) {
+						allDebugTypes += ", "+type.toString();
+					}
+					allDebugTypes = allDebugTypes.substring(2);
+					ConsoleHandler.print("Choose type from: "+allDebugTypes, MessageType.IMPORTANT);
+				}
+			}else {
+				ConsoleHandler.print("Use: debugType [newType] - Current: "+currentDebugType, MessageType.IMPORTANT);
+			}
+			break;
+		case "help":
+		default:
+			ConsoleHandler.print("Choose input: help ; exit ; debugType", MessageType.IMPORTANT);
+			break;
+		}
+		
+	}
+	
+	public static void switchDebugType(MessageType newType) {
+		
+		currentDebugType = newType;
+		
+	}
+	
 }

@@ -10,7 +10,7 @@ package uni.bombenstimmung.de.backend.console;
 
 public enum MessageType {
 
-	NONSPECIFIC,
+	NONESPECIFIC,
 	IMPORTANT,
 	ERROR,
 	

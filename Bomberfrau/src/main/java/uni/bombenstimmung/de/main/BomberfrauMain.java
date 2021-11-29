@@ -9,10 +9,12 @@
 
 package uni.bombenstimmung.de.main;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+
 public class BomberfrauMain {
 	
 	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - ©2021";
-	public static final String VERSION = "Alpha - V0.0.1";
+	public static final String VERSION = "Alpha - V0.0.2";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
@@ -20,7 +22,18 @@ public class BomberfrauMain {
 	 */
 	public static void main(String[] args) {
 		
-		System.out.println("Starting Bomberfrau !!! - "+VERSION);
+		ConsoleHandler.print("Starting Bomberfrau ["+VERSION+"]");
+		
+		/*STARTUP
+		1. BACKEND STUFF !!!
+		2. ...
+		*/
+		
+		//1. BACKEND
+		ConsoleHandler.startInputScanner();
+		
+		//2. ...
+		//TODO
 		
 	}                                                
 	
