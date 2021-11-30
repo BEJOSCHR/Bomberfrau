@@ -79,6 +79,7 @@ public class ConsoleHandler {
 					
 				}
 			}, 0, 60);
+			ConsoleHandler.print("Started ConsoleInputScanner!", MessageType.BACKEND);
 		}else {
 			ConsoleHandler.print("Couldn't init/start Inputscanner, because there is already one running!", MessageType.IMPORTANT);
 		}

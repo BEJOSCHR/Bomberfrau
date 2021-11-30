@@ -10,6 +10,7 @@
 package uni.bombenstimmung.de.main;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 
 public class BomberfrauMain {
 	
@@ -30,6 +31,7 @@ public class BomberfrauMain {
 		*/
 		
 		//1. BACKEND
+		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		
 		//2. ...
