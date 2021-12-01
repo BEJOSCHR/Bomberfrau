@@ -20,6 +20,7 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
+import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 
 public class GraphicsHandler {
@@ -52,7 +53,7 @@ public class GraphicsHandler {
 		frame.addWindowListener(new WindowHandler());
 		
 		try {
-			frame.setIconImage(ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream("images/Bomberman_Icon.png")));
+			frame.setIconImage(ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream(ImageHandler.PATH+"Bomberman_Icon.png")));
 		} catch (Exception error) {
 			ConsoleHandler.print("Couldn't load window icon!", MessageType.BACKEND);
 		}
