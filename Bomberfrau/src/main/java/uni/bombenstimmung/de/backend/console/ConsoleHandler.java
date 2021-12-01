@@ -12,6 +12,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+
 public class ConsoleHandler {
 	
 	private static Timer inputScanner = null;
@@ -94,6 +96,7 @@ public class ConsoleHandler {
 		if(inputScanner != null) {
 			inputScanner.cancel();
 			inputScanner = null;
+			ConsoleHandler.print("Stopped ConsoleInputScanner!", MessageType.BACKEND);
 		}else {
 			ConsoleHandler.print("Couldn't stop Inputscanner, because there is no one running!", MessageType.IMPORTANT);
 		}
@@ -109,7 +112,7 @@ public class ConsoleHandler {
 		switch(input[0]) {
 		case "exit":
 			ConsoleHandler.print("Shutting down...", MessageType.IMPORTANT);
-			System.exit(0);
+			GraphicsHandler.shutdownProgram();
 			break;
 		case "debugType":
 			if(input.length >= 2) {

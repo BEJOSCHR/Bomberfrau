@@ -84,7 +84,7 @@ public class MouseActionArea {
 	 * @return boolean - Den selben status von checkArea() nur mit den Mouse-Koorinaten als Input
 	 **/
 	public boolean isHovered() {
-		return checkArea(MouseHandler.getMouseX(), MouseHandler.getMouseY());
+		return false; //TODO checkArea(MouseHandler.getMouseX(), MouseHandler.getMouseY());
 	}
 	
 
@@ -102,7 +102,7 @@ public class MouseActionArea {
 	 * Wird aufgerufen wenn diese MAA mit der LINKEN Taste GEDRÜCKT wird - LEFT PRESS
 	 * (Soll überschrieben/verändert werden wenn eine neue MAA erzeugt wird (@Overwrite))
 	 **/
-	public void performAction_LEFT_PRESS() { }
+	public void performAction_LEFT_PRESS() { };
 
 	/**
 	 * Wird aufgerufen wenn diese MAA mit der RECHTEN Taste GEDRÜCKT wird - RIGHT PRESS

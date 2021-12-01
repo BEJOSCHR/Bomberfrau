@@ -10,9 +10,11 @@ package uni.bombenstimmung.de.backend.graphics;
 
 public enum DisplayType {
 
+	LOADINGSCREEN,
+	
 	MENU,
 	LOBBY,
-	GAME,
+	INGAME,
 	AFTERGAME;
 	
 }
