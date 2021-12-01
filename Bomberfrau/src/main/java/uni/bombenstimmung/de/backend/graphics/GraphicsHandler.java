@@ -12,10 +12,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
+import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
+import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 
 public class GraphicsHandler {
@@ -38,20 +42,20 @@ public class GraphicsHandler {
 		frame.setTitle("BomberFrau - "+BomberfrauMain.VERSION);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setUndecorated(true); //TODO 
+		frame.setUndecorated(true); 
 		frame.setVisible(true);
 		
-//		frame.addKeyListener(new KeyHandler());
-//		frame.addMouseListener(new MouseHandler());
-//		frame.addMouseMotionListener(new MouseHandler());
-//		frame.addMouseWheelListener(new MouseHandler());
-//		frame.addWindowListener(new WindowHandler());
+		frame.addKeyListener(new KeyHandler());
+		frame.addMouseListener(new MouseHandler());
+		frame.addMouseMotionListener(new MouseHandler());
+		frame.addMouseWheelListener(new MouseHandler());
+		frame.addWindowListener(new WindowHandler());
 		
-//		try { //TRY TO SET ICON
-//			frame.setIconImage(ImageIO.read(Bomberfrau_Main.class.getResourceAsStream("images/Icon.png")));
-//		} catch (Exception error) {
-//			System.out.println("The Window Icon couldn't be loaded!");
-//		}
+		try {
+			frame.setIconImage(ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream("images/Bomberman_Icon.png")));
+		} catch (Exception error) {
+			ConsoleHandler.print("Couldn't load window icon!", MessageType.BACKEND);
+		}
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(1920, 1080);
@@ -62,13 +66,13 @@ public class GraphicsHandler {
 		width = frame.getWidth();
 		height = frame.getHeight();
 		
-//		GameData.FIELD_DIMENSION = (int) ((GraphicsData.height-GameData.MAP_SIDE_BORDER*2)/GameData.MAP_DIMENSION);
-//		GameData.PLAYER_DIMENSION = (int) (GameData.FIELD_DIMENSION*0.75);
-//		GameData.BOMB_DIMENSION = (int) (GameData.FIELD_DIMENSION*0.65);
+		//TODO CALCULATE DIMENSIONS RELATIVE TO WIDTH AND HEIGHT
 		
 		frame.requestFocus();
 		
 		label = new Label();
+		
+		label.requestFocus();
 		
 		ConsoleHandler.print("Initialised Visuals!", MessageType.BACKEND);
 		
@@ -182,6 +186,8 @@ public class GraphicsHandler {
 	public static void shutdownProgram() {
 		
 		if(shuttingDown) { return; }
+		
+		ConsoleHandler.print("Stopping Bomberfrau ["+BomberfrauMain.VERSION+"]", MessageType.IMPORTANT);
 		
 		shuttingDown = true;
 		

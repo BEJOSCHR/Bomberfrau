@@ -20,7 +20,7 @@ import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 public class BomberfrauMain {
 	
 	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - ©2021";
-	public static final String VERSION = "Alpha - V0.0.3";
+	public static final String VERSION = "Alpha - V0.0.4";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)

@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 
 public class MouseActionArea {
 
@@ -84,7 +85,7 @@ public class MouseActionArea {
 	 * @return boolean - Den selben status von checkArea() nur mit den Mouse-Koorinaten als Input
 	 **/
 	public boolean isHovered() {
-		return false; //TODO checkArea(MouseHandler.getMouseX(), MouseHandler.getMouseY());
+		return checkArea(MouseHandler.getMouseX(), MouseHandler.getMouseY());
 	}
 	
 
