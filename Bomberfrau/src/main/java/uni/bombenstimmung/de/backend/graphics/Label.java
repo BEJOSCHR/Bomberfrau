@@ -72,21 +72,22 @@ public class Label extends JLabel {
 		//PARTS
 		switch(GraphicsHandler.getDisplayType()) {
 		case LOADINGSCREEN:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "B O M B E R F R A U", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "B O M B E R F R A U", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 18, "<< Click to continue >>", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+130);
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, BomberfrauMain.AUTHOR, GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-30);
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, BomberfrauMain.VERSION, GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-15);
 			break;
 		case MENU:
-			
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "MENU", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case LOBBY:
-			
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case INGAME:
-			
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case AFTERGAME:
-			
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		default:
 			ConsoleHandler.print("Illegal displayType! Can't draw for type '"+GraphicsHandler.getDisplayType()+"'", MessageType.ERROR);

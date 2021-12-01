@@ -10,6 +10,7 @@ package uni.bombenstimmung.de.backend.maa;
 
 public enum MouseActionAreaType {
 
+	MAA_LOADINGSCREEN_CLICKTOSTART,
 	MAA_MENU_XXX;
 	
 }

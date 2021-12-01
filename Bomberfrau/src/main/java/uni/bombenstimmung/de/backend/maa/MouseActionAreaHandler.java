@@ -11,8 +11,12 @@ package uni.bombenstimmung.de.backend.maa;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.awt.Color;
+
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class MouseActionAreaHandler {
 
@@ -23,7 +27,17 @@ public class MouseActionAreaHandler {
 	 */
 	public static void initMAAs() {
 		
-		//TODO ADD MAAs
+		new MouseActionArea(-1, -1, GraphicsHandler.getWidth()+1, GraphicsHandler.getHeight()+1,
+				MouseActionAreaType.MAA_LOADINGSCREEN_CLICKTOSTART, "", 1, Color.WHITE, Color.WHITE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				GraphicsHandler.switchToMenuFromStart();
+			}
+			@Override
+			public boolean isActiv() {
+				return GraphicsHandler.getDisplayType() == DisplayType.LOADINGSCREEN;
+			}
+		};
 		
 		ConsoleHandler.print("Initialised MouseActionAreas!", MessageType.BACKEND);
 		
