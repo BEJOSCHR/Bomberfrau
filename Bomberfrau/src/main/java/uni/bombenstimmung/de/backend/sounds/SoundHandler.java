@@ -29,9 +29,7 @@ public class SoundHandler {
 		
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
-		new LoadedSound("Hover.wav", SoundType.TEST_HOVER, SoundCategory.TEST, 0.02D);
-		new LoadedSound("Klick.wav", SoundType.TEST_KLICK, SoundCategory.TEST, 0.02D);
-		new LoadedSound("Schuss.wav", SoundType.TEST_SCHUSS, SoundCategory.TEST, 0.02D);
+		
 		new LoadedSound("Start.wav", SoundType.TEST_START, SoundCategory.TEST, 0.02D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);

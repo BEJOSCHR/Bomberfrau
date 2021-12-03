@@ -39,7 +39,7 @@ public class MouseActionAreaHandler {
 			}
 		};
 		
-		ConsoleHandler.print("Initialised MouseActionAreas!", MessageType.BACKEND);
+		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		
 	}
 	

@@ -19,9 +19,10 @@ import javax.swing.JLabel;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
-import uni.bombenstimmung.de.main.BomberfrauMain;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -72,10 +73,10 @@ public class Label extends JLabel {
 		//PARTS
 		switch(GraphicsHandler.getDisplayType()) {
 		case LOADINGSCREEN:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "B O M B E R F R A U", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 18, "<< Click to continue >>", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+130);
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, BomberfrauMain.AUTHOR, GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-30);
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, BomberfrauMain.VERSION, GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-15);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_TITLE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 18, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_CONTINUE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+130);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_AUTHOR).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-30);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_VERSION).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-15);
 			break;
 		case MENU:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "MENU", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);

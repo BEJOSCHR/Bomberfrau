@@ -57,13 +57,13 @@ public class KeyHandler implements KeyListener {
 			//D
 			
 		}else if(keyCode == KeyEvent.VK_T) {
-			//T
-			SoundHandler.playSound(SoundType.TEST_SCHUSS);
+			//T  TODO JUST TESTING REMOVE LATER
+			SoundHandler.playSound(SoundType.TEST_START);
 		}else if(keyCode == KeyEvent.VK_PLUS) {
-			//+
+			//+  TODO JUST TESTING REMOVE LATER
 			SoundHandler.changeCategoryVolume(SoundCategory.TEST, 0.1D);
 		}else if(keyCode == KeyEvent.VK_MINUS) {
-			//-
+			//-  TODO JUST TESTING REMOVE LATER
 			SoundHandler.changeCategoryVolume(SoundCategory.TEST, -0.1D);
 		}
 		

@@ -13,14 +13,15 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class BomberfrauMain {
 	
-	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - �2021";
-	public static final String VERSION = "Alpha - V0.0.6";
+	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - C2021";
+	public static final String VERSION = "Alpha - V0.0.8";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
@@ -36,6 +37,7 @@ public class BomberfrauMain {
 		*/
 		
 		//1. BACKEND
+		LanguageHandler.initLLBs();
 		GraphicsHandler.initVisuals();
 		MouseActionAreaHandler.initMAAs();
 		ImageHandler.initImages();
