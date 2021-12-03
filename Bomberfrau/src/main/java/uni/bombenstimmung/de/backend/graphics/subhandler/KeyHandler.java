@@ -11,6 +11,10 @@ package uni.bombenstimmung.de.backend.graphics.subhandler;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import uni.bombenstimmung.de.backend.sounds.SoundCategory;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
+
 public class KeyHandler implements KeyListener {
 
 	@Override
@@ -52,6 +56,15 @@ public class KeyHandler implements KeyListener {
 		}else if(keyCode == KeyEvent.VK_D) {
 			//D
 			
+		}else if(keyCode == KeyEvent.VK_T) {
+			//T
+			SoundHandler.playSound(SoundType.TEST_SCHUSS);
+		}else if(keyCode == KeyEvent.VK_PLUS) {
+			//+
+			SoundHandler.changeCategoryVolume(SoundCategory.TEST, 0.1D);
+		}else if(keyCode == KeyEvent.VK_MINUS) {
+			//-
+			SoundHandler.changeCategoryVolume(SoundCategory.TEST, -0.1D);
 		}
 		
 	}

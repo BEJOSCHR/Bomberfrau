@@ -11,6 +11,9 @@ package uni.bombenstimmung.de.backend.images;
 import java.util.ArrayList;
 import java.util.List;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
+
 public class ImageHandler {
 
 	public static final String PATH = "images/";
@@ -24,10 +27,12 @@ public class ImageHandler {
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
 		
+		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
+		
 	}
 	
 	/**
-	 * Added das angegebene Image zur images Liste (Wiord eigentlich nur aus den LoadedImages aufgerufen)
+	 * Added das angegebene Image zur images Liste (Wird eigentlich nur aus den LoadedImages aufgerufen)
 	 * @param img - Das zu addende Image
 	 * @see LoadedImage
 	 */

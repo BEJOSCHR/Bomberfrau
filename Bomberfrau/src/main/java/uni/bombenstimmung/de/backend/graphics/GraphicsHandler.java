@@ -69,11 +69,10 @@ public class GraphicsHandler {
 		
 		//TODO CALCULATE DIMENSIONS RELATIVE TO WIDTH AND HEIGHT
 		
-		frame.requestFocus();
-		
 		label = new Label();
-		
 		label.requestFocus();
+		
+		frame.requestFocus();
 		
 		ConsoleHandler.print("Initialised Visuals!", MessageType.BACKEND);
 		

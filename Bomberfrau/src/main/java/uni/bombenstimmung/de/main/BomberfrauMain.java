@@ -14,6 +14,7 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 
 public class BomberfrauMain {
 	
@@ -37,6 +38,7 @@ public class BomberfrauMain {
 		GraphicsHandler.initVisuals();
 		MouseActionAreaHandler.initMAAs();
 		ImageHandler.initImages();
+		SoundHandler.initSounds();
 		ConsoleHandler.startInputScanner();
 		
 		//2. ...

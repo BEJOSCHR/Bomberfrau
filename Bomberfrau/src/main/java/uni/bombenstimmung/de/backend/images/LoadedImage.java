@@ -63,7 +63,7 @@ public class LoadedImage {
 	 */
 	private boolean loadImage(String name) {
 		try {
-			this.image = ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream(ImageHandler.PATH+"Bomberman_Icon.png"));
+			this.image = ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream(ImageHandler.PATH+name));
 			return true;
 		} catch (IOException e) {
 			ConsoleHandler.print("Can't load/find image '"+name+"' [NO SCALE]!", MessageType.ERROR);
@@ -79,7 +79,7 @@ public class LoadedImage {
 	 */
 	private boolean loadImage(String name, int width, int height) {
 		try {
-			this.image = ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream(ImageHandler.PATH+"Bomberman_Icon.png")).getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			this.image = ImageIO.read(BomberfrauMain.class.getClassLoader().getResourceAsStream(ImageHandler.PATH+name)).getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			return true;
 		} catch (IOException e) {
 			ConsoleHandler.print("Can't load/find image '"+name+"' [SCALE]!", MessageType.ERROR);
