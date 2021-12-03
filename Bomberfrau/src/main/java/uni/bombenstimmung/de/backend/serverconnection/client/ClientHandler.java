@@ -10,4 +10,5 @@ package uni.bombenstimmung.de.backend.serverconnection.client;
 
 public class ClientHandler {
 
+	
 }

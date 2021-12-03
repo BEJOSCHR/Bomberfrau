@@ -15,15 +15,16 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class BomberfrauMain {
 	
-	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - ©2021";
+	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - ï¿½2021";
 	public static final String VERSION = "Alpha - V0.0.6";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
-	 * @param args Die Argumente die dem Start mitgegeben werden können
+	 * @param args Die Argumente die dem Start mitgegeben werden kï¿½nnen
 	 */
 	public static void main(String[] args) {
 		
@@ -41,6 +42,12 @@ public class BomberfrauMain {
 		SoundHandler.initSounds();
 		ConsoleHandler.startInputScanner();
 		
+		ConnectedClient host = new ConnectedClient(true, 0);
+		System.out.println("Client: " + host.getId()+" Host: " +host.isHost());
+		ConnectedClient client = new ConnectedClient(false, 1);
+		System.out.println("Client: " + client.getId()+" Host: " +client.isHost());
+		ConnectedClient client2 = new ConnectedClient(false, 2);
+		System.out.println("Client: " + client2.getId()+" Host: " +client2.isHost());
 		//2. ...
 		//TODO
 		
