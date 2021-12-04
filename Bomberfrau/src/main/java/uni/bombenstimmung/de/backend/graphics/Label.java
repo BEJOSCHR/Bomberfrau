@@ -17,6 +17,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
+import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
@@ -73,8 +74,8 @@ public class Label extends JLabel {
 		//PARTS
 		switch(GraphicsHandler.getDisplayType()) {
 		case LOADINGSCREEN:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_TITLE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 18, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_CONTINUE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+130);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 160, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_TITLE).getContent(), GraphicsHandler.getWidth()/2+AnimationData.loadingScreen_posXModifier, GraphicsHandler.getHeight()/2-30+AnimationData.loadingScreen_posYModifier);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 15+AnimationData.loadingScreen_textSizeModifier, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_CONTINUE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+150);
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_AUTHOR).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-30);
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 12, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_VERSION).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-15);
 			break;
