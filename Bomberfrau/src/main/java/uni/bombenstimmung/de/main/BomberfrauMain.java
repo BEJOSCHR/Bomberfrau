@@ -25,7 +25,7 @@ import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 public class BomberfrauMain {
 	
 	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - C2021";
-	public static final String VERSION = "Alpha - V0.0.8";
+	public static final String VERSION = "Alpha - V0.1.0";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
