@@ -1,0 +1,57 @@
+/*
+ * ServerHandler
+ *
+ * Version 1.0
+ * Author: Benni
+ *
+ * Arbeitet alle Events der Server-Verbindung zu allen Clients (ConnectedClients) ab (senden, empfangen, verwalten...)
+ */
+package uni.bombenstimmung.de.backend.serverconnection.host;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IoSession;
+
+public class ServerHandler extends IoHandlerAdapter {
+
+
+	@SuppressWarnings("unused")
+	private List<ConnectedClient> ConnectedClients = new ArrayList<ConnectedClient>();
+	
+	private ConnectedClient server;
+	
+	public ServerHandler(ConnectedClient server) {
+		this.server = server;
+	}
+	
+	
+	public void excepetionCaught(IoSession session, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		session.closeNow();
+	}
+	
+	@Override
+	public void sessionCreated(IoSession session) throws Exception {
+		System.out.println("Server session created");
+		//ConnectedClients.add(new ConnectedClient (false));
+	}
+	
+	@Override
+	public void messageReceived(IoSession session, Object message) throws Exception {
+		//SocketAddress remoteAddress = session.getRemoteAddress();
+		
+		server.printMessage(message.toString()+ "\n");
+	}
+	
+	@Override
+	public void sessionClosed(IoSession session) throws Exception {
+		System.out.println("Session closed .... ");
+		//session.closeNow();
+		//ConnectedClients.remove(ConnectedClients.size());
+		
+	}
+}
+
+
