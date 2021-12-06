@@ -27,6 +27,8 @@ public class ImageHandler {
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
 		
+		
+		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}

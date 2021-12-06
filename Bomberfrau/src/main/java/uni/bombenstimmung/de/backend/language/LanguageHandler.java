@@ -28,7 +28,7 @@ public class LanguageHandler {
 		
 		String[] loadingScreen_Title = {"B O M B E R F R A U", "B O M B E R F R A U"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_TITLE, loadingScreen_Title);
-		String[] loadingScreen_Continue = {"<< Click to continue >>", "<< Klicke zum starten >>"};
+		String[] loadingScreen_Continue = {"<< Click to continue >>", "<< Klicke zum Starten >>"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_CONTINUE, loadingScreen_Continue);
 		String[] loadingScreen_Author = {BomberfrauMain.AUTHOR, BomberfrauMain.AUTHOR};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_AUTHOR, loadingScreen_Author);

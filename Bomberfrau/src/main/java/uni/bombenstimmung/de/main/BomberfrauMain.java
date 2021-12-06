@@ -77,19 +77,14 @@ public class BomberfrauMain {
 			}
 			@Override
 			public void changeValues() {
-				if(getSteps()%2 == 0) {
-					int stepSize = 1;
-					AnimationData.loadingScreen_posXModifier += r.nextInt(stepSize*2)-stepSize;
-					AnimationData.loadingScreen_posYModifier += r.nextInt(stepSize*2)-stepSize;
-					int limit = 10;
-					if(AnimationData.loadingScreen_posXModifier < -limit) { AnimationData.loadingScreen_posXModifier = -limit; }
-					else if(AnimationData.loadingScreen_posXModifier > limit) { AnimationData.loadingScreen_posXModifier = limit; }
-					if(AnimationData.loadingScreen_posYModifier < -limit) { AnimationData.loadingScreen_posYModifier = -limit; }
-					else if(AnimationData.loadingScreen_posYModifier > limit) { AnimationData.loadingScreen_posYModifier = limit; }
-				}else {
-					AnimationData.loadingScreen_posXModifier = 0;
-					AnimationData.loadingScreen_posYModifier = 0;
-				}
+				int stepSize = 5;
+				AnimationData.loadingScreen_posXModifier += r.nextInt(stepSize*2)-stepSize;
+				AnimationData.loadingScreen_posYModifier += r.nextInt(stepSize*2)-stepSize;
+				int limit = 10;
+				if(AnimationData.loadingScreen_posXModifier < -limit) { AnimationData.loadingScreen_posXModifier = -limit; }
+				else if(AnimationData.loadingScreen_posXModifier > limit) { AnimationData.loadingScreen_posXModifier = limit; }
+				if(AnimationData.loadingScreen_posYModifier < -limit) { AnimationData.loadingScreen_posYModifier = -limit; }
+				else if(AnimationData.loadingScreen_posYModifier > limit) { AnimationData.loadingScreen_posYModifier = limit; }
 			}
 			@Override
 			public void finaliseValues() {
