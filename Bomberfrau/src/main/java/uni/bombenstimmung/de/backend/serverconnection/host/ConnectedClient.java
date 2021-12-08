@@ -30,6 +30,7 @@ import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
+import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
 
 public class ConnectedClient extends IoHandlerAdapter{
 	
@@ -64,7 +65,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Is the new created Client not the host, a new UDP Client will be initialized
 		else {
 			connector = new NioDatagramConnector();
-			connector.setHandler(this);
+			//connector.setHandler(this);
+			connector.setHandler(new ClientHandler(this));
 			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
 			ConnectFuture connFuture = connector.connect(new InetSocketAddress(ConnectionData.IP, ConnectionData.PORT));
 			ConsoleHandler.print("UDP Client created");
@@ -91,7 +93,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		for (int i = 0; i < 100; i++) {
 			String message = "Testnachricht"+i+" von " + this.id;
 			conSession.write(message);
-			Thread.sleep(20);
+			Thread.sleep(200);
 		}
 		//conSession.closeNow();
 		//ConsoleHandler.print("Session closed from Client");

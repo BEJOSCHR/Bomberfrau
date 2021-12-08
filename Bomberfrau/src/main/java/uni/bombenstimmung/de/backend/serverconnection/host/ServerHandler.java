@@ -45,6 +45,8 @@ public class ServerHandler extends IoHandlerAdapter {
 		//SocketAddress remoteAddress = session.getRemoteAddress();
 		
 		server.printMessage(message.toString()+ "\n");
+		
+		session.write("Answer back to Client");
 	}
 	
 	@Override
