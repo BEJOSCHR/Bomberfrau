@@ -12,9 +12,6 @@ public enum SoundType {
 
 	SOUND_MENU_XXX,
 	
-	TEST_HOVER,
-	TEST_KLICK,
-	TEST_SCHUSS,
 	TEST_START;
 	
 }

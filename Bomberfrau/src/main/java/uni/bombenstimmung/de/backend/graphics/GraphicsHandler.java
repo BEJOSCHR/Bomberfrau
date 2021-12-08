@@ -15,6 +15,7 @@ import java.awt.Graphics;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
@@ -85,7 +86,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromStart() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'START'!", MessageType.BACKEND);
@@ -96,7 +97,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromLobby() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
@@ -107,7 +108,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromIngame() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
@@ -118,7 +119,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromAftergame() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -129,7 +130,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToLobbyFromMenu() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
@@ -140,7 +141,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIngameFromLobby() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
@@ -151,7 +152,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToAftergameFromIngame() {
 		
-		
+		AnimationHandler.stopAllAnimations();
 		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
@@ -192,6 +193,7 @@ public class GraphicsHandler {
 		shuttingDown = true;
 		
 		ConsoleHandler.stopInputScanner();
+		AnimationHandler.stopTickTimer();
 		
 		System.exit(0);
 		

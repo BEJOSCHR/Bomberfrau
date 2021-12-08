@@ -8,19 +8,17 @@
  */
 package uni.bombenstimmung.de.backend.serverconnection.host;
 
-import java.io.IOException;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
-import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 
 public class ServerHandler extends IoHandlerAdapter {
 
 
-	private List<ConnectedClient> ConnectedClients = new ArrayList();
+	@SuppressWarnings("unused")
+	private List<ConnectedClient> ConnectedClients = new ArrayList<ConnectedClient>();
 	
 	private ConnectedClient server;
 	

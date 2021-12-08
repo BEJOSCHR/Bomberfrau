@@ -28,7 +28,7 @@ public class MouseActionAreaHandler {
 	public static void initMAAs() {
 		
 		new MouseActionArea(-1, -1, GraphicsHandler.getWidth()+1, GraphicsHandler.getHeight()+1,
-				MouseActionAreaType.MAA_LOADINGSCREEN_CLICKTOSTART, "", 1, Color.WHITE, Color.WHITE) {
+				MouseActionAreaType.MAA_LOADINGSCREEN_CLICKTOSTART, "", 1, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				GraphicsHandler.switchToMenuFromStart();
@@ -39,7 +39,7 @@ public class MouseActionAreaHandler {
 			}
 		};
 		
-		ConsoleHandler.print("Initialised MouseActionAreas!", MessageType.BACKEND);
+		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		
 	}
 	

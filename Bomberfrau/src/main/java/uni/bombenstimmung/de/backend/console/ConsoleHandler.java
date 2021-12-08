@@ -13,6 +13,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.backend.language.LanguageType;
 
 public class ConsoleHandler {
 	
@@ -132,9 +134,27 @@ public class ConsoleHandler {
 				ConsoleHandler.print("Use: debugType [newType] - Current: "+currentDebugType, MessageType.IMPORTANT);
 			}
 			break;
+		case "language":
+			if(input.length >= 2) {
+				try {
+					LanguageType languageType = LanguageType.valueOf(input[1]);
+					LanguageHandler.setActiveLanguage(languageType);
+					ConsoleHandler.print("Switched Activelanguage to: "+LanguageHandler.getActiveLanguage(), MessageType.IMPORTANT);
+				}catch(IllegalArgumentException error) {
+					String allLanguageTypes = "";
+					for(LanguageType type : LanguageType.values()) {
+						allLanguageTypes += ", "+type.toString();
+					}
+					allLanguageTypes = allLanguageTypes.substring(2);
+					ConsoleHandler.print("Choose type from: "+allLanguageTypes, MessageType.IMPORTANT);
+				}
+			}else {
+				ConsoleHandler.print("Use: language [LanguageType] - Current: "+LanguageHandler.getActiveLanguage(), MessageType.IMPORTANT);
+			}
+			break;
 		case "help":
 		default:
-			ConsoleHandler.print("Choose input: [help,exit,debugType]", MessageType.IMPORTANT);
+			ConsoleHandler.print("Choose input: [help,exit,debugType,language]", MessageType.IMPORTANT);
 			break;
 		}
 		
