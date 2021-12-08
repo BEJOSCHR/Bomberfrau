@@ -13,6 +13,9 @@
 
 package uni.bombenstimmung.de.game;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
+
 public class PlayerMoveButtonConfig {
     
     int up;
@@ -53,10 +56,7 @@ public class PlayerMoveButtonConfig {
 	    break;
 	    
 	default:
-	    /*
-	     * TODO Console-Ausgabe einfügen, das falsche ID
-	     * übergeben wurde.
-	     */
+	    ConsoleHandler.print("Invalid ID for button reconfiguration!", MessageType.GAME);
 	}
     }
     
