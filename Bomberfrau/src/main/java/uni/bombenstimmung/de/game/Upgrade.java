@@ -1,3 +1,7 @@
+/*	Diese Klasse ist von Dennis
+ * 	Sie dient dazu, die Upgrades im Spiel zu verwalten.
+ */
+
 package uni.bombenstimmung.de.game;
 
 public class Upgrade {

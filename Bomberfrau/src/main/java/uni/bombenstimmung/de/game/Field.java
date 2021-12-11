@@ -1,6 +1,11 @@
+/*	Diese Klasse ist von Dennis
+ * 	Sie dient dazu, die einzelnen Felder und ihre Inhalte 
+ * 	der Map zu verwalten. 
+ */
+
 package uni.bombenstimmung.de.game;
 
-public class Field {
+public class Field extends Entity {
     
     private int width;
     private int length;

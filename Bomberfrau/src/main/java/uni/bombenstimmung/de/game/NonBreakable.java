@@ -1,3 +1,8 @@
+/*	Diese Klasse ist von Dennis
+ * 	Sie dient dazu, die einzelnen nicht zerstörbaren 
+ * 	Elemente der Map zu verwalten. 
+ */
+
 package uni.bombenstimmung.de.game;
 
 public class NonBreakable {

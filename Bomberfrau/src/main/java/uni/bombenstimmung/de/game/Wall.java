@@ -1,3 +1,8 @@
+/*	Diese Klasse ist von Dennis
+ * 	Sie dient dazu, die zerstörbare Wall zu
+ * 	verwalten.
+ */
+
 package uni.bombenstimmung.de.game;
 
 public class Wall {
