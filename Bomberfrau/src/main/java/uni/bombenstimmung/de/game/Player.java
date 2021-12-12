@@ -1,11 +1,11 @@
 /*
  * Player
  *
- * Version 0.1
+ * Version 0.4.1
  * 
  * Author: Christopher
  * 
- * Datum: 02.12.2021
+ * Datum: 12.12.2021
  *
  * Enthält Informationen zum eigenen Player und initiiert Aktionen
  * bei Tastendruck.
@@ -13,17 +13,30 @@
 
 package uni.bombenstimmung.de.game;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
+
 public class Player {
 
-    int id, skin, movementSpeed, maxBombs;
-    String name;
-    Entity position;
-    PlayerMoveButtonConfig currentButtonConfig;
-    boolean dead;
-    Field currentField;
+    private int id;
+    private int skin;
+    private int movementSpeed;
+    private int maxBombs;
+    private String name;
+//    private Entity position;
+    private PlayerButtonConfig currentButtonConfig;
+    private boolean dead;
+//    private Field currentField;
     
     public Player(String name) {
+	this.id = 0;
+	this.skin = 0;
+	this.movementSpeed = 1;
+	this.maxBombs = 1;
 	this.name = name;
+	currentButtonConfig = new PlayerButtonConfig();
+	this.dead = false;
+	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.GAME);
     }
     
     public void setId(int id) {
@@ -42,7 +55,7 @@ public class Player {
 	this.skin = skin;
     }
     
-    public void setDeath(boolean dead) {
+    public void setDead(boolean dead) {
 	this.dead = dead;
     }
     
@@ -50,12 +63,32 @@ public class Player {
 	return id;
     }
     
-    public Entity getPosition() {
-	return position;
-    }
-    
     public int getSkin() {
 	return skin;
+    }
+    
+    public int getMovementSpeed() {
+	return movementSpeed;
+    }
+    
+    public int getMaxBombs() {
+	return maxBombs;
+    }
+    
+    public String getName() {
+	return name;
+    }
+    
+//    public Entity getPosition() {
+//	return position;
+//    }
+    
+    public PlayerButtonConfig getCurrentButtonConfig() {
+	return currentButtonConfig;
+    }
+    
+    public boolean getDead() {
+	return dead;
     }
     
     public void actionPlayer(int buttonPrompt) {

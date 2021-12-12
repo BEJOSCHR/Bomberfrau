@@ -1,11 +1,11 @@
 /*
- * PlayerMoveButtonConfig
+ * PlayerButtonConfig
  *
- * Version 0.1
+ * Version 0.4.1
  * 
  * Author: Christopher
  * 
- * Datum: 02.12.2021
+ * Datum: 08.12.2021
  *
  * Spielsteuerung. Tastenzuweisungen können konfiguriert und
  * Aktionen bei Tastendruck definiert werden.
@@ -13,16 +13,46 @@
 
 package uni.bombenstimmung.de.game;
 
+import java.awt.event.KeyEvent;
+
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 
-public class PlayerMoveButtonConfig {
+public class PlayerButtonConfig {
     
-    int up;
-    int down;
-    int left;
-    int right;
-    int setBomb;
+    private int up;
+    private int down;
+    private int left;
+    private int right;
+    private int setBomb;
+    
+    public PlayerButtonConfig() {
+	this.up = KeyEvent.VK_W;
+	this.down = KeyEvent.VK_S;
+	this.left = KeyEvent.VK_A;
+	this.right = KeyEvent.VK_D;
+	this.setBomb = KeyEvent.VK_SPACE;
+    }
+    
+    public int getUp() {
+	return up;
+    }
+    
+    public int getDown() {
+	return down;
+    }
+    
+    public int getLeft() {
+	return left;
+    }
+    
+    public int getRight() {
+	return right;
+    }
+    
+    public int getSetBomb() {
+	return setBomb;
+    }
     
     public void reconfigFull(int up, int down, int left, int right,
 	    		     int setBomb) {
