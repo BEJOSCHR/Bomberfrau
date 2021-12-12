@@ -10,8 +10,13 @@ package uni.bombenstimmung.de.backend.serverconnection.host;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.future.IoFuture;
 import org.apache.mina.core.future.IoFutureListener;
@@ -20,6 +25,7 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.DatagramSessionConfig;
 import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
@@ -35,30 +41,36 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private IoSession conSession;
 	private IoConnector connector;
 	
+	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
+	
 	@SuppressWarnings("rawtypes")
 	public ConnectedClient(boolean sHost, int sId) {
 		id = sId;
 		host = sHost;
-		
+
 		//Is the new created Client the host, a new server will be initialized
 		if (host == true) {
+			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
 			NioDatagramAcceptor acceptor = new NioDatagramAcceptor();
 			acceptor.setHandler(new ServerHandler(this));
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			//DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
-			//chain.addLast("logger", new LoggingFilter());
+			DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
+			chain.addLast("logger", new LoggingFilter());
 			
 			DatagramSessionConfig dcfg = acceptor.getSessionConfig();
 			dcfg.setReuseAddress(true);
+			
 			try {
 				acceptor.bind(new InetSocketAddress(ConnectionData.PORT));
 				ConsoleHandler.print("UDP Server started at "+ConnectionData.IP+":"+ConnectionData.PORT);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
-		
+			
 		//Is the new created Client not the host, a new UDP Client will be initialized
 		else {
 			connector = new NioDatagramConnector();
@@ -73,7 +85,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 					if (connFuture.isConnected()) {
 						conSession = future.getSession();
 						try {
-							sendData();
+							sendMessage();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -84,21 +96,17 @@ public class ConnectedClient extends IoHandlerAdapter{
 				});
 		}
 	}
-	
-	
-	private void sendData() throws InterruptedException {
-		for (int i = 0; i < 100; i++) {
-			String message = "Testnachricht"+i+" von " + this.id;
+		
+	private void sendMessage() throws InterruptedException {
+		for (int i = 0; i < 0; i++) {
+			String message = "Testnachricht"+i+" von ClientID: " + this.id;
 			conSession.write(message);
 			Thread.sleep(200);
 		}
-		//conSession.closeNow();
-		//ConsoleHandler.print("Session closed from Client");
 	}
 	
-	
 	void printMessage(Object message) {
-		System.out.print(message);
+		ConsoleHandler.print(message.toString());
 	}
 	
 	public int getId() {
@@ -109,7 +117,28 @@ public class ConnectedClient extends IoHandlerAdapter{
 		return host;
 	}
 	
+	//Add a new client with the corresponding remote address to the Hash Map
+	public void addClientToList(SocketAddress remoteAddress) {
+		if (!containsClient(remoteAddress)) {
+			connectedClients.put(remoteAddress, id = connectedClients.size()+1);
+			ConsoleHandler.print("Client added to List");
+		}
+	} 
+		
+	//Prints out the elements inside the Hash Map
+	public void printConnectedClients() {
+		connectedClients.forEach((k,v)-> ConsoleHandler.print(k+"="+v));
+	}
 	
+	//Checks if the Hash Map already contains a client with the remote address
+	public boolean containsClient(SocketAddress remoteAddress) {
+		return connectedClients.contains(remoteAddress);
+	}
+	
+	//Removes the client from the Hash Map
+	public void removeClient(SocketAddress remoteAdress) {
+		connectedClients.remove(remoteAdress);
+	}
 }
 
 

@@ -20,6 +20,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 
 public class BomberfrauMain {
@@ -92,13 +93,19 @@ public class BomberfrauMain {
 				AnimationData.loadingScreen_posYModifier = 0;
 			}
 		};
-		
-//		ConnectedClient host = new ConnectedClient(true, 0);
-//		System.out.println("Client: " + host.getId()+" Host: " +host.isHost());
-//		ConnectedClient client = new ConnectedClient(false, 1);
-//		System.out.println("Client: " + client.getId()+" Host: " +client.isHost());
-//		ConnectedClient client2 = new ConnectedClient(false, 2);
-//		System.out.println("Client: " + client2.getId()+" Host: " +client2.isHost());
+		/*
+		try {
+			ConnectedClient host = new ConnectedClient(true, 0);
+			System.out.println("Client: " + host.getId()+" Host: " +host.isHost());
+			Thread.sleep(5000);
+			ConnectedClient client = new ConnectedClient(false, 1);
+			System.out.println("Client: " + client.getId()+" Host: " +client.isHost());
+			Thread.sleep(5000);
+			ConnectedClient client2 = new ConnectedClient(false, 2);
+			System.out.println("Client: " + client2.getId()+" Host: " +client2.isHost());
+		}  catch (InterruptedException e) {
+			e.printStackTrace();
+		} */
 		//2. ...
 		//TODO
 		
