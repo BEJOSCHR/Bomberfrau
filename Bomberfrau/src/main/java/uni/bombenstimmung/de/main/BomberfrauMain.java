@@ -70,27 +70,56 @@ public class BomberfrauMain {
 			}
 		};
 		Random r = new Random();
-		new Animation(10, -1) {
+		new Animation(7, -1) {
+			
+			private final int stepSize = 2, limit = 20;
+			private int targetX = 0, targetY = 0;
+			
 			@Override
 			public void initValues() {
 				AnimationData.loadingScreen_posXModifier = 0;
 				AnimationData.loadingScreen_posYModifier = 0;
+				setNewTarget();
 			}
 			@Override
 			public void changeValues() {
-				int stepSize = 5;
-				AnimationData.loadingScreen_posXModifier += r.nextInt(stepSize*2)-stepSize;
-				AnimationData.loadingScreen_posYModifier += r.nextInt(stepSize*2)-stepSize;
-				int limit = 10;
-				if(AnimationData.loadingScreen_posXModifier < -limit) { AnimationData.loadingScreen_posXModifier = -limit; }
-				else if(AnimationData.loadingScreen_posXModifier > limit) { AnimationData.loadingScreen_posXModifier = limit; }
-				if(AnimationData.loadingScreen_posYModifier < -limit) { AnimationData.loadingScreen_posYModifier = -limit; }
-				else if(AnimationData.loadingScreen_posYModifier > limit) { AnimationData.loadingScreen_posYModifier = limit; }
+				if(targetX >= AnimationData.loadingScreen_posXModifier) {
+					AnimationData.loadingScreen_posXModifier += stepSize;
+					if(targetX <= AnimationData.loadingScreen_posXModifier) {
+						AnimationData.loadingScreen_posXModifier = targetX;
+						setNewTarget();
+					}
+				}else if(targetX <= AnimationData.loadingScreen_posXModifier) {
+					AnimationData.loadingScreen_posXModifier -= stepSize;
+					if(targetX >= AnimationData.loadingScreen_posXModifier) {
+						AnimationData.loadingScreen_posXModifier = targetX;
+						setNewTarget();
+					}
+				}
+				if(targetY >= AnimationData.loadingScreen_posYModifier) {
+					AnimationData.loadingScreen_posYModifier += stepSize;
+					if(targetY <= AnimationData.loadingScreen_posYModifier) {
+						AnimationData.loadingScreen_posYModifier = targetY;
+						setNewTarget();
+					}
+				}else if(targetY <= AnimationData.loadingScreen_posYModifier) {
+					AnimationData.loadingScreen_posYModifier -= stepSize;
+					if(targetY >= AnimationData.loadingScreen_posYModifier) {
+						AnimationData.loadingScreen_posYModifier = targetY;
+						setNewTarget();
+					}
+				}
 			}
 			@Override
 			public void finaliseValues() {
 				AnimationData.loadingScreen_posXModifier = 0;
 				AnimationData.loadingScreen_posYModifier = 0;
+				targetX = 0;
+				targetY = 0;
+			}
+			private void setNewTarget() {
+				targetX = r.nextInt(limit*2)-limit;
+				targetY = r.nextInt(limit*2)-limit;
 			}
 		};
 		/*
