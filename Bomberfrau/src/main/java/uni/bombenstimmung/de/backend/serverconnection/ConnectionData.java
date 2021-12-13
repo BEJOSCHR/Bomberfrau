@@ -1,10 +1,10 @@
 /*
  * ConnectionData
  *
- * Version 1.0
- * Author: Benni
+ * Version 0.1.7
+ * Author: Tim
  *
- * Enth�lt alle Daten der Server-Client-Verbindung
+ * Enthaelt alle Daten der Server-Client-Verbindung
  */
 package uni.bombenstimmung.de.backend.serverconnection;
 

@@ -1,10 +1,10 @@
 /*
  * ServerHandler
  *
- * Version 1.0
- * Author: Benni
+ * Version 0.1.7
+ * Author: Tim
  *
- * Arbeitet alle Events der Server-Verbindung zu allen Clients (ConnectedClients) ab (senden, empfangen, verwalten...)
+ * Arbeitet alle Events der Server-Verbindung zu allen Clients (ConnectedClients).
  */
 package uni.bombenstimmung.de.backend.serverconnection.host;
 
@@ -39,6 +39,7 @@ public class ServerHandler extends IoHandlerAdapter {
 		server.addClientToList(session.getRemoteAddress());
 		server.printConnectedClients();
 		//ConnectedClients.add(new ConnectedClient (false));
+		server.sendMessageToAllClients("Hallo");
 	}
 	
 	@Override
@@ -49,7 +50,9 @@ public class ServerHandler extends IoHandlerAdapter {
 		
 		server.printMessage("Server: Message received from Client " + remoteAddress + ": " + message.toString()+ "\n");
 		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + ((ConnectedClient) message).getId());
-		session.write("Answer back to Client " + remoteAddress); 
+		//session.write("Answer back to Client " + remoteAddress); 
+		
+		server.sendMessageToAllClients((String) message);
 	}
 	
 	//When a session is closed, the client will be removed from the Hash Map to remain consistency and integrity

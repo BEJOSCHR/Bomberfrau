@@ -1,10 +1,10 @@
 /*
  * ConnectedClient
  *
- * Version 1.0
- * Author: Benni
+ * Version 0.1.7
+ * Author: Tim
  *
- * Representiert jeweils einen verbundenen Client im ServerHandler
+ * Die Klasse erzeugt die jeweiligen Server-/Client-Objekte und verwaltet die verbundenen Clients. 
  */
 package uni.bombenstimmung.de.backend.serverconnection.host;
 
@@ -40,6 +40,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private boolean host;
 	private IoSession conSession;
 	private IoConnector connector;
+	NioDatagramAcceptor acceptor;
 	
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	
@@ -51,7 +52,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Is the new created Client the host, a new server will be initialized
 		if (host == true) {
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
-			NioDatagramAcceptor acceptor = new NioDatagramAcceptor();
+			//NioDatagramAcceptor acceptor = new NioDatagramAcceptor();
+			acceptor = new NioDatagramAcceptor();
 			acceptor.setHandler(new ServerHandler(this));
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
 			DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
@@ -85,7 +87,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 					if (connFuture.isConnected()) {
 						conSession = future.getSession();
 						try {
-							sendMessage();
+							sendMessage(conSession);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -96,25 +98,23 @@ public class ConnectedClient extends IoHandlerAdapter{
 				});
 		}
 	}
-		
-	private void sendMessage() throws InterruptedException {
+	
+	//Sends a message to the connected Client
+	private void sendMessage(IoSession session) throws InterruptedException {
 		for (int i = 0; i < 0; i++) {
 			String message = "Testnachricht"+i+" von ClientID: " + this.id;
-			conSession.write(message);
+			session.write(message);
 			Thread.sleep(200);
 		}
 	}
 	
+	//Sends a message to all connected Clients
+	public void sendMessageToAllClients(String message) {
+		acceptor.broadcast(message);
+	}
+	
 	void printMessage(Object message) {
 		ConsoleHandler.print(message.toString());
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public boolean isHost() {
-		return host;
 	}
 	
 	//Add a new client with the corresponding remote address to the Hash Map
@@ -138,6 +138,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 	//Removes the client from the Hash Map
 	public void removeClient(SocketAddress remoteAdress) {
 		connectedClients.remove(remoteAdress);
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public boolean isHost() {
+		return host;
 	}
 }
 

@@ -1,8 +1,8 @@
 /*
  * ConnectionType
  *
- * Version 1.0
- * Author: Benni
+ * Version 0.1.7
+ * Author: Tim
  *
  * Gibt an ob dieser User als Client oder Host arbeitet (abgespeichert in ConnectionData) 
  */

@@ -1,10 +1,10 @@
 /*
  * ClientHandler
  *
- * Version 1.0
- * Author: Benni
+ * Version 0.1.7
+ * Author: Tim
  *
- * Arbeitet alle Events der Client-Verbindung zum Server (Host) ab (senden, empfangen...)
+ * Arbeitet alle Events der Client-Verbindung zum Server (Host) ab.
  */
 package uni.bombenstimmung.de.backend.serverconnection.client;
 
@@ -35,11 +35,15 @@ public class ClientHandler extends IoHandlerAdapter{
 		session.write(client.getId());
 	}
 	
+	@Override
+	public void sessionClosed(IoSession session) throws Exception {
+		//TODO
+	}
 	
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		SocketAddress remoteAddress = session.getRemoteAddress();
-		ConsoleHandler.print("Client: Message received from Server " + remoteAddress + ": " + message.toString());
+		ConsoleHandler.print("Client:" + client.getId() + " Message received from Server " + remoteAddress + ": " + message.toString());
 	}
 	
 	@Override
