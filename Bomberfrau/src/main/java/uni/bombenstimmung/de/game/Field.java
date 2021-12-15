@@ -5,24 +5,41 @@
 
 package uni.bombenstimmung.de.game;
 
+import uni.bombenstimmung.de.backend.graphics.*;
+
 public class Field extends Entity {
     
     private int width;
     private int length;
-    private FieldContent content;
+    private FieldContent type;
+    
     
     public Field(int w, int l, FieldContent c) {
 	width = w;
 	length = l;
-	content = c;
+	type = c;
     }
     
     public void setContent (FieldContent t) {
-	content = t;
+	type = t;
     }
     
     public FieldContent getContent() {
-	return content;
+	return type;
     }
 
-}
+    
+    public void changeType(FieldContent newType) {
+		
+   this.type = newType;
+	}
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+
