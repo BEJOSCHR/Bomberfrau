@@ -40,7 +40,7 @@ private void resettMap() {
 		//DEFAULT
 		for(int x = 0 ; x < GameData.MAP_DIMENSION ; x++) {
 			for(int y = 0 ; y < GameData.MAP_DIMENSION ; y++) {
-				this.map[x][y].changeType(FieldContent.EMPTY);
+				this.map[x][y].setContent(FieldContent.EMPTY);
 			}}
 		}	
 	
@@ -71,7 +71,7 @@ public void updateMap(int MapNumber) {
 			int x = Integer.parseInt(data[0]);
 			int y = Integer.parseInt(data[1]);
 			FieldContent type = FieldContent.getFieldTypeFromRepresentation(data[2]);
-			this.map[x][y].changeType(type);
+			this.map[x][y].setContent(type);
 		}
 		
 	}
