@@ -40,6 +40,19 @@ public class MouseActionAreaHandler {
 			}
 		};
 		
+		//LOBBY STARTBUTTON
+		new MouseActionArea(GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2, 100, 70,
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
+			}
+			@Override
+			public boolean isActiv() {
+				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+			}
+		};
+		
 		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		
 	}

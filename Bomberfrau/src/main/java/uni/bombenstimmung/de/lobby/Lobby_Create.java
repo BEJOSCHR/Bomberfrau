@@ -5,6 +5,8 @@ import java.util.Enumeration;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 
@@ -41,12 +43,12 @@ public class Lobby_Create {
 		this.player[numberPlayer] = player;
 		
 		numberPlayer++;
-		printPlayers();
+
 			
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben!
-	public void printPlayers() {
+	public static void printPlayers() {
 			for(int i=0; i < numberPlayer; i++) {
 				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
 			}
@@ -60,6 +62,7 @@ public class Lobby_Create {
 		for(int i=0; i < numberPlayer; i++)
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/4 + 40*i);
 		
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), 200, 200, null);
 
 	}
 	

@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet alle Images (laden, ausgeben, verändern...)
+ * Verwaltet alle Images (laden, ausgeben, verï¿½ndern...)
  */
 package uni.bombenstimmung.de.backend.images;
 
@@ -20,12 +20,17 @@ public class ImageHandler {
 	private static List<LoadedImage> images = new ArrayList<LoadedImage>();
 	
 	/**
-	 * Wird am start aufgerufen und läd alle Images
+	 * Wird am start aufgerufen und lï¿½d alle Images
 	 */
 	public static void initImages() {
 		
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
+		
+		//LOBBY PICS
+		// Arrow Location: https://pixabay.com/illustrations/arrow-choose-select-next-button-1217949/
+		new LoadedImage("Lobby/arrow-Left.png", ImageType.IMAGE_LOBBY_ARROW_LEFT, 50, 50);
+		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT, 50, 50);
 		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
@@ -43,10 +48,10 @@ public class ImageHandler {
 	}
 	
 	/**
-	 * Gibt das Bild zum zugehörigen Type zurück (Wenn richtig geladen gibt es für jeden Type ein Image)
+	 * Gibt das Bild zum zugehï¿½rigen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type ein Image)
 	 * @param type - Der Type der gesucht wird
 	 * @see ImageType
-	 * @return Das {@link LoadedImage} das zum Type gehört, wenn keins gefunden wird dann null
+	 * @return Das {@link LoadedImage} das zum Type gehï¿½rt, wenn keins gefunden wird dann null
 	 */
 	public static LoadedImage getImage(ImageType type) {
 		

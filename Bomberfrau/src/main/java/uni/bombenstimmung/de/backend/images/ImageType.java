@@ -4,12 +4,14 @@
  * Version 1.0
  * Author: Benni
  *
- * Dient zur Identifizierung jedes LoadedImage Objektes über den ImageHandler
+ * Dient zur Identifizierung jedes LoadedImage Objektes ï¿½ber den ImageHandler
  */
 package uni.bombenstimmung.de.backend.images;
 
 public enum ImageType {
 
-	IMAGE_MENU_XXX;
+	IMAGE_MENU_XXX,
+	IMAGE_LOBBY_ARROW_RIGHT,
+	IMAGE_LOBBY_ARROW_LEFT;
 	
 }
