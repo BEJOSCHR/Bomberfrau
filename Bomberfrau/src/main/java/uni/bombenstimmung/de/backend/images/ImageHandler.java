@@ -13,6 +13,7 @@ import java.util.List;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.game.GameData;
 
 public class ImageHandler {
 
@@ -26,7 +27,7 @@ public class ImageHandler {
 		
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
-	    	new LoadedImage("Grass_background.png", ImageType.IMAGE_INGAME_GRAS);
+	    	new LoadedImage("Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}

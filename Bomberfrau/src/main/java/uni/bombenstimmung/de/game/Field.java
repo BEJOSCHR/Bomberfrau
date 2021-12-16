@@ -67,10 +67,10 @@ public class Field extends Entity {
 		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
 		break;
 	    case EMPTY:
-		//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS),x,y,x+GameData.FIELD_DIMENSION,y+GameData.FIELD_DIMENSION, Color.RED);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(),x,y, null);
 		//g.setBackground(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS));
-		g.setColor(Color.GREEN);
-		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		//g.setColor(Color.GREEN);
+		//g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
 		break;
 	    case BLOCK:
 		g.setColor(Color.BLACK);
