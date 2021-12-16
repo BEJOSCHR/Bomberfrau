@@ -9,14 +9,20 @@ import uni.bombenstimmung.de.game.FieldContent;
 public class Game {
 
 	
-private Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
-private int mapNumber = 1;
+private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
+private static int mapNumber = 1;
+	
+public static void fillMap() {
+    for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
+	for (int y = 0; y < GameData.MAP_DIMENSION; y++) {
+	    map[x][y] = new Field(x,y,FieldContent.EMPTY);
+	}
+    }	
+}
 	
 	
 	
-	
-	
-public void drawGame(Graphics g) {
+public static void drawGame(Graphics g) {
 	
 	//DRAW COUNTDOWN ETC
 	
@@ -24,7 +30,7 @@ public void drawGame(Graphics g) {
 	for(int y = GameData.MAP_DIMENSION-1 ; y >= 0 ; y--) {
 		for(int x = GameData.MAP_DIMENSION-1 ; x >= 0 ; x--) {
 		    	//Wir brauchen hier noch ne Methode zum String auslesen für die Map
-			this.map[x][y].drawField(g,x*GameData.FIELD_DIMENSION,y*GameData.FIELD_DIMENSION,##HIER NOCH STRING AUSLESEN##);
+			map[x][y].drawField(g,x*GameData.FIELD_DIMENSION,y*GameData.FIELD_DIMENSION,FieldContent.EMPTY);
 		}
 	}
 }	
@@ -35,24 +41,24 @@ public void drawGame(Graphics g) {
 	
 	
 	
-private void resettMap() {
+private static void resettMap() {
 		
 		//DEFAULT
 		for(int x = 0 ; x < GameData.MAP_DIMENSION ; x++) {
 			for(int y = 0 ; y < GameData.MAP_DIMENSION ; y++) {
-				this.map[x][y].setContent(FieldContent.EMPTY);
+				map[x][y].setContent(FieldContent.EMPTY);
 			}}
 		}	
 	
 	
 	
 	
-public void updateMap(int MapNumber) {
+public static void updateMap(int MapNumber) {
 		
 		//SYNTAX: 1,1,BL:1,2,BL: ...
 		
 		//RESETT MAP
-		resettMap();
+		Game.resettMap();
 		
 		String mapData;
 		switch(mapNumber) {
@@ -70,8 +76,8 @@ public void updateMap(int MapNumber) {
 			String[] data = field.split(",");
 			int x = Integer.parseInt(data[0]);
 			int y = Integer.parseInt(data[1]);
-			FieldContent type = FieldContent.getFieldTypeFromRepresentation(data[2]);
-			this.map[x][y].setContent(type);
+			FieldContent type = Field.getFieldTypeFromRepresentation(data[2]);
+			map[x][y].setContent(type);
 		}
 		
 	}
