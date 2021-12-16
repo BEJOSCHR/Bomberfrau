@@ -11,5 +11,8 @@ package uni.bombenstimmung.de.backend.images;
 public enum ImageType {
 
 	IMAGE_MENU_XXX,
-    	IMAGE_INGAME_GRAS;	
+    	IMAGE_INGAME_GRAS,
+    	IMAGE_INGAME_WALL,
+    	IMAGE_INGAME_BORDER,
+    	IMAGE_INGAME_BLOCK;	
 }

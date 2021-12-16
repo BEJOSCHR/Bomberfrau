@@ -28,6 +28,9 @@ public class ImageHandler {
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
 	    	new LoadedImage("Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("Box.png", ImageType.IMAGE_INGAME_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("Wand_gray.png", ImageType.IMAGE_INGAME_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("wand_orange.png", ImageType.IMAGE_INGAME_BORDER, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}

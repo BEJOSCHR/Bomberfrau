@@ -3,8 +3,6 @@ package uni.bombenstimmung.de.game;
 import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.console.*;
-import uni.bombenstimmung.de.backend.graphics.*;
-import uni.bombenstimmung.de.game.FieldContent;
 
 public class Game {
 
@@ -15,7 +13,7 @@ private static int mapNumber = 1;
 public static void fillMap() {
     for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
 	for (int y = 0; y < GameData.MAP_DIMENSION; y++) {
-	    map[x][y] = new Field(x,y,FieldContent.EMPTY);
+	    map[x][y] = new Field(x, y, FieldContent.EMPTY);
 	}
     }	
 }
@@ -29,8 +27,7 @@ public static void drawGame(Graphics g) {
 	//MAP
 	for(int y = GameData.MAP_DIMENSION-1 ; y >= 0 ; y--) {
 		for(int x = GameData.MAP_DIMENSION-1 ; x >= 0 ; x--) {
-		    	//Wir brauchen hier noch ne Methode zum String auslesen für die Map
-			map[x][y].drawField(g,x*GameData.FIELD_DIMENSION,y*GameData.FIELD_DIMENSION,FieldContent.EMPTY);
+			map[x][y].drawField(g, x*GameData.FIELD_DIMENSION, y*GameData.FIELD_DIMENSION, map[x][y].getContent());
 		}
 	}
 }	

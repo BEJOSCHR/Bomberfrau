@@ -59,22 +59,16 @@ public class Field extends Entity {
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
 	    case WALL:
-		g.setColor(Color.GRAY);
-		g.fillRect(x,y, x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(),x,y, null);
 		break;
 	    case BORDER:
-		g.setColor(Color.MAGENTA);
-		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(),x,y, null);
 		break;
 	    case EMPTY:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(),x,y, null);
-		//g.setBackground(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS));
-		//g.setColor(Color.GREEN);
-		//g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
 		break;
 	    case BLOCK:
-		g.setColor(Color.BLACK);
-		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(),x,y, null);
 		break;
 	    default:
 		break;
