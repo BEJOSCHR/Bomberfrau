@@ -45,7 +45,7 @@ public class Lobby_Create {
 			
 	}
 	
-	// die toString wird von allen Playern im Array ausgegeben
+	// die toString wird von allen Playern im Array ausgegeben!
 	public void printPlayers() {
 			for(int i=0; i < numberPlayer; i++) {
 				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
