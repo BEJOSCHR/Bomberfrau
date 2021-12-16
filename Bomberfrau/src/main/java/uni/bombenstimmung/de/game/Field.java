@@ -6,25 +6,33 @@
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class Field extends Entity {
-    
-    private static int width;
-    private static int length;
+
     private FieldContent content;
     
-    public Field(int w, int l, FieldContent c) {
-	width = w;
-	length = l;
-	content = c;
-    }
-    
-    public void drawField(Graphics g, int x, int y, int hoehe, int breite, FieldContent cont) {
-	
-    }
-    
-    public void setFieldSize() {
-	
+    public void drawField(Graphics g, int x, int y, FieldContent cont) {
+	switch (cont) {
+	    case WALL:
+		g.setColor(Color.GRAY);
+		g.fillRect(x,y, x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		break;
+	    case BORDER:
+		g.setColor(Color.MAGENTA);
+		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		break;
+	    case EMPTY:
+		g.setColor(Color.GREEN);
+		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		break;
+	    case BLOCK:
+		g.setColor(Color.BLACK);
+		g.fillRect(x,y,x+GameData.FIELD_DIMENSION, y+GameData.FIELD_DIMENSION);
+		break;
+	    default:
+		break;
+	}
     }
     
     public void setContent (FieldContent t) {
@@ -34,5 +42,13 @@ public class Field extends Entity {
     public FieldContent getContent() {
 	return content;
     }
-
+    
 }
+    
+    
+    
+    
+    
+    
+    
+
