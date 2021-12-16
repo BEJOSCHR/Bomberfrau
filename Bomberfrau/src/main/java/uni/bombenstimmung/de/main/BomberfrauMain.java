@@ -96,13 +96,13 @@ public class BomberfrauMain {
 		/*
 		try {
 			ConnectedClient host = new ConnectedClient(true, 0);
-			System.out.println("Client: " + host.getId()+" Host: " +host.isHost());
+			ConsoleHandler.print("Client: " + host.getId()+" Host: " +host.isHost(), MessageType.BACKEND);
 			Thread.sleep(5000);
 			ConnectedClient client = new ConnectedClient(false, 1);
-			System.out.println("Client: " + client.getId()+" Host: " +client.isHost());
+			ConsoleHandler.print("Client: " + client.getId()+" Host: " +client.isHost(), MessageType.BACKEND);
 			Thread.sleep(5000);
 			ConnectedClient client2 = new ConnectedClient(false, 2);
-			System.out.println("Client: " + client2.getId()+" Host: " +client2.isHost());
+			ConsoleHandler.print("Client: " + client2.getId()+" Host: " +client2.isHost(), MessageType.BACKEND);
 		}  catch (InterruptedException e) {
 			e.printStackTrace();
 		} */
