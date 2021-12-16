@@ -8,6 +8,9 @@
  */
 package uni.bombenstimmung.de.backend.graphics.subhandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -41,17 +44,25 @@ public class MouseHandler implements MouseMotionListener, MouseListener, MouseWh
 		int buttonCode = e.getButton();
 		if(buttonCode == MouseEvent.BUTTON1) {
 			//LEFT
+			List<MouseActionArea> clickedMAAs = new ArrayList<MouseActionArea>();
 			for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 				if(maa.isActiv() && maa.isHovered()) {
-					maa.performAction_LEFT_PRESS();
+					clickedMAAs.add(maa);
 				}
+			}
+			for(MouseActionArea clickedMAA : clickedMAAs) {
+				clickedMAA.performAction_LEFT_PRESS();
 			}
 		}else if(buttonCode == MouseEvent.BUTTON3) {
 			//RIGHT
+			List<MouseActionArea> clickedMAAs = new ArrayList<MouseActionArea>();
 			for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 				if(maa.isActiv() && maa.isHovered()) {
-					maa.performAction_RIGHT_PRESS();
+					clickedMAAs.add(maa);
 				}
+			}
+			for(MouseActionArea clickedMAA : clickedMAAs) {
+				clickedMAA.performAction_RIGHT_PRESS();
 			}
 		}
 		
@@ -63,17 +74,25 @@ public class MouseHandler implements MouseMotionListener, MouseListener, MouseWh
 		int buttonCode = e.getButton();
 		if(buttonCode == MouseEvent.BUTTON1) {
 			//LEFT
+			List<MouseActionArea> clickedMAAs = new ArrayList<MouseActionArea>();
 			for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 				if(maa.isActiv() && maa.isHovered()) {
-					maa.performAction_LEFT_RELEASE();
+					clickedMAAs.add(maa);
 				}
+			}
+			for(MouseActionArea clickedMAA : clickedMAAs) {
+				clickedMAA.performAction_LEFT_RELEASE();
 			}
 		}else if(buttonCode == MouseEvent.BUTTON3) {
 			//RIGHT
+			List<MouseActionArea> clickedMAAs = new ArrayList<MouseActionArea>();
 			for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 				if(maa.isActiv() && maa.isHovered()) {
-					maa.performAction_RIGHT_RELEASE();
+					clickedMAAs.add(maa);
 				}
+			}
+			for(MouseActionArea clickedMAA : clickedMAAs) {
+				clickedMAA.performAction_RIGHT_RELEASE();
 			}
 		}
 		
