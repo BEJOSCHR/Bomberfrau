@@ -5,16 +5,26 @@
 
 package uni.bombenstimmung.de.game;
 
+import java.awt.Graphics;
+
 public class Field extends Entity {
     
-    private int width;
-    private int length;
+    private static int width;
+    private static int length;
     private FieldContent content;
     
     public Field(int w, int l, FieldContent c) {
 	width = w;
 	length = l;
 	content = c;
+    }
+    
+    public void drawField(Graphics g, int x, int y, int hoehe, int breite, FieldContent cont) {
+	
+    }
+    
+    public void setFieldSize() {
+	
     }
     
     public void setContent (FieldContent t) {
