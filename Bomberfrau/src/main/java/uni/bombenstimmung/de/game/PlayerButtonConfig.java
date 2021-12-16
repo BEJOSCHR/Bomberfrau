@@ -89,24 +89,4 @@ public class PlayerButtonConfig {
 	    ConsoleHandler.print("Invalid ID for button reconfiguration!", MessageType.GAME);
 	}
     }
-    
-    public void actionUp() {
-	
-    }
-    
-    public void actionDown() {
-	
-    }
-    
-    public void actionLeft() {
-	
-    }
-    
-    public void actionRight() {
-	
-    }
-    
-    public void actionSetBomb() {
-	
-    }
 }
