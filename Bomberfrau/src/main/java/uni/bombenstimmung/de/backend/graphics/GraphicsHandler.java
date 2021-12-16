@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet die graphischen Veränderungen und Wechsel zwischen den Modulen
+ * Verwaltet die graphischen Verï¿½nderungen und Wechsel zwischen den Modulen
  */
 package uni.bombenstimmung.de.backend.graphics;
 
@@ -23,6 +23,8 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
+import uni.bombenstimmung.de.lobby.Lobby_Create;
+import uni.bombenstimmung.de.lobby.Player;
 
 public class GraphicsHandler {
 
@@ -104,7 +106,7 @@ public class GraphicsHandler {
 		
 	}
 	/**
-	 * Wird aufgerufen wenn wärend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schließt
+	 * Wird aufgerufen wenn wï¿½rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieï¿½t
 	 */
 	public static void switchToMenuFromIngame() {
 		
@@ -134,7 +136,14 @@ public class GraphicsHandler {
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
+		String name1 = "Johnny";
+		String name2 = "NBon";
+		//String ip = "127.0.0.1";
+		Player player1 = new Player(name1);
+		Player player2 = new Player(name2);
 		
+		Lobby_Create lobby = new Lobby_Create(player1);
+		lobby.addPlayer(player2);
 	}
 	/**
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
@@ -165,7 +174,7 @@ public class GraphicsHandler {
 	 * Allgemeine methode um einen beliebigen text mit parametern relativ zu einem Punkt (x,y) mittig darzustellen
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die Textgröße
+	 * @param textSize, die Textgrï¿½ï¿½e
 	 * @param text, der eigentliche Text
 	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text mittig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
@@ -181,8 +190,8 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schließt KONTROLLIERT alle Datenzugänge bzw speichert setting etc).
-	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht möglich ist!
+	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlieï¿½t KONTROLLIERT alle Datenzugï¿½nge bzw speichert setting etc).
+	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht mï¿½glich ist!
 	 */
 	public static void shutdownProgram() {
 		

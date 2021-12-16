@@ -24,6 +24,7 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
+import uni.bombenstimmung.de.lobby.Lobby_Create;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -46,8 +47,8 @@ public class Label extends JLabel {
 	
 	/**
 	 * Die methode die dauerhaft aufgerufen wird vom {@link JLabel} und somit die FPS representiert
-	 * Enthält automatische FPS Limitierung
-	 * Von hier aus werden über das 'g' Komponent alle grafischen Methoden aufgerufen
+	 * Enthï¿½lt automatische FPS Limitierung
+	 * Von hier aus werden ï¿½ber das 'g' Komponent alle grafischen Methoden aufgerufen
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -65,7 +66,7 @@ public class Label extends JLabel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		//(Reihenfolge der Aufrufe ist wichtig, spätere Aufrufe überschreiben frühere)
+		//(Reihenfolge der Aufrufe ist wichtig, spï¿½tere Aufrufe ï¿½berschreiben frï¿½here)
 		
 		//BACKGROUND
 		g.setColor(Color.DARK_GRAY);
@@ -82,9 +83,12 @@ public class Label extends JLabel {
 		case MENU:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "MENU", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
+			
 		case LOBBY:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/6);
+			Lobby_Create.drawScreen(g);
 			break;
+			
 		case INGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
