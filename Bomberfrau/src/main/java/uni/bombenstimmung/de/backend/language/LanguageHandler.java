@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet alle SprachBlöcke (laden, ausgeben, verändern...)
+ * Verwaltet alle SprachBlï¿½cke (laden, ausgeben, verï¿½ndern...)
  */
 package uni.bombenstimmung.de.backend.language;
 
@@ -21,7 +21,7 @@ public class LanguageHandler {
 	private static LanguageType activeLanguage = LanguageType.ENGLISH;
 	
 	/**
-	 * Wird am Start aufgerufen und initialisiert alle SprachBlöcke
+	 * Wird am Start aufgerufen und initialisiert alle SprachBlï¿½cke
 	 * @see LoadedLanguageBlock
 	 */
 	public static void initLLBs() {
@@ -35,13 +35,16 @@ public class LanguageHandler {
 		String[] loadingScreen_Version = {BomberfrauMain.VERSION, BomberfrauMain.VERSION};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_VERSION, loadingScreen_Version);
 		
+		String[] lobby_Test = {"DickerFetterJosTest", "BigFatJosTest"}; // Jos Test
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_TEST, lobby_Test); // Jos Test
+		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);
 		
 	}
 	
 	/**
-	 * Fügt den LLB zur languageBlocks Liste hinzu (Wird eigentlich nur aus einem LLB aufgerufen)
-	 * @param llb - Der {@link LoadedLanguageBlock} der hinzugefügt werden soll
+	 * Fï¿½gt den LLB zur languageBlocks Liste hinzu (Wird eigentlich nur aus einem LLB aufgerufen)
+	 * @param llb - Der {@link LoadedLanguageBlock} der hinzugefï¿½gt werden soll
 	 */
 	public static void addLLB(LoadedLanguageBlock llb) {
 		
@@ -50,8 +53,8 @@ public class LanguageHandler {
 	}
 	
 	/**
-	 * Gibt den LLB zum angegebenen Type zurück (Wenn richtig geladen gibt es für jeden Type ienen LLB)
-	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehört
+	 * Gibt den LLB zum angegebenen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type ienen LLB)
+	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehï¿½rt
 	 * @return Den {@link LoadedLanguageBlock} der durch den Type identifiziert wird, falls keiner gefunden wird null
 	 */
 	public static LoadedLanguageBlock getLLB(LanguageBlockType type) {
