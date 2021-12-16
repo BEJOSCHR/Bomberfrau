@@ -138,6 +138,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 		String name1 = "Johnny";
 		String name2 = "NBon";
+<<<<<<< HEAD
 		String name3 = "Son";
 		String name4 = "Jos";
 		String ip1 = "127.0.0.1";
@@ -147,11 +148,19 @@ public class GraphicsHandler {
 		Player player2 = new Player(name2, ip1);
 		Player player3 = new Player(name3, ip2);
 		Player player4 = new Player(name4, ip3);
+=======
+		//String ip = "127.0.0.1";
+		Player player1 = new Player(name1);
+		Player player2 = new Player(name2);
+>>>>>>> branch 'Lobby' of git@github.com:BEJOSCHR/Bomberfrau.git
 		
 		Lobby_Create lobby = new Lobby_Create(player1);
 		lobby.addPlayer(player2);
+<<<<<<< HEAD
 		lobby.addPlayer(player3);
 		lobby.addPlayer(player4);
+=======
+>>>>>>> branch 'Lobby' of git@github.com:BEJOSCHR/Bomberfrau.git
 	}
 	/**
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
