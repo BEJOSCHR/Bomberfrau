@@ -7,7 +7,7 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 
 public class Player {
 	private String ip;
-	private String nameOfPlayer;
+	private String name;
 	static int idZaehler = 0;
 	private int id;
 	private int skin = 0;
@@ -16,14 +16,16 @@ public class Player {
 	// Konstruktor mit IP
 	public Player(String name, String ip) {
 		this.ip = ip;
-		nameOfPlayer = name;
+		this.name = name;
 		id = idZaehler;
 		idZaehler ++;
 		isHost = false;
+		
+		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 	}
 	// Konstruktor ohne IP. Also nur den namen // Hier handelt es sich um den Host
 	public Player(String name) {
-		nameOfPlayer = name;
+		this.name = name;
 		id = idZaehler;
 		idZaehler ++;
 		isHost = true;
@@ -39,13 +41,15 @@ public class Player {
     public int getSkin() {
     	return skin;
     }
-    
+    public String getName() {
+    	return name;
+    }
     public int getId() {
     	return id;
     }
     
     @Override public String toString() {
-    	return "Player ID: " + id + " Name: " + nameOfPlayer + " IP-Adress: " + ip;
+    	return "Player ID: " + id + " Name: " + name + " IP-Adress: " + ip;
     }
     
     

@@ -20,11 +20,13 @@ import java.net.InetAddress;
 
 public class Lobby_Create {
 
-	Player player[] = new Player[3];
+	static Player player[] = new Player[4];
+	static int numberPlayer = 0;
 	
 	// Host wird als player 0 im Array gespeichert.
 	public Lobby_Create (Player player){
 		this.player[0] = player;
+		numberPlayer++;
 //		 //FindIP-Adress
 //		try {
 //			findIP_Adress();
@@ -35,31 +37,30 @@ public class Lobby_Create {
 	}
 	
 	// Ein weiterer Player wird als nächstes im Array ausgegeben
-	public void addPlayer(Player playerN) {
-		int i = 0;
-		while (player[i] != null) {
-			i++;
-		}
-		player[i] = playerN;
+	public void addPlayer(Player player) {
+		this.player[numberPlayer] = player;
+		
+		numberPlayer++;
 		printPlayers();
 			
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben
 	public void printPlayers() {
-		int i = 0;
-		while(player[i] != null) {
-			ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
-			i++;
+			for(int i=0; i < numberPlayer; i++) {
+				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
+			}
 		}
-	}
 	
 
 	
 	// Wird von Label.java aufgerufen und malt alles was ich haben will. Daher auch static, sodass ich davon nicht extra ein Objekt erzeugen muss
 	public static void drawScreen(Graphics g) {
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
-		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, player[0].name, GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/4);
+		for(int i=0; i < numberPlayer; i++)
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/4 + 40*i);
+		
+
 	}
 	
 	

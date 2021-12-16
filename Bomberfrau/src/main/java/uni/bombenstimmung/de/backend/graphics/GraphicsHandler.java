@@ -138,12 +138,20 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 		String name1 = "Johnny";
 		String name2 = "NBon";
-		//String ip = "127.0.0.1";
+		String name3 = "Son";
+		String name4 = "Jos";
+		String ip1 = "127.0.0.1";
+		String ip2 = "2.0.0.2";
+		String ip3 = "1.0.0.Jos";
 		Player player1 = new Player(name1);
-		Player player2 = new Player(name2);
+		Player player2 = new Player(name2, ip1);
+		Player player3 = new Player(name3, ip2);
+		Player player4 = new Player(name4, ip3);
 		
 		Lobby_Create lobby = new Lobby_Create(player1);
 		lobby.addPlayer(player2);
+		lobby.addPlayer(player3);
+		lobby.addPlayer(player4);
 	}
 	/**
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
