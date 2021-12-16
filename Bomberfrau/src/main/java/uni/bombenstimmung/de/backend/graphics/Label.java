@@ -25,6 +25,7 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.game.Game;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -87,7 +88,11 @@ public class Label extends JLabel {
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case INGAME:
-			PlayerHandler.drawPlayers(g);
+			//GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
+		    	Game.fillMap();
+		    	Game.updateMap(1);
+		    	Game.drawGame(g);
+		    	PlayerHandler.drawPlayers(g);
 			break;
 		case AFTERGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);

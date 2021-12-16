@@ -4,6 +4,8 @@
 
 package uni.bombenstimmung.de.game;
 
+import uni.bombenstimmung.de.backend.console.*;
+
 public enum FieldContent {
     WALL,
     BOMB,
@@ -11,4 +13,5 @@ public enum FieldContent {
     UPGRADE,
     EMPTY,
     BLOCK;
-}
+}	
+

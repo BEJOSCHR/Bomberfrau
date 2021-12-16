@@ -23,6 +23,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
+import uni.bombenstimmung.de.game.Game;
 
 public class GraphicsHandler {
 
@@ -142,6 +143,9 @@ public class GraphicsHandler {
 	public static void switchToIngameFromLobby() {
 		
 		AnimationHandler.stopAllAnimations();
+		
+	
+		
 		
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
