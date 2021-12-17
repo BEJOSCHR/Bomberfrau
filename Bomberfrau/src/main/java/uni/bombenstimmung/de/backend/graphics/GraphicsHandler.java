@@ -24,13 +24,14 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameData;
 
 public class GraphicsHandler {
 
 	private static int width = 0, height = 0;
 	private static Label label;
 	private static JFrame frame;
-	private static DisplayType displayType = DisplayType.INGAME;
+	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
 	
 	/**
@@ -70,7 +71,7 @@ public class GraphicsHandler {
 		height = frame.getHeight();
 		
 		//TODO CALCULATE DIMENSIONS RELATIVE TO WIDTH AND HEIGHT
-		
+		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
 		label = new Label();
 		label.requestFocus();
 		
@@ -145,7 +146,8 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		
 	
-		
+		Game.fillMap();
+	    	Game.updateMap(1);
 		
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);

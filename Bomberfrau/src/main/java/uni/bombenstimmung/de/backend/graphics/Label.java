@@ -89,8 +89,6 @@ public class Label extends JLabel {
 			break;
 		case INGAME:
 			//GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
-		    	Game.fillMap();
-		    	Game.updateMap(1);
 		    	Game.drawGame(g);
 		    	PlayerHandler.drawPlayers(g);
 			break;

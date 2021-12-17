@@ -59,16 +59,16 @@ public class Field extends Entity {
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
 	    case WALL:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(),x,y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
 		break;
 	    case BORDER:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(),x,y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
 		break;
 	    case EMPTY:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(),x,y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
 		break;
 	    case BLOCK:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(),x,y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
 		break;
 	    default:
 		break;
