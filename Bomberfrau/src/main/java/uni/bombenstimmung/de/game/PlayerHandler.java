@@ -26,6 +26,9 @@ public class PlayerHandler {
     static ArrayList<Player> opponentPlayers = new ArrayList<Player>();
     static int opponentCount = 0;
     static boolean buttonPressed = false;
+    static int buttonPressedBuffer = 0;
+    static boolean secondPress = false;
+    static int secondPressBuffer = 0;
     
     public static void addClientPlayer(int id, String name, String ipAdress, boolean host, int skin) {
 	clientPlayer = new Player(id, name, ipAdress, host, skin);
@@ -48,61 +51,158 @@ public class PlayerHandler {
 	}
     }
     
+    // TODO: Bombe legen neu machen
+    
     public static void handleKeyEventPressed(int keyCode) {
-	if (clientPlayer.getDead() == false && buttonPressed == false) {
-	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
-		ConsoleHandler.print("Client presses Button 'up'", MessageType.GAME);
-		// TODO: Aktion hoch Start
-		clientPlayer.actionUp();
-		buttonPressed = true;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
-		ConsoleHandler.print("Client presses Button 'down'", MessageType.GAME);
-		// TODO: Aktion runter Start
-		clientPlayer.actionDown();
-		buttonPressed = true;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
-		ConsoleHandler.print("Client presses Button 'left'", MessageType.GAME);
-		// TODO: Aktion links Start
-		clientPlayer.actionLeft();
-		buttonPressed = true;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
-		ConsoleHandler.print("Client presses Button 'right'", MessageType.GAME);
-		// TODO: Aktion rechts Start
-		clientPlayer.actionRight();
-		buttonPressed = true;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
-		ConsoleHandler.print("Client presses Button 'setBomb'", MessageType.GAME);
-		// TODO: Aktion Bombe legen Start
-		buttonPressed = true;
+	if (clientPlayer.getDead() == false) {
+	    if (buttonPressed == false) {
+		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
+		    ConsoleHandler.print("Client presses Button 'up'", MessageType.GAME);
+		    clientPlayer.actionUp();
+		    buttonPressedBuffer = keyCode;
+		    secondPressBuffer = keyCode;
+		    buttonPressed = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
+		    ConsoleHandler.print("Client presses Button 'down'", MessageType.GAME);
+		    clientPlayer.actionDown();
+		    buttonPressedBuffer = keyCode;
+		    secondPressBuffer = keyCode;
+		    buttonPressed = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
+		    ConsoleHandler.print("Client presses Button 'left'", MessageType.GAME);
+		    clientPlayer.actionLeft();
+		    buttonPressedBuffer = keyCode;
+		    secondPressBuffer = keyCode;
+		    buttonPressed = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
+		    ConsoleHandler.print("Client presses Button 'right'", MessageType.GAME);
+		    clientPlayer.actionRight();
+		    buttonPressedBuffer = keyCode;
+		    secondPressBuffer = keyCode;
+		    buttonPressed = true;
+		} /*else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
+		    ConsoleHandler.print("Client presses Button 'setBomb'", MessageType.GAME);
+		    buttonPressedBuffer = keyCode;
+		    secondPressBuffer = keyCode;
+		    buttonPressed = true;
+		}*/
+	    } else if (buttonPressed == true && secondPress == false) {
+		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && keyCode != secondPressBuffer) {
+		    ConsoleHandler.print("Buffer 'up'", MessageType.GAME);
+		    secondPressBuffer = keyCode;
+		    secondPress = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && keyCode != secondPressBuffer) {
+		    ConsoleHandler.print("Buffer 'down'", MessageType.GAME);
+		    secondPressBuffer = keyCode;
+		    secondPress = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && keyCode != secondPressBuffer) {
+		    ConsoleHandler.print("Buffer 'left'", MessageType.GAME);
+		    secondPressBuffer = keyCode;
+		    secondPress = true;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && keyCode != secondPressBuffer) {
+		    ConsoleHandler.print("Buffer 'right'", MessageType.GAME);
+		    secondPressBuffer = keyCode;
+		    secondPress = true;
+		}/* else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb() && keyCode != secondPressBuffer) {
+		    ConsoleHandler.print("Buffer 'setBomb'", MessageType.GAME);
+		    secondPressBuffer = keyCode;
+		    secondPress = true;
+		}*/
 	    }
+	    
 	}
     }
     
     public static void handleKeyEventReleased(int keyCode) {
 	if (clientPlayer.getDead() == false && buttonPressed == true) {
-	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
-		ConsoleHandler.print("Client released Button 'up'", MessageType.GAME);
-		// TODO: Aktion hoch Stop
-		clientPlayer.actionStop();
-		buttonPressed = false;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
-		ConsoleHandler.print("Client released Button 'down'", MessageType.GAME);
-		// TODO: Aktion runter Stop
-		clientPlayer.actionStop();
-		buttonPressed = false;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
-		ConsoleHandler.print("Client released Button 'left'", MessageType.GAME);
-		// TODO: Aktion links Stop
-		clientPlayer.actionStop();
-		buttonPressed = false;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
-		ConsoleHandler.print("Client released Button 'right'", MessageType.GAME);
-		// TODO: Aktion rechts Stop
-		clientPlayer.actionStop();
-		buttonPressed = false;
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
-		ConsoleHandler.print("Client released Button 'setBomb'", MessageType.GAME);
-		// TODO: Aktion Bombe legen Stop
+	    if (secondPress == true) {
+		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
+		    if (keyCode == secondPressBuffer) {
+			ConsoleHandler.print("Unbuffer 'up'", MessageType.GAME);
+			secondPressBuffer = buttonPressedBuffer;
+		    } else {
+			if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getDown()) {
+			    clientPlayer.actionDown();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getLeft()) {
+			    clientPlayer.actionLeft();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getRight()) {
+			    clientPlayer.actionRight();
+			}
+			buttonPressedBuffer = secondPressBuffer;
+		    }
+		    secondPress = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
+		    if (keyCode == secondPressBuffer) {
+			ConsoleHandler.print("Unbuffer 'down'", MessageType.GAME);
+			secondPressBuffer = buttonPressedBuffer;
+		    } else {
+			if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getUp()) {
+			    clientPlayer.actionUp();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getLeft()) {
+			    clientPlayer.actionLeft();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getRight()) {
+			    clientPlayer.actionRight();
+			}
+			buttonPressedBuffer = secondPressBuffer;
+		    }
+		    secondPress = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
+		    if (keyCode == secondPressBuffer) {
+			ConsoleHandler.print("Unbuffer 'left'", MessageType.GAME);
+			secondPressBuffer = buttonPressedBuffer;
+		    } else {
+			if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getUp()) {
+			    clientPlayer.actionUp();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getDown()) {
+			    clientPlayer.actionDown();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getRight()) {
+			    clientPlayer.actionRight();
+			}
+			buttonPressedBuffer = secondPressBuffer;
+		    }
+		    secondPress = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
+		    if (keyCode == secondPressBuffer) {
+			ConsoleHandler.print("Unbuffer 'right'", MessageType.GAME);
+			secondPressBuffer = buttonPressedBuffer;
+		    } else {
+			if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getUp()) {
+			    clientPlayer.actionUp();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getDown()) {
+			    clientPlayer.actionDown();
+			} else if (secondPressBuffer == clientPlayer.getCurrentButtonConfig().getLeft()) {
+			    clientPlayer.actionLeft();
+			}
+			buttonPressedBuffer = secondPressBuffer;
+		    }
+		    secondPress = false;
+		} /*else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
+		    
+		}*/
+	    } else {
+		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
+		    ConsoleHandler.print("Client released Button 'up'", MessageType.GAME);
+		    clientPlayer.actionStop();
+		    buttonPressedBuffer = 0;
+		    buttonPressed = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
+		    ConsoleHandler.print("Client released Button 'down'", MessageType.GAME);
+		    clientPlayer.actionStop();
+		    buttonPressedBuffer = 0;
+		    buttonPressed = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
+		    ConsoleHandler.print("Client released Button 'left'", MessageType.GAME);
+		    clientPlayer.actionStop();
+		    buttonPressedBuffer = 0;
+		    buttonPressed = false;
+		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
+		    ConsoleHandler.print("Client released Button 'right'", MessageType.GAME);
+		    clientPlayer.actionStop();
+		    buttonPressedBuffer = 0;
+		    buttonPressed = false;
+		} /*else if (keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
+		    ConsoleHandler.print("Client released Button 'setBomb'", MessageType.GAME);
+		}*/
 	    }
 	}
     }
