@@ -3,6 +3,7 @@ package uni.bombenstimmung.de.lobby;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import javax.swing.*;
 
 
 public class Player {
@@ -12,6 +13,7 @@ public class Player {
 	private int id;
 	private int skin = 0;
 	private boolean isHost;
+	public JTextField textfield;
 	
 	// Konstruktor mit IP
 	public Player(String name, String ip) {
@@ -20,7 +22,7 @@ public class Player {
 		id = idZaehler;
 		idZaehler ++;
 		isHost = false;
-		
+		textfield = new JTextField(name ,10);
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 	}
 	// Konstruktor ohne IP. Also nur den namen // Hier handelt es sich um den Host
@@ -33,6 +35,8 @@ public class Player {
 		//Lobby_Create lobby = new Lobby_Create(nameOfPlayer);
 		
 	}
+
+	
 	
 	public void setSkin(int skin) {
 		this.skin = skin;
@@ -41,9 +45,16 @@ public class Player {
     public int getSkin() {
     	return skin;
     }
+    
+	// To change the name in the Lobby
+	public void setName(String name) {
+		this.name = name;
+	}
+	
     public String getName() {
     	return name;
     }
+    
     public int getId() {
     	return id;
     }

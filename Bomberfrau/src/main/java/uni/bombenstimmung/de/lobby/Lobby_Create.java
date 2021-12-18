@@ -27,7 +27,7 @@ public class Lobby_Create {
 	
 	// Host wird als player 0 im Array gespeichert.
 	public Lobby_Create (Player player){
-		this.player[0] = player;
+		Lobby_Create.player[numberPlayer] = player;
 		numberPlayer++;
 //		 //FindIP-Adress
 //		try {
@@ -40,7 +40,7 @@ public class Lobby_Create {
 	
 	// Ein weiterer Player wird als nächstes im Array ausgegeben
 	public void addPlayer(Player player) {
-		this.player[numberPlayer] = player;
+		Lobby_Create.player[numberPlayer] = player;
 		
 		numberPlayer++;
 
@@ -58,11 +58,18 @@ public class Lobby_Create {
 	
 	// Wird von Label.java aufgerufen und malt alles was ich haben will. Daher auch static, sodass ich davon nicht extra ein Objekt erzeugen muss
 	public static void drawScreen(Graphics g) {
+		//Für die HintergrundFarbe
+		g.setColor(Color.PINK);
+		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
+		
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
 		for(int i=0; i < numberPlayer; i++)
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/4 + 40*i);
 		
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), 200, 200, null);
+		//player[0].textfield.paintComponents(g);
+		
+		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
+		//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
 
 	}
 	

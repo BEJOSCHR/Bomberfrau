@@ -30,7 +30,9 @@ public class ImageHandler {
 		//LOBBY PICS
 		// Arrow Location: https://pixabay.com/illustrations/arrow-choose-select-next-button-1217949/
 		new LoadedImage("Lobby/arrow-Left.png", ImageType.IMAGE_LOBBY_ARROW_LEFT, 50, 50);
+		new LoadedImage("Lobby/arrow-Left.png", ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER, 55, 55);
 		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT, 50, 50);
+		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER, 55, 55);
 		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
