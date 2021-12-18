@@ -6,6 +6,7 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
@@ -23,12 +24,17 @@ import java.net.InetAddress;
 public class Lobby_Create {
 
 	static Player player[] = new Player[4];
+	static LoadedImage image[] = new LoadedImage[3];
+	static int zaehlerMapSelection = 0;
 	static int numberPlayer = 0;
 	
 	// Host wird als player 0 im Array gespeichert.
 	public Lobby_Create (Player player){
 		Lobby_Create.player[numberPlayer] = player;
 		numberPlayer++;
+		Lobby_Create.image[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
+		Lobby_Create.image[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
+		Lobby_Create.image[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
 //		 //FindIP-Adress
 //		try {
 //			findIP_Adress();
@@ -43,8 +49,6 @@ public class Lobby_Create {
 		Lobby_Create.player[numberPlayer] = player;
 		
 		numberPlayer++;
-
-			
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben!
@@ -53,6 +57,22 @@ public class Lobby_Create {
 				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
 			}
 		}
+	
+	public static void setIncrementMap() {
+		zaehlerMapSelection = (zaehlerMapSelection + 1)%3;
+	}
+	public static void setDecrementMap() {
+		if (zaehlerMapSelection == 0) {
+			zaehlerMapSelection = 2;
+		}
+		else {
+			zaehlerMapSelection = (zaehlerMapSelection - 1)%3;	
+		}
+
+	}
+	public static int getMap() {
+		return zaehlerMapSelection;
+	}
 	
 
 	
@@ -69,8 +89,8 @@ public class Lobby_Create {
 		//player[0].textfield.paintComponents(g);
 		
 		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
-		//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
-
+//		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
+		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), 500, 500, null);
 	}
 	
 	

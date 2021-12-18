@@ -20,6 +20,7 @@ import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.lobby.Lobby_Create;
 
 public class MouseActionAreaHandler {
 
@@ -61,7 +62,8 @@ public class MouseActionAreaHandler {
 				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
 			@Override
 			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("Pfeilbutton Button was Clicked", MessageType.LOBBY);
+				ConsoleHandler.print(" Left Pfeilbutton Button was Clicked", MessageType.LOBBY);
+				Lobby_Create.setDecrementMap();
 			}
 			@Override
 			public boolean isActiv() {
@@ -82,7 +84,8 @@ public class MouseActionAreaHandler {
 				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("Pfeilbutton Button was Clicked", MessageType.LOBBY);
+				ConsoleHandler.print("Right Pfeilbutton Button was Clicked", MessageType.LOBBY);
+				Lobby_Create.setIncrementMap();
 			}
 			@Override
 			public boolean isActiv() {
