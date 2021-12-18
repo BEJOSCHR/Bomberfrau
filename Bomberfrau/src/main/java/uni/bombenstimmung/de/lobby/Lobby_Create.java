@@ -90,6 +90,8 @@ public class Lobby_Create {
 		
 		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
 //		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
+		
+		// Einfach feste Koordinaten verwendet
 		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), 500, 500, null);
 	}
 	

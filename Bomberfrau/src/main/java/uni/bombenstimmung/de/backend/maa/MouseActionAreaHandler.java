@@ -72,7 +72,7 @@ public class MouseActionAreaHandler {
 			@Override
 			public void draw(Graphics g) { 
 				if(isHovered()) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2-1, null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, null);
 				}
@@ -94,7 +94,8 @@ public class MouseActionAreaHandler {
 			@Override
 			public void draw(Graphics g) { 
 				if(isHovered()) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
+					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
 				}
