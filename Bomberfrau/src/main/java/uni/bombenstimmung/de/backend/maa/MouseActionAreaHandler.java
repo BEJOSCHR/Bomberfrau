@@ -21,9 +21,10 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.lobby.Lobby_Create;
+import uni.bombenstimmung.de.lobby.OwnButtons;
 
 public class MouseActionAreaHandler {
-
+	
 	private static List<MouseActionArea> mouseActionAreas = new ArrayList<MouseActionArea>(); 
 	
 	/**
@@ -44,63 +45,64 @@ public class MouseActionAreaHandler {
 			}
 		};
 		
-		//LOBBY STARTBUTTON
-		new MouseActionArea(GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2, 100, 70,
-				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
-			}
-			@Override
-			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-			}
-		};
-		
-		//LOBBY Unsichtbarer LEFT Button fuer Pfeil -> MAA_LOBBY_PFEILBUTTON_LEFT
-		new MouseActionArea(GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, 45, 44,
-				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print(" Left Pfeilbutton Button was Clicked", MessageType.LOBBY);
-				Lobby_Create.setDecrementMap();
-			}
-			@Override
-			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-			}
-			@Override
-			public void draw(Graphics g) { 
-				if(isHovered()) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2-1, null);
-				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, null);
-				}
-			}
-		};
+//		//LOBBY STARTBUTTON
+//		new MouseActionArea(GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2, 100, 70,
+//				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+//			}
+//		};
+//		
+//		//LOBBY Unsichtbarer LEFT Button fuer Pfeil -> MAA_LOBBY_PFEILBUTTON_LEFT
+//		new MouseActionArea(GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, 45, 44,
+//				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print(" Left Pfeilbutton Button was Clicked", MessageType.LOBBY);
+//				Lobby_Create.setDecrementMap();
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+//			}
+//			@Override
+//			public void draw(Graphics g) { 
+//				if(isHovered()) {
+//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2-1, null);
+//				}else {
+//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/2, null);
+//				}
+//			}
+//		};
 		
 		//LOBBY Unsichtbarer RIGHT Button fuer Pfeil -> MAA_LOBBY_PFEILBUTTON_RIGHT
-		new MouseActionArea(GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
-				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("Right Pfeilbutton Button was Clicked", MessageType.LOBBY);
-				Lobby_Create.setIncrementMap();
-			}
-			@Override
-			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-			}
-			@Override
-			public void draw(Graphics g) { 
-				if(isHovered()) {
-					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
-				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
-				}
-			}
-		};
+//		new MouseActionArea(GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
+//				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print("Right Pfeilbutton Button was Clicked", MessageType.LOBBY);
+//				Lobby_Create.setIncrementMap();
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+//			}
+//			@Override
+//			public void draw(Graphics g) { 
+//				if(isHovered()) {
+//					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
+//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
+//				}else {
+//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
+//				}
+//			}
+//		};
+		OwnButtons button1 = new OwnButtons();
 		
 		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		

@@ -28,13 +28,13 @@ public class Lobby_Create {
 	static int zaehlerMapSelection = 0;
 	static int numberPlayer = 0;
 	
+	
 	// Host wird als player 0 im Array gespeichert.
 	public Lobby_Create (Player player){
 		Lobby_Create.player[numberPlayer] = player;
 		numberPlayer++;
-		Lobby_Create.image[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
-		Lobby_Create.image[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
-		Lobby_Create.image[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		initializeImages();
+
 //		 //FindIP-Adress
 //		try {
 //			findIP_Adress();
@@ -49,6 +49,12 @@ public class Lobby_Create {
 		Lobby_Create.player[numberPlayer] = player;
 		
 		numberPlayer++;
+	}
+	
+	public void initializeImages() {
+		Lobby_Create.image[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
+		Lobby_Create.image[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
+		Lobby_Create.image[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben!
@@ -87,18 +93,18 @@ public class Lobby_Create {
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
 		
 		for(int i=0; i < numberPlayer; i++) {
-			if (player[i].getisHost() == true)
+			if (player[i].getisHost() == true) {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/13, GraphicsHandler.getHeight()/4 + 40*i-13, null);
+			}
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
-			
-
-		
-		
 		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
 //		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
 		
 		// Einfach feste Koordinaten verwendet
+//		if (LobbyMovement.getTimerZaehler() != 0) {
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
+//		}
 		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), 500, 500, null);
 	}
 	
