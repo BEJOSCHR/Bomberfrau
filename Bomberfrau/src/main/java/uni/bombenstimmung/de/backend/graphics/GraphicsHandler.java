@@ -23,6 +23,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
+import uni.bombenstimmung.de.menu.Settings;
 import uni.bombenstimmung.de.game.Game;
 
 public class GraphicsHandler {
@@ -30,7 +31,8 @@ public class GraphicsHandler {
 	private static int width = 0, height = 0;
 	private static Label label;
 	private static JFrame frame;
-	private static DisplayType displayType = DisplayType.INGAME;
+	private static DisplayType displayType = DisplayType.INTRO;
+	//private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
 	
 	/**
@@ -61,7 +63,8 @@ public class GraphicsHandler {
 		}
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setSize(1920, 1080);
+//		frame.setSize(1920, 1080);
+		frame.setSize(Settings.res_width, Settings.res_height);
 		frame.setPreferredSize(frame.getSize());
 		frame.setMinimumSize(frame.getSize());
 		frame.setMaximumSize(frame.getSize());

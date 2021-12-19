@@ -12,6 +12,7 @@ public enum DisplayType {
 
 	LOADINGSCREEN,
 	
+	INTRO,
 	MENU,
 	LOBBY,
 	INGAME,

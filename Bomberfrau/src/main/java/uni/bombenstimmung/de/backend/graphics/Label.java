@@ -13,17 +13,24 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.game.Game;
 
@@ -75,6 +82,15 @@ public class Label extends JLabel {
 		
 		//PARTS
 		switch(GraphicsHandler.getDisplayType()) {
+		case INTRO:
+		    	g.setColor(Color.WHITE);
+			g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
+		    	//SoundHandler.playSound(SoundType.INTRO, false);
+		    	//SoundHandler.playSound(SoundType.TEST_START, false);
+		    	Image img = Toolkit.getDefaultToolkit().createImage("src\\main\\resources\\images\\logo_white.png");
+		    	g.drawImage(img, 0, 0, null);
+			GraphicsHandler.drawCentralisedText(g, Color.RED, 20+AnimationData.loadingScreen_textSizeModifier, LanguageHandler.getLLB(LanguageBlockType.LB_INTRO_SKIP).getContent(), (int)(GraphicsHandler.getWidth()*0.85), (int)(GraphicsHandler.getHeight()*0.95));
+			break;
 		case LOADINGSCREEN:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 160, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_TITLE).getContent(), GraphicsHandler.getWidth()/2+AnimationData.loadingScreen_posXModifier, GraphicsHandler.getHeight()/2-30+AnimationData.loadingScreen_posYModifier);
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 15+AnimationData.loadingScreen_textSizeModifier, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_CONTINUE).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2+150);
@@ -111,7 +127,7 @@ public class Label extends JLabel {
 		
 		//DRAW FPS
 		if(showFPS == true) {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font("Arial", Font.BOLD, 10));
 			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 		}

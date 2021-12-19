@@ -10,6 +10,9 @@ package uni.bombenstimmung.de.backend.sounds;
 
 public enum SoundType {
 
+    	INTRO,
+    	MENU,
+    
 	SOUND_MENU_XXX,
 	
 	TEST_START;

@@ -15,6 +15,8 @@ public enum LanguageBlockType {
 	LB_LOADINGSCREEN_AUTHOR,
 	LB_LOADINGSCREEN_VERSION,
 	
+	LB_INTRO_SKIP,
+	
 	LB_MENU_XXX;
 	
 }

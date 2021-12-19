@@ -31,6 +31,8 @@ public class SoundHandler {
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
 		new LoadedSound("Start.wav", SoundType.TEST_START, SoundCategory.TEST, 0.02D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.02D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.02D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -40,7 +42,7 @@ public class SoundHandler {
 	 * Spielt den Sound ab, der zum übergebenene Type gehört
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 */
-	public static void playSound(SoundType type) {
+	public static void playSound(SoundType type, Boolean loop) {
 		
 		LoadedSound sound = getSound(type);
 		Clip clip = sound.getClip();
@@ -49,6 +51,7 @@ public class SoundHandler {
 		if(value < -70) { value = -70; } //MINIMUM VOLUME
 		gainControl.setValue(value);
 		clip.setFramePosition(0);
+		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
 		
 	}

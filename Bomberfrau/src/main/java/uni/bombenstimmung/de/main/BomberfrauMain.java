@@ -21,6 +21,7 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class BomberfrauMain {
 	
@@ -39,6 +40,10 @@ public class BomberfrauMain {
 		1. BACKEND STUFF
 		2. ...
 		*/
+		
+		String ini = "save.ini";
+		Settings.initIni(ini);
+		Settings.iniValuesToTerminal(ini);
 		
 		//1. BACKEND
 		LanguageHandler.initLLBs();

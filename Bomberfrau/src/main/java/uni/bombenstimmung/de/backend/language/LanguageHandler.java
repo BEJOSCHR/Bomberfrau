@@ -35,6 +35,9 @@ public class LanguageHandler {
 		String[] loadingScreen_Version = {BomberfrauMain.VERSION, BomberfrauMain.VERSION};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_VERSION, loadingScreen_Version);
 		
+		String[] intro_Skip = {"<<  Click to skip  >>", "<< Klicken zum Überspringen >>"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INTRO_SKIP, intro_Skip);
+		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);
 		
 	}
