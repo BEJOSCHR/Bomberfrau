@@ -85,7 +85,6 @@ public class Label extends JLabel {
 			break;
 			
 		case LOBBY:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/6);
 			Lobby_Create.drawScreen(g);
 			break;
 			

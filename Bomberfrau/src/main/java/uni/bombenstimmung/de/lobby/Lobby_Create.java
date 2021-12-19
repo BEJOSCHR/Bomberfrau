@@ -82,11 +82,18 @@ public class Lobby_Create {
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		
-		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
-		for(int i=0; i < numberPlayer; i++)
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/5, GraphicsHandler.getHeight()/4 + 40*i);
+		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/6);
 		
-		//player[0].textfield.paintComponents(g);
+		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
+		
+		for(int i=0; i < numberPlayer; i++) {
+			if (player[i].getisHost() == true)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/13, GraphicsHandler.getHeight()/4 + 40*i-13, null);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
+		}
+			
+
+		
 		
 		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
 //		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);

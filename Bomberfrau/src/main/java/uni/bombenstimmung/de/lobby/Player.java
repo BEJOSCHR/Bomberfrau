@@ -58,6 +58,9 @@ public class Player {
     public int getId() {
     	return id;
     }
+    public boolean getisHost() {
+    	return isHost;
+    }
     
     @Override public String toString() {
     	return "Player ID: " + id + " Name: " + name + " IP-Adress: " + ip;
