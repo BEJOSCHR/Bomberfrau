@@ -16,7 +16,6 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
-import uni.bombenstimmung.de.lobby.LobbyMovement;
 import uni.bombenstimmung.de.lobby.OwnButtons;
 
 public class KeyHandler implements KeyListener {
@@ -28,9 +27,8 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
-		
+		// LOBBY
 		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
-//		    LobbyMovement.KeyEvents(keyCode);
 			OwnButtons.keyIsPressed(keyCode);
 		}
 		
@@ -55,6 +53,7 @@ public class KeyHandler implements KeyListener {
 		
 		int keyCode = e.getKeyCode();
 		
+		// LOBBY
 		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
 		    OwnButtons.keyIsReleased(keyCode);
 		}
