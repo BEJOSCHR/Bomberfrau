@@ -1,4 +1,4 @@
-/*	Diese Klasse ist von Dennis
+/*	Diese Klasse ist von Dennis und wurde von Mustafa überarbeitet
  * 	Sie dient dazu, die einzelnen Felder und ihre Inhalte 
  * 	der Map zu verwalten. 
  */
@@ -25,16 +25,18 @@ public class Field extends Entity {
     
     public static String getFieldTypeRepresentation(FieldContent type) {
 	switch(type) {
-		case BLOCK:
+		case BLOCK: //wand_gray.png wird angezeigt 
 			return "BL";
-		case BORDER:
+		case BORDER: // wand_orange.png wird angezeigt 
 			return "BO";
-		case EMPTY:
+		case EMPTY: //freier Space wo dann Gras Tile gezeigt wird
 			return "EM";
-		case WALL:
+		case WALL: //Box.png, die Sachen die zerstört werden können 
 			return "WA";
-		case YELLOWGRAS:
+		case YELLOWGRAS: 
 			return "YG";
+		case LIGHTTILE:
+			return "LT";
 		default:
 			ConsoleHandler.print("Unknown fieldtype '"+type+"'!");
 			return "##";
@@ -54,6 +56,8 @@ public class Field extends Entity {
 		    return FieldContent.WALL;
 		case "YG":
 			return FieldContent.YELLOWGRAS;
+		case "LT":
+			return FieldContent.LIGHTTILE;
 		default:
 		    ConsoleHandler.print("Unknown fieldtype representation '"+representation+"'!");
 		    return FieldContent.EMPTY;
@@ -76,7 +80,10 @@ public class Field extends Entity {
 		break;
 	    case YELLOWGRAS:
 	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+	    break;
 	    default:
+	    case LIGHTTILE:
+	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LIGHTTILE).getImage(), x, y, null);	
 		break;
 	}
     }

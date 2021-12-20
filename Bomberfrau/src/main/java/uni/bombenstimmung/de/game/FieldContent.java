@@ -11,6 +11,7 @@ public enum FieldContent {
     UPGRADE,
     EMPTY,
     BLOCK,
-	YELLOWGRAS;
+	YELLOWGRAS,
+	LIGHTTILE;
 }	
 
