@@ -24,8 +24,15 @@ import java.net.InetAddress;
 public class Lobby_Create {
 
 	static Player player[] = new Player[4];
-	static LoadedImage image[] = new LoadedImage[3];
+	static LoadedImage mapSelection[] = new LoadedImage[3];
+	static LoadedImage skinSelection[] = new LoadedImage[3];
+
 	static int zaehlerMapSelection = 0;
+	
+	static int zaehlerSkinSelection = 0;
+	
+	static int hochRunterNavigation = 0;
+	
 	static int numberPlayer = 0;
 	
 	
@@ -52,9 +59,13 @@ public class Lobby_Create {
 	}
 	
 	public void initializeImages() {
-		Lobby_Create.image[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
-		Lobby_Create.image[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
-		Lobby_Create.image[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		Lobby_Create.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
+		Lobby_Create.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
+		Lobby_Create.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		
+		Lobby_Create.skinSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
+		Lobby_Create.skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
+		Lobby_Create.skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben!
@@ -64,6 +75,7 @@ public class Lobby_Create {
 			}
 		}
 	
+	// Map Zaehler
 	public static void setIncrementMap() {
 		zaehlerMapSelection = (zaehlerMapSelection + 1)%3;
 	}
@@ -74,12 +86,41 @@ public class Lobby_Create {
 		else {
 			zaehlerMapSelection = (zaehlerMapSelection - 1)%3;	
 		}
-
 	}
 	public static int getMap() {
 		return zaehlerMapSelection;
 	}
 	
+	// Skin Zaehler
+	public static void setIncrementSkin() {
+		zaehlerSkinSelection = (zaehlerSkinSelection + 1)%3;
+	}
+	public static void setDecrementSkin() {
+		if (zaehlerSkinSelection == 0) {
+			zaehlerSkinSelection = 2;
+		}
+		else {
+			zaehlerSkinSelection = (zaehlerSkinSelection - 1)%3;	
+		}
+	}
+	public static int getSkin() {
+		return zaehlerSkinSelection;
+	}
+	
+	public static void setIncrementHochRunterNavigation() {
+		hochRunterNavigation = (hochRunterNavigation + 1)%3;
+	}
+	public static void setDecrementHochRunterNavigation() {
+		if (hochRunterNavigation == 0) {
+			hochRunterNavigation = 2;
+		}
+		else {
+			hochRunterNavigation = (hochRunterNavigation - 1)%3;	
+		}
+	}
+	public static int getHochRunterNavigation() {
+		return hochRunterNavigation;
+	}
 
 	
 	// Wird von Label.java aufgerufen und malt alles was ich haben will. Daher auch static, sodass ich davon nicht extra ein Objekt erzeugen muss
@@ -105,7 +146,9 @@ public class Lobby_Create {
 //		if (LobbyMovement.getTimerZaehler() != 0) {
 //			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
 //		}
-		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), 500, 500, null);
+		g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), 500, 500, null);
+		
+		g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), 500, 700, null);
 	}
 	
 	

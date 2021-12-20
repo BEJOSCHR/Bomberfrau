@@ -45,7 +45,7 @@ public class MouseActionAreaHandler {
 			}
 		};
 		
-		OwnButtons LobbyButtons = new OwnButtons();
+		OwnButtons.initOwnButtons();
 		
 		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		

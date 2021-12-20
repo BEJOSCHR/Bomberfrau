@@ -36,6 +36,11 @@ public class ImageHandler {
 		new LoadedImage("Lobby/MapSelection_Platzhalter_1.jpg", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1, 100, 100);
 		new LoadedImage("Lobby/MapSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2, 100, 100);
 		new LoadedImage("Lobby/MapSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3, 100, 100);
+		
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1, 100, 100);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2, 100, 100);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3, 100, 100);
+		
 		//https://www.pngwing.com/en/free-png-zekql/download?width=107
 		new LoadedImage("Lobby/Crown.png", ImageType.IMAGE_LOBBY_CROWN, 25, 25);
 		
