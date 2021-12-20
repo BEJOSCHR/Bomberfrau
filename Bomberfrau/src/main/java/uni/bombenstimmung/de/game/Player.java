@@ -67,7 +67,7 @@ public class Player extends Entity implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 	Field tempField = this.currentField;
 	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
-	if (this.currentField.getContent() == FieldContent.EMPTY || this.currentField.getContent() == FieldContent.YELLOWGRAS) {
+	if (this.currentField.getContent() == FieldContent.EMPTY) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	} else {
