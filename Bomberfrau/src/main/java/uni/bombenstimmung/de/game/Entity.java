@@ -1,8 +1,11 @@
-/*	Diese Abstrakte Klasse ist von Dennis
- * 	Sie dient dazu, die x- und y-Position zu speichern.
- * 	Bombe, Player, Upgrade und Field erben von ihr. 
+/*
+ * Entity
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Abstrakte Klasse um die Position zu speichern
  */
-
 package uni.bombenstimmung.de.game;
 
 import java.awt.Point;

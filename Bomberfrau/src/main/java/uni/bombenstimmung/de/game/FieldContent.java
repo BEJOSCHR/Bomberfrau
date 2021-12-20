@@ -1,5 +1,10 @@
-/*	Dieses Enum ist von Dennis und dient dazu
- * 	den Feldern der Map Zustände zuzuordnen
+/*
+ * FieldContent
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Zaehlt die einzelnen Typen für Felder auf
  */
 
 package uni.bombenstimmung.de.game;
@@ -11,6 +16,5 @@ public enum FieldContent {
     UPGRADE,
     EMPTY,
     BLOCK,
-	YELLOWGRAS;
 }	
 
