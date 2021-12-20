@@ -1,7 +1,7 @@
 /*
  * Game
  *
- * Version 1.0
+ * Version 1.1
  * Author: Dennis und Mustafa
  *
  * Malt und verwaltet die Map
@@ -17,10 +17,12 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Game {
 
-	
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
     private static int mapNumber = 2;
-	
+
+    /**
+     *  Füllt das Map Array mit leeren Feldern
+     */
     public static void fillMap() {
 	for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
 	    for (int y = 0; y < GameData.MAP_DIMENSION; y++) {
@@ -28,7 +30,10 @@ public class Game {
 	    }
 	}	
     }	
-	
+
+    /**
+     * Malt die aktuelle Map
+     */
     public static void drawGame(Graphics g) {
 	//DRAW COUNTDOWN ETC
 	
@@ -40,17 +45,12 @@ public class Game {
 		map[x][y].drawField(g, (x*GameData.FIELD_DIMENSION)+(xOffset/2), (y*GameData.FIELD_DIMENSION)+(yOffset/2), map[x][y].getContent());
 	    }
 	}
-    }		
-	
-//    private static void resettMap() {
-//	//DEFAULT
-//	for(int x = 0 ; x < GameData.MAP_DIMENSION ; x++) {
-//	    for(int y = 0 ; y < GameData.MAP_DIMENSION ; y++) {
-//		map[x][y].setContent(FieldContent.EMPTY);
-//	    }
-//	}
-//    }		
-	
+    }			
+
+    /**
+     * Füllt das Map Array mit den Map-Spezifischen Feldern
+     * @param MapNumber, die Nummer der ausgewählten Map
+     */
     public static void updateMap(int MapNumber) {	
 	//SYNTAX: 1,1,BL:1,2,BL: ...
 	//RESETT MAP
@@ -79,10 +79,13 @@ public class Game {
 	}	
     }
 	
-    public Field[][] getMap() {
-	return map;
-    }	
     
+    /**
+     * Gibt das Field aus dem Array anhand der Koordinaten zurück
+     * @param x, zu überprüfende X-Koordinate
+     * @param y, zu überprüfende Y-Koordinate
+     * @return, gibt das Field Objekt zurück, das zu der Koordinate gehört
+     */
     public static Field getFieldFromCoord(int x, int y) {
 	Field field = null;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
@@ -99,15 +102,11 @@ public class Game {
 	}
 	return field;
     }
-
-    public static int getMapNumber() {
-	return mapNumber;
-    }
-
-    public static void setMapNumber(int mapNumber) {
-	Game.mapNumber = mapNumber;
-    }
-
+    
+    /**
+     * Malt den Hintergrund im Ingame Mapspezifisch
+     * @param bgnumber, 1 = Gras, 2 = Wüste
+     */
     public static void drawBackground(Graphics g, int bgnumber) {
 	Color yellowColor = new Color(217, 212, 163);
 	Color greenColor = new Color(110, 150, 42);
@@ -129,6 +128,10 @@ public class Game {
 	
     }
     
+    /**
+     * Malt den Rechten Teil des Ingame Menüs
+     * @param map, Map Nummer anhand derer Titel und Menü gestaltet werden
+     */
     public static void drawRightPartOfMap(Graphics g, int map) {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yStart = GameData.MAP_SIDE_BORDER;
@@ -144,6 +147,10 @@ public class Game {
 	}
     }
     
+    /**
+     * Malt den Linken Teil des Ingame Menüs
+     * @param anzPlayer, die Anzahl der teilnehmenden Spieler zur Berechnung der Textaufteilung
+     */
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
@@ -151,5 +158,17 @@ public class Game {
 	for(int i = 0; i < anzPlayer; i++) {
 	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i+1) + " : Mia Julia", 0+(xOffset/4), 0+((i+(i+1))*gap));
 	}
+    }
+
+    public Field[][] getMap() {
+	return map;
+    }	
+    
+    public static int getMapNumber() {
+	return mapNumber;
+    }
+
+    public static void setMapNumber(int mapNumber) {
+	Game.mapNumber = mapNumber;
     }
 }
