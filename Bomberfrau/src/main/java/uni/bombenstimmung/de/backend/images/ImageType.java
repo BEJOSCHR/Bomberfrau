@@ -15,7 +15,11 @@ public enum ImageType {
     	IMAGE_INGAME_WALL,
     	IMAGE_INGAME_BORDER,
     	IMAGE_INGAME_BLOCK,	
+<<<<<<< HEAD
 		IMAGE_INGAME_YELLOWGRAS,
 		IMAGE_INGAME_LIGHTTILE;
 		
+=======
+	IMAGE_INGAME_YELLOWGRAS;
+>>>>>>> refs/remotes/origin/InGame
 }

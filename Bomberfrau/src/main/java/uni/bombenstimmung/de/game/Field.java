@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /*	Diese Klasse ist von Dennis und wurde von Mustafa überarbeitet
  * 	Sie dient dazu, die einzelnen Felder und ihre Inhalte 
@@ -11,6 +12,15 @@
  *
  * Verwaltet die einzelnen Felder einer Map
 >>>>>>> branch 'InGame' of git@github.com:BEJOSCHR/Bomberfrau.git
+=======
+/*
+ * Field
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Verwaltet die einzelnen Felder einer Map
+>>>>>>> refs/remotes/origin/InGame
  */
 package uni.bombenstimmung.de.game;
 
@@ -48,12 +58,17 @@ public class Field extends Entity {
 			return "BO";
 		case EMPTY: //freier Space wo dann Gras Tile gezeigt wird
 			return "EM";
+<<<<<<< HEAD
 		case WALL: //Box.png, die Sachen die zerstört werden können 
 			return "WA";
 		case YELLOWGRAS: 
 			return "YG";
 		case LIGHTTILE:
 			return "LT";
+=======
+		case WALL:
+			return "WA";
+>>>>>>> refs/remotes/origin/InGame
 		default:
 			ConsoleHandler.print("Unknown fieldtype '"+type+"'!");
 			return "##";
@@ -75,11 +90,15 @@ public class Field extends Entity {
 		case "EM":
 		    return FieldContent.EMPTY;
 		case "WA":
+<<<<<<< HEAD
 		    return FieldContent.WALL;
 		case "YG":
 			return FieldContent.YELLOWGRAS;
 		case "LT":
 			return FieldContent.LIGHTTILE;
+=======
+		    return FieldContent.WALL;
+>>>>>>> refs/remotes/origin/InGame
 		default:
 		    ConsoleHandler.print("Unknown fieldtype representation '"+representation+"'!");
 		    return FieldContent.EMPTY;
