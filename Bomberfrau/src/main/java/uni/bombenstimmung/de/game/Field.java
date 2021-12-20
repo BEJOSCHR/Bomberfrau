@@ -1,3 +1,8 @@
+
+/*	Diese Klasse ist von Dennis und wurde von Mustafa überarbeitet
+ * 	Sie dient dazu, die einzelnen Felder und ihre Inhalte 
+ * 	der Map zu verwalten. 
+=======
 /*
  * Field
  *
@@ -5,6 +10,7 @@
  * Author: Dennis
  *
  * Verwaltet die einzelnen Felder einer Map
+>>>>>>> branch 'InGame' of git@github.com:BEJOSCHR/Bomberfrau.git
  */
 package uni.bombenstimmung.de.game;
 
@@ -35,14 +41,14 @@ public class Field extends Entity {
      * @param type, FieldContent eingeben
      */
     public static String getFieldTypeRepresentation(FieldContent type) {
-	switch(type) {
+	switch(type) { 
 		case BLOCK:
 			return "BL";
-		case BORDER:
+		case BORDER: // wand_orange.png wird angezeigt 
 			return "BO";
-		case EMPTY:
+		case EMPTY: //freier Space wo dann Gras Tile gezeigt wird
 			return "EM";
-		case WALL:
+		case WALL: //Box.png, die Sachen die zerstört werden können 
 			return "WA";
 		default:
 			ConsoleHandler.print("Unknown fieldtype '"+type+"'!");
@@ -59,7 +65,7 @@ public class Field extends Entity {
 	
 	switch(representation) {
 		case "BL":
-		    return FieldContent.BLOCK;
+			return FieldContent.BLOCK;
 		case "BO":
 		    return FieldContent.BORDER;
 		case "EM":
@@ -80,6 +86,9 @@ public class Field extends Entity {
      */
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
+		case BLOCK:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
+		break;
 	    case WALL:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
 		break;
@@ -96,11 +105,7 @@ public class Field extends Entity {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
 		}
 		break;
-	    case BLOCK:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
-		break;
-	    default:
-		break;
+	  
 	}
     }
     

@@ -34,6 +34,8 @@ public class ImageHandler {
 	    	new LoadedImage("Yellow_background.png", ImageType.IMAGE_INGAME_YELLOWGRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("bomb.png", ImageType.IMAGE_INGAME_BOMB, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5);
 	    	ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
+	    	new LoadedImage("lightTileBackground.png", ImageType.IMAGE_INGAME_LIGHTTILE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}
 	
