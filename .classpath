@@ -6,5 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="Bomberfrau/src/main/java"/>
+	<classpathentry kind="src" path="Bomberfrau/src/main/resources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

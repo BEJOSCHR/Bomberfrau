@@ -33,6 +33,8 @@ public class Field extends Entity {
 			return "EM";
 		case WALL:
 			return "WA";
+		case YELLOWGRAS:
+			return "YG";
 		default:
 			ConsoleHandler.print("Unknown fieldtype '"+type+"'!");
 			return "##";
@@ -50,6 +52,8 @@ public class Field extends Entity {
 		    return FieldContent.EMPTY;
 		case "WA":
 		    return FieldContent.WALL;
+		case "YG":
+			return FieldContent.YELLOWGRAS;
 		default:
 		    ConsoleHandler.print("Unknown fieldtype representation '"+representation+"'!");
 		    return FieldContent.EMPTY;
@@ -70,6 +74,8 @@ public class Field extends Entity {
 	    case BLOCK:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
 		break;
+	    case YELLOWGRAS:
+	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
 	    default:
 		break;
 	}

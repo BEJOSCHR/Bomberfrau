@@ -49,7 +49,7 @@ public class Game {
 	String mapData;
 	switch(mapNumber) {
 		case 1:
-			mapData = GameData.MAP_1;
+			mapData = GameData.MAP_2;
 			break;
 		default:
 			ConsoleHandler.print("Unknown mapnumber, cant load map!");
