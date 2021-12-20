@@ -24,8 +24,6 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
-import uni.bombenstimmung.de.game.PlayerHandler;
-import uni.bombenstimmung.de.game.Game;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -48,8 +46,8 @@ public class Label extends JLabel {
 	
 	/**
 	 * Die methode die dauerhaft aufgerufen wird vom {@link JLabel} und somit die FPS representiert
-	 * Enthï¿½lt automatische FPS Limitierung
-	 * Von hier aus werden ï¿½ber das 'g' Komponent alle grafischen Methoden aufgerufen
+	 * Enthält automatische FPS Limitierung
+	 * Von hier aus werden über das 'g' Komponent alle grafischen Methoden aufgerufen
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -67,7 +65,7 @@ public class Label extends JLabel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		//(Reihenfolge der Aufrufe ist wichtig, spï¿½tere Aufrufe ï¿½berschreiben frï¿½here)
+		//(Reihenfolge der Aufrufe ist wichtig, spätere Aufrufe überschreiben frühere)
 		
 		//BACKGROUND
 		g.setColor(Color.DARK_GRAY);
@@ -88,11 +86,7 @@ public class Label extends JLabel {
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case INGAME:
-			//GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
-		    	Game.fillMap();
-		    	Game.updateMap(1);
-		    	Game.drawGame(g);
-		    	PlayerHandler.drawPlayers(g);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		case AFTERGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
