@@ -46,7 +46,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	
 	@SuppressWarnings("rawtypes")
-	public ConnectedClient(boolean sHost, int sId) {
+	public ConnectedClient(boolean sHost, int sId, String IP) {
 		id = sId;
 		host = sHost;
 
@@ -79,7 +79,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//connector.setHandler(this);
 			getConnector().setHandler(new ClientHandler(this));
 			getConnector().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			ConnectFuture connFuture = getConnector().connect(new InetSocketAddress(ConnectionData.IP, ConnectionData.PORT));
+			ConnectFuture connFuture = getConnector().connect(new InetSocketAddress(IP, ConnectionData.PORT));
 			connFuture.addListener(new IoFutureListener() {
 				public void operationComplete(IoFuture future) {
 					ConnectFuture connFuture = (ConnectFuture) future;
@@ -101,10 +101,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	//Sends a message to the connected Client
 	private void sendMessage(IoSession session) throws InterruptedException {
-		for (int i = 0; i < 0; i++) {
-			String message = "Testnachricht"+i+" von ClientID: " + this.id;
+		for (int i = 0; i < 100; i++) {
+			String message = "000-Hallo" + i;
 			session.write(message);
-			Thread.sleep(200);
+			Thread.sleep(20);
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 000:
 			String[] pMessage000 = message.split("-");
 			ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
-			sendMessageToAllClients("1000-Sharing this to all clients");
+			//sendMessageToAllClients("1000-Sharing this to all clients");
 			break;
 			
 		//001 = Being sent when opening a session with the server. 

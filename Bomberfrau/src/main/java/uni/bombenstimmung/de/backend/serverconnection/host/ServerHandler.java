@@ -50,8 +50,8 @@ public class ServerHandler extends IoHandlerAdapter {
 		String[] parts = message.toString().split("-");
 		server.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
 		
-		//SocketAddress remoteAddress = session.getRemoteAddress();
-		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + message.toString()+ "\n");
+		SocketAddress remoteAddress = session.getRemoteAddress();
+		ConsoleHandler.print("Server: Message received from Client " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
 		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + ((ConnectedClient) message).getId());
 		//session.write("Answer back to Client " + remoteAddress);
 		//server.sendMessageToAllClients((String) message);
