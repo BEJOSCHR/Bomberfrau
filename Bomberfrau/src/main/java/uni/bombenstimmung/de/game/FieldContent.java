@@ -14,14 +14,7 @@ public enum FieldContent {
     BOMB,
     BORDER,
     UPGRADE,
-    EMPTY,
-<<<<<<< HEAD
-    BLOCK,
-	YELLOWGRAS,
-	LIGHTTILE;
+    EMPTY;
 
-=======
-    BLOCK,
->>>>>>> refs/remotes/origin/InGame
 }	
 
