@@ -86,6 +86,9 @@ public class Field extends Entity {
 	    case BORDER:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
 		break;
+	    case BOMB:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, null);
+		break;
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);

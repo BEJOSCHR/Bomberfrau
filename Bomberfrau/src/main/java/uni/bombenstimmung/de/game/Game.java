@@ -141,10 +141,10 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, "Rumble in the Jungle", xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, "Opertaion Desert", xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
     }

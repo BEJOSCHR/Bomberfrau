@@ -20,6 +20,7 @@ public class GameData {
 	/**
 	 * Map 1 - Rumble in the Jungle
 	 */
+	public static final String MAP_1_NAME = "Rumble in the Jungle";
 	public static final String MAP_1 = "0,0,BO:0,1,BO:0,2,BO:0,3,BO:0,4,BO:0,5,BO:0,6,BO:0,7,BO:0,8,BO:0,9,BO:0,10,BO:0,11,BO:0,12,BO:0,13,BO:0,14,BO:0,15,BO:0,16,BO:"
 					+ "1,0,BO:1,1,EM:1,2,EM:1,3,WA:1,4,WA:1,5,WA:1,6,WA:1,7,WA:1,8,BL:1,9,WA:1,10,WA:1,11,WA:1,12,WA:1,13,WA:1,14,EM:1,15,EM:1,16,BO:"
 					+ "2,0,BO:2,1,EM:2,2,BL:2,3,BL:2,4,BL:2,5,WA:2,6,WA:2,7,WA:2,8,BL:2,9,WA:2,10,WA:2,11,WA:2,12,BL:2,13,BL:2,14,BL:2,15,EM:2,16,BO:"
@@ -42,6 +43,7 @@ public class GameData {
 	/**
 	 * Map 2 - Operation Desert
 	 */
+	public static final String MAP_2_NAME = "Operation Desert";
 	public static final String MAP_2 = "0,0,BO:0,1,BO:0,2,BO:0,3,BO:0,4,BO:0,5,BO:0,6,BO:0,7,BO:0,8,BO:0,9,BO:0,10,BO:0,11,BO:0,12,BO:0,13,BO:0,14,BO:0,15,BO:0,16,BO:"
 			+ "1,0,BO:1,1,EM:1,2,EM:1,3,WA:1,4,WA:1,5,WA:1,6,WA:1,7,WA:1,8,WA:1,9,WA:1,10,WA:1,11,WA:1,12,WA:1,13,WA:1,14,EM:1,15,EM:1,16,BO:"
 			+ "2,0,BO:2,1,EM:2,2,BL:2,3,WA:2,4,BL:2,5,WA:2,6,BL:2,7,WA:2,8,BL:2,9,WA:2,10,BL:2,11,WA:2,12,BL:2,13,WA:2,14,BL:2,15,EM:2,16,BO:"
