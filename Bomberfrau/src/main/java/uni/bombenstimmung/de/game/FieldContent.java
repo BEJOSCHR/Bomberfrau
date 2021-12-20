@@ -11,6 +11,7 @@ package uni.bombenstimmung.de.game;
 
 public enum FieldContent {
     WALL,
+    BLOCK,
     BOMB,
     BORDER,
     UPGRADE,

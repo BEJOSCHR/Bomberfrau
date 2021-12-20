@@ -41,8 +41,9 @@ public class Field extends Entity {
      * @param type, FieldContent eingeben
      */
     public static String getFieldTypeRepresentation(FieldContent type) {
-	switch(type) {
-	
+	switch(type) { 
+		case BLOCK:
+			return "BL";
 		case BORDER: // wand_orange.png wird angezeigt 
 			return "BO";
 		case EMPTY: //freier Space wo dann Gras Tile gezeigt wird
@@ -63,6 +64,8 @@ public class Field extends Entity {
     public static FieldContent getFieldTypeFromRepresentation(String representation) {
 	
 	switch(representation) {
+		case "BL":
+			return FieldContent.BLOCK;
 		case "BO":
 		    return FieldContent.BORDER;
 		case "EM":
@@ -83,6 +86,9 @@ public class Field extends Entity {
      */
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
+		case BLOCK:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
+		break;
 	    case WALL:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
 		break;
