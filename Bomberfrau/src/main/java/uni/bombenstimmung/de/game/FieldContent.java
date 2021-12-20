@@ -10,6 +10,7 @@ public enum FieldContent {
     BORDER,
     UPGRADE,
     EMPTY,
-    BLOCK;
+    BLOCK,
+	YELLOWGRAS;
 }	
 
