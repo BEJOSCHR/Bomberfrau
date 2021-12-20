@@ -36,10 +36,13 @@ public class ClientHandler extends IoHandlerAdapter{
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		ConsoleHandler.print("Session of ID " + client.getId() + " closed", MessageType.BACKEND);	
-		}
+	}
 	
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
+		String[] parts = message.toString().split("-");
+		client.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
+		
 		SocketAddress remoteAddress = session.getRemoteAddress();
 		ConsoleHandler.print("Client:" + client.getId() + " Message received from Server " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
 	}

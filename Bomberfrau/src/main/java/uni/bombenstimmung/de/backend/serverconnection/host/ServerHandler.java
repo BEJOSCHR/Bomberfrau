@@ -47,11 +47,11 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		
-		SocketAddress remoteAddress = session.getRemoteAddress();
 		String[] parts = message.toString().split("-");
-		server.receivedMessage( Integer.parseInt(parts[0]), message.toString(), session);
-		server.printMessage("Server: Message received from Client " + remoteAddress + ": " + message.toString()+ "\n");
+		server.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
 		
+		//SocketAddress remoteAddress = session.getRemoteAddress();
+		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + message.toString()+ "\n");
 		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + ((ConnectedClient) message).getId());
 		//session.write("Answer back to Client " + remoteAddress);
 		//server.sendMessageToAllClients((String) message);

@@ -65,7 +65,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			
 			try {
 				acceptor.bind(new InetSocketAddress(ConnectionData.PORT));
-				ConsoleHandler.print("UDP Server started at "+ConnectionData.IP+":"+ConnectionData.PORT);
+				ConsoleHandler.print("UDP Server started at "+ConnectionData.IP+":"+ConnectionData.PORT, MessageType.BACKEND);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -77,10 +77,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		else {
 			connector = new NioDatagramConnector();
 			//connector.setHandler(this);
-			connector.setHandler(new ClientHandler(this));
-			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			ConnectFuture connFuture = connector.connect(new InetSocketAddress(ConnectionData.IP, ConnectionData.PORT));
-			ConsoleHandler.print("UDP Client created");
+			getConnector().setHandler(new ClientHandler(this));
+			getConnector().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+			ConnectFuture connFuture = getConnector().connect(new InetSocketAddress(ConnectionData.IP, ConnectionData.PORT));
 			connFuture.addListener(new IoFutureListener() {
 				public void operationComplete(IoFuture future) {
 					ConnectFuture connFuture = (ConnectFuture) future;
@@ -88,11 +87,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 						conSession = future.getSession();
 						try {
 							sendMessage(conSession);
+							ConsoleHandler.print("UDP Client successfully created and connected to the server", MessageType.BACKEND);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					} else {
-							ConsoleHandler.print("Client is not connected to the server....exiting");
+							ConsoleHandler.print("Client is not connected to the server....exiting", MessageType.BACKEND);
 						}
 					}
 				});
@@ -108,10 +108,19 @@ public class ConnectedClient extends IoHandlerAdapter{
 		}
 	}
 	
-	//Handles all the received Messages from Clients and the Server
-	public void receivedMessage(int messageID, String message, IoSession session) {
-		
+	//Handles all the received Messages from Clients and the Server.
+	//This is the bridge between the server-client-backend and the game itself.
+	//Here, other groups can add their functions when certain events happen.
+	public void receivedMessage(int messageID, String message, IoSession session) {	
 		switch(messageID) {
+		//000 = Debug Message 
+		//Format: "000-[Message]"
+		case 000:
+			String[] pMessage000 = message.split("-");
+			ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
+			sendMessageToAllClients("1000-Sharing this to all clients");
+			break;
+			
 		//001 = Being sent when opening a session with the server. 
 		//Format: "001-[ID]"
 		case 001:
@@ -180,6 +189,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	//Sends a message to all connected Clients
 	public void sendMessageToAllClients(String message) {
+		ConsoleHandler.print("DEBUG: Broadcasting message = " + message);
 		acceptor.broadcast(message);
 	}
 	
@@ -212,13 +222,22 @@ public class ConnectedClient extends IoHandlerAdapter{
 		return;
 	}
 	
-	
+	//Returns the id of the player
 	public int getId() {
 		return id;
 	}
 	
+	//Returns if the player is host or not
 	public boolean isHost() {
 		return host;
+	}
+
+	public IoConnector getConnector() {
+		return connector;
+	}
+	
+	public IoSession getSession() {
+		return conSession;
 	}
 }
 

@@ -122,7 +122,7 @@ public class BomberfrauMain {
 				targetY = r.nextInt(limit*2)-limit;
 			}
 		};
-		/*
+		
 		try {
 			ConnectedClient host = new ConnectedClient(true, 0);
 			ConsoleHandler.print("Client: " + host.getId()+" Host: " +host.isHost(), MessageType.BACKEND);
@@ -132,9 +132,11 @@ public class BomberfrauMain {
 			Thread.sleep(5000);
 			ConnectedClient client2 = new ConnectedClient(false, 2);
 			ConsoleHandler.print("Client: " + client2.getId()+" Host: " +client2.isHost(), MessageType.BACKEND);
+			Thread.sleep(5000);
+			//client2.getSession().write("000-Hallo Server");
 		}  catch (InterruptedException e) {
 			e.printStackTrace();
-		} */
+		} 
 		//2. ...
 		//TODO
 		
