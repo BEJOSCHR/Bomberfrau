@@ -10,6 +10,7 @@
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -19,6 +20,7 @@ public class Game {
 	
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
     private static int mapNumber = 2;
+    private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
 	
     public static void fillMap() {
 	for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
@@ -105,5 +107,17 @@ public class Game {
 
     public static void setMapNumber(int mapNumber) {
 	Game.mapNumber = mapNumber;
+    }
+    
+    public static void changeFieldContent(FieldContent t, int x, int y) {
+	map[x][y].setContent(t);
+    }
+    
+    public static void addBomb(int r, int t, int ownerId) {
+	placedBombs.add(new Bomb(r, t, ownerId));
+    }
+    
+    public static void removeBomb(Bomb b) {
+	placedBombs.remove(b);
     }
 }
