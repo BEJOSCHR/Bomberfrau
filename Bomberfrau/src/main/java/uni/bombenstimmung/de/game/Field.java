@@ -14,8 +14,6 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 
-import java.awt.Color;
-
 public class Field extends Entity {
 
     private FieldContent content;

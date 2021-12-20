@@ -145,7 +145,6 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		
-	
 		Game.fillMap();
 	    	Game.updateMap(1);
 		
