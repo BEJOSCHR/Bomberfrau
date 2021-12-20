@@ -24,8 +24,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class PlayerHandler {
     private static Player clientPlayer = new Player(0, "Bob", "localhost", true, 0,
-	    					    new Point((int)((double)GraphicsHandler.getWidth()/2.13),
-	    					    (int)((double)GraphicsHandler.getHeight()/2.7)));
+	    					    new Point(1, 1));
     private static ArrayList<Player> opponentPlayers = new ArrayList<Player>();
     private static int opponentCount = 0;
     private static boolean playerMoving = false;

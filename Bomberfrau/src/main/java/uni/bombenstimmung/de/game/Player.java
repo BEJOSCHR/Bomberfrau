@@ -40,6 +40,8 @@ public class Player extends Entity implements ActionListener{
     private int velY;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
+	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
+	int yOffset = GameData.MAP_SIDE_BORDER;
 	this.id = id;
 	this.name = name;
 	this.ipAdress = ipAdress;
@@ -47,14 +49,14 @@ public class Player extends Entity implements ActionListener{
 	this.skin = skin;
 	this.movementSpeed = 1;
 	this.maxBombs = 1;
-	super.xPosition = (int)pos.getX();
-	super.yPosition = (int)pos.getY();
+	super.xPosition = (int)((pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2));
+	super.yPosition = (int)((pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
 	this.velX = 0;
 	this.velY = 0;
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
 	//this.currentField = new Field(0, 0, FieldContent.EMPTY);
-	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
+	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	ConsoleHandler.print("Current Field: " + currentField.xPosition + ", " + currentField.yPosition, MessageType.GAME);
 	this.t = new Timer(8, this);
 	this.t.start();
@@ -65,7 +67,7 @@ public class Player extends Entity implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 	Field tempField = this.currentField;
 	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
-	if (this.currentField.getContent() == FieldContent.EMPTY) {
+	if (this.currentField.getContent() == FieldContent.EMPTY || this.currentField.getContent() == FieldContent.YELLOWGRAS) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	} else {
