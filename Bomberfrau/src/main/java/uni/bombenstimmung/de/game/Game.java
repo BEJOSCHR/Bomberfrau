@@ -69,4 +69,21 @@ public class Game {
     public Field[][] getMap() {
 	return map;
     }	
+    
+    public static Field getFieldFromCoord(int x, int y) {
+	Field field = null;
+	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
+	int yOffset = GameData.MAP_SIDE_BORDER;
+	for (int j = GameData.MAP_DIMENSION-1 ; j >= 0 ; j--) {
+	    for (int i = GameData.MAP_DIMENSION-1 ; i >= 0 ; i--) {
+		if (x >= (i*GameData.FIELD_DIMENSION)+(xOffset/2) &&
+			y >= (j*GameData.FIELD_DIMENSION)+(yOffset/2) &&
+			x < (i*GameData.FIELD_DIMENSION)+(xOffset/2)+GameData.FIELD_DIMENSION &&
+			y < (j*GameData.FIELD_DIMENSION)+(yOffset/2)+GameData.FIELD_DIMENSION) {
+		    field = map[i][j];
+		}
+	    }
+	}
+	return field;
+    }
 }

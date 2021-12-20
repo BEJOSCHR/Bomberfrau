@@ -26,12 +26,23 @@ public class PlayerButtonConfig {
     private int right;
     private int setBomb;
     
+    /* Standard ButtonConfig Initialisierung. */
     public PlayerButtonConfig() {
 	this.up = KeyEvent.VK_W;
 	this.down = KeyEvent.VK_S;
 	this.left = KeyEvent.VK_A;
 	this.right = KeyEvent.VK_D;
 	this.setBomb = KeyEvent.VK_SPACE;
+    }
+    
+    /* Individuelle ButtonConfig Initialisierung. */
+    public PlayerButtonConfig(int up, int down, int left, int right,
+		     		int setBomb) {
+	this.up = up;
+	this.down = down;
+	this.left = left;
+	this.right = right;
+	this.setBomb = setBomb;
     }
     
     public int getUp() {

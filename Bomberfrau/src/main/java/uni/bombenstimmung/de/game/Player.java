@@ -15,6 +15,7 @@ package uni.bombenstimmung.de.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Point;
 
 import javax.swing.Timer;
 
@@ -38,27 +39,7 @@ public class Player extends Entity implements ActionListener{
     private int velX;
     private int velY;
     
-    public Player(String name) {
-	this.id = 0;
-	this.name = name;
-	this.ipAdress = "localhost";
-	this.host = true;
-	this.skin = 0;
-	this.movementSpeed = 1;
-	this.maxBombs = 1;
-	this.xPosition = GraphicsHandler.getWidth()/2;
-	this.yPosition = GraphicsHandler.getHeight()/2;
-	this.velX = 0;
-	this.velY = 0;
-	this.currentButtonConfig = new PlayerButtonConfig();
-	this.dead = false;
-	this.currentField = null;
-	this.t = new Timer(8, this);
-	this.t.start();
-	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.GAME);
-    }
-    
-    public Player(int id, String name, String ipAdress, boolean host, int skin) {
+    public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
 	this.id = id;
 	this.name = name;
 	this.ipAdress = ipAdress;
@@ -66,21 +47,30 @@ public class Player extends Entity implements ActionListener{
 	this.skin = skin;
 	this.movementSpeed = 1;
 	this.maxBombs = 1;
-	this.xPosition = GraphicsHandler.getWidth()/2;
-	this.yPosition = GraphicsHandler.getHeight()/2;
+	super.xPosition = (int)pos.getX();
+	super.yPosition = (int)pos.getY();
 	this.velX = 0;
 	this.velY = 0;
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
-	this.currentField = null;
+	//this.currentField = new Field(0, 0, FieldContent.EMPTY);
+	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
+	ConsoleHandler.print("Current Field: " + currentField.xPosition + ", " + currentField.yPosition, MessageType.GAME);
 	this.t = new Timer(8, this);
 	this.t.start();
 	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.GAME);
     }
     
+    /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position. */
     public void actionPerformed(ActionEvent e) {
-	this.xPosition += this.velX;
-	this.yPosition += this.velY;
+	Field tempField = this.currentField;
+	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
+	if (this.currentField.getContent() == FieldContent.EMPTY) {
+	    super.xPosition += this.velX;
+	    super.yPosition += this.velY;
+	} else {
+	    this.currentField = tempField;
+	}
     }
     
     public void setId(int id) {
@@ -143,6 +133,11 @@ public class Player extends Entity implements ActionListener{
 	return currentField;
     }
     
+    /*
+     * Es folgen Methoden zu Bewegungsaktionen. Hier werden jeweils die Velocities passend zur Aktion
+     * angepasst. Der Velocity-Wert wird in actionPerformed kontinuierlich addiert.
+     */
+    
     public void actionUp() {
 	this.velY = -(int)((double)GraphicsHandler.getHeight()/500.0);
 	this.velX = 0;
@@ -166,5 +161,9 @@ public class Player extends Entity implements ActionListener{
     public void actionStop() {
 	this.velX = 0;
 	this.velY = 0;
+    }
+    
+    public void actionSetBomb() {
+	// TODO: ActionSetBomb
     }
 }
