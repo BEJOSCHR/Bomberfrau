@@ -14,18 +14,26 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 
-import java.awt.Color;
-
 public class Field extends Entity {
 
     private FieldContent content;
     
+    /**
+     * Erzeugt ein Feld
+     * @param x, Startpunkt X
+     * @param y, Startpunkt Y
+     * @param cont, Typ des Feldes
+     */
     public Field(int x, int y, FieldContent cont) {
 	super.xPosition = x;
 	super.yPosition = y;
 	content = cont;
     }
     
+    /**
+     * Gibt einen String zurück, der den Typ des Feldes repräsentiert
+     * @param type, FieldContent eingeben
+     */
     public static String getFieldTypeRepresentation(FieldContent type) {
 	switch(type) {
 		case BLOCK:
@@ -42,6 +50,11 @@ public class Field extends Entity {
 	}
     }
     
+    
+    /**
+     * Wandelt einen String in einen FieldContent um
+     * @param representation, String eingabe (BL,BO,EM,WA)
+     */
     public static FieldContent getFieldTypeFromRepresentation(String representation) {
 	
 	switch(representation) {
@@ -59,6 +72,12 @@ public class Field extends Entity {
 	}
     }
     
+    /**
+     * Malt das spezifische Feld an den angegebenen Koordinaten auf der Map
+     * @param x, X-Koordinate
+     * @param y, Y-Koordinate
+     * @param cont, FieldContent
+     */
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
 	    case WALL:
