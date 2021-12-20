@@ -1,3 +1,12 @@
+/*
+ * Game
+ *
+ * Version 1.0
+ * Author: Dennis und Mustafa
+ *
+ * Malt und verwaltet die Map
+ */
+
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
@@ -9,7 +18,7 @@ public class Game {
 
 	
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
-    private static int mapNumber = 1;
+    private static int mapNumber = 2;
 	
     public static void fillMap() {
 	for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
@@ -47,10 +56,13 @@ public class Game {
 	Game.fillMap();
 	
 	String mapData;
-	switch(mapNumber) {
+	switch(getMapNumber()) {
 		case 1:
 			mapData = GameData.MAP_1;
 			break;
+		case 2: 
+		    	mapData = GameData.MAP_2;
+		    	break;
 		default:
 			ConsoleHandler.print("Unknown mapnumber, cant load map!");
 			return;
@@ -85,5 +97,13 @@ public class Game {
 	    }
 	}
 	return field;
+    }
+
+    public static int getMapNumber() {
+	return mapNumber;
+    }
+
+    public static void setMapNumber(int mapNumber) {
+	Game.mapNumber = mapNumber;
     }
 }

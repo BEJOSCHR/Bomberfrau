@@ -1,6 +1,10 @@
-/*	Diese Klasse ist von Dennis
- * 	Sie dient dazu, die Bombe zu erstellen, zu legen und 
- * 	ihre Eigenschaften zu verwalten.
+/*
+ * Bomb
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Verwaltet die Bombe im Spiel
  */
 
 package uni.bombenstimmung.de.game;

@@ -1,8 +1,11 @@
-/*	Diese Klasse ist von Dennis
- * 	Sie dient dazu, die einzelnen Felder und ihre Inhalte 
- * 	der Map zu verwalten. 
+/*
+ * Field
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Verwaltet die einzelnen Felder einer Map
  */
-
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
@@ -33,8 +36,6 @@ public class Field extends Entity {
 			return "EM";
 		case WALL:
 			return "WA";
-		case YELLOWGRAS:
-			return "YG";
 		default:
 			ConsoleHandler.print("Unknown fieldtype '"+type+"'!");
 			return "##";
@@ -52,8 +53,6 @@ public class Field extends Entity {
 		    return FieldContent.EMPTY;
 		case "WA":
 		    return FieldContent.WALL;
-		case "YG":
-			return FieldContent.YELLOWGRAS;
 		default:
 		    ConsoleHandler.print("Unknown fieldtype representation '"+representation+"'!");
 		    return FieldContent.EMPTY;
@@ -69,14 +68,15 @@ public class Field extends Entity {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
 		break;
 	    case EMPTY:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} else if (Game.getMapNumber() == 2) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}
 		break;
 	    case BLOCK:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
 		break;
-	    case YELLOWGRAS:
-	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
-	    break;
 	    default:
 		break;
 	}
