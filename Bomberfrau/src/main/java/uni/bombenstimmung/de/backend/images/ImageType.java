@@ -17,4 +17,5 @@ public enum ImageType {
     	IMAGE_INGAME_BLOCK,	
 		IMAGE_INGAME_YELLOWGRAS,
 		IMAGE_INGAME_LIGHTTILE;
+		
 }

@@ -15,6 +15,7 @@ package uni.bombenstimmung.de.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,6 +31,15 @@ public class PlayerHandler {
     private static boolean playerMoving = false;
     private static boolean multiPress = false;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
+    private static boolean debugKeys = true;
+    
+    public static Player getClientPlayer() {
+	return clientPlayer;
+    }
+    
+    public static ArrayList<Player> getOpponentPlayers() {
+	return opponentPlayers;
+    }
     
     public static int getOpponentCount() {
 	return opponentCount;
@@ -80,6 +90,15 @@ public class PlayerHandler {
 	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	    for (Player i : opponentPlayers) {
+		g.setColor(Color.green);
+		g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	    }
 	}
     }
     
@@ -240,8 +259,21 @@ public class PlayerHandler {
 	 * Bombe wird erst bei Loslassen der Taste gelegt.
 	 */
 	if (clientPlayer.getDead() == false && keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
-	    ConsoleHandler.print("Client placed bomb.", MessageType.GAME);
 	    clientPlayer.actionSetBomb();
+	}
+	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
+	if (debugKeys) {
+	    if (keyCode == KeyEvent.VK_O) {
+		addOpponentPlayer(1, "Dave", "1.1.1.1", false, 1, new Point(1, 15));
+		addOpponentPlayer(2, "Jenny", "2.2.2.2", false, 2, new Point(15, 15));
+		addOpponentPlayer(3, "Christie", "3.3.3.3", false, 3, new Point(15, 1));
+	    } else if (keyCode == KeyEvent.VK_L) {
+		clearOpponentPlayers();
+	    } else if (keyCode == KeyEvent.VK_I) {
+		clientPlayer.increaseMaxBombs();
+	    } else if (keyCode == KeyEvent.VK_K) {
+		clientPlayer.decreaseMaxBombs();
+	    }
 	}
     }
 }

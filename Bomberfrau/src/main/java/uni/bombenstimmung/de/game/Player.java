@@ -32,6 +32,7 @@ public class Player extends Entity implements ActionListener{
     private int skin;
     private int movementSpeed;
     private int maxBombs;
+    private int placedBombs;
     private PlayerButtonConfig currentButtonConfig;
     private boolean dead;
     private Field currentField;
@@ -49,25 +50,25 @@ public class Player extends Entity implements ActionListener{
 	this.skin = skin;
 	this.movementSpeed = 1;
 	this.maxBombs = 1;
+	this.placedBombs = 0;
 	super.xPosition = (int)((pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2));
 	super.yPosition = (int)((pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
 	this.velX = 0;
 	this.velY = 0;
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
-	//this.currentField = new Field(0, 0, FieldContent.EMPTY);
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
-	ConsoleHandler.print("Current Field: " + currentField.xPosition + ", " + currentField.yPosition, MessageType.GAME);
 	this.t = new Timer(8, this);
 	this.t.start();
-	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.GAME);
+	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name + ", Pos(" + currentField.xPosition +
+				", " + currentField.yPosition +")", MessageType.GAME);
     }
     
-    /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position. */
+    /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
     public void actionPerformed(ActionEvent e) {
 	Field tempField = this.currentField;
-	this.currentField = Game.getFieldFromCoord((xPosition + velX), (yPosition + velY));
-	if (this.currentField.getContent() == FieldContent.EMPTY || this.currentField.getContent() == FieldContent.YELLOWGRAS) {
+	this.currentField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
+	if (this.currentField.getContent() == FieldContent.EMPTY || this.currentField.getContent() == FieldContent.BOMB) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	} else {
@@ -166,6 +167,32 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void actionSetBomb() {
+	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
+	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
+	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
+	    Game.addBomb(0, 3, id);
+	    placedBombs++;
+	    ConsoleHandler.print("Player ID: " + id + " placed Bomb at Pos(" + temp.xPosition + ", "
+		    			+ temp.yPosition + ")", MessageType.GAME);
+	}
 	// TODO: ActionSetBomb
+    }
+    
+    public void increaseMaxBombs() {
+	this.maxBombs++;
+	ConsoleHandler.print("Player ID: " + id + ": New MaxBombs: " + this.maxBombs, MessageType.GAME);
+    }
+    
+    public void decreaseMaxBombs() {
+	if (this.maxBombs > 1) {
+	    this.maxBombs--;
+	}
+	ConsoleHandler.print("Player ID: " + id + ": New MaxBombs: " + this.maxBombs, MessageType.GAME);
+    }
+    
+    public void decreasePlacedBombs() {
+	if (placedBombs > 0) {
+	    placedBombs--;
+	}
     }
 }
