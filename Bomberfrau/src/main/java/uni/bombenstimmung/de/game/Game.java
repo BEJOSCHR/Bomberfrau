@@ -25,8 +25,8 @@ public class Game {
 	//MAP
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yOffset = GameData.MAP_SIDE_BORDER;
-	for(int y = GameData.MAP_DIMENSION-1 ; y >= 0 ; y--) {
-	    for(int x = GameData.MAP_DIMENSION-1 ; x >= 0 ; x--) {
+	for(int x = GameData.MAP_DIMENSION-1 ; x >= 0 ; x--) {
+	    for(int y = GameData.MAP_DIMENSION-1 ; y >= 0 ; y--) {
 		map[x][y].drawField(g, (x*GameData.FIELD_DIMENSION)+(xOffset/2), (y*GameData.FIELD_DIMENSION)+(yOffset/2), map[x][y].getContent());
 	    }
 	}
@@ -49,7 +49,7 @@ public class Game {
 	String mapData;
 	switch(mapNumber) {
 		case 1:
-			mapData = GameData.MAP_2;
+			mapData = GameData.MAP_1;
 			break;
 		default:
 			ConsoleHandler.print("Unknown mapnumber, cant load map!");
@@ -59,8 +59,8 @@ public class Game {
 	String[] fieldData = mapData.split(":");
 	for(String field : fieldData) {
 		String[] data = field.split(",");
-		int x = Integer.parseInt(data[0]);
-		int y = Integer.parseInt(data[1]);
+		int y = Integer.parseInt(data[0]);
+		int x = Integer.parseInt(data[1]);
 		FieldContent type = Field.getFieldTypeFromRepresentation(data[2]);
 		map[x][y].setContent(type);
 	}	

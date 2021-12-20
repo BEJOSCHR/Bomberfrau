@@ -76,6 +76,7 @@ public class Field extends Entity {
 		break;
 	    case YELLOWGRAS:
 	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+	    break;
 	    default:
 		break;
 	}
