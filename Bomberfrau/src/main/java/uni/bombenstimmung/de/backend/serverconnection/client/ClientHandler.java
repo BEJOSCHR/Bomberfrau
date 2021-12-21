@@ -9,6 +9,7 @@
 package uni.bombenstimmung.de.backend.serverconnection.client;
 
 import java.net.SocketAddress;
+import java.util.Date;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -29,9 +30,30 @@ public class ClientHandler extends IoHandlerAdapter{
 	
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
-		ConsoleHandler.print("Client with ID " + Integer.toString(client.getId()) + " connected with Server" + session.getRemoteAddress(), MessageType.BACKEND);
-		session.write((String) "001-"+client.getId());
+		ConsoleHandler.print("Client connected with Server" + session.getRemoteAddress(), MessageType.BACKEND);
+		try {
+			session.write((String) "001-");
+			Thread.sleep(1000);
+			session.write((String) "002-");
+			Thread.sleep(1000); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//calculatePing (session);
+		/*
+		while (true) {
+		    try {
+		    	ConsoleHandler.print("In infinite loop", MessageType.BACKEND);
+		    	Date date = new Date();
+		    	long time = date.getTime();
+		        session.write("003-" + Long.toString(time));
+		        Thread.sleep(500);
+		    } catch (Exception e) {
+		        e.printStackTrace();;
+		    }
+		} */
 	}
+		
 	
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
@@ -50,5 +72,20 @@ public class ClientHandler extends IoHandlerAdapter{
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		//ConsoleHandler.print("Client: Message sent");
+	}
+	
+	
+	private void calculatePing(IoSession session) {
+		while (true) {
+		    try {
+		    	ConsoleHandler.print("In infinite loop", MessageType.BACKEND);
+		    	Date date = new Date();
+		    	long time = date.getTime();
+		        session.write("003-" + Long.toString(time));
+		        Thread.sleep(500);
+		    } catch (Exception e) {
+		        e.printStackTrace();;
+		    }
+		} 
 	}
 }

@@ -13,6 +13,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,6 +23,7 @@ import org.apache.mina.core.future.IoFuture;
 import org.apache.mina.core.future.IoFutureListener;
 import org.apache.mina.core.service.IoConnector;
 import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
@@ -46,12 +48,11 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	
 	@SuppressWarnings("rawtypes")
-	public ConnectedClient(boolean sHost, int sId, String IP) {
-		id = sId;
+	public ConnectedClient(boolean sHost, String IP) {
 		host = sHost;
-
 		//Is the new created Client the host, a new server will be initialized
 		if (host == true) {
+			id = 0;
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
 			//NioDatagramAcceptor acceptor = new NioDatagramAcceptor();
 			acceptor = new NioDatagramAcceptor();
@@ -62,6 +63,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			
 			DatagramSessionConfig dcfg = acceptor.getSessionConfig();
 			dcfg.setReuseAddress(true);
+			
+			
 			
 			try {
 				acceptor.bind(new InetSocketAddress(ConnectionData.PORT));
@@ -101,7 +104,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	//Sends a message to the connected Client
 	private void sendMessage(IoSession session) throws InterruptedException {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 0; i++) {
 			String message = "000-Hallo" + i;
 			session.write(message);
 			Thread.sleep(20);
@@ -120,59 +123,90 @@ public class ConnectedClient extends IoHandlerAdapter{
 			ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
 			//sendMessageToAllClients("1000-Sharing this to all clients");
 			break;
-			
 		//001 = Being sent when opening a session with the server. 
-		//Format: "001-[ID]"
+		//Format: "001-"
 		case 001:
-			String[] pMessage001 = message.split("-");
-			addClientToList(session.getRemoteAddress(), Integer.parseInt(pMessage001[1]));
+			//String[] pMessage001 = message.split("-");
+			addClientToList(session.getRemoteAddress());
 			printConnectedClients();
 			break;
-			
+		//002 = Being sent from a client to get the ID
+		case 002:
+			if (containsClientKey(session.getRemoteAddress())) {
+				for (SocketAddress i : connectedClients.keySet()) {
+					if (i == session.getRemoteAddress()) {
+						//ConsoleHandler.print("Remote Address found: " + connectedClients.get(i), MessageType.BACKEND);
+						session.write("400-"+ Integer.toString(connectedClients.get(i)));
+					}
+					else {
+						ConsoleHandler.print("Error", MessageType.BACKEND);
+					}
+				}
+			}
+			else {
+				ConsoleHandler.print("Client with remote address: " + session.getRemoteAddress() + " is not in HashMap", MessageType.BACKEND);
+			}
+			break;
+		case 003:
+			String[] pMessage003 = message.split("-");
+	    	Date hDate = new Date();
+	    	long hTime = hDate.getTime();
+	    	session.write("903-" + Long.toString(hTime));
+	    	//long clientTime = Long.parseLong(pMessage003[1]);
+	    	//long ping = clientTime - time;
 		//100 = Position of one player is sent and will be broadcasted to all the other clients in the session.
 		//Format: "100-[ID]-[X-Cord]-[Y-Cord]"
 		case 100:
 			//TODO: SetX und SetY für den Host muss noch implementiert werden.
 			String[] pMessage100 = message.split("-");
 			sendMessageToAllClients("202"+pMessage100[1]+pMessage100[2]+pMessage100[3]);
-			break;
-			
+			break;	
 		//101 = Position of the planted bomb is sent and will be broadcasted to all the other clients in the session.
 		//Format: "101-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 101:
 			String[] pMessage101 = message.split("-");
 			sendMessageToAllClients("203"+pMessage101[1]+pMessage101[2]+pMessage101[3]);
 			sendMessageToAllClients(message);
-			break;
-			
+			break;	
 		//END OF SERVER CASES
 			
 		//201 = Create a new player object
 		//Format: "201-//TODO"
 		case 201:
 			//TODO: Neues Spielerobjekt erzeugen
-			break;
-			
+			break;	
 		//202 = Position of one player is sent and will be set on the clients site. 
 		//Format: "201-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
 			String[] pMessage202 = message.split("-");
 			//TODO: Setze X und Y des Spielers
-			break;
-			
+			break;	
 		//202 = Position of a bomb is sent and will be set on the clients site. 
 		//Format: "202-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 203:
 			String[] pMessage203 = message.split("-");
 			//TODO: Setze X und Y der Bombe
 			break;
-			
 		//300 = Receive the message of the host that the game is starting
 		//Format: "300"
 		case 300:
 			//TODO: Starte Spiel
 			break;
-			
+		//400 = Receive message with the id for the client from the server.
+		case 400:
+			String[] pMessage400 = message.split("-");
+			int clientID  = Integer.parseInt(pMessage400[1]);
+			this.id = clientID;
+			ConsoleHandler.print("ID = " + this.id, MessageType.BACKEND);
+			break;
+			//ClientID can be used now be used with .getId
+		case 903:
+			String[] pMessage903 = message.split("-");
+	    	Date cDate = new Date();
+	    	long cTime = cDate.getTime();
+	    	long clientTime = Long.parseLong(pMessage903[1]);
+	    	long ping = clientTime - cTime;
+	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
 		//999 = Being sent when a Client disconnects/leaves from the Server. 
 		//Format: "999"
 		case 999:
@@ -198,9 +232,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	}
 	
 	//Add a new client with the corresponding remote address to the Hash Map
-	public void addClientToList(SocketAddress remoteAddress, int id) {
+	public void addClientToList(SocketAddress remoteAddress) {
 		if (!containsClient(remoteAddress)) {
-			connectedClients.put(remoteAddress, id);
+			int cCsize = connectedClients.size();
+			connectedClients.put(remoteAddress, cCsize+1);
 			ConsoleHandler.print("Client added to List", MessageType.BACKEND);
 		}
 	} 
@@ -213,6 +248,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	//Checks if the Hash Map already contains a client with the remote address
 	public boolean containsClient(SocketAddress remoteAddress) {
 		return connectedClients.contains(remoteAddress);
+	}
+	
+	public boolean containsClientKey(SocketAddress remoteAddress) {
+		return connectedClients.containsKey(remoteAddress);
 	}
 	
 	//Removes the client from the Hash Map

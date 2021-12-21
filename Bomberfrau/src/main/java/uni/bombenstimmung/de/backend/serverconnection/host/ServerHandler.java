@@ -36,11 +36,7 @@ public class ServerHandler extends IoHandlerAdapter {
 	//When a session is created, the client will be added to the Hash Map of the server object
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
-		ConsoleHandler.print("Server session created with Client " + session.getRemoteAddress(), MessageType.BACKEND);
-		//server.addClientToList(session.getRemoteAddress());
-		//server.printConnectedClients();
-		//ConnectedClients.add(new ConnectedClient (false));
-		//server.sendMessageToAllClients("Hallo");
+		ConsoleHandler.print("Server: session created with Client " + session.getRemoteAddress(), MessageType.BACKEND);
 	}
 	
 	//When a message from the Client is received, the Server will check it for an id and process the message as needed.
@@ -52,7 +48,6 @@ public class ServerHandler extends IoHandlerAdapter {
 		
 		SocketAddress remoteAddress = session.getRemoteAddress();
 		ConsoleHandler.print("Server: Message received from Client " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
-		//server.printMessage("Server: Message received from Client " + remoteAddress + ": " + ((ConnectedClient) message).getId());
 		//session.write("Answer back to Client " + remoteAddress);
 		//server.sendMessageToAllClients((String) message);
 	}
