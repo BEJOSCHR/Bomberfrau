@@ -1,25 +1,16 @@
 package uni.bombenstimmung.de.lobby;
 
-import java.util.Enumeration;
+import java.awt.Color;
+import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
-
-//Java program to find IP address of your computer
-//java.net.InetAddress class provides method to get
-//IP of any host name
-import java.net.*;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.io.*;
-//import java.util.*;
-import java.net.InetAddress;
 
 public class Lobby_Create {
 
@@ -131,13 +122,19 @@ public class Lobby_Create {
 		
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/6);
 		
-		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-20);
+		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight());
+		
+		
 		
 		for(int i=0; i < numberPlayer; i++) {
 			if (player[i].getisHost() == true) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/13, GraphicsHandler.getHeight()/4 + 40*i-13, null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 - 50, null);
+				g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 + GraphicsHandler.getHeight()/5, null);
 			}
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4);
+			
+			g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, null);
+//			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
 		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
 //		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
@@ -146,9 +143,6 @@ public class Lobby_Create {
 //		if (LobbyMovement.getTimerZaehler() != 0) {
 //			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
 //		}
-		g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), 500, 500, null);
-		
-		g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), 500, 700, null);
 	}
 	
 	

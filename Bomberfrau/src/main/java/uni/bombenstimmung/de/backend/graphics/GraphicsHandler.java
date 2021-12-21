@@ -136,7 +136,7 @@ public class GraphicsHandler {
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
-		String name1 = "Johnny";
+		String name1 = "SehrSehrLangerName";
 		String name2 = "NBon";
 		String name3 = "Son";
 		String name4 = "Jos";
@@ -145,13 +145,13 @@ public class GraphicsHandler {
 		String ip3 = "1.0.0.Jos";
 		Player player1 = new Player(name1);
 		Player player2 = new Player(name2, ip1);
-		Player player3 = new Player(name3, ip2);
-		Player player4 = new Player(name4, ip3);
+		//Player player3 = new Player(name3, ip2);
+//		Player player4 = new Player(name4, ip3);
 		//String ip = "127.0.0.1";
 		Lobby_Create lobby = new Lobby_Create(player1);
 		lobby.addPlayer(player2);
-		lobby.addPlayer(player3);
-		lobby.addPlayer(player4);
+//		lobby.addPlayer(player3);
+//		lobby.addPlayer(player4);
 
 	}
 	/**

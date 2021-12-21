@@ -8,19 +8,14 @@
  */
 package uni.bombenstimmung.de.backend.maa;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.awt.Color;
-import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
-import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.images.ImageType;
-import uni.bombenstimmung.de.lobby.Lobby_Create;
 import uni.bombenstimmung.de.lobby.OwnButtons;
 
 public class MouseActionAreaHandler {
