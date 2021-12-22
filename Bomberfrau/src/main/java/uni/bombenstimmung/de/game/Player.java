@@ -33,6 +33,7 @@ public class Player extends Entity implements ActionListener{
     private int movementSpeed;
     private int maxBombs;
     private int placedBombs;
+    private int bombRadius;
     private PlayerButtonConfig currentButtonConfig;
     private boolean dead;
     private Field currentField;
@@ -51,6 +52,7 @@ public class Player extends Entity implements ActionListener{
 	this.movementSpeed = 1;
 	this.maxBombs = 1;
 	this.placedBombs = 0;
+	this.bombRadius = 1;
 	super.xPosition = (int)((pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2));
 	super.yPosition = (int)((pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
 	this.velX = 0;
@@ -93,6 +95,11 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void setDead(boolean dead) {
+	/* Bewegung zuruecksetzen im Todesfall. */
+	if (dead == true) {
+	    this.actionStop();
+	    PlayerHandler.resetMovement();
+	}
 	this.dead = dead;
     }
     
@@ -139,6 +146,7 @@ public class Player extends Entity implements ActionListener{
     /*
      * Es folgen Methoden zu Bewegungsaktionen. Hier werden jeweils die Velocities passend zur Aktion
      * angepasst. Der Velocity-Wert wird in actionPerformed kontinuierlich addiert.
+     * =====================================================================================
      */
     
     public void actionUp() {
@@ -166,16 +174,17 @@ public class Player extends Entity implements ActionListener{
 	this.velY = 0;
     }
     
+    /* ========= Ende des Blocks fuer Bewegungsmethoden. =========== */
+    
     public void actionSetBomb() {
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
-	    Game.addBomb(0, 3, id);
+	    Game.addBomb(this.bombRadius, 3, this.id);
 	    placedBombs++;
-	    ConsoleHandler.print("Player ID: " + id + " placed Bomb at Pos(" + temp.xPosition + ", "
+	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);
 	}
-	// TODO: ActionSetBomb
     }
     
     public void increaseMaxBombs() {

@@ -32,12 +32,11 @@ public class Bomb implements ActionListener{
 	this.counter = 0;
 	this.ownerId = ownerId;
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
-	    placedField = Game.getFieldFromCoord(PlayerHandler.getClientPlayer().xPosition, PlayerHandler.getClientPlayer().yPosition);
-	    
+	    placedField = PlayerHandler.getClientPlayer().getCurrentField();
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
-		    placedField = Game.getFieldFromCoord(i.xPosition, i.yPosition);
+		    placedField = i.getCurrentField();
 		}
 	    }
 	}
@@ -53,23 +52,127 @@ public class Bomb implements ActionListener{
     }
     
     public void explode() {
-	// TODO: Explosionsradius und Auswirkungen auf Player
+	// TODO: Auswirkung der Explosion auf andere Mitspieler und auf Upgrades
 	sysTimer.stop();
+	
+	/* 
+	 * Abfragen, ob sich ein Player oder eine Wall im Weg der Explosion befindet.
+	 * Es wird die Stelle der Bombe und die Laenge des Explosionsstrahls
+	 * in allen Himmelsrichtungen geprueft.
+	 */
+	for (int direction = 0; direction < 5; direction++) {
+	    int ray = 1;
+	    if (direction == 0) {	// Stelle der Bombe
+		if (PlayerHandler.getClientPlayer().getCurrentField() ==
+			    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
+		    PlayerHandler.getClientPlayer().setDead(true);
+		}
+		for (Player i : PlayerHandler.getOpponentPlayers()) {
+		    if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
+			i.setDead(true);
+		    }
+		}
+	    } else if (direction == 1) {	// Norden
+		while (ray <= this.radius &&
+			(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray).getContent()
+			== FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray).getContent()
+			== FieldContent.WALL)) {
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray).getContent()
+			    	== FieldContent.WALL) {
+			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition, this.placedField.yPosition - ray);
+			break;
+		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
+			    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray)) {
+			PlayerHandler.getClientPlayer().setDead(true);
+		    }
+		    for (Player i : PlayerHandler.getOpponentPlayers()) {
+			if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray)) {
+			    i.setDead(true);
+			}
+		    }
+		    ray++;
+		}
+	    } else if (direction == 2) {	// Osten
+		while (ray <= this.radius &&
+			(Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition).getContent()
+			== FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition).getContent()
+			== FieldContent.WALL)) {
+		    if (Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition).getContent()
+			    	== FieldContent.WALL) {
+			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition + ray, this.placedField.yPosition);
+			break;
+		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
+			    Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition)) {
+			PlayerHandler.getClientPlayer().setDead(true);
+		    }
+		    for (Player i : PlayerHandler.getOpponentPlayers()) {
+			if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition)) {
+			    i.setDead(true);
+			}
+		    }
+		    ray++;
+		}
+	    } else if (direction == 3) {	// Sueden
+		while (ray <= this.radius &&
+			(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray).getContent()
+			== FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray).getContent()
+			== FieldContent.WALL)) {
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray).getContent()
+			    	== FieldContent.WALL) {
+			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition, this.placedField.yPosition + ray);
+			break;
+		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
+			    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray)) {
+			PlayerHandler.getClientPlayer().setDead(true);
+		    }
+		    for (Player i : PlayerHandler.getOpponentPlayers()) {
+			if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray)) {
+			    i.setDead(true);
+			}
+		    }
+		    ray++;
+		}
+	    } else if (direction == 4) {	// Westen
+		while (ray <= this.radius &&
+			(Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition).getContent()
+			== FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition).getContent()
+			== FieldContent.WALL)) {
+		    if (Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition).getContent()
+			    	== FieldContent.WALL) {
+			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition - ray, this.placedField.yPosition);
+			break;
+		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
+			    Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition)) {
+			PlayerHandler.getClientPlayer().setDead(true);
+		    }
+		    for (Player i : PlayerHandler.getOpponentPlayers()) {
+			if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition)) {
+			    i.setDead(true);
+			}
+		    }
+		    ray++;
+		}
+	    }
+	}
+	/* Aendern des FieldContent auf EMPTY und Loeschen der Bombe. */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	    Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
 	    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 		    			", " + placedField.yPosition + ")", MessageType.GAME);
-	    Game.removeBomb(this);
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
 		    Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
 		    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 	    					", " + placedField.yPosition + ")", MessageType.GAME);
-		    Game.removeBomb(this);
 		}
 	    }
 	}
+	Game.removeBomb(this);
     }
 }

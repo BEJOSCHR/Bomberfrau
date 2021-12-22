@@ -80,6 +80,12 @@ public class PlayerHandler {
 	opponentCount = 0;
     }
     
+    public static void resetMovement() {
+	playerMoving = false;
+	multiPress = false;
+	inputBuffer.clear();
+    }
+    
     /* Draw-Methode mit allen Player-bezogenen Grafiken. Wird vom GraphicsHandler aufgerufen. */
     public static void drawPlayers(Graphics g) {
 	if (clientPlayer.getDead() == false) {
@@ -90,7 +96,17 @@ public class PlayerHandler {
 	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
-	    for (Player i : opponentPlayers) {
+	} else {
+	    g.setColor(Color.black);
+	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	}
+	for (Player i : opponentPlayers) {
+	    if (i.getDead() == false) {
 		g.setColor(Color.green);
 		g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
@@ -98,7 +114,16 @@ public class PlayerHandler {
 		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	    } else {
+		g.setColor(Color.black);
+		g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
 	    }
+	    
 	}
     }
     
@@ -273,6 +298,13 @@ public class PlayerHandler {
 		clientPlayer.increaseMaxBombs();
 	    } else if (keyCode == KeyEvent.VK_K) {
 		clientPlayer.decreaseMaxBombs();
+	    } else if (keyCode == KeyEvent.VK_P) {
+		if (clientPlayer.getDead() == false) {
+		    clientPlayer.setDead(true);
+		} else {
+		    clientPlayer.setDead(false);
+		}
+		
 	    }
 	}
     }
