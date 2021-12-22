@@ -79,10 +79,10 @@ public class Animation {
 		if(this.finished == true) { 
 			return; 
 		}
-		
+
+		this.finished = true;
 		finaliseValues();
 		
-		this.finished = true;
 		if(listRemove == true) {
 			AnimationHandler.removeAnimation(this);
 		}

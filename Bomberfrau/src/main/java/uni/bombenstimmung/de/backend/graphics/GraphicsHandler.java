@@ -11,6 +11,7 @@ package uni.bombenstimmung.de.backend.graphics;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -22,17 +23,18 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.main.BomberfrauMain;
+import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
-import uni.bombenstimmung.de.game.Game;
 
 public class GraphicsHandler {
 
 	private static int width = 0, height = 0;
 	private static Label label;
 	private static JFrame frame;
-	private static DisplayType displayType = DisplayType.INTRO;
-	//private static DisplayType displayType = DisplayType.LOADINGSCREEN;
+	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
 	
 	/**
@@ -43,7 +45,8 @@ public class GraphicsHandler {
 		frame = new JFrame();
 		
 		frame.setLocationRelativeTo(null);
-		frame.setLocation(0, 0);
+		//frame.setLocation(0, 0);
+		frame.setLocation((Settings.res_width_max-Settings.res_width)/2, (Settings.res_height_max-Settings.res_height)/2);
 		frame.setTitle("BomberFrau - "+BomberfrauMain.VERSION);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,10 +68,10 @@ public class GraphicsHandler {
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //		frame.setSize(1920, 1080);
 		frame.setSize(Settings.res_width, Settings.res_height);
-		frame.setPreferredSize(frame.getSize());
-		frame.setMinimumSize(frame.getSize());
-		frame.setMaximumSize(frame.getSize());
-		
+		//frame.setPreferredSize(frame.getSize());
+		//frame.setMinimumSize(frame.getSize());
+		//frame.setMaximumSize(frame.getSize());
+				
 		width = frame.getWidth();
 		height = frame.getHeight();
 		
@@ -76,24 +79,80 @@ public class GraphicsHandler {
 		
 		label = new Label();
 		label.requestFocus();
-		
+
 		frame.requestFocus();
 		
 		ConsoleHandler.print("Initialised Visuals!", MessageType.BACKEND);
 		
 	}
 	
+	
 	//------------------------------------------------------------------------------------------------------------------
 	//SWITCH TO SECTION
+	
 	/**
-	 * Wird von der Main am Start aufgerufen und initialisiert das Menu
+	 * Wird von der Main am Start aufgerufen und startet das Intro
 	 */
-	public static void switchToMenuFromStart() {
+	public static void switchToIntroFromLoadingscreen() {
 		
 		AnimationHandler.stopAllAnimations();
 		
+	    	SoundHandler.playSound(SoundType.INTRO, false);
+
+		Menu.introTextAni();
+		Menu.introAnimation();
+		
+		displayType = DisplayType.INTRO;
+		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.MENU);
+		
+	}
+	
+	/**
+	 * Wird nach dem Intro aufgerufen
+	 */
+	public static void switchToMenuFromIntro() {
+
+		SoundHandler.stopAllSounds();
+	    	//SoundHandler.reduceAllSounds();
+		AnimationHandler.stopAllAnimations();
+		
+	        Settings.create_selected = true;
+		Menu.buildMenu();
+		Menu.buildOptions();
+		Menu.optionsComponentsActive(false);
+		Menu.menuComponentsActive(true);
+		
+	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
-		ConsoleHandler.print("Switched to 'MENU' from 'START'!", MessageType.BACKEND);
+
+	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.MENU);	
+	}
+	
+	/**
+	 * Wird beim Wechseln von Menü zu den Optionen aufgerufen
+	 */
+	public static void switchToOptionsFromMenu() {
+		
+		AnimationHandler.stopAllAnimations();
+		Menu.menuComponentsActive(false);
+		Menu.optionsComponentsActive(true);
+
+		displayType = DisplayType.OPTIONS;
+		ConsoleHandler.print("Switched to 'OPTIONS' from 'MENU'!", MessageType.MENU);
+		
+	}
+	/**
+	 * Wird bei Rückkehr von den Optionen zum Menü aufgerufen
+	 */
+	public static void switchToMenuFromOptions() {
+		
+		AnimationHandler.stopAllAnimations();
+		Menu.optionsComponentsActive(false);
+		//Menu.menuComponentsActive(true);
+		Menu.buildMenu();
+
+		displayType = DisplayType.MENU;
+		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		
 	}
 	/**
@@ -102,64 +161,80 @@ public class GraphicsHandler {
 	public static void switchToMenuFromLobby() {
 		
 		AnimationHandler.stopAllAnimations();
-		
+		//SoundHandler.stopAllSounds();
+	    	//SoundHandler.playSound(SoundType.MENU, true);
+		Menu.menuComponentsActive(true);
+
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		
 	}
+	
 	/**
 	 * Wird aufgerufen wenn wï¿½rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieï¿½t
 	 */
 	public static void switchToMenuFromIngame() {
 		
 		AnimationHandler.stopAllAnimations();
+		SoundHandler.stopAllSounds();
 		
+		Menu.menuComponentsActive(true);
+	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
 		
 	}
+	
 	/**
 	 * Wird aufgerufen wenn im Aftergame die Session verlassen wird
 	 */
 	public static void switchToMenuFromAftergame() {
 		
 		AnimationHandler.stopAllAnimations();
+		SoundHandler.stopAllSounds();
 		
+		Menu.menuComponentsActive(true);
+	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		
 	}
+	
 	/**
 	 * Wird aufgerufen wenn aus dem Menu ein Spiel erstellt wird oder einem beigetreten wird
 	 */
 	public static void switchToLobbyFromMenu() {
 		
+	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
+		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 		
 	}
+	
 	/**
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
 	 */
 	public static void switchToIngameFromLobby() {
 		
+		//SoundHandler.stopAllSounds();
+		SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
-		
-	
-		
 		
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
 		
 	}
+	
 	/**
 	 * Wird aufgerufen wenn ein Spiel beendet wird und man das Aftergame betreten soll
 	 */
 	public static void switchToAftergameFromIngame() {
 		
 		AnimationHandler.stopAllAnimations();
+		SoundHandler.stopAllSounds();
 		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
@@ -167,6 +242,21 @@ public class GraphicsHandler {
 	}
 	//SWITCH TO SECTION
 	//------------------------------------------------------------------------------------------------------------------
+	
+
+	public static Font usedFont(int textSize) {
+
+	    Float factor = (float)(Settings.res_height)/Settings.res_height_max;
+	    Font font;
+	    font = new Font("Arial", Font.BOLD, (int)(40*factor));
+	    try {
+        	    font = Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\fonts\\vagrounded.ttf"));
+                    font = font.deriveFont(10f*factor);
+	    }
+            catch (Exception e) {}
+            font = font.deriveFont((10f+textSize)*factor);
+	    return font;
+	}
 	
 	/**
 	 * Allgemeine methode um einen beliebigen text mit parametern relativ zu einem Punkt (x,y) mittig darzustellen
@@ -179,12 +269,29 @@ public class GraphicsHandler {
 	 */
 	public static void drawCentralisedText(Graphics g, Color color, int textSize, String text, int x, int y) {
 		
-		g.setColor(color);
-		g.setFont(new Font("Arial", Font.BOLD, textSize));
+		g.setColor(color);   
+        	g.setFont(usedFont(textSize));
 		int width = g.getFontMetrics().stringWidth(text);
 		int height = g.getFontMetrics().getHeight()*2/3;
 		g.drawString(text, x-width/2, y+height/2);
 		
+	}
+	
+	public static void drawLeftText(Graphics g, Color color, int textSize, String text, int x, int y) {
+		
+		g.setColor(color);   
+        	g.setFont(usedFont(textSize));
+		int height = g.getFontMetrics().getHeight()*2/3;
+		g.drawString(text, x, y+height/2);
+		
+	}
+	
+	public static void drawRightText(Graphics g, Color color, int textSize, String text, int x, int y) {
+		
+		g.setColor(color);   
+        	g.setFont(usedFont(textSize));
+		int height = g.getFontMetrics().getHeight()*2/3;
+		g.drawString(text, x-g.getFontMetrics().stringWidth(text), y+height/2);
 	}
 	
 	/**

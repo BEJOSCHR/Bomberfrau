@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
@@ -41,67 +43,19 @@ public class BomberfrauMain {
 		2. ...
 		*/
 		
-		String ini = "save.ini";
-		Settings.initIni(ini);
-		Settings.iniValuesToTerminal(ini);
+		Settings.initIni();
+		Settings.iniValuesToTerminal();
 		
 		//1. BACKEND
 		LanguageHandler.initLLBs();
 		GraphicsHandler.initVisuals();
-		MouseActionAreaHandler.initMAAs();
 		ImageHandler.initImages();
 		SoundHandler.initSounds();
+		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		AnimationHandler.startTickTimer();
 		
-		//LOADINGSCREEN ANIMATIONS
-		new Animation(60, -1) {
-			@Override
-			public void initValues() {
-				AnimationData.loadingScreen_textSizeModifier = 0;
-			}
-			@Override
-			public void changeValues() {
-				if(getSteps()%2 == 0) {
-					AnimationData.loadingScreen_textSizeModifier = 1;
-				}else {
-					AnimationData.loadingScreen_textSizeModifier = 0;
-				}
-			}
-			@Override
-			public void finaliseValues() {
-				AnimationData.loadingScreen_textSizeModifier = 0;
-			}
-		};
-		Random r = new Random();
-		new Animation(10, -1) {
-			@Override
-			public void initValues() {
-				AnimationData.loadingScreen_posXModifier = 0;
-				AnimationData.loadingScreen_posYModifier = 0;
-			}
-			@Override
-			public void changeValues() {
-				if(getSteps()%2 == 0) {
-					int stepSize = 1;
-					AnimationData.loadingScreen_posXModifier += r.nextInt(stepSize*2)-stepSize;
-					AnimationData.loadingScreen_posYModifier += r.nextInt(stepSize*2)-stepSize;
-					int limit = 10;
-					if(AnimationData.loadingScreen_posXModifier < -limit) { AnimationData.loadingScreen_posXModifier = -limit; }
-					else if(AnimationData.loadingScreen_posXModifier > limit) { AnimationData.loadingScreen_posXModifier = limit; }
-					if(AnimationData.loadingScreen_posYModifier < -limit) { AnimationData.loadingScreen_posYModifier = -limit; }
-					else if(AnimationData.loadingScreen_posYModifier > limit) { AnimationData.loadingScreen_posYModifier = limit; }
-				}else {
-					AnimationData.loadingScreen_posXModifier = 0;
-					AnimationData.loadingScreen_posYModifier = 0;
-				}
-			}
-			@Override
-			public void finaliseValues() {
-				AnimationData.loadingScreen_posXModifier = 0;
-				AnimationData.loadingScreen_posYModifier = 0;
-			}
-		};
+		GraphicsHandler.switchToIntroFromLoadingscreen();
 		
 //		ConnectedClient host = new ConnectedClient(true, 0);
 //		System.out.println("Client: " + host.getId()+" Host: " +host.isHost());

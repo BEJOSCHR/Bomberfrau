@@ -35,8 +35,37 @@ public class LanguageHandler {
 		String[] loadingScreen_Version = {BomberfrauMain.VERSION, BomberfrauMain.VERSION};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_VERSION, loadingScreen_Version);
 		
-		String[] intro_Skip = {"<<  Click to skip  >>", "<< Klicken zum Überspringen >>"};
-		new LoadedLanguageBlock(LanguageBlockType.LB_INTRO_SKIP, intro_Skip);
+		String[] intro_skip = {"<<  Click to skip  >>", "<< Klicken zum Überspringen >>"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INTRO_SKIP, intro_skip);
+
+		
+		String[] menu_txt1 = {"Create", "Erstellen"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT1, menu_txt1);
+		String[] menu_txt2 = {"Join", "Beitreten"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT2, menu_txt2);
+		String[] menu_btn2 = {"OPTIONS", "OPTIONEN"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN2, menu_btn2);
+		String[] menu_btn3 = {"EXIT", "ENDE"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN3, menu_btn3);
+		
+		String[] options_txt1 = {"Resolution:", "Auslösung:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT1, options_txt1);
+		String[] options_fullscreen = {"Fullscreen", "Vollbild"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_FULLSCREEN, options_fullscreen);
+		String[] options_txt2 = {"Volume Music:", "Lautstärke Musik:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT2, options_txt2);
+		String[] options_txt3 = {"Volume Sound:", "Lautstärke Sound:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT3, options_txt3);
+		String[] options_txt4 = {"Controls:", "Steuerung:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT4, options_txt4);
+		String[] options_txt5 = {"Bomb", "Bombe"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT5, options_txt5);
+		String[] options_txt6 = {"show FPS", "FPS anzeigen"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT6, options_txt6);
+		String[] options_txt7 = {"Language:", "Sprache:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT7, options_txt7);
+		String[] options_btn = {"BACK", "ZURÜCK"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPTIONS_BTN, options_btn);
 		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);
 		

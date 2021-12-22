@@ -21,6 +21,7 @@ public class SoundHandler {
 
 	public static final String PATH = "sounds/";
 	private static List<LoadedSound> sounds = new ArrayList<LoadedSound>();
+	public static Clip clip;
 	
 	/**
 	 * Wird am start aufgerufen und läd alle Sounds
@@ -31,8 +32,8 @@ public class SoundHandler {
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
 		new LoadedSound("Start.wav", SoundType.TEST_START, SoundCategory.TEST, 0.02D);
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.02D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.02D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.5D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.5D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -45,7 +46,7 @@ public class SoundHandler {
 	public static void playSound(SoundType type, Boolean loop) {
 		
 		LoadedSound sound = getSound(type);
-		Clip clip = sound.getClip();
+		clip = sound.getClip();
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		float value = 20f * (float) Math.log10(sound.getVolume());
 		if(value < -70) { value = -70; } //MINIMUM VOLUME
@@ -56,6 +57,33 @@ public class SoundHandler {
 		
 	}
 	
+	/**
+	 * Stoppt alle Sounds die gerade laufen
+	 */
+	public static void stopAllSounds() {
+	        for(LoadedSound sounds : sounds) {
+	        	sounds.getClip().stop();
+	        }
+	}
+	
+	/**
+	 * Reduziert die Lautstärke des gerade laufenden CLips kontinuierlich bis zur Stille
+	 */
+	public static void reduceAllSounds() {
+	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                try {
+                    float vol = volume.getValue();
+                    while (vol>-60) {
+                        vol-=1.5f; 
+                        volume.setValue(vol);
+                        Thread.sleep(100);
+                    }
+                    Thread.sleep(1000);
+                    clip.stop();
+                }
+                catch (InterruptedException ex) {}
+	}
+                
 	/**
 	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehören
 	 * @param category- Die Category die verändert werden soll
@@ -69,6 +97,7 @@ public class SoundHandler {
 		}
 		
 	}
+	
 	
 	/**
 	 * Added den angegebenen Sound zur sounds Liste (Wird eigentlich nur aus den LoadedSounds aufgerufen)

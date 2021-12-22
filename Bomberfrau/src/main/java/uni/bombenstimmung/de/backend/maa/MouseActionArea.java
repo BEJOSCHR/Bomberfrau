@@ -11,6 +11,7 @@ package uni.bombenstimmung.de.backend.maa;
 import java.util.ConcurrentModificationException;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;

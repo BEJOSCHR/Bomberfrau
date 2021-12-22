@@ -14,4 +14,7 @@ public class AnimationData {
 	public static int loadingScreen_posYModifier = 0;
 	public static int loadingScreen_textSizeModifier = 0;
 	
+	public static double intro_zoom = 0;
+	public static int intro_skip_text = 0;
+
 }

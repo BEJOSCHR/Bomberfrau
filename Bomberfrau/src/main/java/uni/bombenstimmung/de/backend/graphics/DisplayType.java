@@ -14,6 +14,7 @@ public enum DisplayType {
 	
 	INTRO,
 	MENU,
+	OPTIONS,
 	LOBBY,
 	INGAME,
 	AFTERGAME;

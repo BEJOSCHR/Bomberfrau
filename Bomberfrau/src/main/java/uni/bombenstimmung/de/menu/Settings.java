@@ -24,6 +24,7 @@ import java.awt.Toolkit;
 
 public class Settings {
 
+	private static final String INI = "save.ini";
 
         public static boolean show_fps;
         public static boolean create_selected;
@@ -32,6 +33,7 @@ public class Settings {
         public static String user_name, language;
         public static int lang_nr;
         public static String ip;
+        public static Properties prop;
 
         // resolution
         public static int res_nr;
@@ -52,58 +54,59 @@ public class Settings {
         public static int pause;
         public static int cancel;
 
+	public static Float factor;
         
 
-        public int setResolution(int i) {
-          switch (i) {
-            case 0:
-                res_width = res_width_max;
-                res_height  = res_height_max;
-                break;
-            case 1:
-                res_width = 1280;
-                res_height  = 720;
-                break;
-            case 2:
-                res_width = 1600;
-                res_height  = 900;
-                break;
-            case 3:
-                res_width = 1920;
-                res_height  = 1080;
-                break;
-            case 4:
-                res_width = 2560;
-                res_height  = 1440;
-                break;
-            case 5:
-                res_width = 3840;
-                res_height  = 2160;
-                break;
-          }
+        public static int setResolution(int i) {
+            switch (i) {
+                case 0:
+                    res_width = res_width_max;
+                    res_height  = res_height_max;
+                    break;
+                case 1:
+                    res_width = 1280;
+                    res_height  = 720;
+                    break;
+                case 2:
+                    res_width = 1600;
+                    res_height  = 900;
+                    break;
+                case 3:
+                    res_width = 1920;
+                    res_height  = 1080;
+                    break;
+                case 4:
+                    res_width = 2560;
+                    res_height  = 1440;
+                    break;
+                case 5:
+                    res_width = 3840;
+                    res_height  = 2160;
+                    break;
+            }
           
-          if (res_width > res_width_max) {
-              res_width  = res_width_max;
-              res_height = res_height_max;
-              res_nr = 0;
-              if (lang_nr==0)
-                  JOptionPane.showMessageDialog(null,"resolution to high - switching to lower one for fullscreen.","resolution", JOptionPane.INFORMATION_MESSAGE);
-              if (lang_nr==1)
-                  JOptionPane.showMessageDialog(null,"Die Auflösung ist zu groß - Wechsel zu Vollbild.","Auflösung", JOptionPane.INFORMATION_MESSAGE);
-              ConsoleHandler.print("resolution to high - switching to lower one for fullscreen", MessageType.MENU);
-              return 0;
-          }
-          else return i;
-        }
+            if (res_width > res_width_max) {
+                  res_width  = res_width_max;
+                  res_height = res_height_max;
+                  res_nr = 0;
+                  if (lang_nr==0)
+                      JOptionPane.showMessageDialog(null,"resolution to high - switching to lower one for fullscreen.","resolution", JOptionPane.INFORMATION_MESSAGE);
+                  if (lang_nr==1)
+                      JOptionPane.showMessageDialog(null,"Die Auflösung ist zu groß - Wechsel zu Vollbild.","Auflösung", JOptionPane.INFORMATION_MESSAGE);
+                  ConsoleHandler.print("resolution to high - switching to lower one for fullscreen", MessageType.MENU);
+                  return 0;
+            }
+            else return i;
+	}
         
     
 	/**
 	*  Gibt alle Werte aus der ini-Datei im Terminal aus
 	*/
-	public static void iniValuesToTerminal(String file) {
+	public static void iniValuesToTerminal() {
         	  try{
-                        Properties prop = new Properties();
-                        prop.load(new FileInputStream(file));
+                        //prop = new Properties();
+                        prop.load(new FileInputStream(INI));
         	    	ConsoleHandler.print("<lang_nr>    = " + prop.getProperty("lang_nr"), MessageType.MENU);
         	    	ConsoleHandler.print("<res_nr>     = " + prop.getProperty("res_nr"), MessageType.MENU);
         	    	ConsoleHandler.print("<res_width>  = " + prop.getProperty("res_width"), MessageType.MENU);
@@ -123,7 +126,7 @@ public class Settings {
 	          }
 	          catch( IOException ex ){
         	        ConsoleHandler.print("catched: " + ex, MessageType.MENU);
-        	        ConsoleHandler.print("message: error in reading " + file + "\n" + ex.getMessage(), MessageType.MENU);
+        	        ConsoleHandler.print("message: error in reading " + INI + "\n" + ex.getMessage(), MessageType.MENU);
         	        ex.printStackTrace();
 	          }
 	}
@@ -132,10 +135,10 @@ public class Settings {
 	/**
 	*  Speichert die ini-Datei mit den aktuellen Werten 
 	*/
-        private static void saveIni(String file) {
+        public static void saveIni() {
               try{
-                    Properties prop = new Properties();
-                    prop.load(new FileInputStream(file));
+                    //prop = new Properties();
+                    prop.load(new FileInputStream(INI));
             
                     prop.setProperty("lang_nr", String.valueOf(lang_nr));
                     prop.setProperty("res_nr", String.valueOf(res_nr));
@@ -155,12 +158,12 @@ public class Settings {
                     prop.setProperty("show_fps", String.valueOf(show_fps));
                     
                     // saving current settings
-                    prop.store(new FileOutputStream(file)," Bomberfrau Settings");
-                    ConsoleHandler.print(file + " has been saved", MessageType.MENU);
+                    prop.store(new FileOutputStream(INI)," Bomberfrau Settings");
+                    ConsoleHandler.print(INI + " has been saved", MessageType.MENU);
                   }
                   catch( IOException ex ){
                     ConsoleHandler.print("catched: " + ex, MessageType.MENU);
-                    ConsoleHandler.print("message: error in saving " + file + "\n" + ex.getMessage(), MessageType.MENU);
+                    ConsoleHandler.print("message: error in saving " + INI + "\n" + ex.getMessage(), MessageType.MENU);
                     ex.printStackTrace();
               }
         }
@@ -172,7 +175,7 @@ public class Settings {
 	*  Ist sie vorhanden, werden die Werte ausgelesen.
 	*  Falls nicht, wird eine Datei mit Standard-Werten erstellt. 
 	*/
-        public static void initIni(String file) {
+        public static void initIni() {
             
 
               // checking current used monitor resolution (Windows 10 only ???)
@@ -190,11 +193,11 @@ public class Settings {
               ConsoleHandler.print("Toolkit resolution: " + res_width_max + " x " + res_height_max, MessageType.MENU); 
      
               try {
-                    File save_ini = new File(file);
+                    File save_ini = new File(INI);
                     if (save_ini.createNewFile())
-                        ConsoleHandler.print("New " + file + " has been created.", MessageType.MENU);
+                        ConsoleHandler.print("New " + INI + " has been created.", MessageType.MENU);
                     else
-                        ConsoleHandler.print(file + " already exists.", MessageType.MENU);
+                        ConsoleHandler.print(INI + " already exists.", MessageType.MENU);
               }
               catch (Exception e) {
                     ConsoleHandler.print("catched: " + e, MessageType.MENU);
@@ -203,8 +206,8 @@ public class Settings {
               }
             
               try{
-            	    Properties prop = new Properties();
-                    prop.load(new FileInputStream(file));
+            	    prop = new Properties();
+                    prop.load(new FileInputStream(INI));
 
                     // checking if all values exist
                     // otherwise setting them to standard values
@@ -308,13 +311,14 @@ public class Settings {
                     
                     
                     // saving current settings
-                    saveIni(file);
+                    saveIni();
               }
               catch( IOException ex ){
         	    ConsoleHandler.print("catched: " + ex, MessageType.MENU);
         	    ConsoleHandler.print("message: " + ex.getMessage(), MessageType.MENU);
                     ex.printStackTrace();
               }
+              factor = (float)(Settings.res_height)/Settings.res_height_max;
         }
 
     
