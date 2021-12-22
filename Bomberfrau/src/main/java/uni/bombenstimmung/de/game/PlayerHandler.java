@@ -276,4 +276,8 @@ public class PlayerHandler {
 	    }
 	}
     }
+    
+    public static Player getClientplayer() {
+	return clientPlayer;
+    }
 }
