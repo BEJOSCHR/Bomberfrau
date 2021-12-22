@@ -83,7 +83,7 @@ public class Game {
 	
     
     /**
-     * Gibt das Field aus dem Array anhand der Koordinaten zurück
+     * Gibt das Field aus dem Array anhand der Bildkoordinaten zurück
      * @param x, zu überprüfende X-Koordinate
      * @param y, zu überprüfende Y-Koordinate
      * @return, gibt das Field Objekt zurück, das zu der Koordinate gehört
@@ -103,6 +103,16 @@ public class Game {
 	    }
 	}
 	return field;
+    }
+    
+    /**
+     * Gibt das Field aus dem Array anhand der Mapkoordinaten zurück
+     * @param x	X-Koordinate der Map
+     * @param y	Y-Koordinate der Map
+     * @return	gibt das Field Objekt zurück, das zu der Koordinate gehört
+     */
+    public static Field getFieldFromMap(int x, int y) {
+	return map[x][y];
     }
     
     /**
