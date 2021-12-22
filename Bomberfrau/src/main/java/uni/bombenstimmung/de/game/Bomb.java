@@ -15,6 +15,7 @@ import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Bomb implements ActionListener{
 
@@ -174,5 +175,9 @@ public class Bomb implements ActionListener{
 	    }
 	}
 	Game.removeBomb(this);
+    }
+    
+    public int getCounter() {
+	return this.timer-this.counter;
     }
 }

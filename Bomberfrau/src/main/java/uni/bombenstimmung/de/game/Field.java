@@ -15,8 +15,10 @@
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 
@@ -97,6 +99,10 @@ public class Field extends Entity {
 		break;
 	    case BOMB:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, null);
+		for(Bomb i : Game.getPLacedBombs()) {
+		    int count = i.getCounter();
+		    GraphicsHandler.drawCentralisedText(g, Color.RED, 30, count + "", x+(GameData.FIELD_DIMENSION/2), y+(GameData.FIELD_DIMENSION/2));
+		}
 		break;
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {

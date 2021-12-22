@@ -91,7 +91,7 @@ public class Label extends JLabel {
 			//GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 		    	Game.drawBackground(g, Game.getMapNumber());
 		    	Game.drawRightPartOfMap(g,Game.getMapNumber());
-		    	Game.drawLeftPartOfMap(g,4);
+		    	Game.drawLeftPartOfMap(g,PlayerHandler.getPlayerAmount());
 		    	Game.drawGame(g);
 		    	PlayerHandler.drawPlayers(g);
 			break;

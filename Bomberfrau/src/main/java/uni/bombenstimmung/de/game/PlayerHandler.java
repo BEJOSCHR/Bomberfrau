@@ -27,11 +27,16 @@ public class PlayerHandler {
     private static Player clientPlayer = new Player(0, "Bob", "localhost", true, 0,
 	    					    new Point(1, 1));
     private static ArrayList<Player> opponentPlayers = new ArrayList<Player>();
+    private static ArrayList<Player> allPlayer = new ArrayList<Player>();
     private static int opponentCount = 0;
     private static boolean playerMoving = false;
     private static boolean multiPress = false;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = true;
+    
+    public static int getPlayerAmount() {
+	return opponentPlayers.size()+1;
+    }
     
     public static Player getClientPlayer() {
 	return clientPlayer;
@@ -45,6 +50,14 @@ public class PlayerHandler {
 	return opponentCount;
     }
     
+    public static void addToAllPlayers(ArrayList<Player> array) {
+	if(allPlayer.contains(clientPlayer)) {
+	    allPlayer.addAll(array);
+	} else {
+	    allPlayer.add(clientPlayer);
+	    allPlayer.addAll(array);
+	}
+    }
     /**
      * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde Player ist.
      * @param id	ID des Players
@@ -292,6 +305,7 @@ public class PlayerHandler {
 		addOpponentPlayer(1, "Dave", "1.1.1.1", false, 1, new Point(1, 15));
 		addOpponentPlayer(2, "Jenny", "2.2.2.2", false, 2, new Point(15, 15));
 		addOpponentPlayer(3, "Christie", "3.3.3.3", false, 3, new Point(15, 1));
+		addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    } else if (keyCode == KeyEvent.VK_L) {
 		clearOpponentPlayers();
 	    } else if (keyCode == KeyEvent.VK_I) {
@@ -309,7 +323,7 @@ public class PlayerHandler {
 	}
     }
     
-    public static Player getClientplayer() {
-	return clientPlayer;
+    public static ArrayList<Player> getAllPlayer(){
+	return allPlayer;
     }
 }

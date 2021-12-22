@@ -15,6 +15,8 @@ import java.awt.Color;
 
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.ImageType;
 
 public class Game {
 
@@ -164,13 +166,18 @@ public class Game {
      * @param anzPlayer, die Anzahl der teilnehmenden Spieler zur Berechnung der Textaufteilung
      */
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
+	int counter = 0;
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
-	for(int i = 0; i < anzPlayer; i++) {
-	    Player client = PlayerHandler.getClientplayer();
-	    int k = client.getId();
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (k+1) + " :" + client.getName() , 0+(xOffset/4), 0+((i+(i+1))*gap));
+	for(Player i : PlayerHandler.getAllPlayer()) {
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + " :" + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    if(i.getDead()) {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), null);
+	    } else {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), null);
+	    }
+	    counter++;
 	}
     }
 
@@ -196,5 +203,9 @@ public class Game {
     
     public static void removeBomb(Bomb b) {
 	placedBombs.remove(b);
+    }
+    
+    public static ArrayList<Bomb> getPLacedBombs() {
+	return placedBombs;
     }
 }

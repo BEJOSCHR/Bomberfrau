@@ -26,6 +26,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameData;
+import uni.bombenstimmung.de.game.PlayerHandler;
 
 public class GraphicsHandler {
 
@@ -148,6 +149,7 @@ public class GraphicsHandler {
 		
 		Game.fillMap();
 	    	Game.updateMap(1);
+	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 		
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
