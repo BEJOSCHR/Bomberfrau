@@ -168,7 +168,9 @@ public class Game {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(int i = 0; i < anzPlayer; i++) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i+1) + " : Mia Julia", 0+(xOffset/4), 0+((i+(i+1))*gap));
+	    Player client = PlayerHandler.getClientplayer();
+	    int k = client.getId();
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (k+1) + " :" + client.getName() , 0+(xOffset/4), 0+((i+(i+1))*gap));
 	}
     }
 
