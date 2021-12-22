@@ -68,12 +68,10 @@ public class Player extends Entity implements ActionListener{
     
     /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
     public void actionPerformed(ActionEvent e) {
-	Field tempField = this.currentField;
-	this.currentField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
-	if (this.currentField.getContent() == FieldContent.EMPTY || this.currentField.getContent() == FieldContent.BOMB) {
+	Field tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
+	if (tempField.getContent() == FieldContent.EMPTY || tempField.getContent() == FieldContent.BOMB) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
-	} else {
 	    this.currentField = tempField;
 	}
     }
@@ -202,6 +200,18 @@ public class Player extends Entity implements ActionListener{
     public void decreasePlacedBombs() {
 	if (placedBombs > 0) {
 	    placedBombs--;
+	}
+    }
+    
+    public void increaseBombRadius() {
+	if (this.bombRadius < GameData.MAP_DIMENSION) {
+	    this.bombRadius++;
+	}
+    }
+    
+    public void increaseMovementSpeed() {
+	if (this.movementSpeed < 5) {
+	    this.movementSpeed++;
 	}
     }
 }
