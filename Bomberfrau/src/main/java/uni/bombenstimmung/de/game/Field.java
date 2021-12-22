@@ -104,6 +104,15 @@ public class Field extends Entity {
 		    GraphicsHandler.drawCentralisedText(g, Color.RED, 30, count + "", x+(GameData.FIELD_DIMENSION/2), y+(GameData.FIELD_DIMENSION/2));
 		}
 		break;
+	    case EXPLOSION1:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX1).getImage(), x, y, null);
+		break;
+	    case EXPLOSION2:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2).getImage(), x, y, null);
+		break;
+	    case EXPLOSION3:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3).getImage(), x, y, null);
+		break;
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
