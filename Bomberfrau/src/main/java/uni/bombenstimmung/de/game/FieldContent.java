@@ -15,6 +15,9 @@ public enum FieldContent {
     BOMB,
     BORDER,
     UPGRADE,
+    EXPLOSION1,
+    EXPLOSION2,
+    EXPLOSION3,
     EMPTY;
 
 }	
