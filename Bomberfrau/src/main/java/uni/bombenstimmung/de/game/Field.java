@@ -120,6 +120,9 @@ public class Field extends Entity {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
 		}
 		break;
+	    case UPGRADE:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_TEMP).getImage(), x, y, null);
+		break;
 	  
 	}
     }

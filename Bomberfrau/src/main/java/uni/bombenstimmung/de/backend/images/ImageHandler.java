@@ -40,6 +40,7 @@ public class ImageHandler {
 	    	new LoadedImage("BombExplosion1.png", ImageType.IMAGE_INGAME_BOMB_EX1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("BombExplosion2.png", ImageType.IMAGE_INGAME_BOMB_EX2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("BombExplosion3.png", ImageType.IMAGE_INGAME_BOMB_EX3, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("upgrade_temp.png", ImageType.IMAGE_INGAME_UPGRADE_TEMP, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}

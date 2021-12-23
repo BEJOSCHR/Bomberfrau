@@ -12,6 +12,8 @@ package uni.bombenstimmung.de.game;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
@@ -25,7 +27,7 @@ public class Bomb implements ActionListener{
     private Timer sysTimer;
     private int counter;
     private Field placedField;
-    private Wall targetedWall;
+    private ArrayList<Wall> targetedWalls;
     
     
     public Bomb(int r, int t, int ownerId) {
@@ -42,7 +44,7 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
-	this.targetedWall = null;
+	this.targetedWalls = new ArrayList<Wall>();
 	sysTimer = new Timer(1000, this);
 	sysTimer.start();
     }
@@ -74,6 +76,10 @@ public class Bomb implements ActionListener{
 	    } else if (direction == 1) { //SUEDEN
 		    while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EMPTY)) {
+			/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
+			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL) {
+			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)));
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
@@ -96,6 +102,10 @@ public class Bomb implements ActionListener{
 	    } else if(direction == 2) { //NORDEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EMPTY)) {
+		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
+			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL) {
+			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)));
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
@@ -118,6 +128,10 @@ public class Bomb implements ActionListener{
 	    } else if (direction == 3) { // OSTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EMPTY)) {
+		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
+			if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
+			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)));
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
@@ -137,9 +151,13 @@ public class Bomb implements ActionListener{
 	    		}
 			r++;
 		}
-	    } else if (direction == 4) {
+	    } else if (direction == 4) { // WESTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EMPTY)) {
+		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
+			if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
+			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)));
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
@@ -263,7 +281,7 @@ public class Bomb implements ActionListener{
 			Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition + r, this.placedField.yPosition);
 			r++;
 		}
-	    } else if (direction == 4) {
+	    } else if (direction == 4) { // WESTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION2 || 
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3)) {
 //			if ((Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
@@ -288,7 +306,7 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
-	/* Aendern des FieldContent auf EMPTY und Loeschen der Bombe. */
+	/* Dekrement der gelegten Bombe bei Players */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	} else {
@@ -299,7 +317,11 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
+	/* Aufrufen von destroyed-Methode aller erzeugten Wall-Objekte. */
 	Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
+	for (Wall i : this.targetedWalls) {
+	    i.destroyed();
+	}
 	ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 			", " + placedField.yPosition + ")", MessageType.GAME);
 	Game.removeBomb(this);
@@ -309,7 +331,7 @@ public class Bomb implements ActionListener{
 	return this.timer-this.counter;
     }
     
-    public Wall getTargetedWall() {
-	return targetedWall;
+    public ArrayList<Wall> getTargetedWalls() {
+	return targetedWalls;
     }
 }

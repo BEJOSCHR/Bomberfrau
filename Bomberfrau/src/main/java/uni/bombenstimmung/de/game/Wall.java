@@ -14,7 +14,6 @@ public class Wall {
     public Wall(Field field) {
 	this.field = field;
 	this.randNr = Math.random();
-	this.destroyed();
     }
     
     public void destroyed() {
