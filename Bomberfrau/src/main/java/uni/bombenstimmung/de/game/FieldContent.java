@@ -17,7 +17,11 @@ public enum FieldContent {
     UPGRADE,
     EXPLOSION1,
     EXPLOSION2,
-    EXPLOSION3,
+    EXPLOSION2_NS,
+    EXPLOSION3_N,
+    EXPLOSION3_S,
+    EXPLOSION3_W,
+    EXPLOSION3_O,
     EMPTY;
 
 }	
