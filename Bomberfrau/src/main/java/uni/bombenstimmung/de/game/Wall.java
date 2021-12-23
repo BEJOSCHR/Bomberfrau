@@ -5,16 +5,25 @@
 
 package uni.bombenstimmung.de.game;
 
+import java.lang.Math;
+
 public class Wall {
+    private Field field;
+    private double randNr;
     
-    private FieldContent type = FieldContent.WALL;
-    
-    public Wall() {
-	// TODO Auto-generated constructor stub
+    public Wall(Field field) {
+	this.field = field;
+	this.randNr = Math.random();
+	this.destroyed();
     }
     
     public void destroyed() {
-	
+	if (randNr <= 0.2) {
+	    Game.changeFieldContent(FieldContent.UPGRADE, this.field.xPosition, this.field.yPosition);
+	} else {
+	    Game.changeFieldContent(FieldContent.EMPTY, this.field.xPosition, this.field.yPosition);
+	}
+	this.field = null;
+	this.randNr = 0.0;
     }
-
 }

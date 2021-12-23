@@ -67,9 +67,36 @@ public class Player extends Entity implements ActionListener{
     }
     
     /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
+    // TODO: Work in Progress: Bugfixing in Kollisionsabfrage
     public void actionPerformed(ActionEvent e) {
-	Field tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
-	if (tempField.getContent() == FieldContent.EMPTY || tempField.getContent() == FieldContent.BOMB) {
+	//boolean block = false;
+	Field tempField;
+	/*if (this.velX == 0) {
+	    tempField = Game.getFieldFromCoord((xPosition + (velY*8)), (yPosition + (velY*8)));
+	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
+		&& tempField.getContent() != FieldContent.UPGRADE) {
+		block = true;
+	    }
+	    tempField = Game.getFieldFromCoord((xPosition - (velY*8)), (yPosition + (velY*8)));
+	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
+		&& tempField.getContent() != FieldContent.UPGRADE) {
+		block = true;
+	    }
+	} else if (this.velY == 0) {
+	    tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velX*8)));
+	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
+		&& tempField.getContent() != FieldContent.UPGRADE) {
+		block = true;
+	    }
+	    tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition - (velX*8)));
+	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
+		&& tempField.getContent() != FieldContent.UPGRADE) {
+		block = true;
+	    }
+	}*/
+	tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
+	if (/*block == false && (*/tempField.getContent() == FieldContent.EMPTY || tempField.getContent() == FieldContent.BOMB
+		|| tempField.getContent() == FieldContent.UPGRADE/*)*/) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	    this.currentField = tempField;
@@ -148,13 +175,13 @@ public class Player extends Entity implements ActionListener{
      */
     
     public void actionUp() {
-	this.velY = -(int)((double)GraphicsHandler.getHeight()/500.0);
 	this.velX = 0;
+	this.velY = -(int)((double)GraphicsHandler.getHeight()/500.0);
     }
     
     public void actionDown() {
-	this.velY = (int)((double)GraphicsHandler.getHeight()/500.0);
 	this.velX = 0;
+	this.velY = (int)((double)GraphicsHandler.getHeight()/500.0);
     }
     
     public void actionLeft() {

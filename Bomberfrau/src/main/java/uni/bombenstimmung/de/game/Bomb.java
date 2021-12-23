@@ -15,7 +15,6 @@ import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
-import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Bomb implements ActionListener{
 
@@ -25,6 +24,7 @@ public class Bomb implements ActionListener{
     private Timer sysTimer;
     private int counter;
     private Field placedField;
+    private Wall targetedWall;
     
     
     public Bomb(int r, int t, int ownerId) {
@@ -41,6 +41,7 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
+	this.targetedWall = null;
 	sysTimer = new Timer(1000, this);
 	sysTimer.start();
     }
@@ -81,7 +82,7 @@ public class Bomb implements ActionListener{
 			== FieldContent.WALL)) {
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray).getContent()
 			    	== FieldContent.WALL) {
-			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition, this.placedField.yPosition - ray);
+			this.targetedWall = new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray));
 			break;
 		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
 			    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - ray)) {
@@ -102,7 +103,7 @@ public class Bomb implements ActionListener{
 			== FieldContent.WALL)) {
 		    if (Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition).getContent()
 			    	== FieldContent.WALL) {
-			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition + ray, this.placedField.yPosition);
+			this.targetedWall = new Wall(Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition));
 			break;
 		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
 			    Game.getFieldFromMap(this.placedField.xPosition + ray, this.placedField.yPosition)) {
@@ -123,7 +124,7 @@ public class Bomb implements ActionListener{
 			== FieldContent.WALL)) {
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray).getContent()
 			    	== FieldContent.WALL) {
-			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition, this.placedField.yPosition + ray);
+			this.targetedWall = new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray));
 			break;
 		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
 			    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + ray)) {
@@ -144,7 +145,7 @@ public class Bomb implements ActionListener{
 			== FieldContent.WALL)) {
 		    if (Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition).getContent()
 			    	== FieldContent.WALL) {
-			Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition - ray, this.placedField.yPosition);
+			this.targetedWall = new Wall(Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition));
 			break;
 		    } else if (PlayerHandler.getClientPlayer().getCurrentField() ==
 			    Game.getFieldFromMap(this.placedField.xPosition - ray, this.placedField.yPosition)) {
@@ -162,22 +163,25 @@ public class Bomb implements ActionListener{
 	/* Aendern des FieldContent auf EMPTY und Loeschen der Bombe. */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
-	    Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
-	    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
-		    			", " + placedField.yPosition + ")", MessageType.GAME);
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
-		    Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
-		    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
-	    					", " + placedField.yPosition + ")", MessageType.GAME);
+		    // TODO: Ist das hier notwendig? Das wird eigentlich bei den anderen Clients berechnet und mit eigenem Client synchronisiert.
+		    i.decreasePlacedBombs();
 		}
 	    }
 	}
+	Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
+	ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
+			", " + placedField.yPosition + ")", MessageType.GAME);
 	Game.removeBomb(this);
     }
     
     public int getCounter() {
 	return this.timer-this.counter;
+    }
+    
+    public Wall getTargetedWall() {
+	return targetedWall;
     }
 }
