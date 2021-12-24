@@ -63,6 +63,7 @@ public class GraphicsHandler {
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(1920, 1080);
+
 		frame.setPreferredSize(frame.getSize());
 		frame.setMinimumSize(frame.getSize());
 		frame.setMaximumSize(frame.getSize());
@@ -136,22 +137,11 @@ public class GraphicsHandler {
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
-		String name1 = "SehrSehrLangerName";
-		String name2 = "NBon";
-		String name3 = "Son";
-		String name4 = "Jos";
-		String ip1 = "127.0.0.1";
-		String ip2 = "2.0.0.2";
-		String ip3 = "1.0.0.Jos";
-		Player player1 = new Player(name1);
-		Player player2 = new Player(name2, ip1);
-		//Player player3 = new Player(name3, ip2);
-//		Player player4 = new Player(name4, ip3);
-		//String ip = "127.0.0.1";
-		Lobby_Create lobby = new Lobby_Create(player1);
-		lobby.addPlayer(player2);
-//		lobby.addPlayer(player3);
-//		lobby.addPlayer(player4);
+
+		Lobby_Create lobby = new Lobby_Create(new Player("SehrSehrSehrSehrSehrSehrLanger"));
+		lobby.addPlayer(new Player("303030303030303030303030303030", "127.0.0.1"));
+		lobby.addPlayer(new Player("Son", "2.0.0.2"));
+		lobby.addPlayer(new Player("Hos", "1.0.0.Jos"));
 
 	}
 	/**
@@ -197,6 +187,7 @@ public class GraphicsHandler {
 		g.drawString(text, x-width/2, y+height/2);
 		
 	}
+
 	
 	/**
 	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlie�t KONTROLLIERT alle Datenzug�nge bzw speichert setting etc).

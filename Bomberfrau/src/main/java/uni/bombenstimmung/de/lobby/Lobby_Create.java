@@ -112,6 +112,10 @@ public class Lobby_Create {
 	public static int getHochRunterNavigation() {
 		return hochRunterNavigation;
 	}
+	
+	public static int getXValueForDraw(int i) {
+		return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*i*2);
+	}
 
 	
 	// Wird von Label.java aufgerufen und malt alles was ich haben will. Daher auch static, sodass ich davon nicht extra ein Objekt erzeugen muss
@@ -120,7 +124,7 @@ public class Lobby_Create {
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		
-		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/6);
+		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.1));
 		
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_TEST).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight());
 		
@@ -128,21 +132,18 @@ public class Lobby_Create {
 		
 		for(int i=0; i < numberPlayer; i++) {
 			if (player[i].getisHost() == true) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 - 50, null);
-				g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 + GraphicsHandler.getHeight()/5, null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (int)(getXValueForDraw(i)-12.5), GraphicsHandler.getHeight()/4 - 50, null);
+				g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, null);
 			}
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4);
 			
-			g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), (GraphicsHandler.getWidth()/8) + (GraphicsHandler.getWidth()/8)*(i*2), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, null);
+			
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), GraphicsHandler.getHeight()/4);
+			
+			g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1), null);
+			
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
-		//Wurde ersetzt in dem MouseActionAreaHandler -> Da der Button aufblinken soll
-//		g.drawImage(Lobby_Create.image[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2, null);
 		
-		// Einfach feste Koordinaten verwendet
-//		if (LobbyMovement.getTimerZaehler() != 0) {
-//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), GraphicsHandler.getWidth()/3, GraphicsHandler.getHeight()/2-3, null);
-//		}
 	}
 	
 	
