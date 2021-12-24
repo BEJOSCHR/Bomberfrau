@@ -117,8 +117,9 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		
 	        Settings.create_selected = true;
+
+	        Menu.buildOptions();
 		Menu.buildMenu();
-		Menu.buildOptions();
 		Menu.optionsComponentsActive(false);
 		Menu.menuComponentsActive(true);
 		
@@ -243,7 +244,9 @@ public class GraphicsHandler {
 	//SWITCH TO SECTION
 	//------------------------------------------------------------------------------------------------------------------
 	
-
+	/**
+	 *  schönerer Font mit abgerundeten Zeichen
+ 	 */
 	public static Font usedFont(int textSize) {
 
 	    Float factor = (float)(Settings.res_height)/Settings.res_height_max;

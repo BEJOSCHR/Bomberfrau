@@ -34,6 +34,7 @@ public class SoundHandler {
 		new LoadedSound("Start.wav", SoundType.TEST_START, SoundCategory.TEST, 0.02D);
 		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.5D);
 		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.5D);
+		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.OPTIONS_SOUND, 0.5D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		

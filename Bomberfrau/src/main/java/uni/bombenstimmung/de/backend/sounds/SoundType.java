@@ -12,6 +12,7 @@ public enum SoundType {
 
     	INTRO,
     	MENU,
+    	OPTIONS,
     
 	SOUND_MENU_XXX,
 	

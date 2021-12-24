@@ -42,7 +42,7 @@ public class BomberfrauMain {
 		1. BACKEND STUFF
 		2. ...
 		*/
-		
+
 		Settings.initIni();
 		Settings.iniValuesToTerminal();
 		
@@ -54,7 +54,8 @@ public class BomberfrauMain {
 		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		AnimationHandler.startTickTimer();
-		
+
+
 		GraphicsHandler.switchToIntroFromLoadingscreen();
 		
 //		ConnectedClient host = new ConnectedClient(true, 0);

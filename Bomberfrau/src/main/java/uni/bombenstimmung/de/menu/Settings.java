@@ -16,6 +16,9 @@ import javax.swing.JOptionPane;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.backend.language.LanguageType;
 
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
@@ -56,7 +59,11 @@ public class Settings {
 
 	public static Float factor;
         
-
+	/**
+	 * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü
+	 * werden die Werte für Breite und Höhe der Auflösungsvariablen gesetzt
+	 * @param i steht für die Auswahl der ComboBox im Optionsmenü  für die Auflösung
+	 */
         public static int setResolution(int i) {
             switch (i) {
                 case 0:
@@ -85,14 +92,12 @@ public class Settings {
                     break;
             }
           
+            // folgende Abfrage verhindert die Auswahl einer zu hohen Auflösung
             if (res_width > res_width_max) {
                   res_width  = res_width_max;
                   res_height = res_height_max;
                   res_nr = 0;
-                  if (lang_nr==0)
-                      JOptionPane.showMessageDialog(null,"resolution to high - switching to lower one for fullscreen.","resolution", JOptionPane.INFORMATION_MESSAGE);
-                  if (lang_nr==1)
-                      JOptionPane.showMessageDialog(null,"Die Auflösung ist zu groß - Wechsel zu Vollbild.","Auflösung", JOptionPane.INFORMATION_MESSAGE);
+                  Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_RESOLUTION).getContent(), "OK");
                   ConsoleHandler.print("resolution to high - switching to lower one for fullscreen", MessageType.MENU);
                   return 0;
             }
@@ -318,6 +323,9 @@ public class Settings {
         	    ConsoleHandler.print("message: " + ex.getMessage(), MessageType.MENU);
                     ex.printStackTrace();
               }
+
+              if (lang_nr==0) LanguageHandler.setActiveLanguage(LanguageType.ENGLISH);
+              if (lang_nr==1) LanguageHandler.setActiveLanguage(LanguageType.GERMAN);
               factor = (float)(Settings.res_height)/Settings.res_height_max;
         }
 
