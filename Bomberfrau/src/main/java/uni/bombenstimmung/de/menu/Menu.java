@@ -377,7 +377,7 @@ public class Menu {
             checkBoxFPS.setSelected(Settings.show_fps);
             checkBoxFPS.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent e) {
-                  //System.out.println("Checkbox = " + checkBoxFPS.isSelected());
+                  //System.out.println("Checkbox=" + checkBoxFPS.isSelected());
         	  Settings.show_fps = checkBoxFPS.isSelected();
         	  if (Settings.show_fps)
         	      GraphicsHandler.getLabel().setShowFPS(true);
