@@ -62,6 +62,7 @@ public class Field extends Entity {
     /**
      * Wandelt einen String in einen FieldContent um
      * @param representation, String eingabe (BL,BO,EM,WA)
+     * Wichtig für den Aufbau der Map
      */
     public static FieldContent getFieldTypeFromRepresentation(String representation) {
 	
@@ -111,14 +112,27 @@ public class Field extends Entity {
 		    GraphicsHandler.drawCentralisedText(g, Color.RED, 30, count + "", x+(GameData.FIELD_DIMENSION/2), y+(GameData.FIELD_DIMENSION/2));
 		}
 		break;
+	// Spezifische Grafiken für die Himmelsrichtungen der Explosion
 	    case EXPLOSION1:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX1).getImage(), x, y, null);
 		break;
 	    case EXPLOSION2:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2).getImage(), x, y, null);
 		break;
-	    case EXPLOSION3:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3).getImage(), x, y, null);
+	    case EXPLOSION2_NS:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2_NS).getImage(), x, y, null);
+		break;
+	    case EXPLOSION3_N:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_N).getImage(), x, y, null);
+		break;
+	    case EXPLOSION3_S:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_S).getImage(), x, y, null);
+		break;
+	    case EXPLOSION3_W:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_W).getImage(), x, y, null);
+		break;
+	    case EXPLOSION3_O:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_O).getImage(), x, y, null);
 		break;
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {

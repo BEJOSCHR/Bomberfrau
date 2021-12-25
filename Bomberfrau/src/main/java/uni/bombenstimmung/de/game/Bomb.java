@@ -29,7 +29,12 @@ public class Bomb implements ActionListener{
     private Field placedField;
     private ArrayList<Wall> targetedWalls;
     
-    
+    /**
+     * Platziert die Bombe auf einem bestimmten Feld
+     * @param r, Radius der Explosion
+     * @param t, Zeit bis zur Ecplosion
+     * @param ownerId, wer die Bombe legt
+     */
     public Bomb(int r, int t, int ownerId) {
 	this.radius = r;
 	this.timer = t;
@@ -49,6 +54,9 @@ public class Bomb implements ActionListener{
 	sysTimer.start();
     }
     
+    /**
+     * Bei Bombenlegung wird hochgezaehlt bis zur Explosion
+     */
     public void actionPerformed(ActionEvent e) {
 	this.counter++;
 	if (this.counter == this.timer) {
@@ -58,6 +66,10 @@ public class Bomb implements ActionListener{
 	}
     }
     
+    /**
+     * Tastet die Felder in allen Himmelsrichtungen ab, und malt die Explosion, prueft
+     * ob Spieler im Radius der Explosion liegen
+     */
     public void explodeFire() {
 	//sysTimer.stop();
 	
@@ -74,24 +86,25 @@ public class Bomb implements ActionListener{
 		    }
 		}
 	    } else if (direction == 1) { //SUEDEN
-		    while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL || 
+		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EMPTY)) {
 			/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
-			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL) {
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)));
-			}
-			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BORDER ||
+		    }
+		    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
+			    	PlayerHandler.getClientPlayer().setDead(true);
+		    }
+		    if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
-			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition, this.placedField.yPosition + r);
+			    		Game.changeFieldContent(FieldContent.EXPLOSION3_S, this.placedField.xPosition, this.placedField.yPosition + r);
 			    		r++;
 			    		break;
-			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
-					PlayerHandler.getClientPlayer().setDead(true);
-				}else {
-				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition, this.placedField.yPosition + r);
-				}
+		    }else {
+			    Game.changeFieldContent(FieldContent.EXPLOSION2_NS, this.placedField.xPosition, this.placedField.yPosition + r);
+		    }
 			for (Player i : PlayerHandler.getOpponentPlayers()) {
 	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
 	    	    		    i.setDead(true);
@@ -106,17 +119,18 @@ public class Bomb implements ActionListener{
 			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)));
 			}
+			if (PlayerHandler.getClientPlayer().getCurrentField() ==
+				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
+					PlayerHandler.getClientPlayer().setDead(true);
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
-			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition, this.placedField.yPosition - r);
+			    		Game.changeFieldContent(FieldContent.EXPLOSION3_N, this.placedField.xPosition, this.placedField.yPosition - r);
 			    		r++;
 			    		break;
-			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
-					PlayerHandler.getClientPlayer().setDead(true);
-				}else {
-				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition, this.placedField.yPosition - r);
+			}else {
+				    Game.changeFieldContent(FieldContent.EXPLOSION2_NS, this.placedField.xPosition, this.placedField.yPosition - r);
 				}
 			for (Player i : PlayerHandler.getOpponentPlayers()) {
 	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
@@ -132,18 +146,19 @@ public class Bomb implements ActionListener{
 			if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)));
 			}
+			if (PlayerHandler.getClientPlayer().getCurrentField() ==
+				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
+					PlayerHandler.getClientPlayer().setDead(true);
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
-			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition + r, this.placedField.yPosition);
+			    		Game.changeFieldContent(FieldContent.EXPLOSION3_O, this.placedField.xPosition + r, this.placedField.yPosition);
 			    		r++;
 			    		break;
-			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
-					PlayerHandler.getClientPlayer().setDead(true);
-				}else {
-				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition + r, this.placedField.yPosition);
-				}
+			}else{
+			    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition + r, this.placedField.yPosition);
+			}
 			for (Player i : PlayerHandler.getOpponentPlayers()) {
 	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
 	    	    		    i.setDead(true);
@@ -158,18 +173,19 @@ public class Bomb implements ActionListener{
 			if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)));
 			}
+			if (PlayerHandler.getClientPlayer().getCurrentField() ==
+				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
+					PlayerHandler.getClientPlayer().setDead(true);
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
 				Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
 				(this.radius - r == 0)) {
-			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition - r, this.placedField.yPosition);
+			    		Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r, this.placedField.yPosition);
 			    		r++;
 			    		break;
-			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
-					PlayerHandler.getClientPlayer().setDead(true);
-				}else {
+			}else {
 				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition - r, this.placedField.yPosition);
-				}
+			}
 			for (Player i : PlayerHandler.getOpponentPlayers()) {
 	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
 	    	    		    i.setDead(true);
@@ -197,6 +213,9 @@ public class Bomb implements ActionListener{
 //	Game.removeBomb(this);
     }
     
+    /**
+     * Die Felder werden leer gezeichnet in einem bestimmten Abstand, um eine "Animation" zu erzeugen
+     */
     public void explode() {
 	sysTimer.stop();
 	
@@ -213,96 +232,29 @@ public class Bomb implements ActionListener{
 		    }
 		}
 	    } else if(direction == 1) { //SUEDEN
-		    while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION2 || 
-			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION3)) {
-//			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BORDER ||
-//				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BLOCK) ||
-//				(this.radius - r == 0)) {
-//			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition, this.placedField.yPosition + r);
-//			    		r++;
-//			    		break;
-//			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-//				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
-//					PlayerHandler.getClientPlayer().setDead(true);
-//				}else {
-//				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition, this.placedField.yPosition + r);
-//				}
-//			for (Player i : PlayerHandler.getOpponentPlayers()) {
-//	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
-//	    	    		    i.setDead(true);
-//	    	    		}
-//	    		}
-			Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition, this.placedField.yPosition + r);
-			r++;
+		    while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION2_NS || 
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION3_S)) {
+				Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition, this.placedField.yPosition + r);
+				r++;
+				
 		    }
 	    } else if(direction == 2) { //NORDEN
-		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION2 || 
-			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION3)) {
-//			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BORDER ||
-//				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BLOCK) ||
-//				(this.radius - r == 0)) {
-//			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition, this.placedField.yPosition - r);
-//			    		r++;
-//			    		break;
-//			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-//				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
-//					PlayerHandler.getClientPlayer().setDead(true);
-//				}else {
-//				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition, this.placedField.yPosition - r);
-//				}
-//			for (Player i : PlayerHandler.getOpponentPlayers()) {
-//	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
-//	    	    		    i.setDead(true);
-//	    	    		}
-//	    		}
-			Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition, this.placedField.yPosition - r);
-			r++;
+		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION2_NS || 
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION3_N)) {
+				Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition, this.placedField.yPosition - r);
+				r++;
 		}
 	    } else if (direction == 3) { // OSTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION2 || 
-			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3)) {
-//			if ((Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
-//				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
-//				(this.radius - r == 0)) {
-//			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition + r, this.placedField.yPosition);
-//			    		r++;
-//			    		break;
-//			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-//				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
-//					PlayerHandler.getClientPlayer().setDead(true);
-//				}else {
-//				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition + r, this.placedField.yPosition);
-//				}
-//			for (Player i : PlayerHandler.getOpponentPlayers()) {
-//	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
-//	    	    		    i.setDead(true);
-//	    	    		}
-//	    		}
-			Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition + r, this.placedField.yPosition);
-			r++;
+			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3_O)) {
+				Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition + r, this.placedField.yPosition);
+				r++;
 		}
 	    } else if (direction == 4) { // WESTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION2 || 
-			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3)) {
-//			if ((Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
-//				Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
-//				(this.radius - r == 0)) {
-//			    		Game.changeFieldContent(FieldContent.EXPLOSION3, this.placedField.xPosition - r, this.placedField.yPosition);
-//			    		r++;
-//			    		break;
-//			}else if (PlayerHandler.getClientPlayer().getCurrentField() ==
-//				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
-//					PlayerHandler.getClientPlayer().setDead(true);
-//				}else {
-//				    Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition - r, this.placedField.yPosition);
-//				}
-//			for (Player i : PlayerHandler.getOpponentPlayers()) {
-//	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
-//	    	    		    i.setDead(true);
-//	    	    		}
-//	    		}
-			Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition - r, this.placedField.yPosition);
-			r++;
+			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3_W)) {
+				Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition - r, this.placedField.yPosition);
+				r++;
 		}
 	    }
 	}

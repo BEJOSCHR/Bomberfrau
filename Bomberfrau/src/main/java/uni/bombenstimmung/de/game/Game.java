@@ -26,6 +26,8 @@ public class Game {
 
     /**
      *  Füllt das Map Array mit leeren Feldern
+     *  X baut auf von West nach Ost
+     *  Y baut auf von Nord nach Süd
      */
     public static void fillMap() {
 	for (int x = 0; x < GameData.MAP_DIMENSION; x++) {
@@ -37,6 +39,7 @@ public class Game {
 
     /**
      * Malt die aktuelle Map
+     * in der Mitte des Bildschirms
      */
     public static void drawGame(Graphics g) {
 	//DRAW COUNTDOWN ETC
