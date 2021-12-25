@@ -21,7 +21,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 public class Game {
 
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
-    private static int mapNumber = 2;
+    private static int mapNumber = 3;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
 
     /**
@@ -66,8 +66,10 @@ public class Game {
 			mapData = GameData.MAP_1;
 			break;
 		case 2: 
-		    	mapData = GameData.MAP_2;
-		    	break;
+		    mapData = GameData.MAP_2;
+		    break;
+		case 3:
+			mapData = GameData.MAP_3;
 		default:
 			ConsoleHandler.print("Unknown mapnumber, cant load map!");
 			return;

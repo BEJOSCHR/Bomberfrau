@@ -92,10 +92,17 @@ public class Field extends Entity {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
 		break;
 	    case WALL:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
+		if (Game.getMapNumber() == 3) {
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_WALL).getImage(), x, y, null);
+		}
+	    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
 		break;
 	    case BORDER:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
+	    	if (Game.getMapNumber() == 3) {
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_BLOCK).getImage(), x, y, null);
+	    	} else {
+	    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
+	    	}
 		break;
 	    case BOMB:
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, null);
@@ -116,12 +123,20 @@ public class Field extends Entity {
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
-		} else if (Game.getMapNumber() == 2) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
-		}
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		break;
-	    case UPGRADE:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_TEMP).getImage(), x, y, null);
+	    case UPGRADE_ITEM_BOMB:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_BOMB).getImage(), x, y, null);
+		break;
+	    case UPGRADE_ITEM_FIRE:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_FIRE).getImage(), x, y, null);
+		break;
+	    case UPGRADE_ITEM_SHOE:
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_SHOE).getImage(), x, y, null);
 		break;
 	  
 	}
