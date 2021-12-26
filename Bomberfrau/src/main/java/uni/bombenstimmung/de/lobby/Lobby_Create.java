@@ -92,6 +92,7 @@ public class Lobby_Create {
 	
 	public static int getXValueForDraw(int i) {
 		if (numberPlayer != 0)
+			// Dieser Wert, damit der Screen sich variabel für die Anzahl der Player verändert. Die Buttons sind dann aber halt blöd
 //			return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*i*2);
 			return (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*i*2);
 		else

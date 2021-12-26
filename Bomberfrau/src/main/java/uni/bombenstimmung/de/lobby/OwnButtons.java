@@ -22,10 +22,11 @@ public class OwnButtons extends MouseActionAreaHandler{
 	static int mapHostY = (GraphicsHandler.getHeight()/4 + GraphicsHandler.getHeight()/5);
 	static int mapHostXRight = GraphicsHandler.getWidth()/8 + 50;
 	
+	static int yPlayer = GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1) + 75;
+	static int yPlayerMap = GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2 + 75;
 	
 	static int xPlayer1Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-100 - GraphicsHandler.getWidth()*0.04);
 	static int xPlayer1Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
-	static int yPlayer = GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1) + 75;
 	
 	static int xPlayer2Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)-100 - GraphicsHandler.getWidth()*0.04);
 	static int xPlayer2Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
@@ -53,54 +54,56 @@ public class OwnButtons extends MouseActionAreaHandler{
 		
 		
 		
-//		//LOBBY Unsichtbarer LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
-//		new MouseActionArea(mapHostXLeft, mapHostY, 45, 44,
-//				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
-//			@Override
-//			public void performAction_LEFT_RELEASE() {
-//				ConsoleHandler.print(" Left Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
-//				Lobby_Create.setDecrementMap();
-//			}
-//			@Override
-//			public boolean isActiv() {
-//				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-//			}
-//			@Override
-//			public void draw(Graphics g) { 
-//				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
-//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), mapHostXLeft, mapHostY+1, null);
-//				}else {
-////					}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), (GraphicsHandler.getWidth()/8) - 35, GraphicsHandler.getHeight()/4 + GraphicsHandler.getHeight()/5, null);
-//				}
-//			}
-//		};
-//		
-//		//LOBBY Unsichtbarer RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
-//		new MouseActionArea(Lobby_Create.getXValueForDraw(Lobby_Create.getHost())+100, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
-//				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
-//			@Override
-//			public void performAction_LEFT_RELEASE() {
-//				ConsoleHandler.print("Right Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
-//				Lobby_Create.setIncrementMap();
-//			}
-//			@Override
-//			public boolean isActiv() {
-//				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-//			}
-//			@Override
-//			public void draw(Graphics g) { 
-//				if(isHovered() || (rightisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
-//					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
-//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), Lobby_Create.getXValueForDraw(Lobby_Create.getHost())+100, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2 +3, null);
-//				}else {
-////				}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), Lobby_Create.getXValueForDraw(Lobby_Create.getHost())+100, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, null);
-////					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), Lobby_Create.getXValueForDraw(Lobby_Create.getHost())+130, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2, null);
-//				}
-//			}
-//		};
+		//LOBBY Unsichtbarer LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
+		new MouseActionArea(xPlayer1Left, yPlayerMap, 45, 44,
+				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print(" Left Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
+				Lobby_Create.setDecrementMap();
+			}
+			@Override
+			public boolean isActiv() {
+				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+			}
+			@Override
+			public void draw(Graphics g) { 
+				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), xPlayer1Left, yPlayerMap+1, null);
+				}else {
+//					}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayerMap, null);
+				}
+			}
+		};
 		
+		//LOBBY Unsichtbarer RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
+		new MouseActionArea(xPlayer1Right, yPlayerMap, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
+				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print("Right Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
+				Lobby_Create.setIncrementMap();
+			}
+			@Override
+			public boolean isActiv() {
+				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+			}
+			@Override
+			public void draw(Graphics g) { 
+				if(isHovered() || (rightisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
+					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer1Right, yPlayerMap - (int)(GraphicsHandler.getWidth()*0.0015), null);
+				}else {
+//				}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayerMap, null);
+				}
+			}
+		};
+		
+		
+		
+		///////////////////////////////// ALLE BUTTONS FÜR DIE SKIN SELECTION ////////////////////////////////////////////////////////
 	
 		// PLAYER 1  LEFT
 		new MouseActionArea(xPlayer1Left, yPlayer, 45, 44,
@@ -322,7 +325,25 @@ public class OwnButtons extends MouseActionAreaHandler{
 			}
 		};
 
-
+		///////////////////////////////// ALLE BUTTONS FÜR DIE SKIN SELECTION ////////////////////////////////////////////////////////
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
