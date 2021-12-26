@@ -85,9 +85,10 @@ public class Label extends JLabel {
 		case INTRO:
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INTRO_PIC).getImage(), (int)(Settings.res_width*(1-AnimationData.intro_zoom)/2), (int)(Settings.res_height*(1-AnimationData.intro_zoom)/2),
 		    		(int)(Settings.res_width*AnimationData.intro_zoom), (int)(Settings.res_height*AnimationData.intro_zoom), null);
-		    	
+		    	double factor = 0.9;
+		    	if (Settings.lang_nr == 1) factor = 0.85;
 		    	GraphicsHandler.drawCentralisedText(g, Color.GRAY, 20+AnimationData.intro_skip_text, LanguageHandler.getLLB(LanguageBlockType.LB_INTRO_SKIP).getContent(),
-		    		(int)(Settings.res_width*0.9), (int)(Settings.res_height*0.95));
+		    		(int)(Settings.res_width*factor), (int)(Settings.res_height*0.95));
 		    	break;
 		case MENU:
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);			
