@@ -16,11 +16,8 @@ public class Lobby_Create {
 
 	static Player player[] = new Player[4];
 	static LoadedImage mapSelection[] = new LoadedImage[3];
-	static LoadedImage skinSelection[] = new LoadedImage[3];
 
 	static int zaehlerMapSelection = 0;
-	
-	static int zaehlerSkinSelection = 0;
 	
 	static int hochRunterNavigation = 0;
 	
@@ -53,10 +50,6 @@ public class Lobby_Create {
 		Lobby_Create.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
 		Lobby_Create.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
 		Lobby_Create.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
-		
-		Lobby_Create.skinSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
-		Lobby_Create.skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
-		Lobby_Create.skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
 	}
 	
 	// die toString wird von allen Playern im Array ausgegeben!
@@ -82,22 +75,6 @@ public class Lobby_Create {
 		return zaehlerMapSelection;
 	}
 	
-	// Skin Zaehler
-	public static void setIncrementSkin() {
-		zaehlerSkinSelection = (zaehlerSkinSelection + 1)%3;
-	}
-	public static void setDecrementSkin() {
-		if (zaehlerSkinSelection == 0) {
-			zaehlerSkinSelection = 2;
-		}
-		else {
-			zaehlerSkinSelection = (zaehlerSkinSelection - 1)%3;	
-		}
-	}
-	public static int getSkin() {
-		return zaehlerSkinSelection;
-	}
-	
 	public static void setIncrementHochRunterNavigation() {
 		hochRunterNavigation = (hochRunterNavigation + 1)%3;
 	}
@@ -114,7 +91,21 @@ public class Lobby_Create {
 	}
 	
 	public static int getXValueForDraw(int i) {
-		return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*i*2);
+		if (numberPlayer != 0)
+//			return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*i*2);
+			return (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*i*2);
+		else
+			return 1;
+	}
+	
+	public static int getHost() {
+		int host = 0;
+		for(int i=0; i < numberPlayer; i++) {
+			if (player[i].getisHost() == true) {
+				host = i;
+			}
+		}
+		return host;
 	}
 
 	
@@ -139,7 +130,7 @@ public class Lobby_Create {
 			
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), GraphicsHandler.getHeight()/4);
 			
-			g.drawImage(Lobby_Create.skinSelection[zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1), null);
+			g.drawImage(player[i].skinSelection[player[i].zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1), null);
 			
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
