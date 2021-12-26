@@ -315,6 +315,12 @@ public class Settings {
                     show_fps = Boolean.valueOf(prop.getProperty("show_fps"));
                     
                     
+                    // für den Fall, dass die ausgelesenen ini-Werte zur Auslösung nicht passend sind
+                    if (res_height > res_height_max) {
+                	res_nr = 0;
+                        res_width = res_width_max;
+                        res_height  = res_height_max;
+                    }
                     // saving current settings
                     saveIni();
               }
