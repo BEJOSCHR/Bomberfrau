@@ -98,7 +98,7 @@ public class Player extends Entity implements ActionListener{
 	}*/
 	tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
 	if (/*block == false && (*/tempField.getContent() == FieldContent.EMPTY || tempField.getContent() == FieldContent.BOMB
-		|| tempField.getContent() == FieldContent.UPGRADE/*)*/) {
+		|| tempField.getContent() == FieldContent.UPGRADE_ITEM_BOMB/*)*/) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	    this.currentField = Game.getFieldFromCoord(xPosition, yPosition);

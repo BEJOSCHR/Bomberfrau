@@ -6,7 +6,7 @@ package uni.bombenstimmung.de.game;
 
 public class Upgrade {
     
-    private FieldContent type = FieldContent.UPGRADE;
+    private FieldContent type = FieldContent.UPGRADE_ITEM_SHOE;
     private int value;
     private int lifetime;
     private int upgradetype;
