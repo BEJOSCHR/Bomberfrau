@@ -7,7 +7,11 @@
  * 
  * Datum: 18.12.2021
  *
- * Verwaltet die erzeugten Player und deren Steuerung
+ * Diese Klasse ist zustaendig fuer die Gesamtheit der Player im Spiel.
+ * Es koennen der clientPlayer, also der steuerbare Player in der
+ * laufen Programminstanz, angepasst und zusaetzliche opponentPlayers
+ * hinzugefuegt werden.
+ * Ausserdem werden hier die Player-Ereignisse der Tastenbetaetigungen verwaltet.
  */
 
 package uni.bombenstimmung.de.game;
@@ -34,6 +38,10 @@ public class PlayerHandler {
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = true;
     
+    /**
+     * Gibt die Gesamtzahl der am Spiel teilnehmenden Players zurueck.
+     * @return Integer mit opponentPlayers + 1
+     */
     public static int getPlayerAmount() {
 	return opponentPlayers.size()+1;
     }
@@ -50,6 +58,11 @@ public class PlayerHandler {
 	return opponentCount;
     }
     
+    /**
+     * Fuehrt den clientPlayer und eine zugegebene Player-ArrayList zusammen
+     * und speichert diese in die ArrayList 'allPlayer'.
+     * @param array	beliebige Player-ArrayList zum Zusammenfuehren
+     */
     public static void addToAllPlayers(ArrayList<Player> array) {
 	if(allPlayer.contains(clientPlayer)) {
 	    allPlayer.addAll(array);
@@ -93,13 +106,21 @@ public class PlayerHandler {
 	opponentCount = 0;
     }
     
+    /**
+     * Setzt jegliche Tasteneingaben fuer die Bewegung zurueck,
+     * indem der inputBuffer geleert wird und die Booleans fuer
+     * playerMoving und multiPress auf false gesetzt werden.
+     */
     public static void resetMovement() {
 	playerMoving = false;
 	multiPress = false;
 	inputBuffer.clear();
     }
     
-    /* Draw-Methode mit allen Player-bezogenen Grafiken. Wird vom GraphicsHandler aufgerufen. */
+    /**
+     * Draw-Methode mit allen Player-bezogenen Grafiken. Wird vom GraphicsHandler aufgerufen.
+     * @param g	Graphics-Variable, auf welcher die neuen Elemente gemalt werden sollen.
+     */
     public static void drawPlayers(Graphics g) {
 	if (clientPlayer.getDead() == false) {
 	    g.setColor(Color.red);
@@ -140,6 +161,11 @@ public class PlayerHandler {
 	}
     }
     
+    /**
+     * Hier werden Ereignisse ausgefuehrt die auftreten sollen, wenn eine bestimmte
+     * Taste gedrueckt wird.
+     * @param keyCode	Tasten-Code in Integer-Form
+     */
     public static void handleKeyEventPressed(int keyCode) {
 	if (clientPlayer.getDead() == false) {
 	    if (playerMoving == false) {
@@ -186,6 +212,11 @@ public class PlayerHandler {
 	}
     }
     
+    /**
+     * Hier werden Ereignisse ausgefuehrt die auftreten sollen, wenn eine
+     * bereits runtergedrueckte Taste losgelassen wird.
+     * @param keyCode	Tasten-Code in Integer-Form
+     */
     @SuppressWarnings("removal")	/* Um Warnung von 'new Integer(keyCode)' auszublenden. */
     public static void handleKeyEventReleased(int keyCode) {
 	if (clientPlayer.getDead() == false && playerMoving == true) {

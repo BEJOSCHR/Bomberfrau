@@ -5,10 +5,11 @@
  * 
  * Author: Christopher
  * 
- * Datum: 12.12.2021
+ * Datum: 27.12.2021
  *
- * Enthält Informationen zum eigenen Player und initiiert Aktionen
- * bei Tastendruck.
+ * Diese Klasse enthaelt Funktionen und Variablen, die mit einem Player direkt zusammenhaengen.
+ * Darunter fallen Informationen ueber den aktuellen Zustand des Players, sowie Aktionen,
+ * welche der Player bei Aufrufen direkt ausfuehrt.
  */
 
 // TODO: Laufgeschwindigkeit implementieren
@@ -44,8 +45,10 @@ public class Player extends Entity implements ActionListener{
     private int velY;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
+	/* Offset-Variablen fuer Berechnung*/
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yOffset = GameData.MAP_SIDE_BORDER;
+	
 	this.id = id;
 	this.name = name;
 	this.ipAdress = ipAdress;
@@ -55,8 +58,11 @@ public class Player extends Entity implements ActionListener{
 	this.maxBombs = 1;
 	this.placedBombs = 0;
 	this.bombRadius = 5;
+	
+	/* Variablen der Oberklasse Entity. */
 	super.xPosition = (int)((pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2));
 	super.yPosition = (int)((pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
+	
 	this.velX = 0;
 	this.velY = 0;
 	this.currentButtonConfig = new PlayerButtonConfig();
@@ -69,7 +75,9 @@ public class Player extends Entity implements ActionListener{
     }
     
     /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
+    
     // TODO: Work in Progress: Bugfixing in Kollisionsabfrage
+    
     public void actionPerformed(ActionEvent e) {
 	//boolean block = false;
 	Field tempField;
@@ -96,9 +104,14 @@ public class Player extends Entity implements ActionListener{
 		block = true;
 	    }
 	}*/
+	
+	/* 
+	 * tempField stellt die Hitbox dar. Es wird das vorliegende Field in Bewegungsrichtung bestimmt
+	 * und fuer die Abfrage, ob das Field betretbar ist, weiterverwendet.
+	 */
 	tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
-	if (/*block == false && (*/tempField.getContent() == FieldContent.EMPTY || tempField.getContent() == FieldContent.BOMB
-		|| tempField.getContent() == FieldContent.UPGRADE_ITEM_BOMB/*)*/) {
+	if (/*block == false && (*/tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+		&& tempField.getContent() != FieldContent.BORDER/*)*/) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
 	    this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
@@ -203,6 +216,11 @@ public class Player extends Entity implements ActionListener{
     
     /* ========= Ende des Blocks fuer Bewegungsmethoden. =========== */
     
+    /**
+     * Platzieren der Bombe. Fragt ab, ob die aktuelle Position EMPTY ist.
+     * Falls ja, dann aendert sich der FieldContent zu BOMB und ein Bomb-Objekt
+     * wird in die static ArrayList 'placedBombs' hinzugefuegt.
+     */
     public void actionSetBomb() {
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
