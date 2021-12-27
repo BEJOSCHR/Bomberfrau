@@ -11,6 +11,8 @@
  * bei Tastendruck.
  */
 
+// TODO: Laufgeschwindigkeit implementieren
+
 package uni.bombenstimmung.de.game;
 
 import java.awt.event.ActionEvent;
@@ -99,7 +101,7 @@ public class Player extends Entity implements ActionListener{
 		|| tempField.getContent() == FieldContent.UPGRADE/*)*/) {
 	    super.xPosition += this.velX;
 	    super.yPosition += this.velY;
-	    this.currentField = tempField;
+	    this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	}
     }
     
@@ -232,12 +234,14 @@ public class Player extends Entity implements ActionListener{
     
     public void increaseBombRadius() {
 	if (this.bombRadius < GameData.MAP_DIMENSION) {
+	    ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
 	    this.bombRadius++;
 	}
     }
     
     public void increaseMovementSpeed() {
 	if (this.movementSpeed < 5) {
+	    ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
 	    this.movementSpeed++;
 	}
     }
