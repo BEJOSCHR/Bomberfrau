@@ -116,6 +116,13 @@ public class Player extends Entity implements ActionListener{
 	    super.yPosition += this.velY;
 	    this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	}
+	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
+	if (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
+	    this.currentField.getContent() == FieldContent.EXPLOSION2_NS || this.currentField.getContent() == FieldContent.EXPLOSION3_N ||
+	    this.currentField.getContent() == FieldContent.EXPLOSION3_S || this.currentField.getContent() == FieldContent.EXPLOSION3_W ||
+	    this.currentField.getContent() == FieldContent.EXPLOSION3_O) {
+	    this.setDead(true);
+	}
     }
     
     public void setId(int id) {
