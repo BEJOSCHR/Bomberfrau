@@ -5,7 +5,7 @@
  * 
  * Author: Christopher
  * 
- * Datum: 27.12.2021
+ * Datum: 28.12.2021
  *
  * Diese Klasse enthaelt Funktionen und Variablen, die mit einem Player direkt zusammenhaengen.
  * Darunter fallen Informationen ueber den aktuellen Zustand des Players, sowie Aktionen,
@@ -122,6 +122,19 @@ public class Player extends Entity implements ActionListener{
 	    this.currentField.getContent() == FieldContent.EXPLOSION3_S || this.currentField.getContent() == FieldContent.EXPLOSION3_W ||
 	    this.currentField.getContent() == FieldContent.EXPLOSION3_O) {
 	    this.setDead(true);
+	}
+	/* Abfrage, ob Player ueber Upgrade laeuft. Falls ja, aufsammeln und passende Upgrade-Methode ausfuehren.*/
+	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_BOMB) {
+	    this.increaseMaxBombs();
+	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
+	}
+	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_FIRE) {
+	    this.increaseBombRadius();
+	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
+	}
+	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_SHOE) {
+	    this.increaseMovementSpeed();
+	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
     }
     
@@ -259,15 +272,15 @@ public class Player extends Entity implements ActionListener{
     
     public void increaseBombRadius() {
 	if (this.bombRadius < GameData.MAP_DIMENSION) {
-	    ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
 	    this.bombRadius++;
 	}
+	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
     }
     
     public void increaseMovementSpeed() {
 	if (this.movementSpeed < 5) {
-	    ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
 	    this.movementSpeed++;
 	}
+	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
     }
 }
