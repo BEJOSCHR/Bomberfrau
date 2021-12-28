@@ -3,6 +3,7 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseListener;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -18,12 +19,9 @@ public class OwnButtons extends MouseActionAreaHandler{
 	
 	static boolean rightisPressed = false;
 	static boolean leftisPressed = false;
-	static int mapHostXLeft = GraphicsHandler.getWidth()/8 - 50;
-	static int mapHostY = (GraphicsHandler.getHeight()/4 + GraphicsHandler.getHeight()/5);
-	static int mapHostXRight = GraphicsHandler.getWidth()/8 + 50;
 	
-	static int yPlayer = GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1) + 75;
-	static int yPlayerMap = GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*2 + 75;
+	static int yPlayer = (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1) + 75;
+	static int yPlayerMap = (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5) + 75;
 	
 	static int xPlayer1Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-100 - GraphicsHandler.getWidth()*0.04);
 	static int xPlayer1Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
@@ -45,6 +43,14 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
+				int counterForReady = 1;
+				// Hier wird gecheckt, ob alle Player die Checkbox aktiviert haben
+				for(int i = 1; i < Lobby_Create.numberPlayer ; i++) {
+					if(Lobby_Create.player[i].getisReady() == true)
+						counterForReady++;
+				}
+				if (counterForReady == Lobby_Create.numberPlayer)
+					ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
 			}
 			@Override
 			public boolean isActiv() {
@@ -325,16 +331,79 @@ public class OwnButtons extends MouseActionAreaHandler{
 			}
 		};
 
-		///////////////////////////////// ALLE BUTTONS FÜR DIE SKIN SELECTION ////////////////////////////////////////////////////////
+		///////////////////////////////// ALLE BUTTONS FUER DIE SKIN SELECTION ////////////////////////////////////////////////////////
 		
 		
 		
 		
+		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////
+		
+		// Player 2
+		new MouseActionArea(xPlayer2Right-100-40, yPlayerMap+15, 50, 50,
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print("CheckBox Player 2", MessageType.LOBBY);
+				Lobby_Create.player[1].setisReady();
+			}
+			@Override
+			public boolean isActiv() {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 2)
+					return true;
+				else
+					return false;
+			}
+			@Override
+			public void drawCustomParts(Graphics g){
+					if(Lobby_Create.player[1].getisReady() == true)
+						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
+			}
+		};
+		// Player 3
+		new MouseActionArea(xPlayer3Right-100-40, yPlayerMap+15, 50, 50,
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print("CheckBox Player 3", MessageType.LOBBY);
+				Lobby_Create.player[2].setisReady();
+			}
+			@Override
+			public boolean isActiv() {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 3)
+					return true;
+				else
+					return false;
+			}
+			@Override
+			public void drawCustomParts(Graphics g){
+					if(Lobby_Create.player[2].getisReady() == true)
+						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null);
+			}
+		};
+		// Player 4
+		new MouseActionArea(xPlayer4Right-100-40, yPlayerMap+15, 50, 50,
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+				ConsoleHandler.print("CheckBox Player 4", MessageType.LOBBY);
+				Lobby_Create.player[3].setisReady();
+			}
+			@Override
+			public boolean isActiv() {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 4)
+					return true;
+				else
+					return false;
+			}
+			@Override
+			public void drawCustomParts(Graphics g){
+					if(Lobby_Create.player[3].getisReady() == true)
+						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
+			}
+		};
 		
 		
-		
-		
-		
+		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
 		
 		
 		
@@ -413,6 +482,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			Lobby_Create.setDecrementHochRunterNavigation();
 		}
 	}
+	// Noch in KeyHandler einstellen / auskommentieren
 //	public static void keyIsReleased(int keyCode) {
 //		if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
 //			rightisPressed = false;

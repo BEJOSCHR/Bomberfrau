@@ -17,6 +17,7 @@ public class Player {
 	private int id;
 	private int skin = 0;
 	private boolean isHost;
+	private boolean isReady = false;
 	
 	public LoadedImage skinSelection[] = new LoadedImage[3];
 	public int zaehlerSkinSelection = 0;
@@ -31,6 +32,7 @@ public class Player {
 		isHost = false;
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
+		
 	}
 	// Konstruktor ohne IP. Also nur den namen // Hier handelt es sich um den Host
 	public Player(String name) {
@@ -81,6 +83,15 @@ public class Player {
     }
     public boolean getisHost() {
     	return isHost;
+    }
+    public void setisReady() {
+    	if (isReady == false)
+    		isReady = true;
+    	else if (isReady == true)
+    		isReady = false;
+    }
+    public boolean getisReady() {
+    	return isReady;
     }
     
     @Override public String toString() {

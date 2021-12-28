@@ -139,9 +139,9 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		Lobby_Create lobby = new Lobby_Create(new Player("SehrSehrSehrSehrSehrSehrLanger"));
-		lobby.addPlayer(new Player("303030303030303030303030303030", "127.0.0.1"));
-		lobby.addPlayer(new Player("Son", "2.0.0.2"));
-		//lobby.addPlayer(new Player("Hos", "1.0.0.Jos"));
+//		lobby.addPlayer(new Player("303030303030303030303030303030", "127.0.0.1"));
+//		lobby.addPlayer(new Player("Son", "2.0.0.2"));
+//		lobby.addPlayer(new Player("Hos", "1.0.0.Jos"));
 
 	}
 	/**

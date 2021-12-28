@@ -55,7 +55,7 @@ public class KeyHandler implements KeyListener {
 		
 		// LOBBY
 		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
-		    OwnButtons.keyIsReleased(keyCode);
+//		    OwnButtons.keyIsReleased(keyCode);
 		}
 		
 		
