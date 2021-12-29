@@ -349,12 +349,19 @@ public class PlayerHandler {
 		} else {
 		    clientPlayer.setDead(false);
 		}
-		
+	    } else if (keyCode == KeyEvent.VK_U) {
+		clientPlayer.increaseMovementSpeed();
+	    } else if (keyCode == KeyEvent.VK_J) {
+		clientPlayer.decreaseMovementSpeed();
 	    }
 	}
     }
     
     public static ArrayList<Player> getAllPlayer(){
 	return allPlayer;
+    }
+    
+    public static boolean getDebugKeysState() {
+	return debugKeys;
     }
 }

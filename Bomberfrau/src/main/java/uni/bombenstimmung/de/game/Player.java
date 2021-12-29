@@ -12,8 +12,6 @@
  * welche der Player bei Aufrufen direkt ausfuehrt.
  */
 
-// TODO: Laufgeschwindigkeit implementieren
-
 package uni.bombenstimmung.de.game;
 
 import java.awt.event.ActionEvent;
@@ -41,8 +39,14 @@ public class Player extends Entity implements ActionListener{
     private boolean dead;
     private Field currentField;
     private Timer t;
-    private int velX;
-    private int velY;
+    /* Genauere Positionsdaten und Velocity-Daten des Players. */
+    private double realPosX;
+    private double realPosY;
+    private double velX;
+    private double velY;
+    private double hitbox;
+    private int direction;
+    private double speedFactor;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
 	/* Offset-Variablen fuer Berechnung*/
@@ -58,16 +62,21 @@ public class Player extends Entity implements ActionListener{
 	this.maxBombs = 1;
 	this.placedBombs = 0;
 	this.bombRadius = 5;
+	this.realPosX = (pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2);
+	this.realPosY = (pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2);
 	
-	/* Variablen der Oberklasse Entity. */
-	super.xPosition = (int)((pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2));
-	super.yPosition = (int)((pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
+	/* Variablen der Oberklasse Entity. Werden als Bildschirmkoordinaten behandelt. */
+	super.xPosition = (int)this.realPosX;
+	super.yPosition = (int)this.realPosY;
 	
-	this.velX = 0;
-	this.velY = 0;
+	this.velX = 0.0;
+	this.velY = 0.0;
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
+	this.hitbox = (double)GraphicsHandler.getHeight()/54;
+	this.direction = 0;
+	this.speedFactor = 540.0;
 	this.t = new Timer(8, this);
 	this.t.start();
 	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name + ", Pos(" + currentField.xPosition +
@@ -76,44 +85,42 @@ public class Player extends Entity implements ActionListener{
     
     /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
     
-    // TODO: Work in Progress: Bugfixing in Kollisionsabfrage
+    // TODO: Bugfixing in Kollisionsabfrage
     
     public void actionPerformed(ActionEvent e) {
-	//boolean block = false;
+	boolean block = false;
 	Field tempField;
-	/*if (this.velX == 0) {
-	    tempField = Game.getFieldFromCoord((xPosition + (velY*8)), (yPosition + (velY*8)));
-	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
-		&& tempField.getContent() != FieldContent.UPGRADE) {
-		block = true;
-	    }
-	    tempField = Game.getFieldFromCoord((xPosition - (velY*8)), (yPosition + (velY*8)));
-	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
-		&& tempField.getContent() != FieldContent.UPGRADE) {
-		block = true;
-	    }
-	} else if (this.velY == 0) {
-	    tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velX*8)));
-	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
-		&& tempField.getContent() != FieldContent.UPGRADE) {
-		block = true;
-	    }
-	    tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition - (velX*8)));
-	    if (tempField.getContent() != FieldContent.EMPTY && tempField.getContent() != FieldContent.BOMB
-		&& tempField.getContent() != FieldContent.UPGRADE) {
-		block = true;
-	    }
-	}*/
 	
 	/* 
 	 * tempField stellt die Hitbox dar. Es wird das vorliegende Field in Bewegungsrichtung bestimmt
 	 * und fuer die Abfrage, ob das Field betretbar ist, weiterverwendet.
 	 */
-	tempField = Game.getFieldFromCoord((xPosition + (velX*8)), (yPosition + (velY*8)));
-	if (/*block == false && (*/tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
-		&& tempField.getContent() != FieldContent.BORDER/*)*/) {
-	    super.xPosition += this.velX;
-	    super.yPosition += this.velY;
+	switch (direction) {
+	case 0:		// ohne Bewegung
+	    tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
+	    break;
+	case 1:		// hoch
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - this.hitbox));
+	    break;
+	case 2:		// runter
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + this.hitbox));
+	    break;
+	case 3:		// links
+	    tempField = Game.getFieldFromCoord((int)(super.xPosition - this.hitbox), super.yPosition);
+	    break;
+	case 4:		// rechts
+	    tempField = Game.getFieldFromCoord((int)(super.xPosition + this.hitbox), super.yPosition);
+	    break;
+	default:
+	    tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
+	    ConsoleHandler.print("Invalid Direction ID!", MessageType.GAME);
+	}
+	if (block == false && (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+		&& tempField.getContent() != FieldContent.BORDER)) {
+	    this.realPosX += this.velX;
+	    this.realPosY += this.velY;
+	    super.xPosition = (int)this.realPosX;
+	    super.yPosition = (int)this.realPosY;
 	    this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	}
 	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
@@ -203,6 +210,22 @@ public class Player extends Entity implements ActionListener{
 	return currentField;
     }
     
+    public double getVelX() {
+	return this.velX;
+    }
+    
+    public double getVelY() {
+	return this.velY;
+    }
+    
+    public double getRealPosX() {
+	return realPosX;
+    }
+    
+    public double getRealPosY() {
+	return realPosY;
+    }
+    
     /*
      * Es folgen Methoden zu Bewegungsaktionen. Hier werden jeweils die Velocities passend zur Aktion
      * angepasst. Der Velocity-Wert wird in actionPerformed kontinuierlich addiert.
@@ -210,26 +233,31 @@ public class Player extends Entity implements ActionListener{
      */
     
     public void actionUp() {
+	this.direction = 1;
 	this.velX = 0;
-	this.velY = -(int)((double)GraphicsHandler.getHeight()/500.0);
+	this.velY = -((double)GraphicsHandler.getHeight() / this.speedFactor); 
     }
     
     public void actionDown() {
+	this.direction = 2;
 	this.velX = 0;
-	this.velY = (int)((double)GraphicsHandler.getHeight()/500.0);
+	this.velY = (double)GraphicsHandler.getHeight() / this.speedFactor;
     }
     
     public void actionLeft() {
-	this.velX = -(int)((double)GraphicsHandler.getWidth()/890.0);
+	this.direction = 3;
+	this.velX = -((double)GraphicsHandler.getHeight() / this.speedFactor);
 	this.velY = 0;
     }
     
     public void actionRight() {
-	this.velX = (int)((double)GraphicsHandler.getWidth()/890.0);
+	this.direction = 4;
+	this.velX = (double)GraphicsHandler.getHeight() / this.speedFactor;
 	this.velY = 0;
     }
     
     public void actionStop() {
+	this.direction = 0;
 	this.velX = 0;
 	this.velY = 0;
     }
@@ -277,9 +305,91 @@ public class Player extends Entity implements ActionListener{
 	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
     }
     
+    /* 
+     * Bei Erhoehen der Laufgeschwindigkeit wird der SpeedFactor erhoeht.
+     * Dieser wird dann fuer die Berechnung der Velocity bei den Action-Methoden herangeholt.
+     * Auch wird die Action-Methode der passenden Richtung einmal aufgerufen,
+     * um den neuen Velocity Wert zu berechnen.
+     */
     public void increaseMovementSpeed() {
 	if (this.movementSpeed < 5) {
 	    this.movementSpeed++;
+	    
+	    switch (movementSpeed) {
+	    case 1:
+		this.speedFactor = 540.0;
+		break;
+	    case 2:
+		this.speedFactor = 360.0;
+		break;
+	    case 3:
+		this.speedFactor = 270.0;
+		break;
+	    case 4:
+		this.speedFactor = 216.0;
+		break;
+	    case 5:
+		this.speedFactor = 180.0;
+	    }
+	    
+	    switch (direction) {
+	    case 0:
+		this.actionStop();
+		break;
+	    case 1:
+		this.actionUp();
+		break;
+	    case 2:
+		this.actionDown();
+		break;
+	    case 3:
+		this.actionLeft();
+		break;
+	    case 4:
+		this.actionRight();
+	    }
+	}
+	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
+    }
+    
+    /* Gleiche Prozedur wie bei increaseMovementSpeed, nur wird die Geschwindigkeit stattdessen verringert. */
+    public void decreaseMovementSpeed() {
+	if (this.movementSpeed > 1) {
+	    this.movementSpeed--;
+	    
+	    switch (movementSpeed) {
+	    case 1:
+		this.speedFactor = 540.0;
+		break;
+	    case 2:
+		this.speedFactor = 360.0;
+		break;
+	    case 3:
+		this.speedFactor = 270.0;
+		break;
+	    case 4:
+		this.speedFactor = 216.0;
+		break;
+	    case 5:
+		this.speedFactor = 180.0;
+	    }
+	    
+	    switch (direction) {
+	    case 0:
+		this.actionStop();
+		break;
+	    case 1:
+		this.actionUp();
+		break;
+	    case 2:
+		this.actionDown();
+		break;
+	    case 3:
+		this.actionLeft();
+		break;
+	    case 4:
+		this.actionRight();
+	    }
 	}
 	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
     }
