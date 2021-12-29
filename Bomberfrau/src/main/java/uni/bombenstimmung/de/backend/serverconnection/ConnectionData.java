@@ -1,7 +1,7 @@
 /*
  * ConnectionData
  *
- * Version 0.1.7
+ * Version 1.0
  * Author: Tim
  *
  * Enthaelt alle Daten der Server-Client-Verbindung

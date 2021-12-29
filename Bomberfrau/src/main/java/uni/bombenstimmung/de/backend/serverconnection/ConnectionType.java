@@ -1,7 +1,7 @@
 /*
  * ConnectionType
  *
- * Version 0.1.7
+ * Version 1.0
  * Author: Tim
  *
  * Gibt an ob dieser User als Client oder Host arbeitet (abgespeichert in ConnectionData) 
