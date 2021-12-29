@@ -149,9 +149,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 		case 003:
 			String[] pMessage003 = message.split("-");
-	    	Date hDate = new Date();
-	    	long hTime = hDate.getTime();
-	    	session.write("903-" + Long.toString(hTime));
+			long hTime = System.currentTimeMillis();
+	    	ConsoleHandler.print("Client time: " + pMessage003[1] + " Server time: " + hTime + " as String: " + Long.toString(hTime) , MessageType.BACKEND);
+	    	session.write("903-" + pMessage003[1] + "-" + Long.toString(hTime));
+	    	break;
 	    	//long clientTime = Long.parseLong(pMessage003[1]);
 	    	//long ping = clientTime - time;
 		//100 = Position of one player is sent and will be broadcasted to all the other clients in the session.
@@ -159,13 +160,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 100:
 			//TODO: SetX und SetY für den Host muss noch implementiert werden.
 			String[] pMessage100 = message.split("-");
-			sendMessageToAllClients("202"+pMessage100[1]+pMessage100[2]+pMessage100[3]);
+			sendMessageToAllClients("202-"+pMessage100[1]+"-"+pMessage100[2]+"-"+pMessage100[3]);
 			break;	
 		//101 = Position of the planted bomb is sent and will be broadcasted to all the other clients in the session.
 		//Format: "101-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 101:
 			String[] pMessage101 = message.split("-");
-			sendMessageToAllClients("203"+pMessage101[1]+pMessage101[2]+pMessage101[3]);
+			sendMessageToAllClients("203-"+pMessage101[1]+"-"+pMessage101[2]+"-"+pMessage101[3]);
 			sendMessageToAllClients(message);
 			break;	
 		//END OF SERVER CASES
@@ -202,11 +203,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//ClientID can be used now be used with .getId
 		case 903:
 			String[] pMessage903 = message.split("-");
-	    	Date cDate = new Date();
-	    	long cTime = cDate.getTime();
-	    	long clientTime = Long.parseLong(pMessage903[1]);
-	    	long ping = clientTime - cTime;
+	    	long currentTime = System.currentTimeMillis();
+	    	long startTime = Long.parseLong(pMessage903[1]);
+	    	long serverTime = Long.parseLong(pMessage903[2]);
+	    	long ping = currentTime-serverTime-startTime;
 	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+	    	break;
 		//999 = Being sent when a Client disconnects/leaves from the Server. 
 		//Format: "999"
 		case 999:
@@ -277,6 +279,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	public IoSession getSession() {
 		return conSession;
+	}
+	public void setSession(IoSession session) {
+		conSession = session;
 	}
 }
 

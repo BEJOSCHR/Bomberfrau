@@ -19,7 +19,7 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
-public class ClientHandler extends IoHandlerAdapter{
+public class ClientHandler extends IoHandlerAdapter implements Runnable{
 
 	private ConnectedClient client;
 	
@@ -35,7 +35,16 @@ public class ClientHandler extends IoHandlerAdapter{
 			session.write((String) "001-");
 			Thread.sleep(1000);
 			session.write((String) "002-");
-			Thread.sleep(1000); 
+			Thread.sleep(1000);
+			client.setSession(session);
+			ConsoleHandler.print("Thread starting...");
+			Thread pingThread = new Thread (this);
+			pingThread.start();
+			
+	    	//Date date = new Date();
+	    	//long time = date.getTime();
+	    	//ConsoleHandler.print(Long.toString(time));
+	        //session.write("003-" + Long.toString(time));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,6 +67,7 @@ public class ClientHandler extends IoHandlerAdapter{
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		ConsoleHandler.print("Session of ID " + client.getId() + " closed", MessageType.BACKEND);	
+		Thread.currentThread().interrupt();
 	}
 	
 	@Override
@@ -74,18 +84,22 @@ public class ClientHandler extends IoHandlerAdapter{
 		//ConsoleHandler.print("Client: Message sent");
 	}
 	
+	public void run() {
+		ConsoleHandler.print("Thread started...");
+		while (!Thread.currentThread().isInterrupted()) {
+		    try {
+		    	Thread.sleep(5000);
+		        calculatePing(client.getSession());
+		        Thread.sleep(5000);
+		    } catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
 	
 	private void calculatePing(IoSession session) {
-		while (true) {
-		    try {
 		    	ConsoleHandler.print("In infinite loop", MessageType.BACKEND);
-		    	Date date = new Date();
-		    	long time = date.getTime();
-		        session.write("003-" + Long.toString(time));
-		        Thread.sleep(500);
-		    } catch (Exception e) {
-		        e.printStackTrace();;
-		    }
-		} 
+		    	long currentTime = System.currentTimeMillis();
+		        session.write("003-" + Long.toString(currentTime));
 	}
 }
