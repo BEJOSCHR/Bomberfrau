@@ -21,7 +21,7 @@ public class Wall {
     }
     
     public void destroyed() {
-	if (randNr <= 0.3) {
+	if (randNr <= 0.15) {
 		if (tmp == 1) {
 			Game.changeFieldContent(FieldContent.UPGRADE_ITEM_BOMB, this.field.xPosition, this.field.yPosition);
 		}
