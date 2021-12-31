@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.event.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 import java.util.regex.*; // for PATTERN (IP address)
 
 import javax.sound.sampled.Clip;
@@ -48,6 +49,7 @@ public class Menu {
     private static JTextField control_up, control_down, control_left, control_right, control_bomb;
     private static JCheckBox checkBoxFPS;
     private static MouseActionArea intro, start, options, exit, back;
+    private static Boolean grow = true;
 
     /**
      * correct pattern for IPv4 address - 4 times 0-255 without leading zeros.
@@ -873,6 +875,73 @@ public class Menu {
 	    public void finaliseValues() {
 		AnimationData.intro_skip_text = 0;
 	    }
+	};
+
+    }
+    
+    /**
+     * Animation Title Text Pulsing
+     */
+    public static void titlePulseAni() {
+	
+	new Animation(1, -1) {
+	    @Override
+	    public void initValues() {
+		AnimationData.title_Modifier = 0;
+	    }
+
+	    @Override
+	    public void changeValues() {
+		if (AnimationData.title_Modifier > 30) grow = false;
+		if (AnimationData.title_Modifier == 0) grow = true;
+		if (getSteps() % 2 == 0) {
+		    if (grow)
+			AnimationData.title_Modifier += 1;
+		    else 
+        		AnimationData.title_Modifier -= 1;
+		}
+	    }
+
+	    @Override
+	    public void finaliseValues() {
+		AnimationData.title_Modifier = 0;
+	    }
+	};
+
+    }
+
+    /**
+     * Animation Title Text Shaking
+     */
+    public static void titleShakeAni() {
+	Random r = new Random();
+	new Animation(10, -1) {
+		@Override
+		public void initValues() {
+			AnimationData.title_posXModifier = 0;
+			AnimationData.title_posYModifier = 0;
+		}
+		@Override
+		public void changeValues() {
+			if(getSteps()%2 == 0) {
+				int stepSize = 1;
+				AnimationData.title_posXModifier += r.nextInt(stepSize*2)-stepSize;
+				AnimationData.title_posYModifier += r.nextInt(stepSize*2)-stepSize;
+				int limit = 10;
+				if(AnimationData.title_posXModifier < -limit) { AnimationData.title_posXModifier = -limit; }
+				else if(AnimationData.title_posXModifier > limit) { AnimationData.title_posXModifier = limit; }
+				if(AnimationData.title_posYModifier < -limit) { AnimationData.title_posYModifier = -limit; }
+				else if(AnimationData.title_posYModifier > limit) { AnimationData.title_posYModifier = limit; }
+			}else {
+				AnimationData.title_posXModifier = 0;
+				AnimationData.title_posYModifier = 0;
+			}
+		}
+		@Override
+		public void finaliseValues() {
+			AnimationData.title_posXModifier = 0;
+			AnimationData.title_posYModifier = 0;
+		}
 	};
 
     }

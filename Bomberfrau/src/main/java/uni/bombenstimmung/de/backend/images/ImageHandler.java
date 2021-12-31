@@ -29,6 +29,7 @@ public class ImageHandler {
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
 	    	new LoadedImage("logo_white.png", ImageType.IMAGE_INTRO_PIC);
 	    	new LoadedImage("mainmenu.png", ImageType.IMAGE_MENU_PIC);
+	    	new LoadedImage("mainmenutitle.png", ImageType.IMAGE_MENU_TITLE);
 	    	new LoadedImage("optionsmenu.png", ImageType.IMAGE_OPTIONS_PIC);
 	    	
 	    	new LoadedImage("Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);

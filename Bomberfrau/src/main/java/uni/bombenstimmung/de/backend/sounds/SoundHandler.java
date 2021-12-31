@@ -68,7 +68,7 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Reduziert die Lautstärke des gerade laufenden CLips kontinuierlich bis zur Stille
+	 * Reduziert die Lautstärke des gerade laufenden Clips kontinuierlich bis zur Stille
 	 */
 	public static void reduceAllSounds() {
 	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

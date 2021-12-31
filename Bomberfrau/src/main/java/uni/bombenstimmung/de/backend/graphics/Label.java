@@ -91,7 +91,18 @@ public class Label extends JLabel {
 		    		(int)(Settings.res_width*factor), (int)(Settings.res_height*0.95));
 		    	break;
 		case MENU:
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);			
+		    	//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);	
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_OPTIONS_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);
+		    	
+//		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.res_width*0.05) ,
+//		    		(int)(Settings.res_height*0.05) , (int)(2100*Settings.res_width/3840), (int)(700*Settings.res_height/2160), null);
+		    	
+//		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.res_width*0.05+10*AnimationData.title_posXModifier) ,
+//		    		(int)(Settings.res_height*0.05+10*AnimationData.title_posYModifier) , (int)(2100*Settings.res_width/3840), (int)(700*Settings.res_height/2160), null);
+		    	
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.res_width*0.05) ,
+		    		(int)(Settings.res_height*0.05) , (int)(2100*Settings.res_width/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.res_height/2160 + AnimationData.title_Modifier), null);
+		    	
 		    	GraphicsHandler.drawRightText(g, Color.BLACK, (int)(30*Settings.factor), "Name:", (int)(Settings.res_width*0.5), (int)(Settings.res_height*0.48));
 		    	if (!Settings.create_selected)
 		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.res_width*0.5), (int)(Settings.res_height*0.58));

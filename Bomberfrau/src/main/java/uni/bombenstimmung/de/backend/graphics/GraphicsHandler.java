@@ -113,11 +113,13 @@ public class GraphicsHandler {
 	public static void switchToMenuFromIntro() {
 
 		SoundHandler.stopAllSounds();
-	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
 		
 	        Settings.create_selected = true;
 
+	        //Menu.titleShakeAni();
+	        Menu.titlePulseAni();
+	        
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
@@ -149,7 +151,9 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		Menu.optionsComponentsActive(false);
-		//Menu.menuComponentsActive(true);
+
+	        //Menu.titleShakeAni();
+	        Menu.titlePulseAni();
 		Menu.buildMenu();
 
 		displayType = DisplayType.MENU;
@@ -162,8 +166,9 @@ public class GraphicsHandler {
 	public static void switchToMenuFromLobby() {
 		
 		AnimationHandler.stopAllAnimations();
-		//SoundHandler.stopAllSounds();
-	    	//SoundHandler.playSound(SoundType.MENU, true);
+
+	        //Menu.titleShakeAni();
+	        Menu.titlePulseAni();
 		Menu.menuComponentsActive(true);
 
 		displayType = DisplayType.MENU;
@@ -178,7 +183,9 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-		
+
+	        //Menu.titleShakeAni();
+	        Menu.titlePulseAni();
 		Menu.menuComponentsActive(true);
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
@@ -193,7 +200,9 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-		
+
+	        //Menu.titleShakeAni();
+	        Menu.titlePulseAni();
 		Menu.menuComponentsActive(true);
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;

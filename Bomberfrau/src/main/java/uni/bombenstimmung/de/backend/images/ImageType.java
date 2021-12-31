@@ -12,6 +12,7 @@ public enum ImageType {
 
     	IMAGE_INTRO_PIC,
     	IMAGE_MENU_PIC,
+    	IMAGE_MENU_TITLE,
     	IMAGE_OPTIONS_PIC,
     	
 	IMAGE_MENU_XXX,
