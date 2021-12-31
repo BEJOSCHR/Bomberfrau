@@ -71,13 +71,13 @@ public class LanguageHandler {
 		String[] options_btn = {"BACK", "ZURÜCK"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPTIONS_BTN, options_btn);
 
-		String[] key_up = {"UP", "HOCH"};
+		String[] key_up = {"Up", "Hoch"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_UP, key_up);
-		String[] key_down = {"DOWN", "RUNTER"};
+		String[] key_down = {"Down", "Runter"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_DOWN, key_down);
-		String[] key_left = {"LEFT", "LINKS"};
+		String[] key_left = {"Left", "Links"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_LEFT, key_left);
-		String[] key_right = {"RIGHT", "RECHTS"};
+		String[] key_right = {"Right", "Rechts"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_RIGHT, key_right);
 
 		String[] bad_name = {"Please enter a name before starting ...", "Bitte vor dem Start einen Namen eingeben ..."};

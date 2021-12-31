@@ -236,11 +236,18 @@ public class Menu {
 			(int) (Settings.res_width / 4.5), (int) (Settings.res_height / 12));
 		sliderSound.setBounds((int) (Settings.res_width * 0.28), (int) (Settings.res_height * 0.3),
 			(int) (Settings.res_width / 4.5), (int) (Settings.res_height / 12));
-		control_up.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
-		control_down.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
-		control_left.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
-		control_right.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
-		control_bomb.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+
+		control_up.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.factor)));
+		control_down.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.factor)));
+		control_left.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.factor)));
+		control_right.setFont(GraphicsHandler
+			.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.factor)));
+		control_bomb.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.factor)));
+
 		control_up.setBounds((int) (Settings.res_width * 0.33), (int) (Settings.res_height * 0.44),
 			(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
 		control_down.setBounds((int) (Settings.res_width * 0.33), (int) (Settings.res_height * 0.64),
@@ -316,111 +323,124 @@ public class Menu {
 
 	control_up = new JTextField();
 	control_up.setHorizontalAlignment(JTextField.CENTER);
-	control_up.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+	// control_up.setText(KeyEvent.getKeyText(Settings.move_up));
+	control_up.setText(codeToText(Settings.move_up));
+	control_up
+		.setFont(GraphicsHandler.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.factor)));
 	control_up.setBounds((int) (Settings.res_width * 0.33), (int) (Settings.res_height * 0.44),
 		(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
-	control_up.setText(codeToText(Settings.move_up));
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		System.out.println("control_up: code = " + e.getKeyCode() + " , char = " + e.getKeyChar());
+		// System.out.println("control_up: code = " + e.getKeyCode() + " ,
+		// e.getKeyChar() = " + e.getKeyChar() + " , int = " + (int)(e.getKeyChar()));
+		// System.out.println("control_up: code ext = " + e.getExtendedKeyCode());
+		// System.out.println("getKeyText = " + KeyEvent.getKeyText(e.getKeyCode()) + "
+		// , getExtendedKeyCodeForChar = " +
+		// KeyEvent.getExtendedKeyCodeForChar(e.getKeyCode()) );
 		Settings.move_up = e.getKeyCode();
+		// control_up.setText(KeyEvent.getKeyText(Settings.move_up));
 		control_up.setText(codeToText(Settings.move_up));
+		control_up.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.factor)));
 	    };
 
-	    // public void keyPressed(KeyEvent e) {};
 	    public void keyTyped(KeyEvent e) {
 		control_up.setText("");
 	    };
 
-	    // public void keyReleased(KeyEvent e) {
 	    public void keyPressed(KeyEvent e) {
-		// control_up.setText("");
-		// System.out.println("control_up: code = " + e.getKeyCode() + " , char = " +
-		// e.getKeyChar());
-		// move_up = e.getKeyCode();
-		// control_up.setText(codeToText(move_up));
-		// System.out.println("codeToText(move_up) = " + codeToText(move_up));
-		// System.out.println("control_up.getText() = " + control_up.getText());
 	    };
 	});
 
 	control_down = new JTextField();
 	control_down.setHorizontalAlignment(JTextField.CENTER);
-	control_down.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+	control_down.setText(KeyEvent.getKeyText(Settings.move_down));
+	control_down.setFont(
+		GraphicsHandler.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.factor)));
 	control_down.setBounds((int) (Settings.res_width * 0.33), (int) (Settings.res_height * 0.64),
 		(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
-	control_down.setText(codeToText(Settings.move_down));
 	control_down.addKeyListener(new KeyListener() {
-	    public void keyPressed(KeyEvent e) {
+	    public void keyReleased(KeyEvent e) {
+		Settings.move_down = e.getKeyCode();
+		control_down.setText(KeyEvent.getKeyText(e.getKeyCode()));
+		control_down.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.factor)));
 	    };
 
 	    public void keyTyped(KeyEvent e) {
+		control_down.setText("");
 	    };
 
-	    public void keyReleased(KeyEvent e) {
-		System.out.println("control_down: code = " + e.getKeyCode() + " , char = " + e.getKeyChar());
-		Settings.move_down = e.getKeyCode();
-		control_down.setText(codeToText(Settings.move_down));
+	    public void keyPressed(KeyEvent e) {
 	    };
 	});
 
 	control_left = new JTextField();
 	control_left.setHorizontalAlignment(JTextField.CENTER);
-	control_left.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+	control_left.setText(KeyEvent.getKeyText(Settings.move_left));
+	control_left.setFont(
+		GraphicsHandler.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.factor)));
 	control_left.setBounds((int) (Settings.res_width * 0.28), (int) (Settings.res_height * 0.54),
 		(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
-	control_left.setText(codeToText(Settings.move_left));
 	control_left.addKeyListener(new KeyListener() {
-	    public void keyPressed(KeyEvent e) {
+	    public void keyReleased(KeyEvent e) {
+		Settings.move_left = e.getKeyCode();
+		control_left.setText(KeyEvent.getKeyText(e.getKeyCode()));
+		control_left.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.factor)));
 	    };
 
 	    public void keyTyped(KeyEvent e) {
+		control_left.setText("");
 	    };
 
-	    public void keyReleased(KeyEvent e) {
-		System.out.println("control_left: code = " + e.getKeyCode() + " , char = " + e.getKeyChar());
-		Settings.move_left = e.getKeyCode();
-		control_left.setText(codeToText(Settings.move_left));
+	    public void keyPressed(KeyEvent e) {
 	    };
 	});
 
 	control_right = new JTextField();
 	control_right.setHorizontalAlignment(JTextField.CENTER);
-	control_right.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+	control_right.setText(KeyEvent.getKeyText(Settings.move_right));
+	control_right.setFont(
+		GraphicsHandler.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.factor)));
 	control_right.setBounds((int) (Settings.res_width * 0.38), (int) (Settings.res_height * 0.54),
 		(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
-	control_right.setText(codeToText(Settings.move_right));
 	control_right.addKeyListener(new KeyListener() {
-	    public void keyPressed(KeyEvent e) {
+	    public void keyReleased(KeyEvent e) {
+		Settings.move_right = e.getKeyCode();
+		control_right.setText(KeyEvent.getKeyText(e.getKeyCode()));
+		control_right.setFont(GraphicsHandler
+			.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.factor)));
 	    };
 
 	    public void keyTyped(KeyEvent e) {
+		control_right.setText("");
 	    };
 
-	    public void keyReleased(KeyEvent e) {
-		System.out.println("control_right: code = " + e.getKeyCode() + " , char = " + e.getKeyChar());
-		Settings.move_right = e.getKeyCode();
-		control_right.setText(codeToText(Settings.move_right));
+	    public void keyPressed(KeyEvent e) {
 	    };
 	});
 
 	control_bomb = new JTextField();
 	control_bomb.setHorizontalAlignment(JTextField.CENTER);
-	control_bomb.setFont(GraphicsHandler.usedFont((int) (35 * Settings.factor)));
+	control_bomb.setText(KeyEvent.getKeyText(Settings.plant_bomb));
+	control_bomb.setFont(
+		GraphicsHandler.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.factor)));
 	control_bomb.setBounds((int) (Settings.res_width * 0.5), (int) (Settings.res_height * 0.54),
 		(int) (Settings.res_width / 12), (int) (Settings.res_height / 16));
-	control_bomb.setText(codeToText(Settings.plant_bomb));
 	control_bomb.addKeyListener(new KeyListener() {
-	    public void keyPressed(KeyEvent e) {
+	    public void keyReleased(KeyEvent e) {
+		Settings.plant_bomb = e.getKeyCode();
+		control_bomb.setText(KeyEvent.getKeyText(e.getKeyCode()));
+		control_bomb.setFont(
+			GraphicsHandler.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.factor)));
 	    };
 
 	    public void keyTyped(KeyEvent e) {
+		control_bomb.setText("");
 	    };
 
-	    public void keyReleased(KeyEvent e) {
-		System.out.println("control_up: code = " + e.getKeyCode() + " , char = " + e.getKeyChar());
-		Settings.plant_bomb = e.getKeyCode();
-		control_bomb.setText(codeToText(Settings.plant_bomb));
+	    public void keyPressed(KeyEvent e) {
 	    };
 	});
 
@@ -776,19 +796,7 @@ public class Menu {
      */
     private static String codeToText(int i) {
 
-	System.out.println("codeToText: i = " + i);
-
-	// Zahlen: 0(49) - 9(57)
-	// Grossbuchstaben: A(65) - Z(90)
-	// Kleinbuchstaben: a(97) - z(122)
-
-	if (i == 27)
-	    return "ESC";
-	if (i == 32)
-	    return "SPACE";
-	if (i == 10)
-	    return "ENTER";
-
+	// System.out.println("codeToText: i = " + i)
 	if (i == 37)
 	    return LanguageHandler.getLLB(LanguageBlockType.LB_KEY_LEFT).getContent();
 	if (i == 38)
@@ -798,10 +806,7 @@ public class Menu {
 	if (i == 40)
 	    return LanguageHandler.getLLB(LanguageBlockType.LB_KEY_DOWN).getContent();
 
-//	if (i>=97 && i<=122)
-//	    return Character.toString((char) (i)).toUpperCase();
-//	else
-	return ("" + (char) (i));
+	return (KeyEvent.getKeyText(i));
     }
 
     /**
