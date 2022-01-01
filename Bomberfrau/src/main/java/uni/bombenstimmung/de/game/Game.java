@@ -21,7 +21,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 public class Game {
 
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
-    private static int mapNumber = 2;
+    private static int mapNumber = 3;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
 
     /**
@@ -73,6 +73,7 @@ public class Game {
 		    break;
 		case 3:
 			mapData = GameData.MAP_3;
+			break;
 		default:
 			ConsoleHandler.print("Unknown mapnumber, cant load map!");
 			return;
@@ -129,6 +130,7 @@ public class Game {
     public static void drawBackground(Graphics g, int bgnumber) {
 	Color yellowColor = new Color(217, 212, 163);
 	Color greenColor = new Color(110, 150, 42);
+	Color grayColor = new Color(143,90,90);
 	switch(bgnumber) {
 		case 1:
 		    //FIX Bild für Gras ist anscheinend zu klein...
@@ -140,7 +142,7 @@ public class Game {
 		    g.fillRect(0,0,GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		    break;
 		default:
-		    g.setColor(greenColor);
+		    g.setColor(grayColor);
 		    g.fillRect(0,0,GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		    break;
 	}
