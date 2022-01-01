@@ -241,7 +241,7 @@ public class GraphicsHandler {
 	public static void switchToIngameFromLobby() {
 		
 		//SoundHandler.stopAllSounds();
-		SoundHandler.reduceAllSounds();
+		SoundHandler.reduceLastPlayedSound();
 		AnimationHandler.stopAllAnimations();
 
 		Game.fillMap();

@@ -290,8 +290,8 @@ public class Menu {
 	sliderMusic.addChangeListener(new ChangeListener() {
 	    public void stateChanged(ChangeEvent event) {
 		Settings.setVol_music(sliderMusic.getValue());
-		System.out.println("Music Volume = " + Settings.getVol_music());
-		FloatControl volume = (FloatControl) SoundHandler.clip.getControl(FloatControl.Type.MASTER_GAIN);
+		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
+		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip.getControl(FloatControl.Type.MASTER_GAIN);
 		// float vol = (Settings.vol_music-50)/2f;
 		System.out.println("Music Volume2 = " + Settings.getVol_music());
 		float vol = (31f * (Settings.getVol_music() / 100f) - 25f);
@@ -694,7 +694,7 @@ public class Menu {
 		}
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
 		// SoundHandler.stopAllSounds();
-		SoundHandler.reduceAllSounds();
+		SoundHandler.reduceLastPlayedSound();
 		GraphicsHandler.shutdownProgram();
 	    }
 

@@ -21,7 +21,7 @@ public class SoundHandler {
 
 	public static final String PATH = "sounds/";
 	private static List<LoadedSound> sounds = new ArrayList<LoadedSound>();
-	public static Clip clip;
+	public static Clip lastPlayedClip;
 	
 	/**
 	 * Wird am start aufgerufen und läd alle Sounds
@@ -31,7 +31,6 @@ public class SoundHandler {
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("Start.wav", SoundType.TEST_START, SoundCategory.TEST, 0.02D);
 		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.5D);
 		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.5D);
 		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.OPTIONS_SOUND, 0.5D);
@@ -47,7 +46,7 @@ public class SoundHandler {
 	public static void playSound(SoundType type, Boolean loop) {
 		
 		LoadedSound sound = getSound(type);
-		clip = sound.getClip();
+		Clip clip = sound.getClip();
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		float value = 20f * (float) Math.log10(sound.getVolume());
 		if(value < -70) { value = -70; } //MINIMUM VOLUME
@@ -56,6 +55,7 @@ public class SoundHandler {
 		clip.setFramePosition(0);
 		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
+		lastPlayedClip = clip;
 		
 	}
 	
@@ -71,8 +71,8 @@ public class SoundHandler {
 	/**
 	 * Reduziert die Lautstärke des gerade laufenden Clips kontinuierlich bis zur Stille
 	 */
-	public static void reduceAllSounds() {
-	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	public static void reduceLastPlayedSound() {
+	    	FloatControl volume = (FloatControl) lastPlayedClip.getControl(FloatControl.Type.MASTER_GAIN);
                 try {
                     float vol = volume.getValue();
                     while (vol>-60) {
@@ -81,7 +81,7 @@ public class SoundHandler {
                         Thread.sleep(100);
                     }
                     Thread.sleep(1000);
-                    clip.stop();
+                    lastPlayedClip.stop();
                 }
                 catch (InterruptedException ex) {}
 	}
