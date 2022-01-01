@@ -62,6 +62,10 @@ public class KeyHandler implements KeyListener {
 //		    OwnButtons.keyIsReleased(keyCode);
 		}
 		
+		if(GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
+		    PlayerHandler.handleKeyEventReleased(keyCode);
+		}
+		
 		
 		if(keyCode == KeyEvent.VK_W) {
 			//W
