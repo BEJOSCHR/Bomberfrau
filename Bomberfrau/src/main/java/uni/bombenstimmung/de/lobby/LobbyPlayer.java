@@ -106,6 +106,10 @@ public class LobbyPlayer {
     public int getId() {
     	return id;
     }
+    
+    public String getIpAdress() {
+    	return ip;
+    }
 	/**
 	 * Gibt zurueck ob der Player der Host ist.
 	 */

@@ -13,6 +13,7 @@ import java.io.File;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -229,9 +230,9 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
-		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
+//		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
+//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
+//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
 	}
 	
@@ -246,6 +247,26 @@ public class GraphicsHandler {
 
 		Game.fillMap();
 	    	Game.updateMap(LobbyCreate.getMap()+1);
+	    	
+		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
+		    if(i==0) {
+			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1));
+		    }
+		    if(i==1) {
+			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1));
+		    }
+		    if(i==2) {
+			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15));
+		    }
+		    if(i==3) {
+			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15));
+		    }
+		}
+	    	
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	
 		displayType = DisplayType.INGAME;

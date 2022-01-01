@@ -59,8 +59,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 					if(LobbyCreate.player[i].getisReady() == true)
 						counterForReady++;
 				}
-				if (counterForReady == LobbyCreate.numberPlayer)
-					ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
+				if (counterForReady == LobbyCreate.numberPlayer) {
+				    ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
+				    GraphicsHandler.switchToIngameFromLobby();
+				}
+
 			}
 			@Override
 			public boolean isActiv() {

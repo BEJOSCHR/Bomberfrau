@@ -21,11 +21,11 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 
 public class LobbyCreate {
 
-	static LobbyPlayer player[] = new LobbyPlayer[4];
+	public static LobbyPlayer player[] = new LobbyPlayer[4];
 	static LoadedImage mapSelection[] = new LoadedImage[3];
 	static int zaehlerMapSelection = 0;
 	static int hochRunterNavigation = 0;
-	static int numberPlayer = 0;
+	public static int numberPlayer = 0;
 	
 	
 	/**
