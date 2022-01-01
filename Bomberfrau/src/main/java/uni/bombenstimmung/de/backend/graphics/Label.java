@@ -44,8 +44,8 @@ public class Label extends JLabel {
 	
 	public Label() {
 		
-		this.setBounds(0, 0, Settings.res_width, Settings.res_height);
-		this.showFPS = Settings.show_fps;
+		this.setBounds(0, 0, Settings.getRes_width(), Settings.getRes_height());
+		this.showFPS = Settings.getShow_fps();
 		this.setVisible(true);
 		GraphicsHandler.getFrame().add(this, BorderLayout.CENTER);
 		
@@ -76,42 +76,42 @@ public class Label extends JLabel {
 		
 		//BACKGROUND
 		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, Settings.res_width, Settings.res_height);
+		g.fillRect(0, 0, Settings.getRes_width(), Settings.getRes_height());
 		
 		//PARTS
 		switch(GraphicsHandler.getDisplayType()) {
 		case LOADINGSCREEN:
 			break;
 		case INTRO:
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INTRO_PIC).getImage(), (int)(Settings.res_width*(1-AnimationData.intro_zoom)/2), (int)(Settings.res_height*(1-AnimationData.intro_zoom)/2),
-		    		(int)(Settings.res_width*AnimationData.intro_zoom), (int)(Settings.res_height*AnimationData.intro_zoom), null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INTRO_PIC).getImage(), (int)(Settings.getRes_width()*(1-AnimationData.intro_zoom)/2), (int)(Settings.getRes_height()*(1-AnimationData.intro_zoom)/2),
+		    		(int)(Settings.getRes_width()*AnimationData.intro_zoom), (int)(Settings.getRes_height()*AnimationData.intro_zoom), null);
 		    	double factor = 0.9;
-		    	if (Settings.lang_nr == 1) factor = 0.85;
+		    	if (Settings.getLang_nr() == 1) factor = 0.85;
 		    	GraphicsHandler.drawCentralisedText(g, Color.GRAY, 20+AnimationData.intro_skip_text, LanguageHandler.getLLB(LanguageBlockType.LB_INTRO_SKIP).getContent(),
-		    		(int)(Settings.res_width*factor), (int)(Settings.res_height*0.95));
+		    		(int)(Settings.getRes_width()*factor), (int)(Settings.getRes_height()*0.95));
 		    	break;
 		case MENU:
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.getRes_width(), Settings.getRes_height(), null);
 		    	
 		    	// Titel pusliert
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.res_width*0.05) ,
-		    		(int)(Settings.res_height*0.05) , (int)(2100*Settings.res_width/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.res_height/2160 + AnimationData.title_Modifier), null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.getRes_width()*0.05) ,
+		    		(int)(Settings.getRes_height()*0.05) , (int)(2100*Settings.getRes_width()/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.getRes_height()/2160 + AnimationData.title_Modifier), null);
 		    	
-		    	GraphicsHandler.drawRightText(g, Color.BLACK, (int)(30*Settings.factor), "Name:", (int)(Settings.res_width*0.5), (int)(Settings.res_height*0.48));
-		    	if (!Settings.create_selected)
-		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.res_width*0.5), (int)(Settings.res_height*0.58));
+		    	GraphicsHandler.drawRightText(g, Color.BLACK, (int)(30*Settings.getFactor()), "Name:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.48));
+		    	if (!Settings.getCreate_selected())
+		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.58));
 		    	break;
 		case OPTIONS:
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.res_width, Settings.res_height, null);
-		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT1).getContent(), (int)(Settings.res_width*0.1), (int)(Settings.res_height*0.13));
-		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT2).getContent(), (int)(Settings.res_width*0.1), (int)(Settings.res_height*0.24));
-		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT3).getContent(), (int)(Settings.res_width*0.1), (int)(Settings.res_height*0.34));
-		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT4).getContent(), (int)(Settings.res_width*0.1), (int)(Settings.res_height*0.44));
-		    	GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT5).getContent(), (int)(Settings.res_width*0.541), (int)(Settings.res_height*0.51));
-		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.factor), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT7).getContent(), (int)(Settings.res_width*0.1), (int)(Settings.res_height*0.83));
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.getRes_width(), Settings.getRes_height(), null);
+		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT1).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.13));
+		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT2).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.24));
+		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT3).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.34));
+		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT4).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.44));
+		    	GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT5).getContent(), (int)(Settings.getRes_width()*0.541), (int)(Settings.getRes_height()*0.51));
+		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT7).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.83));
 			break;
 		case LOBBY:
-			GraphicsHandler.drawCentralisedText(g, Color.RED, 180, "LOBBY", Settings.res_width/2, Settings.res_height/2-30);
+			GraphicsHandler.drawCentralisedText(g, Color.RED, 180, "LOBBY", Settings.getRes_width()/2, Settings.getRes_height()/2-30);
 			break;
 		case INGAME:
 			//GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
@@ -138,7 +138,7 @@ public class Label extends JLabel {
 		//DRAW FPS
 		if(showFPS == true) {
 			g.setColor(Color.DARK_GRAY);
-			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.factor)));
+			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
 			//g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 			
 			// schöner durch ersetzen führender Nuller durch Leerzeichen

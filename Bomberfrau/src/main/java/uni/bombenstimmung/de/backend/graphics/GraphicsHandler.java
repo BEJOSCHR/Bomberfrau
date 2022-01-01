@@ -46,7 +46,7 @@ public class GraphicsHandler {
 		
 		frame.setLocationRelativeTo(null);
 		//frame.setLocation(0, 0);
-		frame.setLocation((Settings.res_width_max-Settings.res_width)/2, (Settings.res_height_max-Settings.res_height)/2);
+		frame.setLocation((Settings.getRes_width_max()-Settings.getRes_width())/2, (Settings.getRes_height_max()-Settings.getRes_height())/2);
 		frame.setTitle("BomberFrau - "+BomberfrauMain.VERSION);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +67,7 @@ public class GraphicsHandler {
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //		frame.setSize(1920, 1080);
-		frame.setSize(Settings.res_width, Settings.res_height);
+		frame.setSize(Settings.getRes_width(), Settings.getRes_height());
 		//frame.setPreferredSize(frame.getSize());
 		//frame.setMinimumSize(frame.getSize());
 		//frame.setMaximumSize(frame.getSize());
@@ -115,7 +115,7 @@ public class GraphicsHandler {
 		SoundHandler.stopAllSounds();
 		AnimationHandler.stopAllAnimations();
 		
-	        Settings.create_selected = true;
+	        Settings.setCreate_selected(true);
 
 	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
@@ -258,7 +258,7 @@ public class GraphicsHandler {
  	 */
 	public static Font usedFont(int textSize) {
 
-	    Float factor = (float)(Settings.res_height)/Settings.res_height_max;
+	    Float factor = (float)(Settings.getRes_height())/Settings.getRes_height_max();
 	    Font font;
 	    font = new Font("Arial", Font.BOLD, (int)(40*factor));
 	    try {

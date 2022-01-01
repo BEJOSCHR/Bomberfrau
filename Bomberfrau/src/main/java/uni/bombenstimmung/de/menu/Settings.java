@@ -30,35 +30,213 @@ public class Settings {
 
     private static final String INI = "save.ini";
 
-    public static boolean show_fps;
-    public static boolean create_selected;
-    public static boolean boxes_main_valid;
-    public static boolean ende;
-    public static String user_name, language;
-    public static int lang_nr;
-    public static String ip;
     public static Properties prop;
 
-    // resolution
-    public static int res_nr;
-    public static int res_width;
-    public static int res_height;
-    public static int res_width_max;
-    public static int res_height_max;
-    // volumes
-    public static int vol_music;
-    public static int vol_sound;
-    // controls
-    public static int move_left;
-    public static int move_up;
-    public static int move_right;
-    public static int move_down;
-    public static int plant_bomb;
-    // special keys
-    public static int pause;
-    public static int cancel;
+    private static boolean show_fps;
+    private static boolean create_selected;
+    private static boolean boxes_main_valid;
+    private static boolean ende;
+    private static String user_name, language;
+    private static int lang_nr;
+    private static String ip;
 
-    public static Float factor;
+    // resolution
+    private static int res_nr;
+    private static int res_width;
+    private static int res_height;
+    private static int res_width_max;
+    private static int res_height_max;
+    // volumes
+    private static int vol_music;
+    private static int vol_sound;
+    // controls
+    private static int move_left;
+    private static int move_up;
+    private static int move_right;
+    private static int move_down;
+    private static int plant_bomb;
+
+    private static Float factor;
+
+    /*****************************************************************************************************************
+     * GETTER
+     *****************************************************************************************************************/
+
+    public static boolean getShow_fps() {
+	return show_fps;
+    }
+
+    public static boolean getCreate_selected() {
+	return create_selected;
+    }
+
+    public static boolean getBoxes_main_valid() {
+	return boxes_main_valid;
+    }
+
+    public static boolean getEnde() {
+	return ende;
+    }
+
+    public static String getUser_name() {
+	return user_name;
+    }
+
+    public static String getLanguage() {
+	return language;
+    }
+
+    public static int getLang_nr() {
+	return lang_nr;
+    }
+
+    public static String getIp() {
+	return ip;
+    }
+
+    public static int getRes_nr() {
+	return res_nr;
+    }
+
+    public static int getRes_width() {
+	return res_width;
+    }
+
+    public static int getRes_height() {
+	return res_height;
+    }
+
+    public static int getRes_width_max() {
+	return res_width_max;
+    }
+
+    public static int getRes_height_max() {
+	return res_height_max;
+    }
+
+    public static int getVol_music() {
+	return vol_music;
+    }
+
+    public static int getVol_sound() {
+	return vol_sound;
+    }
+
+    public static int getMove_left() {
+	return move_left;
+    }
+
+    public static int getMove_up() {
+	return move_up;
+    }
+
+    public static int getMove_right() {
+	return move_right;
+    }
+
+    public static int getMove_down() {
+	return move_down;
+    }
+
+    public static int getPlant_bomb() {
+	return plant_bomb;
+    }
+
+    public static Float getFactor() {
+	return factor;
+    }
+
+    /*****************************************************************************************************************
+     * SETTER
+     *****************************************************************************************************************/
+
+    public static void setShow_fps(Boolean b) {
+	show_fps = b;
+    }
+
+    public static void setCreate_selected(Boolean b) {
+	create_selected = b;
+    }
+
+    public static void setBoxes_main_valid(Boolean b) {
+	boxes_main_valid = b;
+    }
+
+    public static void setEnde(Boolean b) {
+	ende = b;
+    }
+
+    public static void setUser_name(String s) {
+	user_name = s;
+    }
+
+    public static void setLanguage(String s) {
+	language = s;
+    }
+
+    public static void setLang_nr(int i) {
+	lang_nr = i;
+    }
+
+    public static void setIp(String s) {
+	ip = s;
+    }
+
+    public static void setRes_nr(int i) {
+	res_nr = i;
+    }
+
+    public static void setRes_width(int i) {
+	res_width = i;
+    }
+
+    public static void setRes_height(int i) {
+	res_height = i;
+    }
+
+    public static void setRes_width_max(int i) {
+	res_width_max = i;
+    }
+
+    public static void setRes_height_max(int i) {
+	res_height_max = i;
+    }
+
+    public static void setVol_music(int i) {
+	vol_music = i;
+    }
+
+    public static void setVol_sound(int i) {
+	vol_sound = i;
+    }
+
+    public static void setMove_left(int i) {
+	move_left = i;
+    }
+
+    public static void setMove_up(int i) {
+	move_up = i;
+    }
+
+    public static void setMove_right(int i) {
+	move_right = i;
+    }
+
+    public static void setMove_down(int i) {
+	move_down = i;
+    }
+
+    public static void setPlant_bomb(int i) {
+	plant_bomb = i;
+    }
+
+    public static void setFactor(Float f) {
+	factor = f;
+    }
+
+    /*****************************************************************************************************************
+     * INI METHODEN
+     *****************************************************************************************************************/
 
     /**
      * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü werden
@@ -156,8 +334,6 @@ public class Settings {
 	    prop.setProperty("move_right", String.valueOf(move_right));
 	    prop.setProperty("move_down", String.valueOf(move_down));
 	    prop.setProperty("plant_bomb", String.valueOf(plant_bomb));
-	    prop.setProperty("pause", String.valueOf(pause));
-	    prop.setProperty("cancel", String.valueOf(cancel));
 	    prop.setProperty("ip_address", ip);
 	    prop.setProperty("show_fps", String.valueOf(show_fps));
 
@@ -282,18 +458,6 @@ public class Settings {
 		prop.setProperty("plant_bomb", "32");
 	    }
 	    plant_bomb = Integer.parseInt(prop.getProperty("plant_bomb"));
-
-	    if (prop.getProperty("pause") == null) {
-		ConsoleHandler.print("<pause> is empty ... setting value 80 (Code for p)", MessageType.MENU);
-		prop.setProperty("pause", "80");
-	    }
-	    pause = Integer.parseInt(prop.getProperty("pause"));
-
-	    if (prop.getProperty("cancel") == null) {
-		ConsoleHandler.print("<cancel> is empty ... setting value 27 (Code for ESC)", MessageType.MENU);
-		prop.setProperty("cancel", "27");
-	    }
-	    cancel = Integer.parseInt(prop.getProperty("cancel"));
 
 	    if (prop.getProperty("ip_address") == null) {
 		ConsoleHandler.print("<ip_address> is empty ... setting value 0.0.0.0", MessageType.MENU);
