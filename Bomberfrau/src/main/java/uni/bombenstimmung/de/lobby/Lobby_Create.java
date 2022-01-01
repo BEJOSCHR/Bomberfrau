@@ -128,8 +128,10 @@ public class Lobby_Create {
 				g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5), null);
 			}
 			
-			
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15));
+			for(int j=0;j<player[i].arrayForName.length; j++) {
+				GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].arrayForName[j], getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
+			}
+
 			
 			g.drawImage(player[i].skinSelection[player[i].zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
 			

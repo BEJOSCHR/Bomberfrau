@@ -13,6 +13,7 @@ import javax.swing.*;
 public class Player {
 	private String ip;
 	private String name;
+	String[] arrayForName;
 	static int idZaehler = 0;
 	private int id;
 	private int skin = 0;
@@ -32,6 +33,7 @@ public class Player {
 		isHost = false;
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
+		nameSplitter(name);
 		
 	}
 	// Konstruktor ohne IP. Also nur den namen // Hier handelt es sich um den Host
@@ -43,12 +45,54 @@ public class Player {
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		//Lobby_Create lobby = new Lobby_Create(nameOfPlayer);
 		initializeImages();
+		nameSplitter(name);
 	}
 	
 	public void initializeImages() {
 		skinSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
 		skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
 		skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
+	}
+	
+	public void nameSplitter(String name) {
+		if(name.length() >= 14) {
+
+			if(name.contains(" ")) {
+				String[] tmpArray;
+				tmpArray = name.split(" ", 2);
+				arrayForName = new String[tmpArray.length+1];
+		        // Copying elements of a[] to b[]
+		        for (int i = 0; i < tmpArray.length; i++)
+		            arrayForName[i] = tmpArray[i];
+		        
+				int arrayElementSize;
+				String tmp = null;
+				for (int i=0; i<arrayForName.length; i++) {
+					if(arrayForName[i].length() >= 14){
+						arrayForName[i+2] = arrayForName[i+1];
+						arrayForName[i+1] = null;
+						arrayElementSize = (int)arrayForName[i].length()/2;
+						for(int j = 0; j < arrayForName[i].length() ; j++) {
+							if(j <= arrayElementSize) {
+								tmp = tmp + arrayForName[i].charAt(j);
+							}
+							else
+								arrayForName[i+1] = arrayForName[i+1] + arrayForName[i].charAt(j);
+						}
+					}	
+				}
+			}
+			else {
+				arrayForName = new String[1];
+				arrayForName[0] = name;
+				ConsoleHandler.print("Bis hier" + name, MessageType.LOBBY);
+			}
+		}
+		else {
+			arrayForName = new String[1];
+			arrayForName[0] = name;
+			ConsoleHandler.print("Bis hier" + name, MessageType.LOBBY);
+		}
 	}
 
 	
