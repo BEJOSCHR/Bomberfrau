@@ -228,7 +228,7 @@ public class GraphicsHandler {
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		LobbyCreate lobby = new LobbyCreate(new Player("Player 1 (Host)"));
+		LobbyCreate lobby = new LobbyCreate(new Player(Settings.getUser_name()));
 		lobby.addPlayer(new Player("Player 2", "127.0.0.1"));
 		lobby.addPlayer(new Player("Player 3", "2.0.0.2"));
 		lobby.addPlayer(new Player("Player 4", "1.0.0.0"));
