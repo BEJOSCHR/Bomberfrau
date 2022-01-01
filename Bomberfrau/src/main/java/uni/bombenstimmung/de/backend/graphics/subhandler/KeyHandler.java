@@ -16,6 +16,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyButtons;
 
 public class KeyHandler implements KeyListener {
@@ -30,6 +31,9 @@ public class KeyHandler implements KeyListener {
 		// LOBBY
 		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
 			LobbyButtons.keyIsPressed(keyCode);
+		}
+		if(GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
+		    PlayerHandler.handleKeyEventPressed(keyCode);
 		}
 		
 		if(keyCode == KeyEvent.VK_W) {
