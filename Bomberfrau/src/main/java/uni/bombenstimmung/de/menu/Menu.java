@@ -24,6 +24,7 @@ import javax.swing.event.ChangeListener;
 
 import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationData;
+import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
@@ -291,11 +292,12 @@ public class Menu {
 	    public void stateChanged(ChangeEvent event) {
 		Settings.setVol_music(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
-		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip.getControl(FloatControl.Type.MASTER_GAIN);
+		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip
+			.getControl(FloatControl.Type.MASTER_GAIN);
 		// float vol = (Settings.vol_music-50)/2f;
-		System.out.println("Music Volume2 = " + Settings.getVol_music());
+		ConsoleHandler.print("Music Volume2 = " + Settings.getVol_music(), MessageType.MENU);
 		float vol = (31f * (Settings.getVol_music() / 100f) - 25f);
-		System.out.println("Music Volume3 = " + vol);
+		ConsoleHandler.print("Music Volume3 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
 	    }
 	});
@@ -319,7 +321,7 @@ public class Menu {
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		float vol = (31f * (Settings.getVol_sound() / 100f) - 25f);
 		volume.setValue(vol);
-		System.out.println("Sound Volume = " + Settings.getVol_sound());
+		ConsoleHandler.print("Sound Volume = " + Settings.getVol_sound(), MessageType.MENU);
 	    }
 	});
 
@@ -332,12 +334,12 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		// System.out.println("control_up: code = " + e.getKeyCode() + " ,
-		// e.getKeyChar() = " + e.getKeyChar() + " , int = " + (int)(e.getKeyChar()));
-		// System.out.println("control_up: code ext = " + e.getExtendedKeyCode());
-		// System.out.println("getKeyText = " + KeyEvent.getKeyText(e.getKeyCode()) + "
-		// , getExtendedKeyCodeForChar = " +
-		// KeyEvent.getExtendedKeyCodeForChar(e.getKeyCode()) );
+//		ConsoleHandler.print("control_up: code = " + e.getKeyCode() + " , e.getKeyChar() = " + e.getKeyChar()
+//			+ " , int = " + (int) (e.getKeyChar()), MessageType.MENU);
+//		ConsoleHandler.print("control_up: code ext = " + e.getExtendedKeyCode(), MessageType.MENU);
+//		ConsoleHandler.print("getKeyText = " + KeyEvent.getKeyText(e.getKeyCode())
+//			+ ", getExtendedKeyCodeForChar = " + KeyEvent.getExtendedKeyCodeForChar(e.getKeyCode()),
+//			MessageType.MENU);
 		Settings.setMove_up(e.getKeyCode());
 		control_up.setText(codeToText(Settings.getMove_up()));
 		control_up.setFont(GraphicsHandler
@@ -456,7 +458,7 @@ public class Menu {
 	checkBoxFPS.setSelected(Settings.getShow_fps());
 	checkBoxFPS.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		// System.out.println("Checkbox=" + checkBoxFPS.isSelected());
+		// ConsoleHandler.print("Checkbox=" + checkBoxFPS.isSelected(), MessageType.MENU);
 		Settings.setShow_fps(checkBoxFPS.isSelected());
 		if (Settings.getShow_fps())
 		    GraphicsHandler.getLabel().setShowFPS(true);
@@ -508,6 +510,7 @@ public class Menu {
      */
     public static void menuComponentsActive(Boolean bool) {
 	if (bool) {
+	    ConsoleHandler.print("Hauptmenü Komponenten hinzufügen", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(create);
 	    GraphicsHandler.getLabel().add(join);
 	    GraphicsHandler.getLabel().add(name_box);
@@ -519,6 +522,7 @@ public class Menu {
 	    }
 
 	} else {
+	    ConsoleHandler.print("Hauptmenü Komponenten entfernen", MessageType.MENU);
 	    GraphicsHandler.getLabel().remove(create);
 	    GraphicsHandler.getLabel().remove(join);
 	    GraphicsHandler.getLabel().remove(name_box);
@@ -536,6 +540,7 @@ public class Menu {
      */
     public static void optionsComponentsActive(Boolean bool) {
 	if (bool) {
+	    ConsoleHandler.print("Optionsmenü Komponenten hinzufügen", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(comboboxReso);
 	    GraphicsHandler.getLabel().add(sliderMusic);
 	    GraphicsHandler.getLabel().add(sliderSound);
@@ -547,6 +552,7 @@ public class Menu {
 	    GraphicsHandler.getLabel().add(checkBoxFPS);
 	    GraphicsHandler.getLabel().add(comboboxLang);
 	} else {
+	    ConsoleHandler.print("Optionsmenü Komponenten entfernen", MessageType.MENU);
 	    GraphicsHandler.getLabel().remove(comboboxReso);
 	    GraphicsHandler.getLabel().remove(sliderMusic);
 	    GraphicsHandler.getLabel().remove(sliderSound);
@@ -574,7 +580,9 @@ public class Menu {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		intro.remove();
-		GraphicsHandler.switchToMenuFromIntro();
+		ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick", MessageType.MENU);
+		AnimationHandler.stopAllAnimations();
+		//GraphicsHandler.switchToMenuFromIntro();
 	    }
 
 	    @Override
@@ -639,7 +647,7 @@ public class Menu {
 		    }
 
 		    // SoundHandler.reduceAllSounds();
-		    System.out.println("Switching to Lobby");
+		    ConsoleHandler.print("Switching to Lobby", MessageType.MENU);
 		    GraphicsHandler.switchToLobbyFromMenu();
 		    Panes.InfoPane(null,
 			    "Name \"" + Settings.getUser_name() + "\" saved in save.ini. Now switching to Lobby", "OK");
@@ -695,8 +703,9 @@ public class Menu {
 		    }
 		}
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
+		
 		// SoundHandler.stopAllSounds();
-//		SoundHandler.reduceLastPlayedSound();
+		// SoundHandler.reduceLastPlayedSound();
 		GraphicsHandler.shutdownProgram();
 	    }
 
@@ -740,7 +749,7 @@ public class Menu {
      */
     private static Boolean checkName() {
 	boolean check = true;
-	// System.out.println("name_box.getText() = " + name_box.getText());
+	// ConsoleHandler.print("name_box.getText() = " + name_box.getText(), MessageType.MENU);
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
 	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
 //	    name_box.setText(Settings.prop.getProperty("user_name"));
@@ -779,7 +788,7 @@ public class Menu {
      */
     private static String codeToText(int i) {
 
-	// System.out.println("codeToText: i = " + i)
+	// ConsoleHandler.print("codeToText: i = " + i, MessageType.MENU);
 	if (i == 37)
 	    return LanguageHandler.getLLB(LanguageBlockType.LB_KEY_LEFT).getContent();
 	if (i == 38)
@@ -829,6 +838,7 @@ public class Menu {
 	    @Override
 	    public void finaliseValues() {
 		AnimationData.intro_zoom = 0;
+		ConsoleHandler.print("Wechsel vom Intro zu Menü per Abwarten", MessageType.MENU);
 		GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};

@@ -100,6 +100,8 @@ public class GraphicsHandler {
 	 * Wird von der Main am Start aufgerufen und startet das Intro
 	 */
 	public static void switchToIntroFromLoadingscreen() {
+	    
+		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.MENU);
 		
 		AnimationHandler.stopAllAnimations();
 		
@@ -109,8 +111,6 @@ public class GraphicsHandler {
 		Menu.introAnimation();
 		
 		displayType = DisplayType.INTRO;
-		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.MENU);
-		
 	}
 	
 	/**
@@ -118,6 +118,8 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromIntro() {
 
+	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.MENU);
+	        
 		SoundHandler.stopAllSounds();
 		AnimationHandler.stopAllAnimations();
 		
@@ -134,27 +136,26 @@ public class GraphicsHandler {
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 
-	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.MENU);	
 	}
 	
 	/**
 	 * Wird beim Wechseln von Menü zu den Optionen aufgerufen
 	 */
 	public static void switchToOptionsFromMenu() {
-		
+
+		ConsoleHandler.print("Switched to 'OPTIONS' from 'MENU'!", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		Menu.menuComponentsActive(false);
 		Menu.optionsComponentsActive(true);
 
 		displayType = DisplayType.OPTIONS;
-		ConsoleHandler.print("Switched to 'OPTIONS' from 'MENU'!", MessageType.MENU);
-		
 	}
 	/**
 	 * Wird bei Rückkehr von den Optionen zum Menü aufgerufen
 	 */
 	public static void switchToMenuFromOptions() {
-		
+
+		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		Menu.optionsComponentsActive(false);
 
@@ -163,14 +164,14 @@ public class GraphicsHandler {
 		Menu.buildMenu();
 
 		displayType = DisplayType.MENU;
-		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		
 	}
 	/**
 	 * Wird aufgerufen wenn die Lobby verlassen wird
 	 */
 	public static void switchToMenuFromLobby() {
-		
+
+		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 
 	        //Menu.titleShakeAni();
@@ -178,7 +179,6 @@ public class GraphicsHandler {
 		Menu.menuComponentsActive(true);
 
 		displayType = DisplayType.MENU;
-		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		
 	}
 	
@@ -186,7 +186,8 @@ public class GraphicsHandler {
 	 * Wird aufgerufen wenn wï¿½rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieï¿½t
 	 */
 	public static void switchToMenuFromIngame() {
-		
+
+		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 
@@ -195,7 +196,6 @@ public class GraphicsHandler {
 		Menu.menuComponentsActive(true);
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
-		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
 		
 	}
 	
@@ -203,7 +203,8 @@ public class GraphicsHandler {
 	 * Wird aufgerufen wenn im Aftergame die Session verlassen wird
 	 */
 	public static void switchToMenuFromAftergame() {
-		
+
+		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 
@@ -212,7 +213,6 @@ public class GraphicsHandler {
 		Menu.menuComponentsActive(true);
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
-		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		
 	}
 	

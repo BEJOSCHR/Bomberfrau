@@ -92,7 +92,6 @@ public class Label extends JLabel {
 		    	break;
 		case MENU:
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.getRes_width(), Settings.getRes_height(), null);
-		    	
 		    	// Titel pusliert
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.getRes_width()*0.05) ,
 		    		(int)(Settings.getRes_height()*0.05) , (int)(2100*Settings.getRes_width()/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.getRes_height()/2160 + AnimationData.title_Modifier), null);

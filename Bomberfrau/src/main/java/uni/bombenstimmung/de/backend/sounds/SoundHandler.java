@@ -31,9 +31,9 @@ public class SoundHandler {
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.5D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.5D);
-		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.OPTIONS_SOUND, 0.5D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.2D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.2D);
+		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.OPTIONS_SOUND, 0.2D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -78,9 +78,9 @@ public class SoundHandler {
                     while (vol>-60) {
                         vol-=1.5f; 
                         volume.setValue(vol);
-                        Thread.sleep(100);
+                        Thread.sleep(30);
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                     lastPlayedClip.stop();
                 }
                 catch (InterruptedException ex) {}

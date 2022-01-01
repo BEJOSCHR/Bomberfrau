@@ -22,6 +22,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Panes {
@@ -45,7 +47,7 @@ public class Panes {
 	btn1.setBackground(Color.RED);
 	btn1.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		System.out.println("Knopf1 gedrückt");
+		ConsoleHandler.print("Knopf1 gedrückt", MessageType.MENU);
 		d.dispose();
 	    }
 	});
@@ -59,7 +61,7 @@ public class Panes {
 	    btn2.setBackground(Color.RED);
 	    btn2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    System.out.println("Knopf2 gedrückt");
+		    ConsoleHandler.print("Knopf2 gedrückt", MessageType.MENU);
 		    d.dispose();
 		}
 	    });
