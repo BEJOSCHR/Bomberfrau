@@ -103,7 +103,6 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	 * @param session - Die Session, in die eine Nachricht geschrieben werden soll.
 	 */
 	private void calculatePing(IoSession session) {
-		    	ConsoleHandler.print("In infinite loop", MessageType.BACKEND);
 		    	long currentTime = System.currentTimeMillis();
 		        session.write("003-" + Long.toString(currentTime));
 	}

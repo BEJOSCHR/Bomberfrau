@@ -37,6 +37,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	private int id; 
 	private boolean host;
+	private long ping;
 	private IoSession conSession;
 	private IoConnector connector;
 	NioDatagramAcceptor acceptor;
@@ -52,7 +53,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public ConnectedClient(boolean sHost, String IP) {
 		host = sHost;
-		//Is the new created Client the host, a new server will be initialized
+		//Falls der Client ein Host ist, dann wird ein neuer UDP Server initialisiert. 
 		if (host == true) {
 			id = 0;
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
@@ -71,7 +72,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		//Is the new created Client not the host, a new UDP Client will be initialized
+		//Falls der Client kein Host ist, dann wird ein neuer UDP Client initialisiert
 		} else { 
 			connector = new NioDatagramConnector();
 			getConnector().setHandler(new ClientHandler(this));
@@ -202,8 +203,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			String[] pMessage903 = message.split("-");
 	    	long currentTime = System.currentTimeMillis();
 	    	long startTime = Long.parseLong(pMessage903[1]);
-	    	long ping = currentTime-startTime;
-	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+	    	ping = currentTime-startTime;
+	    	//ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
 	    	break;
 		//999 = Wird gesendet, wenn ein Client das Spiel verlässt. 
 		//Format: "999"
@@ -316,6 +317,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public void setSession(IoSession session) {
 		conSession = session;
+	}
+
+	/**
+	 * Gibt den aktuellen Ping in ms zurück.
+	 */
+	public long getPing() {
+		return ping;
 	}
 }
 
