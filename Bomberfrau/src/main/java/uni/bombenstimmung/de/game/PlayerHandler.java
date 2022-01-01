@@ -38,6 +38,9 @@ public class PlayerHandler {
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = true;
     
+    // von der Lobby
+    private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
+    
     /**
      * Gibt die Gesamtzahl der am Spiel teilnehmenden Players zurueck.
      * @return Integer mit opponentPlayers + 1
@@ -363,5 +366,10 @@ public class PlayerHandler {
     
     public static boolean getDebugKeysState() {
 	return debugKeys;
+    }
+    
+    // von der Lobby
+    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
+	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos));
     }
 }
