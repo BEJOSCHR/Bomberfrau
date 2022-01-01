@@ -13,8 +13,6 @@ import java.io.File;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;

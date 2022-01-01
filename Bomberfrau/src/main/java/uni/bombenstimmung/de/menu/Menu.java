@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.regex.*; // for PATTERN (IP address)
 
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -34,7 +33,6 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
-import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 
