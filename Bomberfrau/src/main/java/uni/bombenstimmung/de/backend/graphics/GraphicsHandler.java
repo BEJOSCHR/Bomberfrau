@@ -23,7 +23,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.main.BomberfrauMain;
-import uni.bombenstimmung.de.lobby.Lobby_Create;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.lobby.Player;
 
 public class GraphicsHandler {
@@ -138,7 +138,7 @@ public class GraphicsHandler {
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		Lobby_Create lobby = new Lobby_Create(new Player("SehrSehrSehr SehrSehrSehrLange"));
+		LobbyCreate lobby = new LobbyCreate(new Player("SehrSehrSehr SehrSehrSehrLange"));
 		lobby.addPlayer(new Player("3 0303030303030303030303030303", "127.0.0.1"));
 		lobby.addPlayer(new Player("Son", "2.0.0.2"));
 		lobby.addPlayer(new Player("Hos", "1.0.0.Jos"));

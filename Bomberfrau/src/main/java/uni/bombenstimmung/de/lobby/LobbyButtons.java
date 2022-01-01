@@ -1,10 +1,17 @@
+/*
+ * LobbyButtons
+ *
+ * Version 1.0
+ * Author: Josias
+ *
+ * Vererbt MouseActionAreaHandler, wo alle Buttons der Lobby implementiert werden.
+ */
+
 package uni.bombenstimmung.de.lobby;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseListener;
-
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
@@ -15,7 +22,7 @@ import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
 
-public class OwnButtons extends MouseActionAreaHandler{
+public class LobbyButtons extends MouseActionAreaHandler{
 	
 	static boolean rightisPressed = false;
 	static boolean leftisPressed = false;
@@ -35,7 +42,10 @@ public class OwnButtons extends MouseActionAreaHandler{
 	static int xPlayer4Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)-100 - GraphicsHandler.getWidth()*0.04);
 	static int xPlayer4Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
 			
-	public static void initOwnButtons(){
+	/**
+	 * Inititalisiert alle MAAs der Lobby und definiert via Overwrite restliche Funktionalitäten
+	 */
+	public static void initLobbyButtons(){
 		
 		//LOBBY STARTBUTTON
 		new MouseActionArea(GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
@@ -45,11 +55,11 @@ public class OwnButtons extends MouseActionAreaHandler{
 				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
 				int counterForReady = 1;
 				// Hier wird gecheckt, ob alle Player die Checkbox aktiviert haben
-				for(int i = 1; i < Lobby_Create.numberPlayer ; i++) {
-					if(Lobby_Create.player[i].getisReady() == true)
+				for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
+					if(LobbyCreate.player[i].getisReady() == true)
 						counterForReady++;
 				}
-				if (counterForReady == Lobby_Create.numberPlayer)
+				if (counterForReady == LobbyCreate.numberPlayer)
 					ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
 			}
 			@Override
@@ -66,7 +76,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print(" Left Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
-				Lobby_Create.setDecrementMap();
+				LobbyCreate.setDecrementMap();
 			}
 			@Override
 			public boolean isActiv() {
@@ -74,7 +84,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public void draw(Graphics g) { 
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), xPlayer1Left, yPlayerMap+1, null);
 				}else {
 //					}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
@@ -89,7 +99,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Pfeilbutton MAP Button was Clicked", MessageType.LOBBY);
-				Lobby_Create.setIncrementMap();
+				LobbyCreate.setIncrementMap();
 			}
 			@Override
 			public boolean isActiv() {
@@ -97,7 +107,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public void draw(Graphics g) { 
-				if(isHovered() || (rightisPressed == true && Lobby_Create.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (rightisPressed == true && LobbyCreate.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer1Right, yPlayerMap - (int)(GraphicsHandler.getWidth()*0.0015), null);
 				}else {
@@ -117,11 +127,11 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 1", MessageType.LOBBY);
-				Lobby_Create.player[0].setDecrementSkin();
+				LobbyCreate.player[0].setDecrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer != 0)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer != 0)
 					return true;
 				else
 					return false;
@@ -129,7 +139,7 @@ public class OwnButtons extends MouseActionAreaHandler{
 			// Um die Kaestchen wieder anzeigen zu lassen (sodass man sieht wo man klickt) einfach drawCustomParts anstatt draw Overriden
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer1Left, yPlayer, null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
@@ -146,18 +156,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 1", MessageType.LOBBY);
-				Lobby_Create.player[0].setIncrementSkin();
+				LobbyCreate.player[0].setIncrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer != 0)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer != 0)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer1Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayer , null);
@@ -173,18 +183,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 2", MessageType.LOBBY);
-				Lobby_Create.player[1].setDecrementSkin();
+				LobbyCreate.player[1].setDecrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 2)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer2Left, yPlayer, null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
@@ -201,18 +211,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 2", MessageType.LOBBY);
-				Lobby_Create.player[1].setIncrementSkin();
+				LobbyCreate.player[1].setIncrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 2)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer2Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer2Right, yPlayer , null);
@@ -228,18 +238,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 3", MessageType.LOBBY);
-				Lobby_Create.player[2].setDecrementSkin();
+				LobbyCreate.player[2].setDecrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 3)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer3Left, yPlayer, null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
@@ -256,18 +266,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 3", MessageType.LOBBY);
-				Lobby_Create.player[2].setIncrementSkin();
+				LobbyCreate.player[2].setIncrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 3)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer3Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer3Right, yPlayer , null);
@@ -284,18 +294,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 4", MessageType.LOBBY);
-				Lobby_Create.player[3].setDecrementSkin();
+				LobbyCreate.player[3].setDecrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 4)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer4Left, yPlayer, null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
@@ -312,18 +322,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 4", MessageType.LOBBY);
-				Lobby_Create.player[3].setIncrementSkin();
+				LobbyCreate.player[3].setIncrementSkin();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 4)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void draw(Graphics g) {
-				if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
+				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer4Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
 				}else {
 					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer4Right, yPlayer , null);
@@ -344,18 +354,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("CheckBox Player 2", MessageType.LOBBY);
-				Lobby_Create.player[1].setisReady();
+				LobbyCreate.player[1].setisReady();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 2)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
-					if(Lobby_Create.player[1].getisReady() == true)
+					if(LobbyCreate.player[1].getisReady() == true)
 						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
 			}
 		};
@@ -365,18 +375,18 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("CheckBox Player 3", MessageType.LOBBY);
-				Lobby_Create.player[2].setisReady();
+				LobbyCreate.player[2].setisReady();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 3)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
-					if(Lobby_Create.player[2].getisReady() == true)
+					if(LobbyCreate.player[2].getisReady() == true)
 						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null);
 			}
 		};
@@ -386,88 +396,32 @@ public class OwnButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("CheckBox Player 4", MessageType.LOBBY);
-				Lobby_Create.player[3].setisReady();
+				LobbyCreate.player[3].setisReady();
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && Lobby_Create.numberPlayer >= 4)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
 					return true;
 				else
 					return false;
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
-					if(Lobby_Create.player[3].getisReady() == true)
+					if(LobbyCreate.player[3].getisReady() == true)
 						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
 			}
 		};
 		
 		
 		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			// Player 1
-		
-//			//LOBBY Unsichtbarer LEFT Button fuer Pfeil fuer SKIN -> MAA_LOBBY_PFEILBUTTON_LEFT
-//			new MouseActionArea(Lobby_Create.getXValueForDraw(0)-200, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1) + 75, 45, 44,
-//					MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
-//				@Override
-//				public void performAction_LEFT_RELEASE() {
-//					ConsoleHandler.print(" Left Pfeilbutton SKIN Button was Clicked", MessageType.LOBBY);
-//					Lobby_Create.setDecrementSkin();
-//				}
-//				@Override
-//				public boolean isActiv() {
-//					return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-//				}
-//				@Override
-//				public void draw(Graphics g) { 
-//					if(isHovered() || (leftisPressed == true && Lobby_Create.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), Lobby_Create.getXValueForDraw(0)-200, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1)-1 +72, null);
-//					}else {
-////					}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), Lobby_Create.getXValueForDraw(0)-200, GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1) + 75, null);
-//					}
-//				}
-//			};
-			
-			//LOBBY Unsichtbarer RIGHT Button fuer Pfeil fuer SKIN -> MAA_LOBBY_PFEILBUTTON_RIGHT
-//			new MouseActionArea(Lobby_Create.getXValueForDraw(0), GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1), 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
-//					MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
-//				@Override
-//				public void performAction_LEFT_RELEASE() {
-//					ConsoleHandler.print("Right Pfeilbutton SKIN Button was Clicked", MessageType.LOBBY);
-//					Lobby_Create.setIncrementSkin();
-//				}
-//				@Override
-//				public boolean isActiv() {
-//					return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-//				}
-//				@Override
-//				public void draw(Graphics g) { 
 
-//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), Lobby_Create.getXValueForDraw(0), GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1)-3, null);
-//					}else {
-////					}else if (Lobby_Create.getHochRunterNavigation() == 1){
-//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), Lobby_Create.getXValueForDraw(0), GraphicsHandler.getHeight()/4 + (int)(GraphicsHandler.getHeight()*0.1), null);
-//					}
-//				}
-//			};
 			
 		}
 
-
-
+	
+	/**
+	 * Wird von KeyHandler aufgerufen, sodass keyIsPressed Funktionalitäten in der Lobby funktionieren.
+	 */
 	public static void keyIsPressed(int keyCode) {
 		if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
 			rightisPressed = true;
@@ -476,12 +430,16 @@ public class OwnButtons extends MouseActionAreaHandler{
 			leftisPressed = true;
 		}
 		else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
-			Lobby_Create.setIncrementHochRunterNavigation();
+			LobbyCreate.setIncrementHochRunterNavigation();
 		}
 		else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			Lobby_Create.setDecrementHochRunterNavigation();
+			LobbyCreate.setDecrementHochRunterNavigation();
 		}
 	}
+	
+//	/**
+//	 * Wird von KeyHandler aufgerufen, sodass keyIsReleased Funktionalitäten in der Lobby funktionieren.
+//	 */
 	// Noch in KeyHandler einstellen / auskommentieren
 //	public static void keyIsReleased(int keyCode) {
 //		if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {

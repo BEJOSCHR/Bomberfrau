@@ -33,13 +33,13 @@ public class ImageHandler {
 		new LoadedImage("Lobby/arrow-Left.png", ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER, 55, 55);
 		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT, 50, 50);
 		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER, 55, 55);
-		new LoadedImage("Lobby/MapSelection_Platzhalter_1.jpg", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1, 200, 200);
+		new LoadedImage("Lobby/MapSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1, 200, 200);
 		new LoadedImage("Lobby/MapSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2, 200, 200);
 		new LoadedImage("Lobby/MapSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3, 200, 200);
 		
 		new LoadedImage("Lobby/SkinSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1, 200, 200);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2, 200, 200);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3, 200, 200);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2, 200, 200);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3, 200, 200);
 		
 		new LoadedImage("Lobby/checkmark.png", ImageType.IMAGE_LOBBY_CHECKMARK, 70, 70);
 		

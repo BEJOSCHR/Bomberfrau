@@ -24,7 +24,7 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
-import uni.bombenstimmung.de.lobby.Lobby_Create;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -85,7 +85,7 @@ public class Label extends JLabel {
 			break;
 			
 		case LOBBY:
-			Lobby_Create.drawScreen(g);
+			LobbyCreate.drawScreen(g);
 			break;
 			
 		case INGAME:

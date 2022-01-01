@@ -1,3 +1,12 @@
+/*
+ * LobbyCreate
+ *
+ * Version 1.0
+ * Author: Josias
+ *
+ * Die Lobby wird samt Host bzw. Playern erstellt.
+ */
+
 package uni.bombenstimmung.de.lobby;
 
 import java.awt.Color;
@@ -12,7 +21,7 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 
-public class Lobby_Create {
+public class LobbyCreate {
 
 	static Player player[] = new Player[4];
 	static LoadedImage mapSelection[] = new LoadedImage[3];
@@ -24,34 +33,39 @@ public class Lobby_Create {
 	static int numberPlayer = 0;
 	
 	
+	/**
+	 * Wird aufgerufen, wenn der Host die Lobby erstellt.
+	 */
 	// Host wird als player 0 im Array gespeichert.
-	public Lobby_Create (Player player){
-		Lobby_Create.player[numberPlayer] = player;
+	public LobbyCreate (Player player){
+		LobbyCreate.player[numberPlayer] = player;
 		numberPlayer++;
 		initializeImages();
 
-//		 //FindIP-Adress
-//		try {
-//			findIP_Adress();
-//		}
-//		catch(Exception e) {
-//			ConsoleHandler.print("FindIP has failed", MessageType.LOBBY);
-//		}
 	}
 	
-	// Ein weiterer Player wird als nächstes im Array ausgegeben
+	/**
+	 * Wird aufgerufen, wenn ein Player der Lobby beitritt
+	 */
+	// Ein weiterer Player wird als nächstes im Array erstellt
 	public void addPlayer(Player player) {
-		Lobby_Create.player[numberPlayer] = player;
+		LobbyCreate.player[numberPlayer] = player;
 		
 		numberPlayer++;
 	}
 	
+	/**
+	 * Läd alle Images der Mapauswahl in einem Array. Die Mapauswahl wird vom Host gesteuert.
+	 */
 	public void initializeImages() {
-		Lobby_Create.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
-		Lobby_Create.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
-		Lobby_Create.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		LobbyCreate.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
+		LobbyCreate.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
+		LobbyCreate.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
 	}
 	
+	/**
+	 * Gibt die toString der player aus
+	 */
 	// die toString wird von allen Playern im Array ausgegeben!
 	public static void printPlayers() {
 			for(int i=0; i < numberPlayer; i++) {
@@ -59,10 +73,17 @@ public class Lobby_Create {
 			}
 		}
 	
+	/**
+	 * Wenn die naechste Map ausgewaehlt wird, dann wird diese Methode aufgerufen.
+	 */
 	// Map Zaehler
 	public static void setIncrementMap() {
 		zaehlerMapSelection = (zaehlerMapSelection + 1)%3;
 	}
+	
+	/**
+	 * Wenn die vorherige Map ausgewaehlt wird, dann wird diese Methode aufgerufen.
+	 */
 	public static void setDecrementMap() {
 		if (zaehlerMapSelection == 0) {
 			zaehlerMapSelection = 2;
@@ -71,13 +92,23 @@ public class Lobby_Create {
 			zaehlerMapSelection = (zaehlerMapSelection - 1)%3;	
 		}
 	}
+	/**
+	 * Gibt die Mapnummer zurück
+	 */
 	public static int getMap() {
 		return zaehlerMapSelection;
 	}
 	
+	/**
+	 * Ist fuer die Navigation mit Pfeiltasten gedacht, dass jede Auswahl (Skin, Map, Start, Lobby verlassen) mit den Hoch-Runter Pfeiltasten gesteuert werden kann.
+	 * Diese Methode wird aufgerufen, wenn die naechste Auswahl (unten) mit den Pfeiltasten ausgewaehlt wird.
+	 */
 	public static void setIncrementHochRunterNavigation() {
 		hochRunterNavigation = (hochRunterNavigation + 1)%3;
 	}
+	/**
+	 * Diese Methode wird aufgerufen, wenn die vorherige Auswahl (oben) mit den Pfeiltasten ausgewaehlt wird.
+	 */
 	public static void setDecrementHochRunterNavigation() {
 		if (hochRunterNavigation == 0) {
 			hochRunterNavigation = 2;
@@ -86,10 +117,18 @@ public class Lobby_Create {
 			hochRunterNavigation = (hochRunterNavigation - 1)%3;	
 		}
 	}
+	
+	/**
+	 * Gibt die Auswahlnummer der Pfeiltasten zurück
+	 */
 	public static int getHochRunterNavigation() {
 		return hochRunterNavigation;
 	}
 	
+	/**
+	 * Gibt die mittige X Koordinate in Abhaengigkeit der Player wieder.
+	 * Fuer den Parameter int i wird die Anzahl der Player benötigt
+	 */
 	public static int getXValueForDraw(int i) {
 		if (numberPlayer != 0)
 			// Dieser Wert, damit der Screen sich variabel für die Anzahl der Player verändert. Die Buttons sind dann aber halt blöd
@@ -98,7 +137,9 @@ public class Lobby_Create {
 		else
 			return 1;
 	}
-	
+	/**
+	 * Gibt die Nummer des Hosts im Array wieder. (Wird meistens 0 sein)
+	 */
 	public static int getHost() {
 		int host = 0;
 		for(int i=0; i < numberPlayer; i++) {
@@ -109,10 +150,11 @@ public class Lobby_Create {
 		return host;
 	}
 
-	
-	// Wird von Label.java aufgerufen und malt alles was ich haben will. Daher auch static, sodass ich davon nicht extra ein Objekt erzeugen muss
+	/**
+	 * Wird von Label.java aufgerufen und drawed alles ausser die Buttons.
+	 */
 	public static void drawScreen(Graphics g) {
-		//Für die HintergrundFarbe
+		//Fuer die HintergrundFarbe
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		
@@ -125,12 +167,10 @@ public class Lobby_Create {
 		for(int i=0; i < numberPlayer; i++) {
 			if (player[i].getisHost() == true) {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (int)(getXValueForDraw(i)-12.5), (int)(GraphicsHandler.getHeight()*0.15)- 50, null);
-				g.drawImage(Lobby_Create.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5), null);
+				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5), null);
 			}
 			
-			for(int j=0;j<player[i].arrayForName.length; j++) {
-				GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].arrayForName[j], getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
-			}
+				GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
 
 			
 			g.drawImage(player[i].skinSelection[player[i].zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
@@ -139,33 +179,6 @@ public class Lobby_Create {
 		}
 		
 	}
-	
-	
-//	
-//	// https://stackoverflow.com/questions/8083479/java-getting-my-ip-address
-//	public void findIP_Adress() throws Exception {
-//	    String ip;
-//	    try {
-//	        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-//	        while (interfaces.hasMoreElements()) {
-//	            NetworkInterface iface = interfaces.nextElement();
-//	            // filters out 127.0.0.1 and inactive interfaces
-//	            if (iface.isLoopback() || !iface.isUp())
-//	                continue;
-//
-//	            Enumeration<InetAddress> addresses = iface.getInetAddresses();
-//	            while(addresses.hasMoreElements()) {
-//	                InetAddress addr = addresses.nextElement();
-//	                ip = addr.getHostAddress();
-//	                System.out.println(iface.getDisplayName() + " " + ip);
-//	            }
-//	        }
-//	    } catch (SocketException e) {
-//	        throw new RuntimeException(e);
-//	    }
-//		
-//	}
-	
 
 	
 	
