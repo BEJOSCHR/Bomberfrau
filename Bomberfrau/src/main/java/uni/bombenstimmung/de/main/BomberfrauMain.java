@@ -9,17 +9,11 @@
 
 package uni.bombenstimmung.de.main;
 
-import java.util.Random;
-
-import uni.bombenstimmung.de.backend.animation.Animation;
-import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.images.ImageType;
-import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
