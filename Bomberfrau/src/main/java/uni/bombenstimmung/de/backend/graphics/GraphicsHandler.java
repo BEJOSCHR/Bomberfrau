@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet die graphischen Ver�nderungen und Wechsel zwischen den Modulen
+ * Verwaltet die graphischen Verï¿½nderungen und Wechsel zwischen den Modulen
  */
 package uni.bombenstimmung.de.backend.graphics;
 
@@ -138,7 +138,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird beim Wechseln von Men� zu den Optionen aufgerufen
+	 * Wird beim Wechseln von Menü zu den Optionen aufgerufen
 	 */
 	public static void switchToOptionsFromMenu() {
 		
@@ -151,7 +151,7 @@ public class GraphicsHandler {
 		
 	}
 	/**
-	 * Wird bei R�ckkehr von den Optionen zum Men� aufgerufen
+	 * Wird bei Rückkehr von den Optionen zum Menü aufgerufen
 	 */
 	public static void switchToMenuFromOptions() {
 		
@@ -183,7 +183,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird aufgerufen wenn w�rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlie�t
+	 * Wird aufgerufen wenn wï¿½rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieï¿½t
 	 */
 	public static void switchToMenuFromIngame() {
 		
@@ -228,10 +228,10 @@ public class GraphicsHandler {
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		LobbyCreate lobby = new LobbyCreate(new Player("SehrSehrSehr SehrSehrSehrLange"));
-		lobby.addPlayer(new Player("3 0303030303030303030303030303", "127.0.0.1"));
-		lobby.addPlayer(new Player("Son", "2.0.0.2"));
-		lobby.addPlayer(new Player("Hos", "1.0.0.Jos"));
+		LobbyCreate lobby = new LobbyCreate(new Player("Player 1 (Host)"));
+		lobby.addPlayer(new Player("Player 2", "127.0.0.1"));
+		lobby.addPlayer(new Player("Player 3", "2.0.0.2"));
+		lobby.addPlayer(new Player("Player 4", "1.0.0.0"));
 
 	}
 	
@@ -269,7 +269,7 @@ public class GraphicsHandler {
 	//------------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 *  sch�nerer Font mit abgerundeten Zeichen
+	 *  schönerer Font mit abgerundeten Zeichen
  	 */
 	public static Font usedFont(int textSize) {
 
@@ -289,7 +289,7 @@ public class GraphicsHandler {
 	 * Allgemeine methode um einen beliebigen text mit parametern relativ zu einem Punkt (x,y) mittig darzustellen
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die Textgr��e
+	 * @param textSize, die Textgrï¿½ï¿½e
 	 * @param text, der eigentliche Text
 	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text mittig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
@@ -323,8 +323,8 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlie�t KONTROLLIERT alle Datenzug�nge bzw speichert setting etc).
-	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht m�glich ist!
+	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlieï¿½t KONTROLLIERT alle Datenzugï¿½nge bzw speichert setting etc).
+	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht mï¿½glich ist!
 	 */
 	public static void shutdownProgram() {
 		
