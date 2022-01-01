@@ -139,10 +139,10 @@ public class Label extends JLabel {
 		if(showFPS == true) {
 			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
-			//g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
+			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 			
 			// schöner durch ersetzen führender Nuller durch Leerzeichen
-			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
+//			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
 		}
 		
 		//CALCULATE FPS
