@@ -8,10 +8,11 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
+import java.io.File;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -25,11 +26,14 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameData;
+import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
+import uni.bombenstimmung.de.lobby.Player;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
-import uni.bombenstimmung.de.lobby.LobbyCreate;
-import uni.bombenstimmung.de.lobby.Player;
 
 public class GraphicsHandler {
 
@@ -78,7 +82,7 @@ public class GraphicsHandler {
 		height = frame.getHeight();
 		
 		//TODO CALCULATE DIMENSIONS RELATIVE TO WIDTH AND HEIGHT
-		
+		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
 		label = new Label();
 		label.requestFocus();
 
@@ -239,7 +243,11 @@ public class GraphicsHandler {
 		//SoundHandler.stopAllSounds();
 		SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
-		
+
+		Game.fillMap();
+	    	Game.updateMap(1);
+	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
+	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
 		

@@ -13,6 +13,7 @@ import java.util.List;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.game.GameData;
 
 public class ImageHandler {
 
@@ -55,6 +56,27 @@ public class ImageHandler {
 		//https://www.pngwing.com/en/free-png-zekql/download?width=107
 		new LoadedImage("Lobby/Crown.png", ImageType.IMAGE_LOBBY_CROWN, 25, 25);
 		
+		//INGAME
+	    	new LoadedImage("Yellow_background.png", ImageType.IMAGE_INGAME_YELLOWGRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("bomb.png", ImageType.IMAGE_INGAME_BOMB, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5);
+	    	new LoadedImage("lightTileBackground.png", ImageType.IMAGE_INGAME_LIGHTTILE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("easteregg.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("easteregg_Wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("BombExplosion1.png", ImageType.IMAGE_INGAME_BOMB_EX1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion2.png", ImageType.IMAGE_INGAME_BOMB_EX2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion2_NS.png", ImageType.IMAGE_INGAME_BOMB_EX2_NS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion3_Ost.png", ImageType.IMAGE_INGAME_BOMB_EX3_O, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion3_West.png", ImageType.IMAGE_INGAME_BOMB_EX3_W, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion3_Sud.png", ImageType.IMAGE_INGAME_BOMB_EX3_S, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("BombExplosion3_Nord.png", ImageType.IMAGE_INGAME_BOMB_EX3_N, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("upgrade_temp.png", ImageType.IMAGE_INGAME_UPGRADE_TEMP, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("item_bomb.png", ImageType.IMAGE_INGAME_UPGRADE_ITEM_BOMB, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("item_flame.png", ImageType.IMAGE_INGAME_UPGRADE_ITEM_FIRE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("item_shoe.png", ImageType.IMAGE_INGAME_UPGRADE_ITEM_SHOE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("tile_env3_block.png", ImageType.IMAGE_INGAME_LAVA_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("tile_env3_floor.png", ImageType.IMAGE_INGAME_LAVA_FLOOR, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("tile_env3_wall.png", ImageType.IMAGE_INGAME_LAVA_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}
