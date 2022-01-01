@@ -17,7 +17,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
 
 
-public class Player {
+public class LobbyPlayer {
 	private String ip;
 	private String name;
 	static int idZaehler = 0;
@@ -32,7 +32,7 @@ public class Player {
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
 	 */
-	public Player(String name, String ip) {
+	public LobbyPlayer(String name, String ip) {
 		this.ip = ip;
 		this.name = name;
 		id = idZaehler;
@@ -46,7 +46,7 @@ public class Player {
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird vom zu erstellenden HOST aufgerufen.
 	 */
-	public Player(String name) {
+	public LobbyPlayer(String name) {
 		this.name = name;
 		id = idZaehler;
 		idZaehler ++;
