@@ -27,6 +27,7 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.menu.Settings;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {
@@ -50,8 +51,8 @@ public class Label extends JLabel {
 	
 	/**
 	 * Die methode die dauerhaft aufgerufen wird vom {@link JLabel} und somit die FPS representiert
-	 * Enthält automatische FPS Limitierung
-	 * Von hier aus werden über das 'g' Komponent alle grafischen Methoden aufgerufen
+	 * Enthï¿½lt automatische FPS Limitierung
+	 * Von hier aus werden ï¿½ber das 'g' Komponent alle grafischen Methoden aufgerufen
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -69,7 +70,7 @@ public class Label extends JLabel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		//(Reihenfolge der Aufrufe ist wichtig, spätere Aufrufe überschreiben frühere)
+		//(Reihenfolge der Aufrufe ist wichtig, spï¿½tere Aufrufe ï¿½berschreiben frï¿½here)
 		
 		//BACKGROUND
 		g.setColor(Color.WHITE);
@@ -107,9 +108,11 @@ public class Label extends JLabel {
 		    	GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT5).getContent(), (int)(Settings.getRes_width()*0.541), (int)(Settings.getRes_height()*0.51));
 		    	GraphicsHandler.drawLeftText(g, Color.RED, (int)(30*Settings.getFactor()), LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT7).getContent(), (int)(Settings.getRes_width()*0.1), (int)(Settings.getRes_height()*0.83));
 			break;
+			
 		case LOBBY:
-			GraphicsHandler.drawCentralisedText(g, Color.RED, 180, "LOBBY", Settings.getRes_width()/2, Settings.getRes_height()/2-30);
+			LobbyCreate.drawScreen(g);
 			break;
+			
 		case INGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "INGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;

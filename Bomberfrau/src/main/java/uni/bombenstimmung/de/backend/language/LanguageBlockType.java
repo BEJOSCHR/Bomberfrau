@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Dient zur Identifizierung jedes LanguageBlock Objektes über den LanguageBlockHandler
+ * Dient zur Identifizierung jedes LanguageBlock Objektes ï¿½ber den LanguageBlockHandler
  */
 package uni.bombenstimmung.de.backend.language;
 
@@ -23,5 +23,7 @@ public enum LanguageBlockType {
 	LB_OPT_FULLSCREEN,
 	
 	LB_MENU_XXX;
+	
+
 	
 }

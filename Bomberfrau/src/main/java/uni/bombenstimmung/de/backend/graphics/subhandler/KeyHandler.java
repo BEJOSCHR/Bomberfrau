@@ -4,16 +4,19 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet alle Tastendrücke über die jeweiligen Events
+ * Verwaltet alle Tastendrï¿½cke ï¿½ber die jeweiligen Events
  */
 package uni.bombenstimmung.de.backend.graphics.subhandler;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.lobby.LobbyButtons;
 
 public class KeyHandler implements KeyListener {
 
@@ -24,6 +27,11 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
+		// LOBBY
+		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
+			LobbyButtons.keyIsPressed(keyCode);
+		}
+		
 		if(keyCode == KeyEvent.VK_W) {
 			//W
 			
@@ -44,6 +52,13 @@ public class KeyHandler implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
+		
+		// LOBBY
+		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
+//		    OwnButtons.keyIsReleased(keyCode);
+		}
+		
+		
 		if(keyCode == KeyEvent.VK_W) {
 			//W
 			
