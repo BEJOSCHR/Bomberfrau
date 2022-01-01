@@ -48,7 +48,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	public static void initLobbyButtons(){
 		
 		//LOBBY STARTBUTTON
-		new MouseActionArea(GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
+		new MouseActionArea((int)(GraphicsHandler.getWidth()*0.25), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
 				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
@@ -64,6 +64,23 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				    GraphicsHandler.switchToIngameFromLobby();
 				}
 
+			}
+			@Override
+			public boolean isActiv() {
+				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+			}
+		};
+		
+		//LOBBY EXITBUTTON
+		new MouseActionArea((int)(GraphicsHandler.getWidth()*0.75), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Exit", 20, Color.WHITE, Color.ORANGE) {
+			@Override
+			public void performAction_LEFT_RELEASE() {
+			    for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
+				LobbyCreate.player[i] = null;
+			}
+			    	LobbyCreate.numberPlayer = 0;
+				GraphicsHandler.switchToMenuFromLobby();
 			}
 			@Override
 			public boolean isActiv() {
