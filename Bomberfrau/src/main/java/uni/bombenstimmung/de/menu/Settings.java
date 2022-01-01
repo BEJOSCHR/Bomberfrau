@@ -273,11 +273,16 @@ public class Settings {
 	    break;
 	}
 
+	GraphicsHandler.setWidth(res_width);
+	GraphicsHandler.setHeight(res_height);
+	
 	// folgende Abfrage verhindert die Auswahl einer zu hohen Auflösung
 	if (res_width > res_width_max) {
 	    res_width = res_width_max;
 	    res_height = res_height_max;
 	    res_nr = 0;
+	    GraphicsHandler.setWidth(res_width);
+	    GraphicsHandler.setHeight(res_height);
 	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_RESOLUTION).getContent(), "OK");
 	    ConsoleHandler.print("resolution to high - switching to lower one for fullscreen", MessageType.MENU);
 	    return 0;
@@ -285,6 +290,12 @@ public class Settings {
 	    return i;
     }
 
+
+    public static void updateResAtGraphics() {
+	GraphicsHandler.setWidth(res_width);
+	GraphicsHandler.setHeight(res_height);
+    }
+    
     /**
      * Gibt alle Werte aus der ini-Datei im Terminal aus
      */
