@@ -21,34 +21,31 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 
 public class LobbyCreate {
 
-	static Player player[] = new Player[4];
+	static LobbyPlayer player[] = new LobbyPlayer[4];
 	static LoadedImage mapSelection[] = new LoadedImage[3];
-
 	static int zaehlerMapSelection = 0;
-	
 	static int hochRunterNavigation = 0;
-	
 	static int numberPlayer = 0;
 	
 	
 	/**
 	 * Wird aufgerufen, wenn der Host die Lobby erstellt.
+	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Host wird als player 0 im Array gespeichert.
-	public LobbyCreate (Player player){
+	public LobbyCreate (LobbyPlayer player){
 		LobbyCreate.player[numberPlayer] = player;
 		numberPlayer++;
 		initializeImages();
-
 	}
 	
 	/**
 	 * Wird aufgerufen, wenn ein Player der Lobby beitritt
+	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Ein weiterer Player wird als nächstes im Array erstellt
-	public void addPlayer(Player player) {
+	public void addPlayer(LobbyPlayer player) {
 		LobbyCreate.player[numberPlayer] = player;
-		
 		numberPlayer++;
 	}
 	
@@ -64,7 +61,6 @@ public class LobbyCreate {
 	/**
 	 * Gibt die toString der player aus
 	 */
-	// die toString wird von allen Playern im Array ausgegeben!
 	public static void printPlayers() {
 			for(int i=0; i < numberPlayer; i++) {
 				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
@@ -92,6 +88,7 @@ public class LobbyCreate {
 	}
 	/**
 	 * Gibt die Mapnummer zurück
+	 * @return Integer zaehlerMapSelection
 	 */
 	public static int getMap() {
 		return zaehlerMapSelection;

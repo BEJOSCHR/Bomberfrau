@@ -30,7 +30,7 @@ import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameData;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
-import uni.bombenstimmung.de.lobby.Player;
+import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
@@ -228,10 +228,10 @@ public class GraphicsHandler {
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		LobbyCreate lobby = new LobbyCreate(new Player(Settings.getUser_name()));
-		lobby.addPlayer(new Player("Player 2", "127.0.0.1"));
-		lobby.addPlayer(new Player("Player 3", "2.0.0.2"));
-		lobby.addPlayer(new Player("Player 4", "1.0.0.0"));
+		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
+		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
+		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
+		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
 	}
 	
@@ -245,7 +245,7 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 
 		Game.fillMap();
-	    	Game.updateMap(1);
+	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	
 		displayType = DisplayType.INGAME;
