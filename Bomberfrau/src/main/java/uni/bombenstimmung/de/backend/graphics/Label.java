@@ -147,7 +147,7 @@ public class Label extends JLabel {
 			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
 			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 			
-			// schöner durch ersetzen führender Nuller durch Leerzeichen
+			// schï¿½ner durch ersetzen fï¿½hrender Nuller durch Leerzeichen
 //			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
 		}
 		
