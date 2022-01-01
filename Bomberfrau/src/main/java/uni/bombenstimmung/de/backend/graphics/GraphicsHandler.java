@@ -157,11 +157,11 @@ public class GraphicsHandler {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
+		Menu.menuComponentsActive(true);
 		Menu.optionsComponentsActive(false);
 
-	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
-		Menu.buildMenu();
+		//Menu.buildMenu();
 
 		displayType = DisplayType.MENU;
 		
@@ -174,8 +174,8 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 
-	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
+		//Menu.buildMenu();
 		Menu.menuComponentsActive(true);
 
 		displayType = DisplayType.MENU;
