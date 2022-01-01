@@ -458,7 +458,8 @@ public class Menu {
 	checkBoxFPS.setSelected(Settings.getShow_fps());
 	checkBoxFPS.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		// ConsoleHandler.print("Checkbox=" + checkBoxFPS.isSelected(), MessageType.MENU);
+		// ConsoleHandler.print("Checkbox=" + checkBoxFPS.isSelected(),
+		// MessageType.MENU);
 		Settings.setShow_fps(checkBoxFPS.isSelected());
 		if (Settings.getShow_fps())
 		    GraphicsHandler.getLabel().setShowFPS(true);
@@ -580,7 +581,8 @@ public class Menu {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		intro.remove();
-		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick", MessageType.MENU);
+		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick",
+		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		// GraphicsHandler.switchToMenuFromIntro();
 	    }
@@ -627,11 +629,8 @@ public class Menu {
 
 		    // SoundHandler.reduceAllSounds();
 		    GraphicsHandler.switchToLobbyFromMenu();
-		    Panes.InfoPane(null, "Name \"" + Settings.getUser_name() + "\" + IP \"" + Settings.getIp()
-			    + "\" saved in save.ini. Now switching to Lobby", "OK");
-		    // JOptionPane.showMessageDialog(null,"Name \"" + Settings.user_name + "\" + IP
-		    // \"" + Settings.ip + "\" saved in save.ini\nNow switching to Lobby","to be
-		    // continued ...", JOptionPane.PLAIN_MESSAGE);
+		    // Panes.InfoPane(null, "Name \"" + Settings.getUser_name() + "\" + IP \""
+		    // + Settings.getIp() + "\" saved in save.ini. Now switching to Lobby", "OK");
 		}
 
 		if (create.isSelected() && ok) {
@@ -649,11 +648,9 @@ public class Menu {
 		    // SoundHandler.reduceAllSounds();
 		    ConsoleHandler.print("Switching to Lobby", MessageType.MENU);
 		    GraphicsHandler.switchToLobbyFromMenu();
-		    Panes.InfoPane(null,
-			    "Name \"" + Settings.getUser_name() + "\" saved in save.ini. Now switching to Lobby", "OK");
-		    // JOptionPane.showMessageDialog(null,"Name \"" + Settings.user_name + "\" saved
-		    // in save.ini\nNow switching to Lobby","to be continued ...",
-		    // JOptionPane.PLAIN_MESSAGE);
+		    // Panes.InfoPane(null,
+		    //	    "Name \"" + Settings.getUser_name() + "\" saved in save.ini. Now switching to Lobby", "OK");
+
 		}
 
 		ConsoleHandler.print("Switching from Menu to Lobby ...", MessageType.MENU);
@@ -703,7 +700,7 @@ public class Menu {
 		    }
 		}
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
-		
+
 		// SoundHandler.stopAllSounds();
 		// SoundHandler.reduceLastPlayedSound();
 		GraphicsHandler.shutdownProgram();
@@ -749,11 +746,13 @@ public class Menu {
      */
     private static Boolean checkName() {
 	boolean check = true;
-	// ConsoleHandler.print("name_box.getText() = " + name_box.getText(), MessageType.MENU);
+	name_box.setText(name_box.getText().trim());
+	// ConsoleHandler.print("name_box.getText() = " + name_box.getText(),
+	// MessageType.MENU);
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
 	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
 //	    name_box.setText(Settings.prop.getProperty("user_name"));
-	    name_box.setText(" ");
+	    name_box.setText("");
 	    check = false;
 	}
 	return check;
@@ -838,7 +837,8 @@ public class Menu {
 	    @Override
 	    public void finaliseValues() {
 		AnimationData.intro_zoom = 0;
-		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation", MessageType.MENU);
+		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation",
+		// MessageType.MENU);
 		GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};
