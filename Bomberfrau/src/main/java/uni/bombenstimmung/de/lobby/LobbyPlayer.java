@@ -26,7 +26,7 @@ public class LobbyPlayer {
 	private boolean isReady = false;
 	
 	public LoadedImage skinSelection[] = new LoadedImage[3];
-	public int zaehlerSkinSelection = 0;
+	private int zaehlerSkinSelection = 0;
 
 	
 	/**
