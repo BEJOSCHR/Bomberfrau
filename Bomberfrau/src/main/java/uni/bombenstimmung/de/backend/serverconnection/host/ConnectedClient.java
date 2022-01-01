@@ -37,7 +37,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	private int id; 
 	private boolean host;
-	private long ping;
 	private IoSession conSession;
 	private IoConnector connector;
 	NioDatagramAcceptor acceptor;
@@ -51,9 +50,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @param sHost - Boolean ob der ConnectedClient ein Host ist, oder nicht
 	 * @param IP - IP-Addresse zu dem der Client sich verbinden soll
 	 */
+	@SuppressWarnings("rawtypes")
 	public ConnectedClient(boolean sHost, String IP) {
 		host = sHost;
-		//Falls der Client ein Host ist, dann wird ein neuer UDP Server initialisiert. 
+		//Is the new created Client the host, a new server will be initialized
 		if (host == true) {
 			id = 0;
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
@@ -72,7 +72,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		//Falls der Client kein Host ist, dann wird ein neuer UDP Client initialisiert
+		//Is the new created Client not the host, a new UDP Client will be initialized
 		} else { 
 			connector = new NioDatagramConnector();
 			getConnector().setHandler(new ClientHandler(this));
@@ -176,13 +176,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//202 = Setze die Position eines Spieler. 
 		//Format: "201-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
-			String[] pMessage202 = message.split("-");
+			@SuppressWarnings("unused") String[] pMessage202 = message.split("-");
 			//TODO: Setze X und Y des Spielers
 			break;	
 		//203 = Setze die Position einer Bombe. 
 		//Format: "203-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 203:
-			String[] pMessage203 = message.split("-");
+			@SuppressWarnings("unused") String[] pMessage203 = message.split("-");
 			//TODO: Setze X und Y der Bombe
 			break;
 		//300 = Starte das Spiel
@@ -203,8 +203,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			String[] pMessage903 = message.split("-");
 	    	long currentTime = System.currentTimeMillis();
 	    	long startTime = Long.parseLong(pMessage903[1]);
-	    	ping = currentTime-startTime;
-	    	//ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+	    	long ping = currentTime-startTime;
+	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
 	    	break;
 		//999 = Wird gesendet, wenn ein Client das Spiel verlässt. 
 		//Format: "999"
@@ -317,13 +317,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public void setSession(IoSession session) {
 		conSession = session;
-	}
-
-	/**
-	 * Gibt den aktuellen Ping in ms zurück.
-	 */
-	public long getPing() {
-		return ping;
 	}
 }
 
