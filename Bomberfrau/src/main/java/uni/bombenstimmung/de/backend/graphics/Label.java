@@ -58,7 +58,7 @@ public class Label extends JLabel {
 		   if (nextRepaintDelay > now) {
 			   Thread.sleep(nextRepaintDelay - now);
 		   }
-		   nextRepaintDelay = now + 1000/(maxFPS-44);
+		   nextRepaintDelay = now + 1000/(maxFPS-41);
 		} catch (InterruptedException e) { }
 		
 		super.paintComponent(g);

@@ -47,6 +47,7 @@ public class SoundHandler {
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		float value = 20f * (float) Math.log10(sound.getVolume());
 		if(value < -70) { value = -70; } //MINIMUM VOLUME
+		else if(value > 6) { value = 6; } //MAXIMUM VOLUME
 		gainControl.setValue(value);
 		clip.setFramePosition(0);
 		clip.start();

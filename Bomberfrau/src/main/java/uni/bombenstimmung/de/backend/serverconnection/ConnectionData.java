@@ -2,13 +2,13 @@
  * ConnectionData
  *
  * Version 1.0
- * Author: Benni
+ * Author: Tim
  *
- * Enth�lt alle Daten der Server-Client-Verbindung
+ * Enthaelt alle Daten der Server-Client-Verbindung
  */
 package uni.bombenstimmung.de.backend.serverconnection;
 
 public class ConnectionData {
-	public static final int PORT = 23456;
-	public static final String IP = "127.0.0.1";	
+	public static final int PORT = 55686;
+	public static final String IP = "46.142.146.218";	
 }

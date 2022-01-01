@@ -15,6 +15,8 @@ import java.util.TimerTask;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
+import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class ConsoleHandler {
 	
@@ -32,10 +34,10 @@ public class ConsoleHandler {
 	}
 	
 	/**
-	 * Gibt die angegebene message mit dem angegebenen type aus, wenn der Type dem derzeitigen debugType entspricht oder sich über diesen hinweg setzen kann. 
+	 * Gibt die angegebene message mit dem angegebenen type aus, wenn der Type dem derzeitigen debugType entspricht oder sich ï¿½ber diesen hinweg setzen kann. 
 	 * So wird ERROR immer ausgegeben und IMPORTANT wird nur nicht ausgegeben wenn currentDebugType = ERROR ist
 	 * @param message - Die Message die ausgegeben werden soll
-	 * @param type - Der {@link MessageType} der Nachricht, der die zugehörigkeit der message defeniert
+	 * @param type - Der {@link MessageType} der Nachricht, der die zugehï¿½rigkeit der message defeniert
 	 */
 	public static void print(String message, MessageType type) {
 		
@@ -91,7 +93,7 @@ public class ConsoleHandler {
 	}
 	
 	/**
-	 * Stoppt den Scanner der auf Eingaben in der Console wartet und diese weiterleitet, falls dieser läuft.
+	 * Stoppt den Scanner der auf Eingaben in der Console wartet und diese weiterleitet, falls dieser lï¿½uft.
 	 */
 	public static void stopInputScanner() {
 		
@@ -115,6 +117,20 @@ public class ConsoleHandler {
 		case "exit":
 			ConsoleHandler.print("Shutting down...", MessageType.IMPORTANT);
 			GraphicsHandler.shutdownProgram();
+			break;
+		case "host":
+			ConsoleHandler.print("Starting Server...", MessageType.IMPORTANT);
+			ConnectedClient host = new ConnectedClient(true, null);
+			ConsoleHandler.print("Client: " + host.getId()+" Host: " +host.isHost() + " with " + ConnectionData.IP + ":" + ConnectionData.PORT, MessageType.BACKEND);
+			break;
+		case "client":
+			if(input.length >= 2) {
+				ConsoleHandler.print("Connecting to server...", MessageType.IMPORTANT);
+				ConnectedClient client = new ConnectedClient(false, input[1]);
+				ConsoleHandler.print("Client: " + client.getId()+" Host: " +client.isHost(), MessageType.BACKEND);
+			}else {
+				ConsoleHandler.print("Use: client [IP]", MessageType.IMPORTANT);
+			}
 			break;
 		case "debugType":
 			if(input.length >= 2) {
@@ -154,14 +170,14 @@ public class ConsoleHandler {
 			break;
 		case "help":
 		default:
-			ConsoleHandler.print("Choose input: [help,exit,debugType,language]", MessageType.IMPORTANT);
+			ConsoleHandler.print("Choose input: [help,exit,debugType,language,host,client]", MessageType.IMPORTANT);
 			break;
 		}
 		
 	}
 	
 	/**
-	 * Ändert den derzeitigen DebugType, abhängig davon werden manche ausgeben vor der ausgabe blockiert
+	 * ï¿½ndert den derzeitigen DebugType, abhï¿½ngig davon werden manche ausgeben vor der ausgabe blockiert
 	 * @param newType - Der neue currentDebugType
 	 * @see {@link MessageType}
 	 */

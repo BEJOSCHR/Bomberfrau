@@ -2,7 +2,7 @@
  * ConnectionType
  *
  * Version 1.0
- * Author: Benni
+ * Author: Tim
  *
  * Gibt an ob dieser User als Client oder Host arbeitet (abgespeichert in ConnectionData) 
  */
