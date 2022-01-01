@@ -366,6 +366,14 @@ public class GraphicsHandler {
 	public static int getHeight() {
 		return height;
 	}
+
+	public static void setWidth(int i) {
+		width = i;
+	}
+	public static void setHeight(int i) {
+		height = i;
+	}
+	
 	public static JFrame getFrame() {
 		return frame;
 	}

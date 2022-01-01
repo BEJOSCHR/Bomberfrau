@@ -15,6 +15,7 @@ import java.util.*;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
@@ -186,10 +187,12 @@ public class Settings {
 
     public static void setRes_width(int i) {
 	res_width = i;
+	GraphicsHandler.setWidth(i);
     }
 
     public static void setRes_height(int i) {
 	res_height = i;
+	GraphicsHandler.setHeight(i);
     }
 
     public static void setRes_width_max(int i) {
