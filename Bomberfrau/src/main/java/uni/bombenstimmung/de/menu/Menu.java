@@ -580,9 +580,9 @@ public class Menu {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		intro.remove();
-		ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick", MessageType.MENU);
+		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
-		//GraphicsHandler.switchToMenuFromIntro();
+		// GraphicsHandler.switchToMenuFromIntro();
 	    }
 
 	    @Override
@@ -838,7 +838,7 @@ public class Menu {
 	    @Override
 	    public void finaliseValues() {
 		AnimationData.intro_zoom = 0;
-		ConsoleHandler.print("Wechsel vom Intro zu Menü per Abwarten", MessageType.MENU);
+		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation", MessageType.MENU);
 		GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};

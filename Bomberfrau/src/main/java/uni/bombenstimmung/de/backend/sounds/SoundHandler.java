@@ -78,9 +78,9 @@ public class SoundHandler {
                     while (vol>-60) {
                         vol-=1.5f; 
                         volume.setValue(vol);
-                        Thread.sleep(30);
+                        Thread.sleep(100);
                     }
-                    Thread.sleep(100);
+                    Thread.sleep(500);
                     lastPlayedClip.stop();
                 }
                 catch (InterruptedException ex) {}
