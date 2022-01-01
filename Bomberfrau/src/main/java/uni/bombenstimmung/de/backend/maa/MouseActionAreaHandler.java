@@ -29,8 +29,6 @@ public class MouseActionAreaHandler {
 	    	Menu.initMaaMainmenu();
 	    	Menu.initMaaOptions();
 
-	    	Menu.initMaaLobby();
-
 		LobbyButtons.initLobbyButtons();
 		
 		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);

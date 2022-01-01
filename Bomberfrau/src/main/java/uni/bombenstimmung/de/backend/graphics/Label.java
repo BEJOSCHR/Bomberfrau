@@ -28,8 +28,8 @@ import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.PlayerHandler;
-import uni.bombenstimmung.de.menu.Settings;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
+import uni.bombenstimmung.de.menu.Settings;
 
 @SuppressWarnings("serial")
 public class Label extends JLabel {

@@ -614,6 +614,7 @@ public class Menu {
 			ConsoleHandler.print("Name \"" + Settings.getUser_name() + "\" + IP \"" + Settings.getIp()
 				+ "\" saved in save.ini", MessageType.MENU);
 		    } catch (IOException ex) {
+			ex.printStackTrace();
 		    }
 
 		    // SoundHandler.reduceAllSounds();
@@ -634,6 +635,7 @@ public class Menu {
 			ConsoleHandler.print("Name \"" + Settings.getUser_name() + "\" saved in save.ini",
 				MessageType.MENU);
 		    } catch (IOException ex) {
+			ex.printStackTrace();
 		    }
 
 		    // SoundHandler.reduceAllSounds();
@@ -694,7 +696,7 @@ public class Menu {
 		}
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
 		// SoundHandler.stopAllSounds();
-		SoundHandler.reduceLastPlayedSound();
+//		SoundHandler.reduceLastPlayedSound();
 		GraphicsHandler.shutdownProgram();
 	    }
 
@@ -729,26 +731,6 @@ public class Menu {
 	};
     }
 
-    /**
-     * MAA der temporären Test-Lobby - Vollbild Klick für Rückkehr zum Hauptmenü
-     */
-    public static void initMaaLobby() {
-
-	new MouseActionArea(-1, -1, Settings.getRes_width() + 1, Settings.getRes_height() + 1,
-		MouseActionAreaType.MAA_LOBBY, "", 1, Color.WHITE, Color.WHITE) {
-	    @Override
-	    public void performAction_LEFT_RELEASE() {
-		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.LOBBY);
-		GraphicsHandler.switchToMenuFromLobby();
-	    }
-
-	    @Override
-	    public boolean isActiv() {
-		return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
-	    }
-	};
-    }
-
     /*****************************************************************************************************************
      * HILFSMETHODEN
      *****************************************************************************************************************/
@@ -761,8 +743,8 @@ public class Menu {
 	// System.out.println("name_box.getText() = " + name_box.getText());
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
 	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-	    name_box.setText(Settings.prop.getProperty("user_name"));
-	    ;
+//	    name_box.setText(Settings.prop.getProperty("user_name"));
+	    name_box.setText(" ");
 	    check = false;
 	}
 	return check;
