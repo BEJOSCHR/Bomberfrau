@@ -125,9 +125,7 @@ public class GraphicsHandler {
 		
 	        Settings.setCreate_selected(true);
 
-	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
-	        
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
@@ -157,11 +155,11 @@ public class GraphicsHandler {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
-		Menu.menuComponentsActive(true);
+	        Menu.titlePulseAni();
+		//Menu.menuComponentsActive(true);
+		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
 
-	        Menu.titlePulseAni();
-		//Menu.buildMenu();
 
 		displayType = DisplayType.MENU;
 		
@@ -175,8 +173,8 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 
 	        Menu.titlePulseAni();
-		//Menu.buildMenu();
-		Menu.menuComponentsActive(true);
+		Menu.buildMenu();
+		//Menu.menuComponentsActive(true);
 
 		displayType = DisplayType.MENU;
 		
@@ -190,10 +188,10 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-
-	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
-		Menu.menuComponentsActive(true);
+		//Menu.menuComponentsActive(true);
+		Menu.buildMenu();
+		
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
@@ -207,10 +205,10 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-
-	        //Menu.titleShakeAni();
 	        Menu.titlePulseAni();
-		Menu.menuComponentsActive(true);
+		//Menu.menuComponentsActive(true);
+		Menu.buildMenu();
+		
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
