@@ -164,7 +164,7 @@ public class LobbyCreate {
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
 
 			
-			g.drawImage(player[i].skinSelection[player[i].zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
+			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
 			
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
