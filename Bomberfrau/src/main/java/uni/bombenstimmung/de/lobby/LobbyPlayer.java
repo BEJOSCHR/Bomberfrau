@@ -20,7 +20,7 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 public class LobbyPlayer {
 	private String ip;
 	private String name;
-	static int idZaehler = 0;
+	private static int idZaehler = 0;
 	private int id;
 	private boolean isHost;
 	private boolean isReady = false;
@@ -63,6 +63,10 @@ public class LobbyPlayer {
 		skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
 		skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
 	}
+	
+//	public LoadedImage getskinSelection() {
+//	    
+//	}
 	
 	
 	/**
