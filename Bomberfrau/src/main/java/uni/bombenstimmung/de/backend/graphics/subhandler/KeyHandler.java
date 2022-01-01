@@ -58,7 +58,7 @@ public class KeyHandler implements KeyListener {
 			
 		}else if(keyCode == KeyEvent.VK_T) {
 			//T  TODO JUST TESTING REMOVE LATER
-			SoundHandler.playSound(SoundType.TEST_START);
+			SoundHandler.playSound(SoundType.TEST_START, false);
 		}else if(keyCode == KeyEvent.VK_PLUS) {
 			//+  TODO JUST TESTING REMOVE LATER
 			SoundHandler.changeCategoryVolume(SoundCategory.TEST, 0.1D);

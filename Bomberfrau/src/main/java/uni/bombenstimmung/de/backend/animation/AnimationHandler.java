@@ -98,9 +98,11 @@ public class AnimationHandler {
 	 */
 	public static void stopAllAnimations() {
 		
-		for(Animation animation : runningAnimations) {
-			animation.finished(false);
-		}
+		try {
+			for(Animation animation : runningAnimations) {
+				animation.finished(false);
+			}
+		}catch(ConcurrentModificationException error) {}
 		runningAnimations.clear();
 		
 	}

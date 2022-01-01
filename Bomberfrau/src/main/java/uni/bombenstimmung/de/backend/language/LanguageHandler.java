@@ -35,6 +35,58 @@ public class LanguageHandler {
 		String[] loadingScreen_Version = {BomberfrauMain.VERSION, BomberfrauMain.VERSION};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOADINGSCREEN_VERSION, loadingScreen_Version);
 		
+		String[] intro_skip = {"<<  Click to skip  >>", "<< Klicken zum Überspringen >>"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INTRO_SKIP, intro_skip);
+
+		
+		String[] menu_txt1 = {"Create", "Erstellen"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT1, menu_txt1);
+		String[] menu_txt2 = {"Join", "Beitreten"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT2, menu_txt2);
+		String[] menu_info1 = {"max. 30 signs", "max. 30 Zeichen"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO1, menu_info1);
+		String[] menu_info2 = {"invalid IP", "ungültige IP"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO2, menu_info2);
+		String[] menu_btn2 = {"OPTIONS", "OPTIONEN"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN2, menu_btn2);
+		String[] menu_btn3 = {"EXIT", "ENDE"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN3, menu_btn3);
+		
+		String[] options_txt1 = {"Resolution:", "Auslösung:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT1, options_txt1);
+		String[] options_fullscreen = {"Fullscreen", "Vollbild"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_FULLSCREEN, options_fullscreen);
+		String[] options_txt2 = {"Volume Music:", "Lautstärke Musik:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT2, options_txt2);
+		String[] options_txt3 = {"Volume Sound:", "Lautstärke Sound:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT3, options_txt3);
+		String[] options_txt4 = {"Controls:", "Steuerung:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT4, options_txt4);
+		String[] options_txt5 = {"Bomb", "Bombe"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT5, options_txt5);
+		String[] options_txt6 = {"show FPS", "FPS anzeigen"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT6, options_txt6);
+		String[] options_txt7 = {"Language:", "Sprache:"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT7, options_txt7);
+		String[] options_btn = {"BACK", "ZURÜCK"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPTIONS_BTN, options_btn);
+
+		String[] key_up = {"Up", "Hoch"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_UP, key_up);
+		String[] key_down = {"Down", "Runter"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_DOWN, key_down);
+		String[] key_left = {"Left", "Links"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_LEFT, key_left);
+		String[] key_right = {"Right", "Rechts"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_RIGHT, key_right);
+
+		String[] bad_name = {"Please enter a name before starting ...", "Bitte vor dem Start einen Namen eingeben ..."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_NAME, bad_name);
+		String[] bad_ip = {"Please enter an IP before starting ...", "Bitte vor dem Start eine IP eingeben ..."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_IP, bad_ip);
+		String[] bad_res = {"resolution to high - switching to fullscreen.", "Die Auflösung ist zu gross - Wechsel zu Vollbild."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_RESOLUTION, bad_res);
+		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);
 		
 	}

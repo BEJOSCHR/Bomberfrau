@@ -9,10 +9,6 @@
 
 package uni.bombenstimmung.de.main;
 
-import java.util.Random;
-
-import uni.bombenstimmung.de.backend.animation.Animation;
-import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -21,6 +17,7 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class BomberfrauMain {
 	
@@ -39,90 +36,22 @@ public class BomberfrauMain {
 		1. BACKEND STUFF
 		2. ...
 		*/
+
+		Settings.initIni();
+		Settings.iniValuesToTerminal();
 		
 		//1. BACKEND
 		LanguageHandler.initLLBs();
 		GraphicsHandler.initVisuals();
-		MouseActionAreaHandler.initMAAs();
 		ImageHandler.initImages();
 		SoundHandler.initSounds();
+		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		AnimationHandler.startTickTimer();
-		
-		//LOADINGSCREEN ANIMATIONS
-		new Animation(60, -1) {
-			@Override
-			public void initValues() {
-				AnimationData.loadingScreen_textSizeModifier = 0;
-			}
-			@Override
-			public void changeValues() {
-				if(getSteps()%2 == 0) {
-					AnimationData.loadingScreen_textSizeModifier = 1;
-				}else {
-					AnimationData.loadingScreen_textSizeModifier = 0;
-				}
-			}
-			@Override
-			public void finaliseValues() {
-				AnimationData.loadingScreen_textSizeModifier = 0;
-			}
-		};
-		Random r = new Random();
-		new Animation(7, -1) {
-			
-			private final int stepSize = 2, limit = 20;
-			private int targetX = 0, targetY = 0;
-			
-			@Override
-			public void initValues() {
-				AnimationData.loadingScreen_posXModifier = 0;
-				AnimationData.loadingScreen_posYModifier = 0;
-				setNewTarget();
-			}
-			@Override
-			public void changeValues() {
-				if(targetX >= AnimationData.loadingScreen_posXModifier) {
-					AnimationData.loadingScreen_posXModifier += stepSize;
-					if(targetX <= AnimationData.loadingScreen_posXModifier) {
-						AnimationData.loadingScreen_posXModifier = targetX;
-						setNewTarget();
-					}
-				}else if(targetX <= AnimationData.loadingScreen_posXModifier) {
-					AnimationData.loadingScreen_posXModifier -= stepSize;
-					if(targetX >= AnimationData.loadingScreen_posXModifier) {
-						AnimationData.loadingScreen_posXModifier = targetX;
-						setNewTarget();
-					}
-				}
-				if(targetY >= AnimationData.loadingScreen_posYModifier) {
-					AnimationData.loadingScreen_posYModifier += stepSize;
-					if(targetY <= AnimationData.loadingScreen_posYModifier) {
-						AnimationData.loadingScreen_posYModifier = targetY;
-						setNewTarget();
-					}
-				}else if(targetY <= AnimationData.loadingScreen_posYModifier) {
-					AnimationData.loadingScreen_posYModifier -= stepSize;
-					if(targetY >= AnimationData.loadingScreen_posYModifier) {
-						AnimationData.loadingScreen_posYModifier = targetY;
-						setNewTarget();
-					}
-				}
-			}
-			@Override
-			public void finaliseValues() {
-				AnimationData.loadingScreen_posXModifier = 0;
-				AnimationData.loadingScreen_posYModifier = 0;
-				targetX = 0;
-				targetY = 0;
-			}
-			private void setNewTarget() {
-				targetX = r.nextInt(limit*2)-limit;
-				targetY = r.nextInt(limit*2)-limit;
-			}
-		};
-		//2. ...
-		//TODO
+
+		//2. INTRO
+		GraphicsHandler.switchToIntroFromLoadingscreen();
+
 		
 		
 		//FINISHED STARTING UP
