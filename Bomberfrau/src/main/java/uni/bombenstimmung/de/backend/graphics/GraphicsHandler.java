@@ -244,10 +244,10 @@ public class GraphicsHandler {
 		//SoundHandler.stopAllSounds();
 		SoundHandler.reduceLastPlayedSound();
 		AnimationHandler.stopAllAnimations();
-
-		Game.fillMap();
+		Game.setMapNumber(LobbyCreate.getMap()+1);
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	
+	    	// Add all Players into InGame ArrayList "PlayerFromLobby"
 		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
 		    if(i==0) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
