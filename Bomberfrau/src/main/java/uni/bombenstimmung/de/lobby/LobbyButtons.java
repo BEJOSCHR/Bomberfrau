@@ -27,20 +27,20 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	static boolean rightisPressed = false;
 	static boolean leftisPressed = false;
 	
-	static int yPlayer = (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1) + 75;
-	static int yPlayerMap = (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5) + 75;
+	private static int yPlayer = (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1) + 75;
+	private static int yPlayerMap = (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5) + 75;
 	
-	static int xPlayer1Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-100 - GraphicsHandler.getWidth()*0.04);
-	static int xPlayer1Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
+	private static int xPlayer1Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-100 - GraphicsHandler.getWidth()*0.04);
+	private static int xPlayer1Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
 	
-	static int xPlayer2Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)-100 - GraphicsHandler.getWidth()*0.04);
-	static int xPlayer2Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
+	private static int xPlayer2Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)-100 - GraphicsHandler.getWidth()*0.04);
+	private static int xPlayer2Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
 	
-	static int xPlayer3Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)-100 - GraphicsHandler.getWidth()*0.04);
-	static int xPlayer3Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
+	private static int xPlayer3Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)-100 - GraphicsHandler.getWidth()*0.04);
+	private static int xPlayer3Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
 	
-	static int xPlayer4Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)-100 - GraphicsHandler.getWidth()*0.04);
-	static int xPlayer4Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
+	private static int xPlayer4Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)-100 - GraphicsHandler.getWidth()*0.04);
+	private static int xPlayer4Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
 			
 	/**
 	 * Inititalisiert alle MAAs der Lobby und definiert via Overwrite restliche Funktionalitäten
