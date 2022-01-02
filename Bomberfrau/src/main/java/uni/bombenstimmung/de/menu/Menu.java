@@ -799,6 +799,17 @@ public class Menu {
 	return (KeyEvent.getKeyText(i));
     }
 
+
+    /**
+     * Methode zum Warten in Millisekunden
+     */
+    public static boolean isHost() {
+	if (create.isSelected())
+	    return true;
+	else
+	    return false;
+    }
+
     /**
      * Methode zum Warten in Millisekunden
      */
