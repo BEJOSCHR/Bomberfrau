@@ -51,8 +51,15 @@ public class ImageHandler {
 		//https://www.pngwing.com/en/free-png-zekql/download?width=107
 		new LoadedImage("Lobby/Crown.png", ImageType.IMAGE_LOBBY_CROWN, 25, 25);
 		
+		
+		//LOBBY UND INGAME SHARING ICONS
+		new LoadedImage("Bomberman_Icon.png", ImageType.IMAGE_INGAME_ICON, 200, 200);
+		new LoadedImage("Bomberman_Icon_blau.png", ImageType.IMAGE_INGAME_ICON_BLUE, 200, 200);
+		new LoadedImage("Bomberman_Icon_gelb.png", ImageType.IMAGE_INGAME_ICON_GELB, 200, 200);
+		new LoadedImage("Bomberman_Icon_pink.png", ImageType.IMAGE_INGAME_ICON_PINK, 200, 200);
+		
 		//INGAME
-		new LoadedImage("Ingame/Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+			new LoadedImage("Ingame/Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Box.png", ImageType.IMAGE_INGAME_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Wand_gray.png", ImageType.IMAGE_INGAME_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/wand_orange.png", ImageType.IMAGE_INGAME_BORDER, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);

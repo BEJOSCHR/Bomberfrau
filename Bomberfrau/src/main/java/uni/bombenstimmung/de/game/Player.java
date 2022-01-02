@@ -61,7 +61,7 @@ public class Player extends Entity implements ActionListener{
 	this.movementSpeed = 1;
 	this.maxBombs = 1;
 	this.placedBombs = 0;
-	this.bombRadius = 3;
+	this.bombRadius = 1;
 	this.realPosX = (pos.getX()*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2);
 	this.realPosY = (pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2);
 	
