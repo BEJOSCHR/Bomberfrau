@@ -511,11 +511,10 @@ public class Menu {
      */
     public static void menuComponentsActive(Boolean bool) {
 	if (bool) {
-	    ConsoleHandler.print("Hauptmenü Komponenten hinzufügen", MessageType.MENU);
+	    ConsoleHandler.print("adding Mainmenu Componenten", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(create);
 	    GraphicsHandler.getLabel().add(join);
 	    GraphicsHandler.getLabel().add(name_box);
-	    // name_info.setText("");
 	    GraphicsHandler.getLabel().add(name_info);
 	    if (!Settings.getCreate_selected()) {
 		GraphicsHandler.getLabel().add(ip_box);
@@ -523,7 +522,7 @@ public class Menu {
 	    }
 
 	} else {
-	    ConsoleHandler.print("Hauptmenü Komponenten entfernen", MessageType.MENU);
+	    ConsoleHandler.print("removing Mainmenü Components", MessageType.MENU);
 	    GraphicsHandler.getLabel().remove(create);
 	    GraphicsHandler.getLabel().remove(join);
 	    GraphicsHandler.getLabel().remove(name_box);
@@ -541,7 +540,7 @@ public class Menu {
      */
     public static void optionsComponentsActive(Boolean bool) {
 	if (bool) {
-	    ConsoleHandler.print("Optionsmenü Komponenten hinzufügen", MessageType.MENU);
+	    ConsoleHandler.print("adding Optionsmenu Components", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(comboboxReso);
 	    GraphicsHandler.getLabel().add(sliderMusic);
 	    GraphicsHandler.getLabel().add(sliderSound);
@@ -553,7 +552,7 @@ public class Menu {
 	    GraphicsHandler.getLabel().add(checkBoxFPS);
 	    GraphicsHandler.getLabel().add(comboboxLang);
 	} else {
-	    ConsoleHandler.print("Optionsmenü Komponenten entfernen", MessageType.MENU);
+	    ConsoleHandler.print("removing Optionsmenu Components", MessageType.MENU);
 	    GraphicsHandler.getLabel().remove(comboboxReso);
 	    GraphicsHandler.getLabel().remove(sliderMusic);
 	    GraphicsHandler.getLabel().remove(sliderSound);

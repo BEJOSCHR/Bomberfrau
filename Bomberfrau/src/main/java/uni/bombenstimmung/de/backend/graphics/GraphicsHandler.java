@@ -127,10 +127,10 @@ public class GraphicsHandler {
 	        Settings.setCreate_selected(true);
 
 	        Menu.titlePulseAni();
+	        Menu.sleep(1000);
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
-		Menu.menuComponentsActive(true);
 		
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
