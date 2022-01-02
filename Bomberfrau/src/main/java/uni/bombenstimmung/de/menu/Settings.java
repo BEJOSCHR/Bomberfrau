@@ -20,9 +20,9 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
 
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
 import java.awt.Toolkit;
 
 public class Settings {
@@ -365,19 +365,41 @@ public class Settings {
      */
     public static void initIni() {
 
-	// checking current used monitor resolution (Windows 10 only ???)
-	// isn't really used because needed value gives Toolkit, see next section
-	GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	GraphicsDevice gd = env.getDefaultScreenDevice();
-	DisplayMode dm = gd.getDisplayMode();
-	res_width_max = dm.getWidth();
-	res_height_max = dm.getHeight();
-	ConsoleHandler.print("current resolution: " + res_width_max + " x " + res_height_max, MessageType.MENU);
 
-	// checking current resolution (used by Swing ???) via Toolkit
+	ConsoleHandler.print("*************************************************", MessageType.MENU);
+	// getting resolution of the DEFAULT monitor via Toolkit
+	// scaling is taken into account !!!
 	res_width_max = Toolkit.getDefaultToolkit().getScreenSize().width;
 	res_height_max = Toolkit.getDefaultToolkit().getScreenSize().height;
-	ConsoleHandler.print("Toolkit resolution: " + res_width_max + " x " + res_height_max, MessageType.MENU);
+	ConsoleHandler.print("Toolkit resolution (scaling)      : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+
+	ConsoleHandler.print("*************************************************", MessageType.MENU);
+	// getting resolution of the DEFAULT monitor
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	res_width_max = gd.getDisplayMode().getWidth();
+	res_height_max = gd.getDisplayMode().getHeight();
+	ConsoleHandler.print("resolution (default screen)       : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+	double scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+	// next line gets the scaling factor set in the OS
+	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+	ConsoleHandler.print("scaling    (default screen)       : " + scalingfactor, MessageType.MENU);
+	res_width_max = (int)(res_width_max/scalingfactor);
+	res_height_max = (int)(res_height_max/scalingfactor);
+	ConsoleHandler.print("resolution (default screen new)   : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+	ConsoleHandler.print("*************************************************", MessageType.MENU);
+
+	// getting resolution of the monitor with the mouse pointer
+	gd = MouseInfo.getPointerInfo().getDevice();
+	res_width_max = gd.getDisplayMode().getWidth();
+	res_height_max = gd.getDisplayMode().getHeight();
+	ConsoleHandler.print("resolution (screen with mouse)    : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+	// next line gets the scaling factor set in the OS
+	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+	ConsoleHandler.print("scaling    (screen with mouse)    : " + scalingfactor, MessageType.MENU);
+	res_width_max = (int)(res_width_max/scalingfactor);
+	res_height_max = (int)(res_height_max/scalingfactor);
+	ConsoleHandler.print("resolution (screen with mouse new): " + res_width_max + " x " + res_height_max, MessageType.MENU);
+	ConsoleHandler.print("*************************************************", MessageType.MENU);
 
 	try {
 	    File save_ini = new File(INI);

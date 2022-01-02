@@ -127,7 +127,7 @@ public class GraphicsHandler {
 	        Settings.setCreate_selected(true);
 
 	        Menu.titlePulseAni();
-	        Menu.sleep(1000);
+	        //Menu.sleep(1000);
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
