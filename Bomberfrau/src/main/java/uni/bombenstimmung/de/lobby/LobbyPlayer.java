@@ -24,10 +24,8 @@ public class LobbyPlayer {
 	private int id;
 	private boolean isHost;
 	private boolean isReady = false;
-	
 	public LoadedImage skinSelection[] = new LoadedImage[3];
 	private int zaehlerSkinSelection = 0;
-
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
