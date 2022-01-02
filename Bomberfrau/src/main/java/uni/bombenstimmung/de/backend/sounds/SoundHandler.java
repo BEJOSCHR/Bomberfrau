@@ -31,9 +31,9 @@ public class SoundHandler {
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.INTRO_MUSIK, 0.1D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIK, 0.1D);
-		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.OPTIONS_SOUND, 0.1D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MUSIC, 0.3D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MUSIC, 0.3D);
+		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.SOUNDS, 0.3D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		

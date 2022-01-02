@@ -7,6 +7,10 @@ public enum SoundCategory {
 	OPTIONS_SOUND,
 	INGAME_MUSIK,
 	SOUND_EFFECT,
+	
+	MUSIC,
+	SOUNDS,
+	
 	//...
 	TEST;
 	

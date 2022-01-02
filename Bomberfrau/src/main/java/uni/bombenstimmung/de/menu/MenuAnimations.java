@@ -15,6 +15,7 @@ import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class MenuAnimations {
@@ -25,7 +26,7 @@ public class MenuAnimations {
      * Animation Intro Bild Zooming
      */
     public static void introAnimation() {
-	new Animation(1, 1200) {
+	new Animation(1, 1250) {
 	    @Override
 	    public void initValues() {
 		AnimationData.intro_zoom = 0;
@@ -46,7 +47,7 @@ public class MenuAnimations {
 		AnimationData.intro_zoom = 0;
 		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation",
 		// MessageType.MENU);
-		GraphicsHandler.switchToMenuFromIntro();
+		if (GraphicsHandler.getDisplayType() == DisplayType.INTRO) GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};
 
@@ -74,7 +75,7 @@ public class MenuAnimations {
 	    @Override
 	    public void finaliseValues() {
 		AnimationData.intro_skip_text = 0;
-		GraphicsHandler.switchToMenuFromIntro();
+		if (GraphicsHandler.getDisplayType() == DisplayType.INTRO) GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};
 

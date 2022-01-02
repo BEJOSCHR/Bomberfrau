@@ -9,6 +9,7 @@
 
 package uni.bombenstimmung.de.main;
 
+
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -16,6 +17,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -48,7 +50,13 @@ public class BomberfrauMain {
 		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		AnimationHandler.startTickTimer();
-
+		
+		// Volume Tests
+//		int vol = 50;
+//		double change = (vol-50)*0.006D;
+//		ConsoleHandler.print("Music Volume = " + vol + " , change = " + change, MessageType.MENU);
+//		SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, change);
+		
 		//2. INTRO
 		GraphicsHandler.switchToIntroFromLoadingscreen();
 

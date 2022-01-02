@@ -29,6 +29,7 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
+import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 
@@ -60,7 +61,6 @@ public class Menu {
 	return isHost;
     }
 
-    
     /**
      * Erstellt Swingkomponenten für das Hauptmenü
      */
@@ -92,7 +92,7 @@ public class Menu {
 	join = new JRadioButton();
 	join.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT2).getContent());
 	join.setBounds((int) (Settings.getRes_width() * 0.32), (int) (Settings.getRes_height() * 0.528),
-		(int) (Settings.getRes_width() / 10), (int) (Settings.getRes_height() / 20));
+		(int) (Settings.getRes_width() / 9), (int) (Settings.getRes_height() / 20));
 	join.setBackground(Color.WHITE);
 	join.setFont(GraphicsHandler.usedFont(30));
 	join.setFocusable(false);
@@ -100,7 +100,7 @@ public class Menu {
 	    join.setSelected(true);
 	    isHost = false;
 	}
-	
+
 	join.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		ConsoleHandler.print("add ip box", MessageType.MENU);
@@ -300,13 +300,19 @@ public class Menu {
 	    public void stateChanged(ChangeEvent event) {
 		Settings.setVol_music(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
-		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip
+		ConsoleHandler.print("Music Volume2 = " + ((Settings.getVol_music() - 50) * 0.02D), MessageType.MENU);
+
+		SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, (Settings.getVol_music()-50)*0.02D);
+
+//		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip
+//			.getControl(FloatControl.Type.MASTER_GAIN);
+		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		// float vol = (Settings.vol_music-50)/2f;
 		ConsoleHandler.print("Music Volume2 = " + Settings.getVol_music(), MessageType.MENU);
 		float vol = (31f * (Settings.getVol_music() / 100f) - 25f);
 		ConsoleHandler.print("Music Volume3 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
+
 	    }
 	});
 
@@ -321,6 +327,7 @@ public class Menu {
 	sliderSound.setSnapToTicks(true);
 	sliderSound.addChangeListener(new ChangeListener() {
 	    public void stateChanged(ChangeEvent event) {
+		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
 		Settings.setVol_sound(sliderSound.getValue());
 		ConsoleHandler.print("Settings.vol_sound-88)/2 = " + (Settings.getVol_sound() - 88) / 2D,
 			MessageType.MENU);
@@ -622,7 +629,8 @@ public class Menu {
 
 		if (ok) {
 		    Settings.setUser_name(name_box.getText());
-		    if (!checkIp(false)) ip_box.setText("0.0.0.0");
+		    if (!checkIp(false))
+			ip_box.setText("0.0.0.0");
 		    Settings.setIp(ip_box.getText());
 		    Settings.saveIni();
 		    // SoundHandler.reduceAllSounds();
@@ -644,8 +652,10 @@ public class Menu {
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		if (!checkName(false)) Settings.setUser_name("?");
-		if (!checkIp(false)) Settings.setIp("0.0.0.0");
+		if (!checkName(false))
+		    Settings.setUser_name("?");
+		if (!checkIp(false))
+		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
 		GraphicsHandler.switchToOptionsFromMenu();
 	    }
@@ -662,8 +672,10 @@ public class Menu {
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		if (!checkName(false)) Settings.setUser_name("?");
-		if (!checkIp(false)) Settings.setIp("0.0.0.0");
+		if (!checkName(false))
+		    Settings.setUser_name("?");
+		if (!checkIp(false))
+		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
 
@@ -692,8 +704,10 @@ public class Menu {
 		(int) (30 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		if (!checkName(false)) Settings.setUser_name("?");
-		if (!checkIp(false)) Settings.setIp("0.0.0.0");
+		if (!checkName(false))
+		    Settings.setUser_name("?");
+		if (!checkIp(false))
+		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
 		GraphicsHandler.switchToMenuFromOptions();
 	    }
@@ -766,7 +780,6 @@ public class Menu {
 
 	return (KeyEvent.getKeyText(i));
     }
-
 
     /**
      * Methode zum Warten in Millisekunden
