@@ -32,11 +32,11 @@ public class AnimationHandler {
 			tickTimer.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
-					
-					for(Animation animation : runningAnimations) {
-						animation.tick();
-					}
-					
+					try {
+					    for(Animation animation : runningAnimations) {
+        					animation.tick();
+					    }
+					} catch (ConcurrentModificationException cmex) {}
 				}
 			}, 0, 10);
 			ConsoleHandler.print("Started TickTimer!", MessageType.BACKEND);

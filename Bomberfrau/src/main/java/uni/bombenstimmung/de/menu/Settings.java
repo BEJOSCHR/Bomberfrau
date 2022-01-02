@@ -321,8 +321,8 @@ public class Settings {
 	    ConsoleHandler.print("<show_fps>   = " + prop.getProperty("show_fps"), MessageType.MENU);
 	} catch (IOException ex) {
 	    ConsoleHandler.print("catched: " + ex, MessageType.MENU);
-	    ConsoleHandler.print("message: error in reading " + INI + "\n" + ex.getMessage(), MessageType.MENU);
-	    ex.printStackTrace();
+	    ConsoleHandler.print("message: error in reading " + ex.getMessage(), MessageType.MENU);
+	    GraphicsHandler.shutdownProgram();
 	}
     }
 
@@ -354,8 +354,8 @@ public class Settings {
 	    ConsoleHandler.print(INI + " has been saved", MessageType.MENU);
 	} catch (IOException ex) {
 	    ConsoleHandler.print("catched: " + ex, MessageType.MENU);
-	    ConsoleHandler.print("message: error in saving " + INI + "\n" + ex.getMessage(), MessageType.MENU);
-	    ex.printStackTrace();
+	    ConsoleHandler.print("message: error in saving " + ex.getMessage(), MessageType.MENU);
+	    GraphicsHandler.shutdownProgram();
 	}
     }
 

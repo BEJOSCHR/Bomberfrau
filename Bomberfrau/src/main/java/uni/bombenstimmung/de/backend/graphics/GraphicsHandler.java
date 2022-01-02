@@ -34,6 +34,7 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.main.BomberfrauMain;
 import uni.bombenstimmung.de.menu.Menu;
+import uni.bombenstimmung.de.menu.MenuAnimations;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class GraphicsHandler {
@@ -108,8 +109,8 @@ public class GraphicsHandler {
 		
 	    	SoundHandler.playSound(SoundType.INTRO, false);
 
-		Menu.introTextAni();
-		Menu.introAnimation();
+		MenuAnimations.introTextAni();
+		MenuAnimations.introAnimation();
 		
 		displayType = DisplayType.INTRO;
 	}
@@ -122,17 +123,19 @@ public class GraphicsHandler {
 	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.MENU);
 	        
 		SoundHandler.stopAllSounds();
-		AnimationHandler.stopAllAnimations();
-		
-	        Settings.setCreate_selected(true);
+		//AnimationHandler.stopAllAnimations();
+		MenuAnimations.titlePulseAni();
 
-	        Menu.titlePulseAni();
-	        //Menu.sleep(1000);
+	        Settings.setCreate_selected(true);
+		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.MENU);
+
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
+		//Menu.sleep(1000);
 		
 	    	SoundHandler.playSound(SoundType.MENU, true);
+		
 		displayType = DisplayType.MENU;
 
 	}
@@ -156,7 +159,7 @@ public class GraphicsHandler {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
-	        Menu.titlePulseAni();
+		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
@@ -173,7 +176,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 
-	        Menu.titlePulseAni();
+		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
 		//Menu.menuComponentsActive(true);
 
@@ -189,7 +192,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'INGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-	        Menu.titlePulseAni();
+		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		
@@ -206,7 +209,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
-	        Menu.titlePulseAni();
+		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		

@@ -12,9 +12,6 @@ package uni.bombenstimmung.de.menu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Random;
 import java.util.regex.*; // for PATTERN (IP address)
 
 import javax.sound.sampled.FloatControl;
@@ -22,8 +19,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import uni.bombenstimmung.de.backend.animation.Animation;
-import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -42,6 +37,7 @@ public class Menu {
     public static final int MAX_NAME_LENGTH = 30;
 
     private static JRadioButton create, join;
+    private static boolean isHost = true;
     private static JLabel name_info, ip_info;
     private static JTextField name_box, ip_box;
     private static JComboBox<String> comboboxReso, comboboxLang;
@@ -49,7 +45,6 @@ public class Menu {
     private static JTextField control_up, control_down, control_left, control_right, control_bomb;
     private static JCheckBox checkBoxFPS;
     private static MouseActionArea intro, start, options, exit, back;
-    private static Boolean grow = true;
 
     /**
      * correct pattern for IPv4 address - 4 times 0-255 without leading zeros.
@@ -58,6 +53,14 @@ public class Menu {
 	    .compile("^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\\.(?!$)|$)){4}$");
     // "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
+    /**
+     * Getter für Lobby
+     */
+    public static boolean getIs_host() {
+	return isHost;
+    }
+
+    
     /**
      * Erstellt Swingkomponenten für das Hauptmenü
      */
@@ -70,14 +73,17 @@ public class Menu {
 	create.setBackground(Color.WHITE);
 	create.setFont(GraphicsHandler.usedFont(30));
 	create.setFocusable(false);
-	if (Settings.getCreate_selected())
+	if (Settings.getCreate_selected()) {
 	    create.setSelected(true);
+	    isHost = true;
+	}
 
 	create.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		ConsoleHandler.print("remove ip box", MessageType.MENU);
 		Settings.setCreate_selected(true);
-		// GraphicsHandler.getLabel().remove(ip_box);
+		isHost = true;
+		ConsoleHandler.print("isHost = " + isHost, MessageType.MENU);
 		ip_box.setVisible(false);
 		ip_info.setVisible(false);
 	    }
@@ -90,17 +96,19 @@ public class Menu {
 	join.setBackground(Color.WHITE);
 	join.setFont(GraphicsHandler.usedFont(30));
 	join.setFocusable(false);
-	if (!Settings.getCreate_selected())
+	if (!Settings.getCreate_selected()) {
 	    join.setSelected(true);
-
+	    isHost = false;
+	}
+	
 	join.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		ConsoleHandler.print("add ip box", MessageType.MENU);
 		Settings.setCreate_selected(false);
-		// GraphicsHandler.getLabel().add(ip_box);
+		isHost = false;
+		ConsoleHandler.print("isHost = " + isHost, MessageType.MENU);
 		ip_box.setVisible(true);
 		ip_info.setVisible(true);
-		// repaint();
 	    }
 	});
 
@@ -579,10 +587,10 @@ public class Menu {
 		MouseActionAreaType.MAA_INTRO, "", 1, Color.WHITE, Color.WHITE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		intro.remove();
 		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick",
 		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
+		intro.remove();
 		// GraphicsHandler.switchToMenuFromIntro();
 	    }
 
@@ -607,49 +615,18 @@ public class Menu {
 	    public void performAction_LEFT_RELEASE() {
 
 		boolean ok = true;
-		if (!checkName())
+		if (!checkName(true))
 		    ok = false;
 		else if (join.isSelected() && !checkIp(true))
 		    ok = false;
 
-		if (join.isSelected() && ok) {
-		    try {
-			Settings.setUser_name(name_box.getText());
-			Settings.prop.setProperty("user_name", Settings.getUser_name());
-			Settings.setIp(ip_box.getText());
-			Settings.prop.setProperty("ip_address", Settings.getIp());
-			// saving current settings
-			Settings.prop.store(new FileOutputStream("save.ini"), " Bomberfrau Settings");
-			ConsoleHandler.print("Name \"" + Settings.getUser_name() + "\" + IP \"" + Settings.getIp()
-				+ "\" saved in save.ini", MessageType.MENU);
-		    } catch (IOException ex) {
-			ex.printStackTrace();
-		    }
-
+		if (ok) {
+		    Settings.setUser_name(name_box.getText());
+		    if (!checkIp(false)) ip_box.setText("0.0.0.0");
+		    Settings.setIp(ip_box.getText());
+		    Settings.saveIni();
 		    // SoundHandler.reduceAllSounds();
 		    GraphicsHandler.switchToLobbyFromMenu();
-		    // Panes.InfoPane(null, "Name \"" + Settings.getUser_name() + "\" + IP \""
-		    // + Settings.getIp() + "\" saved in save.ini. Now switching to Lobby", "OK");
-		}
-
-		if (create.isSelected() && ok) {
-		    try {
-			Settings.setUser_name(name_box.getText());
-			Settings.prop.setProperty("user_name", Settings.getUser_name());
-			// saving current settings
-			Settings.prop.store(new FileOutputStream("save.ini"), " Bomberfrau Settings");
-			ConsoleHandler.print("Name \"" + Settings.getUser_name() + "\" saved in save.ini",
-				MessageType.MENU);
-		    } catch (IOException ex) {
-			ex.printStackTrace();
-		    }
-
-		    // SoundHandler.reduceAllSounds();
-		    ConsoleHandler.print("Switching to Lobby", MessageType.MENU);
-		    GraphicsHandler.switchToLobbyFromMenu();
-		    // Panes.InfoPane(null,
-		    //	    "Name \"" + Settings.getUser_name() + "\" saved in save.ini. Now switching to Lobby", "OK");
-
 		}
 
 		ConsoleHandler.print("Switching from Menu to Lobby ...", MessageType.MENU);
@@ -667,6 +644,9 @@ public class Menu {
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
+		if (!checkName(false)) Settings.setUser_name("?");
+		if (!checkIp(false)) Settings.setIp("0.0.0.0");
+		Settings.saveIni();
 		GraphicsHandler.switchToOptionsFromMenu();
 	    }
 
@@ -682,22 +662,9 @@ public class Menu {
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		if (!(name_box.getText().equals(Settings.getUser_name()))
-			|| !(ip_box.getText().equals(Settings.getIp()))) {
-		    int n = JOptionPane.showConfirmDialog(null, "Do you want to save name + IP", "save settings",
-			    JOptionPane.YES_NO_OPTION);
-		    if (n == 0) {
-			if (!checkName() || !checkIp(true)) {
-			    return;
-			}
-			Settings.setUser_name(name_box.getText());
-			Settings.setIp(ip_box.getText());
-			Settings.saveIni();
-			ConsoleHandler.print("quit with saving", MessageType.MENU);
-		    } else {
-			ConsoleHandler.print("quit without saving", MessageType.MENU);
-		    }
-		}
+		if (!checkName(false)) Settings.setUser_name("?");
+		if (!checkIp(false)) Settings.setIp("0.0.0.0");
+		Settings.saveIni();
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
 
 		// SoundHandler.stopAllSounds();
@@ -725,6 +692,8 @@ public class Menu {
 		(int) (30 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
+		if (!checkName(false)) Settings.setUser_name("?");
+		if (!checkIp(false)) Settings.setIp("0.0.0.0");
 		Settings.saveIni();
 		GraphicsHandler.switchToMenuFromOptions();
 	    }
@@ -743,15 +712,14 @@ public class Menu {
     /**
      * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
      */
-    private static Boolean checkName() {
+    private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
-	// ConsoleHandler.print("name_box.getText() = " + name_box.getText(),
-	// MessageType.MENU);
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
-	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-//	    name_box.setText(Settings.prop.getProperty("user_name"));
+	    if (ausgabe)
+		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
 	    name_box.setText("");
+	    name_box.requestFocus();
 	    check = false;
 	}
 	return check;
@@ -774,8 +742,8 @@ public class Menu {
 	if ((ip_box.getText().isEmpty()) || (!isValideIp(ip_box.getText()))) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_IP).getContent(), "OK");
-	    // ip_box.setText(Settings.prop.getProperty("ip_address"));;
 	    check = false;
+	    ip_box.requestFocus();
 	}
 	return check;
     }
@@ -803,16 +771,6 @@ public class Menu {
     /**
      * Methode zum Warten in Millisekunden
      */
-    public static boolean isHost() {
-	if (create.isSelected())
-	    return true;
-	else
-	    return false;
-    }
-
-    /**
-     * Methode zum Warten in Millisekunden
-     */
     public static void sleep(long millis) {
 	try {
 	    Thread.sleep(millis);
@@ -820,142 +778,4 @@ public class Menu {
 	}
     }
 
-    /*****************************************************************************************************************
-     * ANIMATIONEN
-     *****************************************************************************************************************/
-
-    /**
-     * Animation Intro Bild Zooming
-     */
-    public static void introAnimation() {
-	new Animation(1, 1250) {
-	    @Override
-	    public void initValues() {
-		AnimationData.intro_zoom = 0;
-	    }
-
-	    @Override
-	    public void changeValues() {
-		if (getSteps() % 3 == 0) {
-		    if ((getSteps() > 50) && (getSteps() <= 350))
-			AnimationData.intro_zoom += 0.01;
-		    if ((getSteps() >= 750) && (getSteps() < 1050))
-			AnimationData.intro_zoom -= 0.01;
-		}
-	    }
-
-	    @Override
-	    public void finaliseValues() {
-		AnimationData.intro_zoom = 0;
-		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation",
-		// MessageType.MENU);
-		GraphicsHandler.switchToMenuFromIntro();
-	    }
-	};
-
-    }
-
-    /**
-     * Animation Intro Text "click to skip"
-     */
-    public static void introTextAni() {
-	new Animation(60, -1) {
-	    @Override
-	    public void initValues() {
-		AnimationData.intro_skip_text = 0;
-	    }
-
-	    @Override
-	    public void changeValues() {
-		if (getSteps() % 2 == 0) {
-		    AnimationData.intro_skip_text = 3;
-		} else {
-		    AnimationData.intro_skip_text = 0;
-		}
-	    }
-
-	    @Override
-	    public void finaliseValues() {
-		AnimationData.intro_skip_text = 0;
-	    }
-	};
-
-    }
-
-    /**
-     * Animation Title Text Pulsing
-     */
-    public static void titlePulseAni() {
-
-	new Animation(1, -1) {
-	    @Override
-	    public void initValues() {
-		AnimationData.title_Modifier = 0;
-	    }
-
-	    @Override
-	    public void changeValues() {
-		if (AnimationData.title_Modifier > 30)
-		    grow = false;
-		if (AnimationData.title_Modifier == 0)
-		    grow = true;
-		if (getSteps() % 2 == 0) {
-		    if (grow)
-			AnimationData.title_Modifier += 1;
-		    else
-			AnimationData.title_Modifier -= 1;
-		}
-	    }
-
-	    @Override
-	    public void finaliseValues() {
-		AnimationData.title_Modifier = 0;
-	    }
-	};
-
-    }
-
-    /**
-     * Animation Title Text Shaking
-     */
-    public static void titleShakeAni() {
-	Random r = new Random();
-	new Animation(10, -1) {
-	    @Override
-	    public void initValues() {
-		AnimationData.title_posXModifier = 0;
-		AnimationData.title_posYModifier = 0;
-	    }
-
-	    @Override
-	    public void changeValues() {
-		if (getSteps() % 2 == 0) {
-		    int stepSize = 1;
-		    AnimationData.title_posXModifier += r.nextInt(stepSize * 2) - stepSize;
-		    AnimationData.title_posYModifier += r.nextInt(stepSize * 2) - stepSize;
-		    int limit = 10;
-		    if (AnimationData.title_posXModifier < -limit) {
-			AnimationData.title_posXModifier = -limit;
-		    } else if (AnimationData.title_posXModifier > limit) {
-			AnimationData.title_posXModifier = limit;
-		    }
-		    if (AnimationData.title_posYModifier < -limit) {
-			AnimationData.title_posYModifier = -limit;
-		    } else if (AnimationData.title_posYModifier > limit) {
-			AnimationData.title_posYModifier = limit;
-		    }
-		} else {
-		    AnimationData.title_posXModifier = 0;
-		    AnimationData.title_posYModifier = 0;
-		}
-	    }
-
-	    @Override
-	    public void finaliseValues() {
-		AnimationData.title_posXModifier = 0;
-		AnimationData.title_posYModifier = 0;
-	    }
-	};
-
-    }
 }

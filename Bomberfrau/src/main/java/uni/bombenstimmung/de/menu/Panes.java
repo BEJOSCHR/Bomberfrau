@@ -16,22 +16,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Panes {
 
     /**
-     * Erstellt selbstgemachte Abfrage Fenster
+     * Erstellt ein selbstgemachtes Info Fenster
      */
-    public static void OptionPane(String txt1, String txt2, String btn1_txt, String btn2_txt) {
+    public static void InfoPane(String txt1, String txt2, String btn_txt) {
 	JDialog d = new JDialog((java.awt.Frame) null, txt1, true);
 	d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	d.setPreferredSize(new Dimension((int) (txt2.length() * 22 * Settings.getFactor()),
@@ -40,34 +37,18 @@ public class Panes {
 	JPanel panel = new JPanel();
 	panel.setBackground(Color.ORANGE);
 
-	JButton btn1 = new JButton(btn1_txt);
-	btn1.setFont(GraphicsHandler.usedFont((int) (15 * Settings.getFactor())));
-	btn1.setFocusable(false);
-	btn1.setForeground(Color.WHITE);
-	btn1.setBackground(Color.RED);
-	btn1.addActionListener(new ActionListener() {
+	JButton btn = new JButton(btn_txt);
+	btn.setFont(GraphicsHandler.usedFont((int) (15 * Settings.getFactor())));
+	btn.setFocusable(false);
+	btn.setForeground(Color.WHITE);
+	btn.setBackground(Color.RED);
+	btn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		ConsoleHandler.print("Knopf1 gedrückt", MessageType.MENU);
+		//ConsoleHandler.print("button 1 pressed", MessageType.MENU);
 		d.dispose();
 	    }
 	});
-	panel.add(btn1);
-
-	if (!btn2_txt.isEmpty()) {
-	    JButton btn2 = new JButton(btn2_txt);
-	    btn2.setFont(GraphicsHandler.usedFont((int) (15 * Settings.getFactor())));
-	    btn2.setFocusable(false);
-	    btn2.setForeground(Color.WHITE);
-	    btn2.setBackground(Color.RED);
-	    btn2.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    ConsoleHandler.print("Knopf2 gedrückt", MessageType.MENU);
-		    d.dispose();
-		}
-	    });
-	    panel.add(Box.createRigidArea(new Dimension(40, 0)));
-	    panel.add(btn2);
-	}
+	panel.add(btn);
 
 	JLabel label = new JLabel(txt2);
 	label.setHorizontalAlignment(JLabel.CENTER);
@@ -81,20 +62,11 @@ public class Panes {
 	d.add(label, BorderLayout.CENTER);
 
 	d.getRootPane().setBorder(BorderFactory.createLineBorder(Color.RED, (int) (20 * Settings.getFactor()), true));
-	// d.getRootPane().setBorder(new BevelBorder(BevelBorder.RAISED, Color.red,
-	// Color.pink));
 
 	d.setUndecorated(true);
 	d.pack();
 	d.setLocationRelativeTo(null);
 	d.setVisible(true);
-    }
-
-    /**
-     * Erstellt selbstgemachte Info Fenster
-     */
-    public static void InfoPane(String txt1, String txt2, String btn1_txt) {
-	OptionPane(txt1, txt2, btn1_txt, "");
     }
 
 }
