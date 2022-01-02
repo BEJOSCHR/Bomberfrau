@@ -43,6 +43,7 @@ public class GraphicsHandler {
 	private static JFrame frame;
 	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
+	public static LobbyCreate lobby;
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -226,13 +227,11 @@ public class GraphicsHandler {
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
-		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
-		
-		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
-		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
-		
+
+		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
+//		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
+//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
+//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
 	}
 	
