@@ -9,6 +9,8 @@
 
 package uni.bombenstimmung.de.game;
 
+import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +20,7 @@ import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Bomb implements ActionListener{
 
@@ -217,14 +220,10 @@ public class Bomb implements ActionListener{
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
-	    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
-		    			", " + placedField.yPosition + ")", MessageType.GAME);
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
 		    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
-		    ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
-	    					", " + placedField.yPosition + ")", MessageType.GAME);
 		}
 	    }
 	}
@@ -302,5 +301,13 @@ public class Bomb implements ActionListener{
     
     public ArrayList<Wall> getTargetedWalls() {
 	return targetedWalls;
+    }
+    
+    public void drawCounter(Graphics g) {
+	if (this.getCounter() > 0) {
+	    int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
+		int yOffset = GameData.MAP_SIDE_BORDER;
+		GraphicsHandler.drawCentralisedText(g, Color.RED, 30, this.getCounter() + "", (this.placedField.xPosition*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2), (this.placedField.yPosition*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
+	}
     }
 }

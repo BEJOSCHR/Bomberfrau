@@ -212,7 +212,7 @@ public class Game {
 	placedBombs.remove(b);
     }
     
-    public static ArrayList<Bomb> getPLacedBombs() {
+    public static ArrayList<Bomb> getPlacedBombs() {
 	return placedBombs;
     }
 }
