@@ -398,6 +398,12 @@ public class Player extends Entity implements ActionListener{
 	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
     }
     
+    /**
+     * Dies ist eine Corner-Detection. In dieser Methode wird ermittelt, ob sich vorne links oder
+     * vorne rechts vom Player ein nicht begehbares Feld befindet. Ist dies der Fall wird der Player
+     * bei Druecken der selbigen Richtungstaste um die blockierende Ecke gefuehrt.
+     * @return Boolean, ob die Ecke den Player blockiert oder nicht.
+     */
     public boolean isPlayerHittingCorner() {
 	boolean block = false;
 	Field tempField_l = null;
@@ -495,16 +501,6 @@ public class Player extends Entity implements ActionListener{
 	    }
 	    
 	}
-	
-	/*if ( ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
-		&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
-		|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) )
-		||
-		( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
-		&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
-		|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) ) {
-		block = true;
-	    }*/
 	
 	return block;
     }

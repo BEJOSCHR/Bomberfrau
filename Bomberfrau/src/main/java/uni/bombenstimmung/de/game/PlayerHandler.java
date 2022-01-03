@@ -38,7 +38,7 @@ public class PlayerHandler {
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = true;
     
-    // von der Lobby
+    // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
     
     /**
@@ -85,6 +85,14 @@ public class PlayerHandler {
      */
     public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
 	clientPlayer = new Player(id, name, ipAdress, host, skin, pos);
+    }
+    
+    /**
+     * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde Player ist.
+     * @param p	Player-Objekt, welcher der Client sein soll.
+     */
+    public static void setClientPlayer(Player p) {
+	clientPlayer = p;
     }
     
     /**
@@ -368,8 +376,26 @@ public class PlayerHandler {
 	return debugKeys;
     }
     
-    // von der Lobby
+    /**
+     * Fuegt Player in die Liste playerFromLobby hinzu. Diese Methode ist fuer die Lobby
+     * konzipiert und dient als Ausgangspunkt der Player-Organisation fuer das Ingame.
+     * @param id	ID des Players
+     * @param name	Name des Player
+     * @param ipAdress	IP-Adresse zugehoerig zu dem Player
+     * @param host	Boolean, ob dieser Player der Host des Spiels ist
+     * @param skin	Skin-ID des Players
+     * @param pos	Position des Players
+     */
     public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
 	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos));
+    }
+    
+    /**
+     * Verteilt die von der Lobby uebergebenen Players in die PlayerHandler Variablen/Listen
+     * clientPlayer und opponentPlayers.
+     */
+    public static void initPlayers() {
+	// TODO: Verteilung mit IP-Adressen Vergleich anpassen, wenn ServerConnection implementiert wird.
+	setClientPlayer(playerFromLobby.get(0));
     }
 }
