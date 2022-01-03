@@ -121,13 +121,13 @@ public class ConsoleHandler {
 		case "host":
 			ConsoleHandler.print("Starting Server...", MessageType.IMPORTANT);
 			ConnectedClient host = new ConnectedClient(true, null);
-			ConsoleHandler.print("Client: " + host.getId()+" Host: " +host.isHost() + " with " + ConnectionData.IP + ":" + ConnectionData.PORT, MessageType.BACKEND);
+			ConsoleHandler.print("Server is Host: " +host.isHost() + " with " + ConnectionData.IP + ":" + ConnectionData.PORT, MessageType.BACKEND);
 			break;
 		case "client":
 			if(input.length >= 2) {
 				ConsoleHandler.print("Connecting to server...", MessageType.IMPORTANT);
 				ConnectedClient client = new ConnectedClient(false, input[1]);
-				ConsoleHandler.print("Client: " + client.getId()+" Host: " +client.isHost(), MessageType.BACKEND);
+				ConsoleHandler.print("Client is Host: " +client.isHost(), MessageType.BACKEND);
 			}else {
 				ConsoleHandler.print("Use: client [IP]", MessageType.IMPORTANT);
 			}

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.charset.Charset;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
@@ -37,11 +38,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	private int id; 
 	private boolean host;
+	private long ping;
 	private IoSession conSession;
 	private IoConnector connector;
 	NioDatagramAcceptor acceptor;
 	
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
+	private Stack<Integer> idStack;
 	
 	/**
 	 * Erzeugt einen neuen ConnectedClient. 
@@ -57,6 +60,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		if (host == true) {
 			id = 0;
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
+			idStack = new Stack<Integer>();
+			addIdsToStack();
+
 			acceptor = new NioDatagramAcceptor();
 			acceptor.setHandler(new ServerHandler(this));
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
@@ -123,21 +129,20 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//000 = Debug Message 
 		//Format: "000-[Message]"
 		case 000:
-			String[] pMessage000 = message.split("-");
-			ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
-			break;
+		    	String[] pMessage000 = message.split("-");
+		    	ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
+		    	break;
 		//001 = Wird gesendet, wenn eine neue Session mit einem Client erstellt wird. 
 		//Format: "001-"
 		case 001:
-			addClientToList(session.getRemoteAddress());
-			printConnectedClients();
-			break;
+		    	addClientToList(session);
+		    	break;
 		//002 = Wird vom Client gesendet, um eine ID zu erhalten.
 		case 002:
 			if (containsClientKey(session.getRemoteAddress())) {
 				for (SocketAddress i : connectedClients.keySet()) {
 					if (i == session.getRemoteAddress()) {
-						session.write("400-"+ Integer.toString(connectedClients.get(i)));
+						sendMessage(session, "900-"+ Integer.toString(connectedClients.get(i)));
 					}
 					else {
 						ConsoleHandler.print("Error", MessageType.BACKEND);
@@ -150,22 +155,31 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//003 = Ping Anfrage an den Server.
 		case 003:
 			String[] pMessage003 = message.split("-");
-	    	session.write("903-" + pMessage003[1]);
-	    	break;
+			sendMessage(session, "903-" + pMessage003[1]);
+			break;
+		//007 = Wird gesendet, wenn ein Client das Spiel verlässt. 
+		case 007:
+		    	removeClient(session);
+		    	break;
+		//010 = Wird nie aufgerufen. Muss an den Server gesendet werden, wenn es zu viele Spieler gibt. 
+		case 010:
+		    	session.closeNow();
+		    	break;
 		//100 = Position eines Spieler wird gesendet und an alle anderen Spieler gebroadcastet. 
 		//Format: "100-[ID]-[X-Cord]-[Y-Cord]"
 		case 100:
 			//TODO: SetX und SetY für den Host muss noch implementiert werden.
 			String[] pMessage100 = message.split("-");
-			sendMessageToAllClients("202-"+pMessage100[1]+"-"+pMessage100[2]+"-"+pMessage100[3]);
+			//sendMessageToAllClients("202-"+pMessage100[1]+"-"+pMessage100[2]+"-"+pMessage100[3]);
 			break;	
 		//101 = Position einer gesetzen Bombe wird gesendet und an alle anderen Spieler gebroadcastet. 
 		//Format: "101-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 101:
 			String[] pMessage101 = message.split("-");
-			sendMessageToAllClients("203-"+pMessage101[1]+"-"+pMessage101[2]+"-"+pMessage101[3]);
-			sendMessageToAllClients(message);
+			//sendMessageToAllClients("203-"+pMessage101[1]+"-"+pMessage101[2]+"-"+pMessage101[3]);
+			//sendMessageToAllClients(message);
 			break;	
+			
 		//ENDE DER SERVER-FAELLE
 			
 		//201 = Erstelle ein neues Spieler-Objekt
@@ -191,36 +205,36 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Starte Spiel
 			break;
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
-		case 400:
-			String[] pMessage400 = message.split("-");
-			int clientID  = Integer.parseInt(pMessage400[1]);
+		case 900:
+			String[] pMessage900 = message.split("-");
+			int clientID  = Integer.parseInt(pMessage900[1]);
 			this.id = clientID;
-			ConsoleHandler.print("ID = " + this.id, MessageType.BACKEND);
+			ConsoleHandler.print("Client: Set ID = " + this.id, MessageType.BACKEND);
 			break;
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
 		case 903:
 			String[] pMessage903 = message.split("-");
-	    	long currentTime = System.currentTimeMillis();
-	    	long startTime = Long.parseLong(pMessage903[1]);
-	    	long ping = currentTime-startTime;
-	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
-	    	break;
-		//999 = Wird gesendet, wenn ein Client das Spiel verlässt. 
+        	    	long currentTime = System.currentTimeMillis();
+        	    	long startTime = Long.parseLong(pMessage903[1]);
+        	    	ping = currentTime-startTime;
+        	    	//ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+        	    	break;
+		//999 = Wird gesendet, wenn der Server die Verbindung beenden will.
 		//Format: "999"
 		case 999:
-			removeClient(session);
+			session.closeNow();
 			break;
 		//Default-Case
 		default:
 			ConsoleHandler.print("Message received with no id: " + message, MessageType.BACKEND);
 			break;
-		}
-			
+		}	
 	}
 	
 	/**
 	 * Broadcast Methode, die eine Nachricht an alle mit dem Server verbundene Client schickt.
+	 * Kann nur vom Server benutzt werden!
 	 * @param message - Nachricht, die gesendet werden soll
 	 */
 	public void sendMessageToAllClients(String message) {
@@ -228,19 +242,45 @@ public class ConnectedClient extends IoHandlerAdapter{
 		acceptor.broadcast(message);
 	}
 	
-	void printMessage(Object message) {
-		ConsoleHandler.print(message.toString(), MessageType.BACKEND);
+	/**
+	 * Sendet eine Nachricht vom Client an den Server
+	 * @param session - Session zwischen Client und Server. Beim Client diese mit getSession holen, beim Server immer direkt "session" benutzen.
+	 * @param message - Nachricht, die gesendet werden soll
+	 */
+	public void sendMessage(IoSession session, String message) {
+	    session.write(message);
 	}
+	
+	/**
+	 * Fügt alle verfügbaren IDs dem Stack hinzu
+	 */
+	public void addIdsToStack () {
+	    if (idStack != null) {
+		idStack.push(3);
+		idStack.push(2);
+		idStack.push(1);
+	    } else {
+		ConsoleHandler.print("Error, Stack is not initialized", MessageType.BACKEND );
+	    }
+	}
+	
 	
 	/**
 	 * Fügt einen Client der HashMap hinzu
 	 * @param remoteAddress - Remote Addresse des Clients
 	 */
-	public void addClientToList(SocketAddress remoteAddress) {
-		if (!containsClient(remoteAddress)) {
-			int cCsize = connectedClients.size();
-			connectedClients.put(remoteAddress, cCsize+1);
+	public void addClientToList(IoSession session) {
+	    SocketAddress remoteAddress = session.getRemoteAddress();
+	    if (!containsClient(remoteAddress)) {
+		if (!idStack.empty()) {
+		    int id = idStack.pop();
+			connectedClients.put(remoteAddress, id);
 			ConsoleHandler.print("Client added to List", MessageType.BACKEND);
+			printConnectedClients();
+		    } else {
+			ConsoleHandler.print("Stack is empty, too many players. Closing session with newly connected Client.", MessageType.BACKEND);
+			sendMessage(session, "999-");
+		    }
 		}
 	} 
 		
@@ -274,9 +314,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @param session - Session des Clients
 	 */
 	public void removeClient(IoSession session) {
+	    	int id = connectedClients.get(session.getRemoteAddress());
+	    	idStack.push(id);
 		connectedClients.remove(session.getRemoteAddress());
 		session.closeNow();
-		return;
 	}
 	
 	/**
@@ -317,6 +358,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public void setSession(IoSession session) {
 		conSession = session;
+	}
+	
+	/**
+	 * Gibt den aktuellen Ping des Clients zum Server zurück.
+	 * @return ping
+	 */
+	public long getPing() {
+	    return ping;
 	}
 }
 
