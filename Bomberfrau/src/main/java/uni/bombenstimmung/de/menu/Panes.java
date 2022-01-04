@@ -39,7 +39,7 @@ public class Panes {
 
 	JButton btn = new JButton(btn_txt);
 	btn.setFont(GraphicsHandler.usedFont((int) (15 * Settings.getFactor())));
-	btn.setFocusable(false);
+	btn.setFocusable(true);
 	btn.setForeground(Color.WHITE);
 	btn.setBackground(Color.RED);
 	btn.addActionListener(new ActionListener() {
@@ -49,6 +49,8 @@ public class Panes {
 	    }
 	});
 	panel.add(btn);
+	btn.requestFocus(true);
+        d.getRootPane().setDefaultButton(btn);
 
 	JLabel label = new JLabel(txt2);
 	label.setHorizontalAlignment(JLabel.CENTER);

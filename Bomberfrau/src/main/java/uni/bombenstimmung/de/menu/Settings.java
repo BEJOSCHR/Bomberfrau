@@ -315,8 +315,6 @@ public class Settings {
 	    ConsoleHandler.print("<move_right> = code " + prop.getProperty("move_right"), MessageType.MENU);
 	    ConsoleHandler.print("<move_down>  = code " + prop.getProperty("move_down"), MessageType.MENU);
 	    ConsoleHandler.print("<plant_bomb> = code " + prop.getProperty("plant_bomb"), MessageType.MENU);
-	    ConsoleHandler.print("<pause>      = code " + prop.getProperty("pause"), MessageType.MENU);
-	    ConsoleHandler.print("<cancel>     = code " + prop.getProperty("cancel"), MessageType.MENU);
 	    ConsoleHandler.print("<ip_address> = " + prop.getProperty("ip_address"), MessageType.MENU);
 	    ConsoleHandler.print("<show_fps>   = " + prop.getProperty("show_fps"), MessageType.MENU);
 	} catch (IOException ex) {

@@ -132,13 +132,13 @@ public class GraphicsHandler {
 	 * Deaktiviert die Möglichkeit der Fensterbewegung bei Vollbild, aktivert sie ansonsten. 
 	 */
 	public static void setMoveable() {
-        	if (Settings.getRes_nr() == 0) {
-        	    frame.removeMouseListener(frameDragListener);
-        	    frame.removeMouseMotionListener(frameDragListener);
-        	} else {
+        	frame.removeMouseListener(frameDragListener);
+        	frame.removeMouseMotionListener(frameDragListener);
+            	if (Settings.getRes_nr() != 0) {
         	    frame.addMouseListener(frameDragListener);
         	    frame.addMouseMotionListener(frameDragListener);
-        	} 
+        	    ConsoleHandler.print("window moveable = on", MessageType.MENU);
+        	};
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
