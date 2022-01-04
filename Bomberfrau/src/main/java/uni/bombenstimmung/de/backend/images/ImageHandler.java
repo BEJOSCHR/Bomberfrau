@@ -54,9 +54,9 @@ public class ImageHandler {
 		
 		//LOBBY UND INGAME SHARING ICONS
 		new LoadedImage("Bomberman_Icon.png", ImageType.IMAGE_INGAME_ICON, 200, 200);
-		new LoadedImage("Bomberman_Icon_blau.png", ImageType.IMAGE_INGAME_ICON_BLUE, 200, 200);
-		new LoadedImage("Bomberman_Icon_gelb.png", ImageType.IMAGE_INGAME_ICON_GELB, 200, 200);
-		new LoadedImage("Bomberman_Icon_pink.png", ImageType.IMAGE_INGAME_ICON_PINK, 200, 200);
+		new LoadedImage("Bomberman-icon_blau.png", ImageType.IMAGE_INGAME_ICON_BLUE, 200, 200);
+		new LoadedImage("Bomberman-icon_gelb.png", ImageType.IMAGE_INGAME_ICON_GELB, 200, 200);
+		new LoadedImage("Bomberman-icon_pink.png", ImageType.IMAGE_INGAME_ICON_PINK, 200, 200);
 		
 		//INGAME
 			new LoadedImage("Ingame/Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);

@@ -230,9 +230,9 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-//		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
-//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
+		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
+		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
+		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
 	}
 	
@@ -267,6 +267,7 @@ public class GraphicsHandler {
 		    }
 		}
 	    	
+		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	
 		displayType = DisplayType.INGAME;
