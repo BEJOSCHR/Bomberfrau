@@ -26,6 +26,8 @@ import java.util.Collections;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.images.ImageType;
 
 public class PlayerHandler {
     private static Player clientPlayer = new Player(0, "Bob", "localhost", true, 0,
@@ -126,13 +128,15 @@ public class PlayerHandler {
      */
     public static void drawPlayers(Graphics g) {
 	if (clientPlayer.getDead() == false) {
-	    g.setColor(Color.red);
-	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
-	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2), (int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2), null);
+		
+//	    g.setColor(Color.red);
+//	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+//		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+//		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+//	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+//		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
+//		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
 	} else {
 	    g.setColor(Color.black);
 	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
