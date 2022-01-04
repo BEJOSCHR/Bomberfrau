@@ -28,7 +28,7 @@ public class BomberfrauMain {
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
-	 * @param args Die Argumente die dem Start mitgegeben werden kï¿½nnen
+	 * @param args Die Argumente die dem Start mitgegeben werden können
 	 */
 	public static void main(String[] args) {
 		

@@ -102,6 +102,9 @@ public class GraphicsHandler {
 		
 	}
 	
+	/**
+	 * Lässt das Fenster trotz 'Undecorated' bewegen
+	 */
 	private static class FrameDragListener extends MouseAdapter {
 
 	      private final JFrame frame;
@@ -125,6 +128,9 @@ public class GraphicsHandler {
 	      }
 	}
 	
+	/**
+	 * Deaktiviert die Möglichkeit der Fensterbewegung bei Vollbild, aktivert sie ansonsten. 
+	 */
 	public static void setMoveable() {
         	if (Settings.getRes_nr() == 0) {
         	    frame.removeMouseListener(frameDragListener);
@@ -187,7 +193,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird beim Wechseln von MenÃ¼ zu den Optionen aufgerufen
+	 * Wird beim Wechseln von Menü zu den Optionen aufgerufen
 	 */
 	public static void switchToOptionsFromMenu() {
 
@@ -199,7 +205,7 @@ public class GraphicsHandler {
 		displayType = DisplayType.OPTIONS;
 	}
 	/**
-	 * Wird bei RÃ¼ckkehr von den Optionen zum MenÃ¼ aufgerufen
+	 * Wird bei Rückkehr von den Optionen zum Menü aufgerufen
 	 */
 	public static void switchToMenuFromOptions() {
 
@@ -231,7 +237,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird aufgerufen wenn wÃ¯Â¿Â½rend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieÃ¯Â¿Â½t
+	 * Wird aufgerufen wenn während einem Spiel das Spiel verlassen wird bzw der Host das Spiel schließt
 	 */
 	public static void switchToMenuFromIngame() {
 
@@ -355,10 +361,10 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Allgemeine methode um einen beliebigen text mit parametern relativ zu einem Punkt (x,y) mittig darzustellen
+	 * Allgemeine Methode um einen beliebigen Text mit Parametern relativ zu einem Punkt (x,y) mittig darzustellen
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die TextgrÃ¯Â¿Â½Ã¯Â¿Â½e
+	 * @param textSize, die Textgröße
 	 * @param text, der eigentliche Text
 	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text mittig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
@@ -373,7 +379,15 @@ public class GraphicsHandler {
 		
 	}
 
-	
+	/**
+	 * Wie Methode drawCentralisedText, nur linksbündig
+	 * @param g, das Graphics object
+	 * @param color, die Textfarbe
+	 * @param textSize, die Textgröße
+	 * @param text, der eigentliche Text
+	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text linksbündig dargestellt wird
+	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
+	 */
 	public static void drawLeftText(Graphics g, Color color, int textSize, String text, int x, int y) {
 		
 		g.setColor(color);   
@@ -383,6 +397,15 @@ public class GraphicsHandler {
 		
 	}
 	
+	/**
+	 * Wie Methode drawCentralisedText, nur rechtsbündig
+	 * @param g, das Graphics object
+	 * @param color, die Textfarbe
+	 * @param textSize, die Textgröße
+	 * @param text, der eigentliche Text
+	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text rechtsbündig dargestellt wird
+	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
+	 */
 	public static void drawRightText(Graphics g, Color color, int textSize, String text, int x, int y) {
 		
 		g.setColor(color);   
@@ -392,8 +415,8 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlieÃ¯Â¿Â½t KONTROLLIERT alle DatenzugÃ¯Â¿Â½nge bzw speichert setting etc).
-	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht mÃ¯Â¿Â½glich ist!
+	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schließt KONTROLLIERT alle Datenzugänge bzw speichert setting etc).
+	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht möglich ist!
 	 */
 	public static void shutdownProgram() {
 		

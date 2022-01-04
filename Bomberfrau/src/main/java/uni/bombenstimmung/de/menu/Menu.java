@@ -156,6 +156,20 @@ public class Menu {
 		}
 	    }
 	});
+	name_box.addFocusListener(new FocusListener() {
+	    
+	    @Override
+	    public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	    }
+	    
+	    @Override
+	    public void focusGained(FocusEvent e) {
+		if (name_box.getText().equals("?"))
+		    name_box.setText("");
+	    }
+	});
 
 	// JTextField ip_box = new JTextField("0.0.0.0");
 	// ip_box = new JTextField(prop.getProperty("ip_address"));
@@ -303,16 +317,18 @@ public class Menu {
 		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
 		ConsoleHandler.print("Music Volume2 = " + ((Settings.getVol_music() - 50) * 0.02D), MessageType.MENU);
 
-		SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, (Settings.getVol_music()-50)*0.02D);
+		//SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, (Settings.getVol_music()-50)*0.02D);
 
 //		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip
 //			.getControl(FloatControl.Type.MASTER_GAIN);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		ConsoleHandler.print("Music Volume2 = " + Settings.getVol_music(), MessageType.MENU);
-		float vol = (31f * (Settings.getVol_music() / 100f) - 25f);
+		//float vol = (31f * (Settings.getVol_music() / 100f) - 38f);
+		float vol = - 6F - (40 - 40*sliderMusic.getValue()/100);
 		ConsoleHandler.print("Music Volume3 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
+		//ConsoleHandler.print("Music Info: Vol Min = " + volume.getMinimum() + " , Vol Max = " + volume.getMaximum());
 
 	    }
 	});

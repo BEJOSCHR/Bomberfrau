@@ -32,7 +32,7 @@ public class Animation {
 	}
 	
 	/**
-	 * @Overwrite Wird immer beim start dieser Animation aufgerufen und dient dazu die Parameter auf einen Startwert zu setzten
+	 * @Overwrite Wird immer beim Start dieser Animation aufgerufen und dient dazu die Parameter auf einen Startwert zu setzten
 	 */
 	public void initValues() { }
 	

@@ -24,16 +24,16 @@ public class SoundHandler {
 	public static Clip lastPlayedClip;
 	
 	/**
-	 * Wird am start aufgerufen und läd alle Sounds
+	 * Wird am Start aufgerufen und läd alle Sounds
 	 */
 	public static void initSounds() {
 		
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MUSIC, 0.3D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MUSIC, 0.3D);
-		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.SOUNDS, 0.3D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MUSIC, 0.15D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MUSIC, 0.15D);
+		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.SOUNDS, 0.15D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		

@@ -38,7 +38,7 @@ public class MouseActionAreaHandler {
 	
 	/**
 	 * Returned eine MAA die dem angegebenene Type entspricht, falls diese gefunden wurde (Wenn richtig initialisiert wird immer eine gefunden!).
-	 * Bei doppelter type zuordnung wird die zuerst gefundenen maa zurï¿½ckgegeben.
+	 * Bei doppelter type zuordnung wird die zuerst gefundenen maa zurückgegeben.
 	 * @param type - Der {@link MouseActionAreaType} nach dem gesucht werden soll
 	 * @return null wenn keine maa mit dem type gefunden wurde, sonst die maa mit dem type
 	 */

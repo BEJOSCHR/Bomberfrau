@@ -34,10 +34,10 @@ public class ConsoleHandler {
 	}
 	
 	/**
-	 * Gibt die angegebene message mit dem angegebenen type aus, wenn der Type dem derzeitigen debugType entspricht oder sich ï¿½ber diesen hinweg setzen kann. 
+	 * Gibt die angegebene message mit dem angegebenen type aus, wenn der Type dem derzeitigen debugType entspricht oder sich über diesen hinweg setzen kann. 
 	 * So wird ERROR immer ausgegeben und IMPORTANT wird nur nicht ausgegeben wenn currentDebugType = ERROR ist
 	 * @param message - Die Message die ausgegeben werden soll
-	 * @param type - Der {@link MessageType} der Nachricht, der die zugehï¿½rigkeit der message defeniert
+	 * @param type - Der {@link MessageType} der Nachricht, der die zugehörigkeit der message defeniert
 	 */
 	public static void print(String message, MessageType type) {
 		
@@ -93,7 +93,7 @@ public class ConsoleHandler {
 	}
 	
 	/**
-	 * Stoppt den Scanner der auf Eingaben in der Console wartet und diese weiterleitet, falls dieser lï¿½uft.
+	 * Stoppt den Scanner der auf Eingaben in der Console wartet und diese weiterleitet, falls dieser läuft.
 	 */
 	public static void stopInputScanner() {
 		
@@ -177,7 +177,7 @@ public class ConsoleHandler {
 	}
 	
 	/**
-	 * ï¿½ndert den derzeitigen DebugType, abhï¿½ngig davon werden manche ausgeben vor der ausgabe blockiert
+	 * Ändert den derzeitigen DebugType, abhängig davon werden manche ausgeben vor der ausgabe blockiert
 	 * @param newType - Der neue currentDebugType
 	 * @see {@link MessageType}
 	 */
