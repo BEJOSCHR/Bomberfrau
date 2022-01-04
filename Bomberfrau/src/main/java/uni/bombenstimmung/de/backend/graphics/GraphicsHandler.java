@@ -9,11 +9,14 @@
 package uni.bombenstimmung.de.backend.graphics;
 
 import java.io.File;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -44,6 +47,7 @@ public class GraphicsHandler {
 	private static JFrame frame;
 	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
+	private static FrameDragListener frameDragListener;
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -55,10 +59,11 @@ public class GraphicsHandler {
 		frame.setLocationRelativeTo(null);
 		//frame.setLocation(0, 0);
 		frame.setLocation((Settings.getRes_width_max()-Settings.getRes_width())/2, (Settings.getRes_height_max()-Settings.getRes_height())/2);
+		frame.setUndecorated(true);
+		
 		frame.setTitle("BomberFrau - "+BomberfrauMain.VERSION);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setUndecorated(true); 
 		frame.setVisible(true);
 		
 		frame.addKeyListener(new KeyHandler());
@@ -79,7 +84,10 @@ public class GraphicsHandler {
 		//frame.setPreferredSize(frame.getSize());
 		//frame.setMinimumSize(frame.getSize());
 		//frame.setMaximumSize(frame.getSize());
-				
+
+		frameDragListener = new FrameDragListener(frame);
+		setMoveable();
+	        
 		width = frame.getWidth();
 		height = frame.getHeight();
 		
@@ -94,6 +102,38 @@ public class GraphicsHandler {
 		
 	}
 	
+	private static class FrameDragListener extends MouseAdapter {
+
+	      private final JFrame frame;
+	      private Point mouseDownCompCoords = null;
+
+	      public FrameDragListener(JFrame frame) {
+	         this.frame = frame;
+	      }
+
+	      public void mouseReleased(MouseEvent e) {
+	         mouseDownCompCoords = null;
+	      }
+
+	      public void mousePressed(MouseEvent e) {
+	         mouseDownCompCoords = e.getPoint();
+	      }
+
+	      public void mouseDragged(MouseEvent e) {
+	         Point currCoords = e.getLocationOnScreen();
+	         frame.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+	      }
+	}
+	
+	public static void setMoveable() {
+        	if (Settings.getRes_nr() == 0) {
+        	    frame.removeMouseListener(frameDragListener);
+        	    frame.removeMouseMotionListener(frameDragListener);
+        	} else {
+        	    frame.addMouseListener(frameDragListener);
+        	    frame.addMouseMotionListener(frameDragListener);
+        	} 
+	}
 	
 	//------------------------------------------------------------------------------------------------------------------
 	//SWITCH TO SECTION
@@ -103,7 +143,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIntroFromLoadingscreen() {
 	    
-		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.MENU);
+		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.BACKEND);
 		
 		AnimationHandler.stopAllAnimations();
 		
@@ -120,15 +160,21 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromIntro() {
 
-	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.MENU);
+	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.BACKEND);
 	        
 		SoundHandler.stopAllSounds();
 		//AnimationHandler.stopAllAnimations();
-		MenuAnimations.titlePulseAni();
-
+		
+		new Timer().schedule(new TimerTask() {
+		    @Override
+		    public void run() {
+			MenuAnimations.titlePulseAni(); 
+		    }
+		} , 100);
+		
 	        Settings.setCreate_selected(true);
-		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.MENU);
-
+		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
+		
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
@@ -145,7 +191,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToOptionsFromMenu() {
 
-		ConsoleHandler.print("Switched to 'OPTIONS' from 'MENU'!", MessageType.MENU);
+		ConsoleHandler.print("Switched to 'OPTIONS' from 'MENU'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		Menu.menuComponentsActive(false);
 		Menu.optionsComponentsActive(true);
@@ -157,7 +203,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromOptions() {
 
-		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.MENU);
+		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
@@ -290,8 +336,9 @@ public class GraphicsHandler {
 	//SWITCH TO SECTION
 	//------------------------------------------------------------------------------------------------------------------
 	
+	
 	/**
-	 *  schÃ¶nerer Font mit abgerundeten Zeichen
+	 *  schönerer Font mit abgerundeten Zeichen
  	 */
 	public static Font usedFont(int textSize) {
 

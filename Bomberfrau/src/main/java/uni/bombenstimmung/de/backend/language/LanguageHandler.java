@@ -41,7 +41,7 @@ public class LanguageHandler {
 		String[] menu_btn3 = {"EXIT", "ENDE"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN3, menu_btn3);
 		
-		String[] options_txt1 = {"Resolution:", "Auslösung:"};
+		String[] options_txt1 = {"Resolution:", "Auflösung:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT1, options_txt1);
 		String[] options_fullscreen = {"Fullscreen", "Vollbild"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_FULLSCREEN, options_fullscreen);

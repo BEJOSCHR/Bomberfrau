@@ -284,6 +284,7 @@ public class Menu {
 
 		comboboxReso.setSelectedItem(res[t]);
 		Settings.setRes_nr(t);
+		GraphicsHandler.setMoveable();
 	    }
 	});
 
@@ -646,7 +647,7 @@ public class Menu {
 	    }
 	};
 
-	options = new MouseActionArea((int) (Settings.getRes_width() * 0.23), (int) (Settings.getRes_height() * 0.67),
+	options = new MouseActionArea((int) (Settings.getRes_width() * 0.23), (int) (Settings.getRes_height() * 0.65),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN2, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN2).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
@@ -666,7 +667,7 @@ public class Menu {
 	    }
 	};
 
-	exit = new MouseActionArea((int) (Settings.getRes_width() * 0.36), (int) (Settings.getRes_height() * 0.8),
+	exit = new MouseActionArea((int) (Settings.getRes_width() * 0.36), (int) (Settings.getRes_height() * 0.81),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN3, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN3).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
@@ -787,7 +788,7 @@ public class Menu {
     public static void sleep(long millis) {
 	try {
 	    Thread.sleep(millis);
-	} catch (InterruptedException ignored) {
+	} catch (InterruptedException iex) {
 	}
     }
 
