@@ -15,10 +15,8 @@
 package uni.bombenstimmung.de.game;
 
 import java.awt.Graphics;
-import java.awt.Color;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 
@@ -106,32 +104,89 @@ public class Field extends Entity {
 	    	}
 		break;
 	    case BOMB:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, null);
-		for(Bomb i : Game.getPLacedBombs()) {
-		    int count = i.getCounter();
-		    GraphicsHandler.drawCentralisedText(g, Color.RED, 30, count + "", x+(GameData.FIELD_DIMENSION/2), y+(GameData.FIELD_DIMENSION/2));
+		for(Bomb i : Game.getPlacedBombs()) {
+		    i.drawCounter(g);
+		    //int count = i.getCounter();
+		    //GraphicsHandler.drawCentralisedText(g, Color.RED, 30, i.getCounter() + "", i.getPlacedField().xPosition+(GameData.FIELD_DIMENSION/2), i.getPlacedField().yPosition+(GameData.FIELD_DIMENSION/2));
 		}
 		break;
 	// Spezifische Grafiken für die Himmelsrichtungen der Explosion
 	    case EXPLOSION1:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX1).getImage(), x, y, null);
 		break;
 	    case EXPLOSION2:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2).getImage(), x, y, null);
 		break;
 	    case EXPLOSION2_NS:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2_NS).getImage(), x, y, null);
 		break;
 	    case EXPLOSION3_N:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_N).getImage(), x, y, null);
 		break;
 	    case EXPLOSION3_S:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_S).getImage(), x, y, null);
 		break;
 	    case EXPLOSION3_W:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_W).getImage(), x, y, null);
 		break;
 	    case EXPLOSION3_O:
+		if (Game.getMapNumber() == 1) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		} 	else if (Game.getMapNumber() == 2) {
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		}	else if (Game.getMapNumber() == 3) {
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+				}
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_O).getImage(), x, y, null);
 		break;
 	    case EMPTY:

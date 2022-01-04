@@ -21,7 +21,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 public class Game {
 
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
-    private static int mapNumber = 3;
+    private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
 
     /**
@@ -212,7 +212,7 @@ public class Game {
 	placedBombs.remove(b);
     }
     
-    public static ArrayList<Bomb> getPLacedBombs() {
+    public static ArrayList<Bomb> getPlacedBombs() {
 	return placedBombs;
     }
 }
