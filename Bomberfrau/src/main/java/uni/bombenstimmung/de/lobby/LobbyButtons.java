@@ -44,6 +44,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	
 	public static MouseActionArea startLobby;
 	public static MouseActionArea exitLobby;
+
 			
 	/**
 	 * Inititalisiert alle MAAs der Lobby und definiert via Overwrite restliche Funktionalitäten

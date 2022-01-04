@@ -241,6 +241,7 @@ public class GraphicsHandler {
 //		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
 //		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
+
 	}
 	
 	/**
