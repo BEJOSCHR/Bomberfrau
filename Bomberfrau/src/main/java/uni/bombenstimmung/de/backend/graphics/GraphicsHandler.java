@@ -270,6 +270,8 @@ public class GraphicsHandler {
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	
+	    	frame.requestFocus();
+	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
 		
