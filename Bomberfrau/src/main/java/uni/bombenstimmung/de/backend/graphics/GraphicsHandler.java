@@ -48,6 +48,8 @@ public class GraphicsHandler {
 	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
 	private static FrameDragListener frameDragListener;
+	public static LobbyCreate lobby;
+
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -180,10 +182,12 @@ public class GraphicsHandler {
 		
 	        Settings.setCreate_selected(true);
 		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
-		
+//	        Menu.titlePulseAni();
+
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
+		Menu.menuComponentsActive(true);
 		
 	    	//SoundHandler.playSound(SoundType.MENU, true);
 	    	SoundHandler.playSound(SoundType.MENU, false, (float)(-36F + 30*Math.log10(1+(Settings.getVol_music())/9)));
@@ -277,14 +281,24 @@ public class GraphicsHandler {
 		
 	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
+		
+		boolean isHost = false;
+//		if(Menu.isHost() == true) {
+//		    isHost = true;
+//		}
+		    
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
+
 		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
 		
-		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
+
+//		if (isHost == true)
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
+		
+		    lobby.addPlayer(new LobbyPlayer("test1", "127.0.0.1"));
 //		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
 //		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
