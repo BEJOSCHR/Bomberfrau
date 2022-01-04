@@ -128,10 +128,10 @@ public class GraphicsHandler {
 	        Settings.setCreate_selected(true);
 
 	        Menu.titlePulseAni();
-	        //Menu.sleep(1000);
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
+		Menu.menuComponentsActive(true);
 		
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
@@ -223,13 +223,21 @@ public class GraphicsHandler {
 		
 	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
+		
+		boolean isHost = false;
+		if(Menu.isHost() == true) {
+		    isHost = true;
+		}
+		    
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		lobby.addPlayer(new LobbyPlayer("Player 2", "192.168.178.94"));
+//		if (isHost == true)
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
+		
+		    lobby.addPlayer(new LobbyPlayer("test1", "127.0.0.1"));
 //		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
 //		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 
