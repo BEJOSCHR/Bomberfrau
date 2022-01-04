@@ -66,10 +66,14 @@ public class ServerHandler extends IoHandlerAdapter {
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		
 		String[] parts = message.toString().split("-");
+		if (Integer.parseInt(parts[0]) != 003) {
+		    SocketAddress remoteAddress = session.getRemoteAddress();
+		    ConsoleHandler.print("Server: Message received from Client " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
+		}
+		else if (Integer.parseInt(parts[0]) != 003) {
+		    
+		}
 		server.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
-		SocketAddress remoteAddress = session.getRemoteAddress();
-		ConsoleHandler.print("Server: Message received from Client " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
-
 	}
 }
 

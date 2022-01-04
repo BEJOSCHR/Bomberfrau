@@ -20,6 +20,7 @@ import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 public class ClientHandler extends IoHandlerAdapter implements Runnable{
 
 	private ConnectedClient client;
+	private boolean serverIsFull;
 	
 	/**
 	 * Erzeugt einen neuen ClientHandler.
@@ -38,13 +39,19 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	public void sessionOpened(IoSession session) throws Exception {
 		ConsoleHandler.print("Client connected with Server" + session.getRemoteAddress(), MessageType.BACKEND);
 		try {
-			session.write((String) "001-");					//Sende 001 zum Server um den Client der HashMap des Servers hin zu zufügen.
-			Thread.sleep(1000);
-			session.write((String) "002-");					//Sende 002 um die Client ID vom Server zu erhalten.
-			Thread.sleep(1000);
+			session.write((String) "001-");						//Sende 001 zum Server um den Client der HashMap des Servers hinzuzufügen.
 			client.setSession(session);
-			Thread pingThread = new Thread (this);
-			pingThread.start();
+			Thread.sleep(1000);
+			if (!serverIsFull) {
+			    session.write((String) "002-");					//Sende 002 um die Client ID vom Server zu erhalten.
+			    Thread.sleep(500);
+			    //client.sendMessage(client.getSession(), "000-Test Message");	//Template, um eine Nachricht mit einem ConnectedClient Objekt zu senden
+			    Thread.sleep(500);
+			    Thread pingThread = new Thread (this);
+			    pingThread.start();
+			} else {
+			    return;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,8 +63,9 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	 */
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
-		ConsoleHandler.print("Session of ID " + client.getId() + " closed", MessageType.BACKEND);	
+		ConsoleHandler.print("Session of " + session.getRemoteAddress() + " closed", MessageType.BACKEND);	
 		Thread.currentThread().interrupt();
+		return;
 	}
 	
 	/**
@@ -69,10 +77,20 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		String[] parts = message.toString().split("-");
-		client.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
-		
 		SocketAddress remoteAddress = session.getRemoteAddress();
-		ConsoleHandler.print("Client:" + client.getId() + " Message received from Server " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
+		if (Integer.parseInt(parts[0]) == 999) {
+		    client.sendMessage(session, "010-");
+		    serverIsFull = true;
+		}
+		else if (Integer.parseInt(parts[0]) != 903) {
+		    if (client.getId() != 0) {
+			ConsoleHandler.print("Client " + client.getId() + ": Message received from Server " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
+		    }
+		    else {
+			ConsoleHandler.print("Client [NO ID SET YET] : Message received from Server " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
+		    }
+		}
+		client.receivedMessage(Integer.parseInt(parts[0]), message.toString(), session);
 	}
 	
 	/**
