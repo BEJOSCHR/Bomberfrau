@@ -56,6 +56,7 @@ public class Player extends Entity implements ActionListener{
 	
 	this.id = id;
 	this.name = name;
+	// TODO: IP-Adresse nicht notwendig
 	this.ipAdress = ipAdress;
 	this.host = host;
 	this.skin = skin;
@@ -75,7 +76,7 @@ public class Player extends Entity implements ActionListener{
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
-	this.xHitbox = (double)GraphicsHandler.getHeight()/60;
+	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
 	this.yHitbox = (double)GraphicsHandler.getHeight()/36;
 	this.direction = 0;
 	this.speedFactor = 540.0;
