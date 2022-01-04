@@ -136,7 +136,16 @@ public class PlayerHandler {
      */
     public static void drawPlayers(Graphics g) {
 	if (clientPlayer.getDead() == false) {
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2), (int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2), null);
+	    if (debugKeys) {
+		g.setColor(Color.red);
+		g.drawRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
+			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
+			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
+		g.fillRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
+			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
+			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
+	    }
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), null);
 		
 //	    g.setColor(Color.red);
 //	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),

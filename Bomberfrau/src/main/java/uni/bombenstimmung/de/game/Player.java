@@ -44,7 +44,8 @@ public class Player extends Entity implements ActionListener{
     private double realPosY;
     private double velX;
     private double velY;
-    private double hitbox;
+    private double xHitbox;
+    private double yHitbox;
     private int direction;
     private double speedFactor;
     
@@ -74,7 +75,8 @@ public class Player extends Entity implements ActionListener{
 	this.currentButtonConfig = new PlayerButtonConfig();
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
-	this.hitbox = (double)GraphicsHandler.getHeight()/54;
+	this.xHitbox = (double)GraphicsHandler.getHeight()/60;
+	this.yHitbox = (double)GraphicsHandler.getHeight()/36;
 	this.direction = 0;
 	this.speedFactor = 540.0;
 	this.t = new Timer(8, this);
@@ -98,19 +100,19 @@ public class Player extends Entity implements ActionListener{
 	    break;
 	case 1:		// hoch
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - this.hitbox));
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - this.yHitbox));
 	    break;
 	case 2:		// runter
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + this.hitbox));
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + this.yHitbox));
 	    break;
 	case 3:		// links
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord((int)(super.xPosition - this.hitbox), super.yPosition);
+	    tempField = Game.getFieldFromCoord((int)(super.xPosition - this.xHitbox), super.yPosition);
 	    break;
 	case 4:		// rechts
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord((int)(super.xPosition + this.hitbox), super.yPosition);
+	    tempField = Game.getFieldFromCoord((int)(super.xPosition + this.xHitbox), super.yPosition);
 	    break;
 	default:
 	    tempField = null;
@@ -228,6 +230,14 @@ public class Player extends Entity implements ActionListener{
     
     public double getRealPosY() {
 	return realPosY;
+    }
+    
+    public double getXHitbox() {
+	return xHitbox;
+    }
+    
+    public double getYHitbox() {
+	return yHitbox;
     }
     
     /*
@@ -410,93 +420,94 @@ public class Player extends Entity implements ActionListener{
 	Field tempField_fl = null;
 	Field tempField_r = null;
 	Field tempField_fr = null;
-	double cornerHitbox = this.hitbox * 0.9;
+	double xCornerHitbox = this.xHitbox * 0.9;
+	double yCornerHitbox = this.yHitbox * 0.9;
 	
 	switch (this.direction) {
 	case 1:		// hoch
 	    
-	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), super.yPosition);
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), (int)(super.yPosition - cornerHitbox));
-	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), super.yPosition);
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), (int)(super.yPosition - cornerHitbox));
+	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), super.yPosition);
+	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
+	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), super.yPosition);
+	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosX += (this.hitbox * 0.1);
+		this.realPosX += (this.xHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosX -= (this.hitbox * 0.1);
+		this.realPosX -= (this.xHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    break;
 	case 2:		// runter
 	    
-	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), super.yPosition);
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), (int)(super.yPosition + cornerHitbox));
-	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), super.yPosition);
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), (int)(super.yPosition + cornerHitbox));
+	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), super.yPosition);
+	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
+	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), super.yPosition);
+	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosX -= (this.hitbox * 0.1);
+		this.realPosX -= (this.xHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosX += (this.hitbox * 0.1);
+		this.realPosX += (this.xHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    break;
 	case 3:		// links
 	    
-	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + cornerHitbox));
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), (int)(super.yPosition + cornerHitbox));
-	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - cornerHitbox));
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - cornerHitbox), (int)(super.yPosition - cornerHitbox));
+	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + yCornerHitbox));
+	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
+	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - yCornerHitbox));
+	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosY -= (this.hitbox * 0.1);
+		this.realPosY -= (this.yHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosY += (this.hitbox * 0.1);
+		this.realPosY += (this.yHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    break;
 	case 4:		// rechts
 	    
-	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - cornerHitbox));
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), (int)(super.yPosition - cornerHitbox));
-	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + cornerHitbox));
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + cornerHitbox), (int)(super.yPosition + cornerHitbox));
+	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - yCornerHitbox));
+	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
+	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + yCornerHitbox));
+	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosY += (this.hitbox * 0.1);
+		this.realPosY += (this.yHitbox * 0.1);
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosY -= (this.hitbox * 0.1);
+		this.realPosY -= (this.yHitbox * 0.1);
 		block = true;
 	    }
 	    
