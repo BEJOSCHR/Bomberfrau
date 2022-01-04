@@ -54,8 +54,9 @@ public class BomberfrauMain {
 		// Volume Tests
 //		int vol = 50;
 //		double change = (vol-50)*0.006D;
-//		ConsoleHandler.print("Music Volume = " + vol + " , change = " + change, MessageType.MENU);
-//		SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, change);
+//		double vol = (- 36F + (30*Math.log10(1+(Settings.getVol_music())/9)));
+//		ConsoleHandler.print("Music Volume = " + vol, MessageType.MENU);
+//		SoundHandler.setCategoryVolume(SoundCategory.MUSIC, vol);
 		
 		//2. INTRO
 		GraphicsHandler.switchToIntroFromLoadingscreen();

@@ -55,8 +55,26 @@ public class SoundHandler {
 		clip.setFramePosition(0);
 		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
-		lastPlayedClip = clip;
+		lastPlayedClip = clip;	
+	}
+	
+	/**
+	 * Spielt den Sound ab, der zum übergebenene Type gehört
+	 * @param type - Der {@link SoundType} der den Sound identifziert
+	 * @param value - Lautstärke [-70F bis 6F]
+	 */
+	public static void playSound(SoundType type, Boolean loop, float value) {
 		
+		LoadedSound sound = getSound(type);
+		Clip clip = sound.getClip();
+		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		if(value < -70) { value = -70; } //MINIMUM VOLUME
+		else if(value > 6) { value = 6; } //MAXIMUM VOLUME
+		gainControl.setValue(value);
+		clip.setFramePosition(0);
+		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
+		clip.start();
+		lastPlayedClip = clip;	
 	}
 	
 	/**
@@ -96,6 +114,14 @@ public class SoundHandler {
 		
 		for(LoadedSound sound : getSoundCategory(category)) {
 			sound.setCategoryVolume(sound.getCategoryVolume()+volumeModifier);
+		}
+		
+	}
+	
+	public static void setCategoryVolume(SoundCategory category, double volume) {
+		
+		for(LoadedSound sound : getSoundCategory(category)) {
+			sound.setCategoryVolume(volume);
 		}
 		
 	}

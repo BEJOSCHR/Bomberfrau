@@ -159,10 +159,7 @@ public class Menu {
 	name_box.addFocusListener(new FocusListener() {
 	    
 	    @Override
-	    public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
-	    }
+	    public void focusLost(FocusEvent e) {}
 	    
 	    @Override
 	    public void focusGained(FocusEvent e) {
@@ -315,7 +312,6 @@ public class Menu {
 	    public void stateChanged(ChangeEvent event) {
 		Settings.setVol_music(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
-		ConsoleHandler.print("Music Volume2 = " + ((Settings.getVol_music() - 50) * 0.02D), MessageType.MENU);
 
 		//SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, (Settings.getVol_music()-50)*0.02D);
 
@@ -323,13 +319,10 @@ public class Menu {
 //			.getControl(FloatControl.Type.MASTER_GAIN);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		ConsoleHandler.print("Music Volume2 = " + Settings.getVol_music(), MessageType.MENU);
-		//float vol = (31f * (Settings.getVol_music() / 100f) - 38f);
-		float vol = - 6F - (40 - 40*sliderMusic.getValue()/100);
-		ConsoleHandler.print("Music Volume3 = " + vol, MessageType.MENU);
+		float vol = (float) (- 36F + (30*Math.log10(1+sliderMusic.getValue()/9)));
+		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
+		if (sliderMusic.getValue() == 0) vol = -80;
 		volume.setValue(vol);
-		//ConsoleHandler.print("Music Info: Vol Min = " + volume.getMinimum() + " , Vol Max = " + volume.getMaximum());
-
 	    }
 	});
 

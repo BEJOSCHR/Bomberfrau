@@ -103,7 +103,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Lässt das Fenster trotz 'Undecorated' bewegen
+	 * Lässt das Fenster trotz 'Undecorated' per Maus bewegen
 	 */
 	private static class FrameDragListener extends MouseAdapter {
 
@@ -153,7 +153,8 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		
-	    	SoundHandler.playSound(SoundType.INTRO, false);
+	    	//SoundHandler.playSound(SoundType.INTRO, false);
+	    	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+(Settings.getVol_music())/9)));
 
 		MenuAnimations.introTextAni();
 		MenuAnimations.introAnimation();
@@ -169,7 +170,6 @@ public class GraphicsHandler {
 	        ConsoleHandler.print("Switched to 'MENU' from 'INTRO'!", MessageType.BACKEND);
 	        
 		SoundHandler.stopAllSounds();
-		//AnimationHandler.stopAllAnimations();
 		
 		new Timer().schedule(new TimerTask() {
 		    @Override
@@ -184,9 +184,9 @@ public class GraphicsHandler {
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
-		//Menu.sleep(1000);
 		
-	    	SoundHandler.playSound(SoundType.MENU, true);
+	    	//SoundHandler.playSound(SoundType.MENU, true);
+	    	SoundHandler.playSound(SoundType.MENU, false, (float)(-36F + 30*Math.log10(1+(Settings.getVol_music())/9)));
 		
 		displayType = DisplayType.MENU;
 
