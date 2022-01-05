@@ -126,6 +126,9 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "RealPos X: " + PlayerHandler.getClientPlayer().getRealPosX() + " Y: " + PlayerHandler.getClientPlayer().getRealPosY(), 200, 36);
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
+		    	if(Game.getGameOver()) {
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 50, "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	}
 			break;
 		case AFTERGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);

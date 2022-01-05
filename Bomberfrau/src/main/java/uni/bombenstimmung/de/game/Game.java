@@ -23,6 +23,7 @@ public class Game {
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
+    private static boolean gameOver = false;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -253,6 +254,10 @@ public class Game {
     public static int getMapNumber() {
 	return mapNumber;
     }
+    
+    public static boolean getGameOver() {
+	return gameOver;
+    }
 
     public static void setMapNumber(int mapNumber) {
 	Game.mapNumber = mapNumber;
@@ -272,5 +277,28 @@ public class Game {
     
     public static ArrayList<Bomb> getPlacedBombs() {
 	return placedBombs;
+    }
+    
+    public static void checkIfAllDead() {
+	int livingPlayers = 0;
+	for (Player i : PlayerHandler.getAllPlayer()) {
+	    if (!i.getDead()) {
+		livingPlayers++;
+	    }
+	}
+	if (livingPlayers <= 1) {
+	    gameOver();
+	}
+    }
+    
+    public static void gameOver() {
+	// TODO: hier kommt alles rein, was bei einem Game Over passiert
+	gameOver = true;
+	PlayerHandler.getClientPlayer().actionStop();
+	try {
+	    Thread.sleep(4000);
+	}
+	catch (InterruptedException ex) {}
+	GraphicsHandler.switchToAftergameFromIngame();
     }
 }
