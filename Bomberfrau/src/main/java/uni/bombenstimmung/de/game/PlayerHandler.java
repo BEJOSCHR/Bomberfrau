@@ -352,8 +352,8 @@ public class PlayerHandler {
 	 * (ergo kein InputBuffer noetig).
 	 * Bombe wird erst bei Loslassen der Taste gelegt.
 	 */
-	if (clientPlayer.getDead() == false && keyCode == clientPlayer.getCurrentButtonConfig().getSetBomb()) {
-	    clientPlayer.actionSetBomb();
+	if (clientPlayer.getDead() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
+	    clientPlayer.actionPlantBomb();
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
 	if (debugKeys) {

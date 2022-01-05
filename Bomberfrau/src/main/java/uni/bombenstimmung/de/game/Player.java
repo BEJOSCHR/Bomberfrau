@@ -23,6 +23,7 @@ import javax.swing.Timer;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
 
@@ -73,7 +74,9 @@ public class Player extends Entity implements ActionListener{
 	
 	this.velX = 0.0;
 	this.velY = 0.0;
-	this.currentButtonConfig = new PlayerButtonConfig();
+	this.currentButtonConfig = new PlayerButtonConfig(Settings.getMove_up(), Settings.getMove_down(),
+							Settings.getMove_left(), Settings.getMove_right(),
+							Settings.getPlant_bomb());
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
@@ -284,7 +287,7 @@ public class Player extends Entity implements ActionListener{
      * Falls ja, dann aendert sich der FieldContent zu BOMB und ein Bomb-Objekt
      * wird in die static ArrayList 'placedBombs' hinzugefuegt.
      */
-    public void actionSetBomb() {
+    public void actionPlantBomb() {
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
