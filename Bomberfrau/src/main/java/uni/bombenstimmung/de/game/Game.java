@@ -167,8 +167,7 @@ public class Game {
 		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 40, "Zeit: " + gameTime, xStart+xOffset/4, yStart+200);
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 40, "Ring of Death: " + GameCounter.getRingOfDeathNumber(), xStart+xOffset/4, yStart+400);
+	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
     }
     
     /**
@@ -295,10 +294,10 @@ public class Game {
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
 	gameOver = true;
 	PlayerHandler.getClientPlayer().actionStop();
-	try {
-	    Thread.sleep(4000);
-	}
-	catch (InterruptedException ex) {}
-	GraphicsHandler.switchToAftergameFromIngame();
+//	try {
+//	    Thread.sleep(4000);
+//	}
+//	catch (InterruptedException ex) {}
+//	GraphicsHandler.switchToAftergameFromIngame();
     }
 }

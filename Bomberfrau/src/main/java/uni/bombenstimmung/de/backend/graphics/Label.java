@@ -117,6 +117,7 @@ public class Label extends JLabel {
 			
 		case INGAME:
 			Game.drawBackground(g, Game.getMapNumber());
+			GameCounter.drawCounterBackground(g);
 		    	Game.drawRightPartOfMap(g, Game.getMapNumber(), GameCounter.getGameTime());
 		    	Game.drawLeftPartOfMap(g, PlayerHandler.getPlayerAmount());
 		    	Game.drawGame(g);
