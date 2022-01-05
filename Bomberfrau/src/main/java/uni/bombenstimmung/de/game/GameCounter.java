@@ -1,3 +1,12 @@
+/*
+ * GameCounter
+ *
+ * Version 1.0
+ * Author: Dennis
+ *
+ * Malt und verwaltet den Counter und den Ring of Death
+ */
+
 package uni.bombenstimmung.de.game;
 
 import java.awt.event.ActionEvent;
