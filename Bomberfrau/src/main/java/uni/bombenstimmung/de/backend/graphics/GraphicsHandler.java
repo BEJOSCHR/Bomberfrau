@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet die graphischen Verï¿½nderungen und Wechsel zwischen den Modulen
+ * Verwaltet die graphischen Ver�nderungen und Wechsel zwischen den Modulen
  */
 package uni.bombenstimmung.de.backend.graphics;
 
@@ -151,6 +151,8 @@ public class GraphicsHandler {
 	    
 		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.BACKEND);
 		
+		Settings.setAllVolumes();
+		
 		AnimationHandler.stopAllAnimations();
 		
 	    	//SoundHandler.playSound(SoundType.INTRO, false);
@@ -210,12 +212,12 @@ public class GraphicsHandler {
 	public static void switchToMenuFromOptions() {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.BACKEND);
+		Settings.setAllVolumes();
 		AnimationHandler.stopAllAnimations();
 		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
-
 
 		displayType = DisplayType.MENU;
 		
