@@ -27,6 +27,7 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.menu.Settings;
@@ -116,7 +117,7 @@ public class Label extends JLabel {
 			
 		case INGAME:
 			Game.drawBackground(g, Game.getMapNumber());
-		    	Game.drawRightPartOfMap(g, Game.getMapNumber());
+		    	Game.drawRightPartOfMap(g, Game.getMapNumber(), GameCounter.getGameTime());
 		    	Game.drawLeftPartOfMap(g, PlayerHandler.getPlayerAmount());
 		    	Game.drawGame(g);
 		    	PlayerHandler.drawPlayers(g);
