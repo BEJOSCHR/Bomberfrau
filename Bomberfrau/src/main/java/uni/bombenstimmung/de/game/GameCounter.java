@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 public class GameCounter implements ActionListener{
     
-    private static int gametime = 4;
+    private static int gametime = 25;
     private static int ringOfDeathNumber = 0;
     private Timer gameTimer;
     
@@ -20,7 +20,7 @@ public class GameCounter implements ActionListener{
 	if (gametime == 0 && (ringOfDeathNumber < 6)) {
 	    ringOfDeathNumber++;
 	    Game.ringOfDeath(ringOfDeathNumber);
-	    gametime = 2;
+	    gametime = 10;
 	}
     }
     

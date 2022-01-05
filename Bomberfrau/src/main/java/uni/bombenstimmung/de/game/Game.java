@@ -194,18 +194,55 @@ public class Game {
 	//NORD NACH SUED VORNE
 	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
 	    changeFieldContent(FieldContent.BORDER, ring, i);
+	    //Toete ggf Player
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(ring, i)) {
+		    	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(ring, i)) {
+		    j.setDead(true);
+		}
+	    }
 	}
 	//WEST NACH OST OBEN
 	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
 	    changeFieldContent(FieldContent.BORDER, i, ring);
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(i, ring)) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(i, ring)) {
+			    j.setDead(true);
+		}
+	    }
 	}
 	//NORD NACH SUED HINTEN
 	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
 	    changeFieldContent(FieldContent.BORDER, (GameData.MAP_DIMENSION - (ring+1)), i);
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(GameData.MAP_DIMENSION - (ring+1), i)) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(GameData.MAP_DIMENSION - (ring+1), i)) {
+			    j.setDead(true);
+		}
+	    }
 	}
 	//WEST NACH OST HINTEN
 	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
 	    changeFieldContent(FieldContent.BORDER, i, (GameData.MAP_DIMENSION - (ring+1)));
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(i, GameData.MAP_DIMENSION - (ring+1))) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(i, GameData.MAP_DIMENSION - (ring+1) )) {
+			    j.setDead(true);
+		}
+	    }
 	}
     }
 
