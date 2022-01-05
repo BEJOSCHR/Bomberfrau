@@ -53,8 +53,8 @@ public class Label extends JLabel {
 	
 	/**
 	 * Die methode die dauerhaft aufgerufen wird vom {@link JLabel} und somit die FPS representiert
-	 * Enthält automatische FPS Limitierung
-	 * Von hier aus werden über das 'g' Komponent alle grafischen Methoden aufgerufen
+	 * Enthï¿½lt automatische FPS Limitierung
+	 * Von hier aus werden ï¿½ber das 'g' Komponent alle grafischen Methoden aufgerufen
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -72,7 +72,7 @@ public class Label extends JLabel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		//(Reihenfolge der Aufrufe ist wichtig, spätere Aufrufe überschreiben frühere)
+		//(Reihenfolge der Aufrufe ist wichtig, spï¿½tere Aufrufe ï¿½berschreiben frï¿½here)
 		
 		//BACKGROUND
 		g.setColor(Color.WHITE);
@@ -125,6 +125,9 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "RealPos X: " + PlayerHandler.getClientPlayer().getRealPosX() + " Y: " + PlayerHandler.getClientPlayer().getRealPosY(), 200, 36);
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
+		    	if(Game.getGameOver()) {
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 50, "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	}
 			break;
 		case AFTERGAME:
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
@@ -147,7 +150,7 @@ public class Label extends JLabel {
 			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
 			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
 			
-			// schöner durch ersetzen führender Nuller durch Leerzeichen
+			// schï¿½ner durch ersetzen fï¿½hrender Nuller durch Leerzeichen
 //			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
 		}
 		

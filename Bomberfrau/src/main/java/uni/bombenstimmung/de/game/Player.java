@@ -178,6 +178,7 @@ public class Player extends Entity implements ActionListener{
 	    PlayerHandler.resetMovement();
 	}
 	this.dead = dead;
+	Game.checkIfAllDead();
     }
     
     public int getId() {
