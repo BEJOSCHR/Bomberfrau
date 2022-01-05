@@ -153,19 +153,21 @@ public class Game {
      * Malt den Rechten Teil des Ingame Menüs
      * @param map, Map Nummer anhand derer Titel und Menü gestaltet werden
      */
-    public static void drawRightPartOfMap(Graphics g, int map) {
+    public static void drawRightPartOfMap(Graphics g, int map, int gameTime) {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yStart = GameData.MAP_SIDE_BORDER;
 	int xStart = (GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION)+(xOffset/2);
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
+	GraphicsHandler.drawCentralisedText(g, Color.RED, 40, "Zeit: " + gameTime, xStart+xOffset/4, yStart+200);
+	GraphicsHandler.drawCentralisedText(g, Color.RED, 40, "Ring of Death: " + GameCounter.getRingOfDeathNumber(), xStart+xOffset/4, yStart+400);
     }
     
     /**
@@ -185,6 +187,25 @@ public class Game {
 		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), null);
 	    }
 	    counter++;
+	}
+    }
+    
+    public static void ringOfDeath(int ring) {
+	//NORD NACH SUED VORNE
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, ring, i);
+	}
+	//WEST NACH OST OBEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, i, ring);
+	}
+	//NORD NACH SUED HINTEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, (GameData.MAP_DIMENSION - (ring+1)), i);
+	}
+	//WEST NACH OST HINTEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, i, (GameData.MAP_DIMENSION - (ring+1)));
 	}
     }
 
