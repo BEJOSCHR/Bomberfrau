@@ -31,9 +31,9 @@ public class SoundHandler {
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MUSIC, 0.15D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MUSIC, 0.15D);
-		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.SOUNDS, 0.15D);
+		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MENU_MUSIC, 0.15D);
+		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIC, 0.15D);
+		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.15D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -117,7 +117,13 @@ public class SoundHandler {
 		}
 		
 	}
-	
+
+	/**
+	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehören
+	 * @param category- Die Category die verändert werden soll
+	 * @param volume - Die gewünschte Lautstärke
+	 * @see SoundCategory, {@link LoadedSound}
+	 */
 	public static void setCategoryVolume(SoundCategory category, double volume) {
 		
 		for(LoadedSound sound : getSoundCategory(category)) {

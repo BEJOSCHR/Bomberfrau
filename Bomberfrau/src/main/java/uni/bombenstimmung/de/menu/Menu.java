@@ -157,10 +157,11 @@ public class Menu {
 	    }
 	});
 	name_box.addFocusListener(new FocusListener() {
-	    
+
 	    @Override
-	    public void focusLost(FocusEvent e) {}
-	    
+	    public void focusLost(FocusEvent e) {
+	    }
+
 	    @Override
 	    public void focusGained(FocusEvent e) {
 		if (name_box.getText().equals("?"))
@@ -243,6 +244,10 @@ public class Menu {
 
 	comboboxReso.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
+		// wird extra aufgerufen, da inzwischen der Monitor (bei mehreren)
+		// durch Verschieben des Fensters ein anderer sein kann
+		Settings.getMonitorResoltion();
+		
 		int t = (int) comboboxReso.getSelectedIndex();
 		t = Settings.setResolution(t);
 		Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
@@ -311,18 +316,21 @@ public class Menu {
 	sliderMusic.addChangeListener(new ChangeListener() {
 	    public void stateChanged(ChangeEvent event) {
 		Settings.setVol_music(sliderMusic.getValue());
-		ConsoleHandler.print("Music Volume = " + Settings.getVol_music(), MessageType.MENU);
+		ConsoleHandler.print("Music Volume = " + sliderMusic.getValue(), MessageType.MENU);
 
-		//SoundHandler.changeCategoryVolume(SoundCategory.MUSIC, (Settings.getVol_music()-50)*0.02D);
-
-//		FloatControl volume = (FloatControl) SoundHandler.lastPlayedClip
-//			.getControl(FloatControl.Type.MASTER_GAIN);
+		// zuerst wird die laufende Musik angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = (float) (- 36F + (30*Math.log10(1+sliderMusic.getValue()/9)));
+		float vol = (float) (-36F + (30 * Math.log10(1 + sliderMusic.getValue() / 9)));
 		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
-		if (sliderMusic.getValue() == 0) vol = -80;
+		if (sliderMusic.getValue() == 0)
+		    vol = -80;
 		volume.setValue(vol);
+
+		// danach wird die 'Music Category' Lautstärke angepasst
+		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.15D + sliderMusic.getValue() / 133);
+		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.15D + sliderMusic.getValue() / 133);
+
 	    }
 	});
 
@@ -335,18 +343,55 @@ public class Menu {
 	sliderSound.setPaintTicks(true);
 	sliderSound.setPaintLabels(true);
 	sliderSound.setSnapToTicks(true);
-	sliderSound.addChangeListener(new ChangeListener() {
-	    public void stateChanged(ChangeEvent event) {
-		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
-		Settings.setVol_sound(sliderSound.getValue());
-		ConsoleHandler.print("Settings.vol_sound-88)/2 = " + (Settings.getVol_sound() - 88) / 2D,
-			MessageType.MENU);
-		SoundHandler.playSound(SoundType.OPTIONS, false);
+	sliderSound.addMouseListener(new MouseListener() {
+
+	    @Override
+	    public void mousePressed(MouseEvent e) {
+		ConsoleHandler.print("mousePressed", MessageType.MENU);
+		SoundHandler.playSound(SoundType.OPTIONS, true);
+		ConsoleHandler.print("Sound gestartet", MessageType.MENU);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		float vol = (31f * (Settings.getVol_sound() / 100f) - 25f);
 		volume.setValue(vol);
-		ConsoleHandler.print("Sound Volume = " + Settings.getVol_sound(), MessageType.MENU);
+
+	    }
+	    
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+		ConsoleHandler.print("mouseReleased", MessageType.MENU);
+		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
+
+	    }
+
+	    @Override
+	    public void mouseExited(MouseEvent e) {
+	    }
+
+	    @Override
+	    public void mouseEntered(MouseEvent e) {
+	    }
+
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+	    }
+	});
+
+	sliderSound.addChangeListener(new ChangeListener() {
+	    public void stateChanged(ChangeEvent event) {
+		Settings.setVol_sound(sliderSound.getValue());
+		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
+
+		// zuerst wird der laufende Sound angepasst
+		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
+			.getControl(FloatControl.Type.MASTER_GAIN);
+		float vol = (31f * (Settings.getVol_sound() / 100f) - 25f);
+		volume.setValue(vol);
+
+		// danach wird die 'Sound Category' Lautstärke angepasst
+		SoundHandler.setCategoryVolume(SoundCategory.MENU_SOUND, -0.15D + sliderSound.getValue() / 133);
+		SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.15D + sliderSound.getValue() / 133);
+
 	    }
 	});
 

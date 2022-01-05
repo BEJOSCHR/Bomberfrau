@@ -19,6 +19,8 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
+import uni.bombenstimmung.de.backend.sounds.SoundCategory;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -28,6 +30,7 @@ import java.awt.Toolkit;
 public class Settings {
 
     private static final String INI = "save.ini";
+    public static String os;
 
     public static Properties prop;
 
@@ -235,9 +238,24 @@ public class Settings {
 	factor = f;
     }
 
-    /*****************************************************************************************************************
-     * INI METHODEN
-     *****************************************************************************************************************/
+    
+    /**
+     * bring das Betriebsystem in Erfahrung
+     */
+    public static void checkOS() {
+	os = System.getProperty("os.name").toLowerCase();
+	if (os.contains("win")){
+	    ConsoleHandler.print("System = Windows (" + os + ")", MessageType.BACKEND);
+	}
+	else if (os.contains("nix") || os.contains("aix") || os.contains("nux")){
+	    ConsoleHandler.print("System = Unix/Linux (" + os + ")", MessageType.BACKEND);
+	}      
+	else if (os.contains("osx")){
+	    ConsoleHandler.print("System = Apple (" + os + ")", MessageType.BACKEND);
+	}
+    }
+    
+    
 
     /**
      * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü werden
@@ -290,11 +308,44 @@ public class Settings {
 	    return i;
     }
 
-
+    /**
+     * Übergibt die Auflösung an den GraphicsHandler
+     */
     public static void updateResAtGraphics() {
 	GraphicsHandler.setWidth(res_width);
 	GraphicsHandler.setHeight(res_height);
     }
+    
+
+    public static void setAllVolumes() {
+
+	// Volume Tests
+//	SoundHandler.setCategoryVolume(SoundCategory.MUSIC, -0.1D);
+//	SoundHandler.playSound(SoundType.INTRO, false);
+//	Menu.sleep(5000);
+//	
+//	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+10/9)));
+//	Menu.sleep(5000);
+//	
+//	
+//	SoundHandler.setCategoryVolume(SoundCategory.MUSIC, 0.6D);
+//	SoundHandler.playSound(SoundType.INTRO, false);
+//	Menu.sleep(5000);
+//	
+//	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+100/9)));
+//	Menu.sleep(5000);
+	
+	SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC,   -0.15D + Settings.getVol_music()/133);
+	SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.15D + Settings.getVol_music()/133);
+
+	SoundHandler.setCategoryVolume(SoundCategory.MENU_SOUND,    -0.15D + Settings.getVol_sound()/133);
+	SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.15D + Settings.getVol_sound()/133);
+    }
+
+    
+    /*****************************************************************************************************************
+     * INI METHODEN
+     *****************************************************************************************************************/
     
     /**
      * Gibt alle Werte aus der ini-Datei im Terminal aus
@@ -358,11 +409,11 @@ public class Settings {
     }
 
     /**
-     * Prüft anfangs die Existenz der ini-Datei. Ist sie vorhanden, werden die Werte
-     * ausgelesen. Falls nicht, wird eine Datei mit Standard-Werten erstellt.
+     * Besorgt die Monitorauflösung. Dabei wird berücksichtigt:
+     * - mehrere Monitore
+     * - Position des Fensters (durch die aktuelle Mauszeigerposition)
      */
-    public static void initIni() {
-
+    public static void getMonitorResoltion() {
 
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
 	// getting resolution of the DEFAULT monitor via Toolkit
@@ -398,6 +449,16 @@ public class Settings {
 	res_height_max = (int)(res_height_max/scalingfactor);
 	ConsoleHandler.print("resolution (screen with mouse new): " + res_width_max + " x " + res_height_max, MessageType.MENU);
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
+
+    }
+    
+    /**
+     * Prüft anfangs die Existenz der ini-Datei. Ist sie vorhanden, werden die Werte
+     * ausgelesen. Falls nicht, wird eine Datei mit Standard-Werten erstellt.
+     */
+    public static void initIni() {
+
+	getMonitorResoltion();
 
 	try {
 	    File save_ini = new File(INI);
