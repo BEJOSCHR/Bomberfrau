@@ -41,12 +41,12 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 		try {
 			session.write((String) "001-");						//Sende 001 zum Server um den Client der HashMap des Servers hinzuzufügen.
 			client.setSession(session);
-			Thread.sleep(1000);
+			Thread.sleep(100);
 			if (!serverIsFull) {
 			    session.write((String) "002-");					//Sende 002 um die Client ID vom Server zu erhalten.
-			    Thread.sleep(500);
+			    Thread.sleep(50);
 			    //client.sendMessage(client.getSession(), "000-Test Message");	//Template, um eine Nachricht mit einem ConnectedClient Objekt zu senden
-			    Thread.sleep(500);
+			    Thread.sleep(50);
 			    Thread pingThread = new Thread (this);
 			    pingThread.start();
 			} else {
