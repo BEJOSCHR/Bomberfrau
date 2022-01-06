@@ -28,7 +28,7 @@ import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
 
-    private int id;
+	private int id;
     private String name;
     private String ipAdress;
     private boolean host;
@@ -77,8 +77,8 @@ public class Player extends Entity implements ActionListener{
 	this.velX = 0.0;
 	this.velY = 0.0;
 	this.currentButtonConfig = new PlayerButtonConfig(Settings.getMove_up(), Settings.getMove_down(),
-							Settings.getMove_left(), Settings.getMove_right(),
-							Settings.getPlant_bomb());
+								Settings.getMove_left(), Settings.getMove_right(),
+								Settings.getPlant_bomb());
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
@@ -185,6 +185,11 @@ public class Player extends Entity implements ActionListener{
 	if (dead == true) {
 	    this.actionStop();
 	    PlayerHandler.resetMovement();
+	    /*if(this.connectedClient.isHost()) {
+	    	this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    } else {
+	    	this.connectedClient.sendMessage(this.connectedClient.getSession(), "204-" + this.id);
+	    }*/
 	}
 	this.dead = dead;
 	Game.checkIfAllDead();
