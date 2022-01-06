@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet die graphischen VerÄnderungen und Wechsel zwischen den Modulen
+ * Verwaltet die graphischen Verï¿½nderungen und Wechsel zwischen den Modulen
  */
 package uni.bombenstimmung.de.backend.graphics;
 
@@ -28,6 +28,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -49,6 +50,8 @@ public class GraphicsHandler {
 	private static boolean shuttingDown = false;
 	private static FrameDragListener frameDragListener;
 	public static LobbyCreate lobby;
+	public static ConnectedClient server;
+	public static ConnectedClient client;
 
 	
 	/**
@@ -285,10 +288,10 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		
 		boolean isHost = false;
-//		if(Menu.isHost() == true) {
-//		    isHost = true;
-//		}
-		    
+		if(Menu.getIs_host() == true) {
+		    isHost = true;
+		}
+		
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
@@ -297,10 +300,28 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
 		
 
-//		if (isHost == true)
+		if (isHost == true) {
+		    try {
+			server = new ConnectedClient(true, null);
+			Thread.sleep(500);
+		    }
+		    catch (Exception e) {
+			e.printStackTrace();
+		    }
 		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		
-		    lobby.addPlayer(new LobbyPlayer("test1", "127.0.0.1"));
+		}
+		else {
+		    try {
+			client = new ConnectedClient(false, "127.0.0.1");
+			Thread.sleep(500);
+		    }
+		    catch (Exception e) {
+			e.printStackTrace();
+		    }
+		    lobby = new LobbyCreate();
+		    lobby.addPlayer(new LobbyPlayer("test1", Settings.getIp()));
+		}
+
 //		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
 //		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
 

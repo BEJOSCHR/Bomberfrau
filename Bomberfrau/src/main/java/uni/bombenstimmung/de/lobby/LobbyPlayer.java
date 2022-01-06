@@ -15,18 +15,32 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 
 public class LobbyPlayer {
 	private String ip;
 	private String name;
-	private static int idZaehler = 0;
 	private int id;
 	private boolean isHost;
 	private boolean isReady = false;
 	public LoadedImage skinSelection[] = new LoadedImage[3];
 	private int zaehlerSkinSelection = 0;
+	private ConnectedClient connectedClient;
 
+	
+	/**
+	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird vom zu erstellenden HOST aufgerufen.
+	 */
+	public LobbyPlayer(String name) {
+		this.name = name;
+
+		isHost = true;
+		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
+		initializeImages();
+		connectedClient = new ConnectedClient(true, null);
+		id = connectedClient.getId();
+	}
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
@@ -34,24 +48,13 @@ public class LobbyPlayer {
 	public LobbyPlayer(String name, String ip) {
 		this.ip = ip;
 		this.name = name;
-		id = idZaehler;
-		idZaehler ++;
+
 		isHost = false;
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
+		connectedClient = new ConnectedClient(true, ip);
+		id = connectedClient.getId();
 		
-	}
-	
-	/**
-	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird vom zu erstellenden HOST aufgerufen.
-	 */
-	public LobbyPlayer(String name) {
-		this.name = name;
-		id = idZaehler;
-		idZaehler ++;
-		isHost = true;
-		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
-		initializeImages();
 	}
 	
 	/**
@@ -109,6 +112,9 @@ public class LobbyPlayer {
     public int getId() {
     	return id;
     }
+    public void setId() {
+	id = connectedClient.getId();
+    }
     
     public String getIpAdress() {
     	return ip;
@@ -124,8 +130,11 @@ public class LobbyPlayer {
 	 * Wird von der Checkbox aufgerufen, wo alle Player (ausser dem Host) den Button klicken koennen.
 	 */
     public void setisReady() {
-    	if (isReady == false)
-    		isReady = true;
+    	if (isReady == false) {
+    	    isReady = true;
+    	    connectedClient.sendMessage(connectedClient.getSession(), "456-ready");
+    	}
+
     	else if (isReady == true)
     		isReady = false;
     }

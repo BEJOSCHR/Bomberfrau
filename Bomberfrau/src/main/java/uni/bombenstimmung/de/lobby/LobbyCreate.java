@@ -27,7 +27,6 @@ public class LobbyCreate {
 	static int zaehlerMapSelection = 0;
 	static int hochRunterNavigation = 0;
 	public static int numberPlayer = 0;
-	private ConnectedClient connectedClient[] = new ConnectedClient[4];
 	
 	
 	/**
@@ -39,7 +38,12 @@ public class LobbyCreate {
 		LobbyCreate.player[numberPlayer] = player;
 		numberPlayer++;
 		initializeImages();
-		connectedClient[0] = new ConnectedClient(true, null);
+//		connectedClient[0] = new ConnectedClient(true, null);
+	}
+	
+	//Test Konstruktor um Cleints zu createn
+	public LobbyCreate () {
+
 	}
 	
 	/**
@@ -49,7 +53,7 @@ public class LobbyCreate {
 	// Ein weiterer Player wird als nächstes im Array erstellt
 	public void addPlayer(LobbyPlayer player) {
 		LobbyCreate.player[numberPlayer] = player;
-		connectedClient[0] = new ConnectedClient(false, player.getIpAdress());
+//		connectedClient[0] = new ConnectedClient(false, player.getIpAdress());
 		numberPlayer++;
 	}
 	

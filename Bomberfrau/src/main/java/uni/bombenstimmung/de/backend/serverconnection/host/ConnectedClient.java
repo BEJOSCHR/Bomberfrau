@@ -205,6 +205,23 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Starte Spiel
 			break;
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
+		
+		// LOBBY TEST - Server Antwort
+		case 456:
+		    	String[] pMessage456 = message.split("-");
+		    	if (pMessage456[0] == "3") {
+			    if (pMessage456[1] == "red") {
+				//Setze Farbe red
+				sendMessageToAllClients("457-" +pMessage456[1] + "-" + pMessage456[0]);
+			    }  
+		    	}
+		    	break;
+		    	
+		case 457:
+		    	String [] pMessage457 = message.split("-");
+		    	// set Farbe von PlayerID pMessage457[2]
+
+		    	
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);
