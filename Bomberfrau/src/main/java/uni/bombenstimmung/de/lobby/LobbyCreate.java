@@ -189,6 +189,14 @@ public class LobbyCreate {
 	}
 	
 	/**
+	 * Veraendert den Status, ob der Player ready ist, sodass der Host das Spiel starten kann.
+	 * Wird von der Checkbox aufgerufen, wo alle Player (ausser dem Host) den Button klicken koennen.
+	 */
+    public static void setisReady(int player) {
+	LobbyCreate.player[player].setisReady();
+	client.sendMessage(client.getSession(), "510-" + player + "-" + LobbyCreate.player[player].getisReady());
+    }
+	/**
 	 * Ist fuer die Navigation mit Pfeiltasten gedacht, dass jede Auswahl (Skin, Map, Start, Lobby verlassen) mit den Hoch-Runter Pfeiltasten gesteuert werden kann.
 	 * Diese Methode wird aufgerufen, wenn die naechste Auswahl (unten) mit den Pfeiltasten ausgewaehlt wird.
 	 */

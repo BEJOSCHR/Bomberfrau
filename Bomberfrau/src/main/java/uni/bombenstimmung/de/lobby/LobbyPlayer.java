@@ -115,11 +115,15 @@ public class LobbyPlayer {
     public void setisReady() {
     	if (isReady == false) {
     	    isReady = true;
-    	    connectedClient.sendMessage(connectedClient.getSession(), "500-ready");
     	}
 
-    	else if (isReady == true)
-    		isReady = false;
+    	else if (isReady == true) {
+    	    isReady = false; 
+    	}
+
+    }
+    public void setisReadyForClients(String ready) {
+	isReady = Boolean.parseBoolean(ready);
     }
 	/**
 	 * Gibt zurueck, ob der Player ready ist.

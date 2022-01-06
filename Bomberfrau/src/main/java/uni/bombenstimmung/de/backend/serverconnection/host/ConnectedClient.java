@@ -208,22 +208,22 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
 		
 			
-		// LOBBY TEST - Server Antwort
-		case 500:
-		    	String[] pMessage500 = message.split("-");
-		    	if (pMessage500[0] == "3") {
-			    if (pMessage500[1] == "red") {
-				//Setze Farbe red
-				sendMessageToAllClients("457-" +pMessage500[1] + "-" + pMessage500[0]);
-			    }  
-		    	}
-		    	break;
-		    	
-		case 5001:
-		    	String [] pMessage457 = message.split("-");
-		    	// set Farbe von PlayerID pMessage457[2]
-		    	break;
-		// LOBBY TEST - 
+//		// LOBBY TEST - Server Antwort
+//		case 500:
+//		    	String[] pMessage500 = message.split("-");
+//		    	if (pMessage500[0] == "3") {
+//			    if (pMessage500[1] == "red") {
+//				//Setze Farbe red
+//				sendMessageToAllClients("457-" +pMessage500[1] + "-" + pMessage500[0]);
+//			    }  
+//		    	}
+//		    	break;
+//		    	
+//		case 5001:
+//		    	String [] pMessage457 = message.split("-");
+//		    	// set Farbe von PlayerID pMessage457[2]
+//		    	break;
+//		// LOBBY TEST - 
 		
 		// LOBBY Join Nachrichten von Clients an Server und anschließend Aufruf von Sever an alle Clients um neuen Client zu adden case 502
 		case 501:
@@ -290,6 +290,17 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 509:
 			String[] pMessage509 = message.split("-");
 			LobbyCreate.setSkin(Integer.parseInt(pMessage509[1]), Integer.parseInt(pMessage509[2]));;
+		    	break;
+		// Wenn Clients isReady aendern, dann sendet Server an alle weiter, damit die case 511 ausfuehren
+		case 510:
+		    	String[] pMessage510 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage510[1])].setisReadyForClients(pMessage510[2]);
+		    	sendMessageToAllClients("511-" + pMessage510[1] + "-" + pMessage510[2]);
+		    	break;
+		// Befehl um IsReady Checkboxen eines Clients zu aendern
+		case 511:
+		    	String[] pMessage511 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage511[1])].setisReadyForClients(pMessage511[2]);
 		    	break;
 		    	
 		case 900:
