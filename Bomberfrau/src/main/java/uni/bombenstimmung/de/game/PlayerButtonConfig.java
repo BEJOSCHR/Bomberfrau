@@ -24,7 +24,7 @@ public class PlayerButtonConfig {
     private int down;
     private int left;
     private int right;
-    private int setBomb;
+    private int plantBomb;
     
     /* Standard ButtonConfig Initialisierung. */
     public PlayerButtonConfig() {
@@ -32,17 +32,17 @@ public class PlayerButtonConfig {
 	this.down = KeyEvent.VK_S;
 	this.left = KeyEvent.VK_A;
 	this.right = KeyEvent.VK_D;
-	this.setBomb = KeyEvent.VK_SPACE;
+	this.plantBomb = KeyEvent.VK_SPACE;
     }
     
     /* Individuelle ButtonConfig Initialisierung. */
     public PlayerButtonConfig(int up, int down, int left, int right,
-		     		int setBomb) {
+		     		int plantBomb) {
 	this.up = up;
 	this.down = down;
 	this.left = left;
 	this.right = right;
-	this.setBomb = setBomb;
+	this.plantBomb = plantBomb;
     }
     
     public int getUp() {
@@ -61,17 +61,17 @@ public class PlayerButtonConfig {
 	return right;
     }
     
-    public int getSetBomb() {
-	return setBomb;
+    public int getPlantBomb() {
+	return plantBomb;
     }
     
     public void reconfigFull(int up, int down, int left, int right,
-	    		     int setBomb) {
+	    		     int plantBomb) {
 	this.up = up;
 	this.down = down;
 	this.left = left;
 	this.right = right;
-	this.setBomb = setBomb;
+	this.plantBomb = plantBomb;
     }
     
     public void reconfigSpecific(int id, int newButton) {
@@ -93,7 +93,7 @@ public class PlayerButtonConfig {
 	    break;
 	    
 	case 4:
-	    this.setBomb = newButton;
+	    this.plantBomb = newButton;
 	    break;
 	    
 	default:

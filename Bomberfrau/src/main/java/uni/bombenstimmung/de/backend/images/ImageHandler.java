@@ -21,7 +21,7 @@ public class ImageHandler {
 	private static List<LoadedImage> images = new ArrayList<LoadedImage>();
 	
 	/**
-	 * Wird am Start aufgerufen und läd alle Images
+	 * Wird am Start aufgerufen und lï¿½d alle Images
 	 */
 	public static void initImages() {
 		
@@ -59,15 +59,17 @@ public class ImageHandler {
 		new LoadedImage("Bomberman-icon_pink.png", ImageType.IMAGE_INGAME_ICON_PINK, 200, 200);
 		
 		//INGAME
-			new LoadedImage("Ingame/Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Grass_background.png", ImageType.IMAGE_INGAME_GRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Box.png", ImageType.IMAGE_INGAME_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Wand_gray.png", ImageType.IMAGE_INGAME_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/wand_orange.png", ImageType.IMAGE_INGAME_BORDER, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Yellow_background.png", ImageType.IMAGE_INGAME_YELLOWGRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/bomb.png", ImageType.IMAGE_INGAME_BOMB, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5);
 	    	new LoadedImage("Ingame/lightTileBackground.png", ImageType.IMAGE_INGAME_LIGHTTILE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-	    	new LoadedImage("Ingame/easteregg.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
-	    	new LoadedImage("Ingame/easteregg_Wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+//	    	new LoadedImage("Ingame/easteregg.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+//	    	new LoadedImage("Ingame/easteregg_Wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("Ingame/new_skin_left.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	    	new LoadedImage("Ingame/BombExplosion1.png", ImageType.IMAGE_INGAME_BOMB_EX1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/BombExplosion2.png", ImageType.IMAGE_INGAME_BOMB_EX2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/BombExplosion2_NS.png", ImageType.IMAGE_INGAME_BOMB_EX2_NS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
@@ -100,10 +102,10 @@ public class ImageHandler {
 	}
 	
 	/**
-	 * Gibt das Bild zum zugehörigen Type zurück (Wenn richtig geladen gibt es für jeden Type ein Image)
+	 * Gibt das Bild zum zugehï¿½rigen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type ein Image)
 	 * @param type - Der Type der gesucht wird
 	 * @see ImageType
-	 * @return Das {@link LoadedImage} das zum Type gehört, wenn keins gefunden wird dann null
+	 * @return Das {@link LoadedImage} das zum Type gehï¿½rt, wenn keins gefunden wird dann null
 	 */
 	public static LoadedImage getImage(ImageType type) {
 		

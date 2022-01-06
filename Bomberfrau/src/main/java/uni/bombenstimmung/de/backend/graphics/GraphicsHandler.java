@@ -31,6 +31,7 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.game.GameData;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
@@ -103,7 +104,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Lässt das Fenster trotz 'Undecorated' per Maus bewegen
+	 * Lï¿½sst das Fenster trotz 'Undecorated' per Maus bewegen
 	 */
 	private static class FrameDragListener extends MouseAdapter {
 
@@ -129,7 +130,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Deaktiviert die Möglichkeit der Fensterbewegung bei Vollbild, aktivert sie ansonsten. 
+	 * Deaktiviert die Mï¿½glichkeit der Fensterbewegung bei Vollbild, aktivert sie ansonsten. 
 	 */
 	public static void setMoveable() {
         	frame.removeMouseListener(frameDragListener);
@@ -193,7 +194,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird beim Wechseln von Menü zu den Optionen aufgerufen
+	 * Wird beim Wechseln von Menï¿½ zu den Optionen aufgerufen
 	 */
 	public static void switchToOptionsFromMenu() {
 
@@ -205,7 +206,7 @@ public class GraphicsHandler {
 		displayType = DisplayType.OPTIONS;
 	}
 	/**
-	 * Wird bei Rückkehr von den Optionen zum Menü aufgerufen
+	 * Wird bei Rï¿½ckkehr von den Optionen zum Menï¿½ aufgerufen
 	 */
 	public static void switchToMenuFromOptions() {
 
@@ -237,7 +238,7 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wird aufgerufen wenn während einem Spiel das Spiel verlassen wird bzw der Host das Spiel schließt
+	 * Wird aufgerufen wenn wï¿½hrend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlieï¿½t
 	 */
 	public static void switchToMenuFromIngame() {
 
@@ -304,24 +305,27 @@ public class GraphicsHandler {
 		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
 		    if(i==0) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), null);
 		    }
 		    if(i==1) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), null);
 		    }
 		    if(i==2) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), null);
 		    }
 		    if(i==3) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), null);
 		    }
 		}
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
+	    	ConsoleHandler.print("Player Count: " + PlayerHandler.getAllPlayer().size(), MessageType.GAME);
+	    	GameCounter zaehler = new GameCounter();
+	    	zaehler.startCounter();
 	    	
 	    	frame.requestFocus();
 	    	
@@ -347,7 +351,7 @@ public class GraphicsHandler {
 	
 	
 	/**
-	 *  schönerer Font mit abgerundeten Zeichen
+	 *  schï¿½nerer Font mit abgerundeten Zeichen
  	 */
 	public static Font usedFont(int textSize) {
 
@@ -367,7 +371,7 @@ public class GraphicsHandler {
 	 * Allgemeine Methode um einen beliebigen Text mit Parametern relativ zu einem Punkt (x,y) mittig darzustellen
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die Textgröße
+	 * @param textSize, die Textgrï¿½ï¿½e
 	 * @param text, der eigentliche Text
 	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text mittig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
@@ -383,12 +387,12 @@ public class GraphicsHandler {
 	}
 
 	/**
-	 * Wie Methode drawCentralisedText, nur linksbündig
+	 * Wie Methode drawCentralisedText, nur linksbï¿½ndig
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die Textgröße
+	 * @param textSize, die Textgrï¿½ï¿½e
 	 * @param text, der eigentliche Text
-	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text linksbündig dargestellt wird
+	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text linksbï¿½ndig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
 	 */
 	public static void drawLeftText(Graphics g, Color color, int textSize, String text, int x, int y) {
@@ -401,12 +405,12 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Wie Methode drawCentralisedText, nur rechtsbündig
+	 * Wie Methode drawCentralisedText, nur rechtsbï¿½ndig
 	 * @param g, das Graphics object
 	 * @param color, die Textfarbe
-	 * @param textSize, die Textgröße
+	 * @param textSize, die Textgrï¿½ï¿½e
 	 * @param text, der eigentliche Text
-	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text rechtsbündig dargestellt wird
+	 * @param x, die X-Koordinate (Links-Rechts-Verschiebung) zu der der Text rechtsbï¿½ndig dargestellt wird
 	 * @param y, die Y-Koordinate (Oben-Unten-Verschiebung) zu der der Text mittig dargestellt wird
 	 */
 	public static void drawRightText(Graphics g, Color color, int textSize, String text, int x, int y) {
@@ -418,8 +422,8 @@ public class GraphicsHandler {
 	}
 	
 	/**
-	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schließt KONTROLLIERT alle Datenzugänge bzw speichert setting etc).
-	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht möglich ist!
+	 * Der einzige saubere Weg dieses Programm zu stoppen (Stoppt alle Timer und schlieï¿½t KONTROLLIERT alle Datenzugï¿½nge bzw speichert setting etc).
+	 * Wenn einmal aufgerufen werden weitere Aufrufe dieser Methode abgeblockt, so dass ein doppeltes runterfahren nicht mï¿½glich ist!
 	 */
 	public static void shutdownProgram() {
 		

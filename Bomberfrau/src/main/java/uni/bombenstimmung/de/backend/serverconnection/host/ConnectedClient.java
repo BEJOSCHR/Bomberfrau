@@ -31,8 +31,12 @@ import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
+import uni.bombenstimmung.de.game.Player;
+import uni.bombenstimmung.de.game.PlayerHandler;
 
 public class ConnectedClient extends IoHandlerAdapter{
 	
@@ -45,6 +49,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	private Stack<Integer> idStack;
+	
+	private Player player;
 	
 	/**
 	 * Erzeugt einen neuen ConnectedClient. 
@@ -188,17 +194,30 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
 		//202 = Setze die Position eines Spieler. 
-		//Format: "201-[ID]-[X-Cord]-[Y-Cord]"
+		//Format: "202-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
-			@SuppressWarnings("unused") String[] pMessage202 = message.split("-");
+			String[] pMessage202 = message.split("-");
 			//TODO: Setze X und Y des Spielers
 			break;	
 		//203 = Setze die Position einer Bombe. 
 		//Format: "203-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 203:
-			@SuppressWarnings("unused") String[] pMessage203 = message.split("-");
+			String[] pMessage203 = message.split("-");
 			//TODO: Setze X und Y der Bombe
 			break;
+		//204 = Signalisiere, dass Player tot ist
+		//Format: "204-[ID-OF-DEAD-PLAYER]"
+		case 204:
+		    String[] pMessage204 = message.split("-");
+		    int sentId = 0;
+		    try {
+		    	sentId = Integer.parseInt(pMessage204[1]);
+		    }
+		    catch(NumberFormatException ex) {}
+		    if(id != sentId) {
+		    	PlayerHandler.getAllPlayer().get(sentId).setDead(true);
+		    }
+		    break;
 		//300 = Starte das Spiel
 		//Format: "300"
 		case 300:

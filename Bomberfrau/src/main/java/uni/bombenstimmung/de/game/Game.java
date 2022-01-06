@@ -13,16 +13,19 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Color;
 
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class Game {
 
     private static Field map[][] = new Field[GameData.MAP_DIMENSION][GameData.MAP_DIMENSION];	
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
+    private static boolean gameOver = false;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -153,19 +156,20 @@ public class Game {
      * Malt den Rechten Teil des Ingame Menüs
      * @param map, Map Nummer anhand derer Titel und Menü gestaltet werden
      */
-    public static void drawRightPartOfMap(Graphics g, int map) {
+    public static void drawRightPartOfMap(Graphics g, int map, int gameTime) {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yStart = GameData.MAP_SIDE_BORDER;
 	int xStart = (GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION)+(xOffset/2);
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 40, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
+	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
     }
     
     /**
@@ -187,6 +191,62 @@ public class Game {
 	    counter++;
 	}
     }
+    
+    public static void ringOfDeath(int ring) {
+	//NORD NACH SUED VORNE
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, ring, i);
+	    //Toete ggf Player
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(ring, i)) {
+		    	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(ring, i)) {
+		    j.setDead(true);
+		}
+	    }
+	}
+	//WEST NACH OST OBEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, i, ring);
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(i, ring)) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(i, ring)) {
+			    j.setDead(true);
+		}
+	    }
+	}
+	//NORD NACH SUED HINTEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, (GameData.MAP_DIMENSION - (ring+1)), i);
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(GameData.MAP_DIMENSION - (ring+1), i)) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(GameData.MAP_DIMENSION - (ring+1), i)) {
+			    j.setDead(true);
+		}
+	    }
+	}
+	//WEST NACH OST HINTEN
+	for(int i = 0; i < GameData.MAP_DIMENSION; i++) {
+	    changeFieldContent(FieldContent.BORDER, i, (GameData.MAP_DIMENSION - (ring+1)));
+	    if (PlayerHandler.getClientPlayer().getCurrentField() ==
+		Game.getFieldFromMap(i, GameData.MAP_DIMENSION - (ring+1))) {
+		  	PlayerHandler.getClientPlayer().setDead(true);
+	    }
+	    for (Player j : PlayerHandler.getOpponentPlayers()) {
+		if (j.getCurrentField() == Game.getFieldFromMap(i, GameData.MAP_DIMENSION - (ring+1) )) {
+			    j.setDead(true);
+		}
+	    }
+	}
+    }
 
     public Field[][] getMap() {
 	return map;
@@ -194,6 +254,10 @@ public class Game {
     
     public static int getMapNumber() {
 	return mapNumber;
+    }
+    
+    public static boolean getGameOver() {
+	return gameOver;
     }
 
     public static void setMapNumber(int mapNumber) {
@@ -214,5 +278,36 @@ public class Game {
     
     public static ArrayList<Bomb> getPlacedBombs() {
 	return placedBombs;
+    }
+    
+    public static void checkIfAllDead() {
+	int livingPlayers = 0;
+	for (Player i : PlayerHandler.getAllPlayer()) {
+	    if (!i.getDead()) {
+		livingPlayers++;
+	    }
+	}
+	if (gameOver == false && livingPlayers <= 1) {
+	    gameOver();
+	}
+    }
+    
+    public static void gameOver() {
+	// TODO: hier kommt alles rein, was bei einem Game Over passiert
+	new Animation(400, 1) {
+	    @Override
+	    public void initValues() {
+		PlayerHandler.getClientPlayer().actionStop();
+		gameOver = true;
+	    }
+	    
+	    @Override
+	    public void changeValues() {}
+	    
+	    @Override
+	    public void finaliseValues() {
+		GraphicsHandler.switchToAftergameFromIngame();
+	    }
+	};
     }
 }
