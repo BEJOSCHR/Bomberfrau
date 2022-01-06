@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Color;
 
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
@@ -25,7 +26,6 @@ public class Game {
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
-    private static ServerHandler ingameServerHandler;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -287,19 +287,27 @@ public class Game {
 		livingPlayers++;
 	    }
 	}
-	if (livingPlayers <= 1) {
+	if (gameOver == false && livingPlayers <= 1) {
 	    gameOver();
 	}
     }
     
     public static void gameOver() {
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
-	PlayerHandler.getClientPlayer().actionStop();
-	gameOver = true;
-//	try {
-//	    Thread.sleep(4000);
-//	}
-//	catch (InterruptedException ex) {}
-//	GraphicsHandler.switchToAftergameFromIngame();
+	new Animation(400, 1) {
+	    @Override
+	    public void initValues() {
+		PlayerHandler.getClientPlayer().actionStop();
+		gameOver = true;
+	    }
+	    
+	    @Override
+	    public void changeValues() {}
+	    
+	    @Override
+	    public void finaliseValues() {
+		GraphicsHandler.switchToAftergameFromIngame();
+	    }
+	};
     }
 }
