@@ -18,6 +18,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class LobbyCreate {
 
@@ -26,6 +27,7 @@ public class LobbyCreate {
 	static int zaehlerMapSelection = 0;
 	static int hochRunterNavigation = 0;
 	public static int numberPlayer = 0;
+	private ConnectedClient connectedClient[] = new ConnectedClient[4];
 	
 	
 	/**
@@ -37,6 +39,7 @@ public class LobbyCreate {
 		LobbyCreate.player[numberPlayer] = player;
 		numberPlayer++;
 		initializeImages();
+		connectedClient[0] = new ConnectedClient(true, null);
 	}
 	
 	/**
@@ -46,11 +49,12 @@ public class LobbyCreate {
 	// Ein weiterer Player wird als nächstes im Array erstellt
 	public void addPlayer(LobbyPlayer player) {
 		LobbyCreate.player[numberPlayer] = player;
+		connectedClient[0] = new ConnectedClient(false, player.getIpAdress());
 		numberPlayer++;
 	}
 	
 	/**
-	 * Läd alle Images der Mapauswahl in einem Array. Die Mapauswahl wird vom Host gesteuert.
+	 * Laed alle Images der Mapauswahl in einem Array. Die Mapauswahl wird vom Host gesteuert.
 	 */
 	public void initializeImages() {
 		LobbyCreate.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
@@ -163,8 +167,7 @@ public class LobbyCreate {
 			
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
 
-			
-			g.drawImage(player[i].skinSelection[player[i].zaehlerSkinSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
+			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
 			
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}

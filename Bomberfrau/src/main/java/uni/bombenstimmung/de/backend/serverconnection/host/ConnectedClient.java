@@ -213,6 +213,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
+		case 500: 
+		    	ConsoleHandler.print("Lobby Test", MessageType.LOBBY);
 		case 903:
 			String[] pMessage903 = message.split("-");
         	    	long currentTime = System.currentTimeMillis();
