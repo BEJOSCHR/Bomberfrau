@@ -73,8 +73,12 @@ public class LobbyCreate {
 	 */
 	// Ein weiterer Player wird als nächstes im Array erstellt
 	public static void addPlayer(String numberPlayers, String id, String name) {
-	    	LobbyCreate.player[Integer.parseInt(numberPlayers)] = new LobbyPlayer(name, "");
-		LobbyCreate.player[Integer.parseInt(numberPlayers)].setId(Integer.parseInt(id));
+	    	int IntnumberPlayers = Integer.parseInt(numberPlayers);
+	    	if(IntnumberPlayers == 4) {
+	    	    IntnumberPlayers = 3;
+	    	}
+	    	LobbyCreate.player[IntnumberPlayers] = new LobbyPlayer(name, "");
+		LobbyCreate.player[IntnumberPlayers].setId(Integer.parseInt(id));
 
 		if(client.isHost()) {
 		    numberPlayer++;	

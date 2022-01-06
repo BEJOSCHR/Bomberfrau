@@ -34,7 +34,6 @@ public class LobbyPlayer {
 	 */
 	public LobbyPlayer(String name) {
 		this.name = name;
-
 		isHost = true;
 		initializeImages();
 	}
@@ -46,7 +45,6 @@ public class LobbyPlayer {
 		this.name = name;
 		this.ip = ip;
 		isHost = false;
-		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
 		
 	}

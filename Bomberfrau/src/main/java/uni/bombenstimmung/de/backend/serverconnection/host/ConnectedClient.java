@@ -230,8 +230,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	String[] pMessage501 = message.split("-");
 		    	if(pMessage501[1].equals("binGeJoined")) {
 		    	    // Der gejointe Player muss die anderen Player Objekte auch noch erstellen. case 503-505
-		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberPlayer), pMessage501[2], pMessage501[3]);
 
+		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberPlayer), pMessage501[2], pMessage501[3]);
 		    	    for(int i=0; i<LobbyCreate.numberPlayer; i++) {
 		    		ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
 		    	    	sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName());
