@@ -237,7 +237,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	    	sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost()));
 		    	    }
 
-		    	    sendMessageToAllClients("502-" + LobbyCreate.numberPlayer + "-" + pMessage501[2] + "-" + pMessage501[3]);
+		    	    sendMessageToAllClients("502-" + LobbyCreate.numberPlayer + "-" + pMessage501[2] + "-" + pMessage501[3] + "-" + pMessage501[4]);
 		    	    sendMessage(session, "506-" + LobbyCreate.numberPlayer);
 		    	}
 		    	break;
@@ -273,6 +273,23 @@ public class ConnectedClient extends IoHandlerAdapter{
 			String[] pMessage506 = message.split("-");
 			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
 			break;
+			
+		// Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	
+		case 507:
+		    	String[] pMessage507 = message.split("-");
+		    	LobbyCreate.setMap(Integer.parseInt(pMessage507[1]));
+		    	break;
+		// Wenn Clients Ihre Skin wechseln, dann sendet Server an alle weiter, damit die case 509 ausfuehren    	
+		case 508:
+			String[] pMessage508 = message.split("-");
+			LobbyCreate.setSkin(Integer.parseInt(pMessage508[1]), Integer.parseInt(pMessage508[2]));;
+			sendMessageToAllClients("509-" + pMessage508[1] + "-" + pMessage508[2]);
+		    	break;
+		// Befehl um Skin Auswahl eines anderen Clients zu aendern    	
+		case 509:
+			String[] pMessage509 = message.split("-");
+			LobbyCreate.setSkin(Integer.parseInt(pMessage509[1]), Integer.parseInt(pMessage509[2]));;
+		    	break;
 		    	
 		case 900:
 			String[] pMessage900 = message.split("-");

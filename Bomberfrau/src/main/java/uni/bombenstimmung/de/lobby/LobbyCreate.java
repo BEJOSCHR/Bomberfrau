@@ -120,6 +120,8 @@ public class LobbyCreate {
 	// Map Zaehler
 	public static void setIncrementMap() {
 		zaehlerMapSelection = (zaehlerMapSelection + 1)%3;
+		// Sendet zaehlerMapSelection via Case 507 zu den Clients
+		client.sendMessageToAllClients("507-" + zaehlerMapSelection);
 	}
 	
 	/**
@@ -128,10 +130,17 @@ public class LobbyCreate {
 	public static void setDecrementMap() {
 		if (zaehlerMapSelection == 0) {
 			zaehlerMapSelection = 2;
+			// Sendet zaehlerMapSelection via Case 507 zu den Clients
+			client.sendMessageToAllClients("507-" + zaehlerMapSelection);
 		}
 		else {
-			zaehlerMapSelection = (zaehlerMapSelection - 1)%3;	
+			zaehlerMapSelection = (zaehlerMapSelection - 1)%3;
+			// Sendet zaehlerMapSelection via Case 507 zu den Clients
+			client.sendMessageToAllClients("507-" + zaehlerMapSelection);
 		}
+	}
+	public static void setMap(int mapNr) {
+	    zaehlerMapSelection = mapNr;
 	}
 	/**
 	 * Gibt die Mapnummer zurück
@@ -139,6 +148,40 @@ public class LobbyCreate {
 	 */
 	public static int getMap() {
 		return zaehlerMapSelection;
+	}
+	
+	/**
+	 * Wenn die naechste Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
+	 */
+	public static void setIncrementSkin(int player) {
+		LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() + 1) %3);
+		if (client.isHost()) {
+		    client.sendMessageToAllClients("509-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
+		}
+		else {
+		    client.sendMessage(client.getSession(), "508-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
+		}
+
+	}
+	/**
+	 * Wenn die vorherige Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
+	 */
+	public static void setDecrementSkin(int player) {
+		if (LobbyCreate.player[player].getSkin() == 0) {
+		    LobbyCreate.player[player].setSkin(2);
+		}
+		else {
+		    LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() - 1) %3);	
+		}
+		if (client.isHost()) {
+		    client.sendMessageToAllClients("509-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
+		}
+		else {
+		    client.sendMessage(client.getSession(), "508-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
+		}
+	}
+	public static void setSkin(int player, int skinNr) {
+	    LobbyCreate.player[player].setSkin(skinNr);
 	}
 	
 	/**

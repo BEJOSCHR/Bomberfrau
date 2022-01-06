@@ -63,28 +63,15 @@ public class LobbyPlayer {
 //	}
 	
 	
-	/**
-	 * Wenn die naechste Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
-	 */
-	public void setIncrementSkin() {
-		zaehlerSkinSelection = (zaehlerSkinSelection + 1)%3;
-	}
-	/**
-	 * Wenn die vorherige Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
-	 */
-	public void setDecrementSkin() {
-		if (zaehlerSkinSelection == 0) {
-			zaehlerSkinSelection = 2;
-		}
-		else {
-			zaehlerSkinSelection = (zaehlerSkinSelection - 1)%3;	
-		}
-	}
+
 	/**
 	 * Gibt die Skinnummer zurueck.
 	 */
 	public int getSkin() {
 		return zaehlerSkinSelection;
+	}
+	public void setSkin(int skin) {
+		zaehlerSkinSelection = skin;
 	}
 	/**
 	 * Setzt den Namen

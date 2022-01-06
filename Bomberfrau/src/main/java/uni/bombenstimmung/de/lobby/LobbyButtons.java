@@ -56,18 +56,20 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
-				int counterForReady = 1;
-				// Hier wird gecheckt, ob alle Player die Checkbox aktiviert haben
-				for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
-					if(LobbyCreate.player[i].getisReady() == true)
-						counterForReady++;
-				}
-				if (counterForReady == LobbyCreate.numberPlayer) {
-				    ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
-				    GraphicsHandler.switchToIngameFromLobby();
-				}
-
+			    	if (LobbyCreate.client.isHost()) {
+			    	    ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
+			    	    int counterForReady = 1;
+			    	    // Hier wird gecheckt, ob alle Player die Checkbox aktiviert haben
+			    	    for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
+			    		if(LobbyCreate.player[i].getisReady() == true) {
+			    		    counterForReady++;		    
+			    		}
+					}
+			    	    if (counterForReady == LobbyCreate.numberPlayer) {
+			    		ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
+					GraphicsHandler.switchToIngameFromLobby();
+			    	    }
+			    	}
 			}
 			@Override
 			public boolean isActiv() {
@@ -105,7 +107,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost())
+					return true;
+				else
+					return false;
 			}
 			@Override
 			public void draw(Graphics g) { 
@@ -128,7 +133,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost())
+					return true;
+				else
+					return false;
 			}
 			@Override
 			public void draw(Graphics g) { 
@@ -152,11 +160,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 1", MessageType.LOBBY);
-				LobbyCreate.player[0].setDecrementSkin();
+				LobbyCreate.setDecrementSkin(0);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer != 0)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 0)
 					return true;
 				else
 					return false;
@@ -181,11 +189,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 1", MessageType.LOBBY);
-				LobbyCreate.player[0].setIncrementSkin();
+				LobbyCreate.setIncrementSkin(0);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer != 0)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 0)
 					return true;
 				else
 					return false;
@@ -208,11 +216,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 2", MessageType.LOBBY);
-				LobbyCreate.player[1].setDecrementSkin();
+				LobbyCreate.setDecrementSkin(1);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 1)
 					return true;
 				else
 					return false;
@@ -236,11 +244,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 2", MessageType.LOBBY);
-				LobbyCreate.player[1].setIncrementSkin();
+				LobbyCreate.setIncrementSkin(1);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 1)
 					return true;
 				else
 					return false;
@@ -263,11 +271,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 3", MessageType.LOBBY);
-				LobbyCreate.player[2].setDecrementSkin();
+				LobbyCreate.setDecrementSkin(2);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 2)
 					return true;
 				else
 					return false;
@@ -291,11 +299,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 3", MessageType.LOBBY);
-				LobbyCreate.player[2].setIncrementSkin();
+				LobbyCreate.setIncrementSkin(2);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 2)
 					return true;
 				else
 					return false;
@@ -319,11 +327,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Left Player 4", MessageType.LOBBY);
-				LobbyCreate.player[3].setDecrementSkin();
+				LobbyCreate.setDecrementSkin(3);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 3)
 					return true;
 				else
 					return false;
@@ -347,11 +355,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void performAction_LEFT_RELEASE() {
 				ConsoleHandler.print("Right Player 4", MessageType.LOBBY);
-				LobbyCreate.player[3].setIncrementSkin();
+				LobbyCreate.setIncrementSkin(3);
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 3)
 					return true;
 				else
 					return false;
