@@ -28,6 +28,7 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class PlayerHandler {
     private static Player clientPlayer;
@@ -84,8 +85,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	clientPlayer = new Player(id, name, ipAdress, host, skin, pos);
+    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	clientPlayer = new Player(id, name, ipAdress, host, skin, pos, cC);
     }
     
     /**
@@ -105,8 +106,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	opponentPlayers.add(new Player(id, name, ipAdress, host, skin, pos));
+    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	opponentPlayers.add(new Player(id, name, ipAdress, host, skin, pos, cC));
 	opponentCount++;
     }
     
@@ -157,9 +158,9 @@ public class PlayerHandler {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), null);
 	} else {
 	    g.setColor(Color.black);
-	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+	    /*g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
 	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
@@ -169,9 +170,9 @@ public class PlayerHandler {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), null);
 	    } else {
 		g.setColor(Color.black);
-		g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+		/*g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
 		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
@@ -394,8 +395,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos));
+    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos, cC));
     }
     
     /**
@@ -404,9 +405,13 @@ public class PlayerHandler {
      */
     public static void initPlayers() {
 	// TODO: Verteilung mit IP-Adressen Vergleich anpassen, wenn ServerConnection implementiert wird.
-	setClientPlayer(playerFromLobby.get(0));
-	for (int i = 1; i < playerFromLobby.size(); i++) {
-	    addOpponentPlayer(playerFromLobby.get(i));
+	
+	for(Player p : playerFromLobby) {
+	    if(p.getId() == 0) {	// TODO: wenn Lobby connectedClient implementiert hat, dann hier ID von ConnectedClient abfragen
+		setClientPlayer(p);
+	    } else {
+		addOpponentPlayer(p);
+	    }
 	}
     }
 }

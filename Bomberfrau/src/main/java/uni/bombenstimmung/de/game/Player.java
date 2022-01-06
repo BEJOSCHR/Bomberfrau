@@ -23,6 +23,7 @@ import javax.swing.Timer;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
@@ -49,8 +50,9 @@ public class Player extends Entity implements ActionListener{
     private double yHitbox;
     private int direction;
     private double speedFactor;
+    private ConnectedClient connectedClient;
     
-    public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
+    public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
 	/* Offset-Variablen fuer Berechnung*/
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yOffset = GameData.MAP_SIDE_BORDER;
@@ -82,7 +84,8 @@ public class Player extends Entity implements ActionListener{
 	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
 	this.yHitbox = (double)GraphicsHandler.getHeight()/36;
 	this.direction = 0;
-	this.speedFactor = 540.0;
+	this.speedFactor = 360.0;
+	this.connectedClient = cC;
 	this.t = new Timer(8, this);
 	this.t.start();
 	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name + ", Pos(" + currentField.xPosition +
@@ -133,6 +136,12 @@ public class Player extends Entity implements ActionListener{
 	super.yPosition = (int)this.realPosY;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	
+	/*if(this.connectedClient.isHost()) {
+	    this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	} else {
+	    this.connectedClient.sendMessage(this.connectedClient.getSession(), "202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	}*/
+	
 	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
 	if (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
 	    this.currentField.getContent() == FieldContent.EXPLOSION2_NS || this.currentField.getContent() == FieldContent.EXPLOSION3_N ||
@@ -179,6 +188,15 @@ public class Player extends Entity implements ActionListener{
 	}
 	this.dead = dead;
 	Game.checkIfAllDead();
+    }
+    
+    public void setConnectedClient(ConnectedClient cC) {
+	this.connectedClient = cC;
+    }
+    
+    public void setDisplayCoordinates(int xPos, int yPos) {
+	super.xPosition = xPos;
+	super.yPosition = yPos;
     }
     
     public int getId() {
@@ -334,21 +352,30 @@ public class Player extends Entity implements ActionListener{
 	if (this.movementSpeed < 5) {
 	    this.movementSpeed++;
 	    
+	    /*
+	     * Berechnen des Speed Factors:
+	     * Bildschirmhoehe / gewuenschter Pixel-Shift = SpeedFactor
+	     * Bsp: 1080 / 3 = 360 (Standardlaufgeschwindigkeit)
+	     * Man kann natuerlich auch andere Bildschirmhoehen und Pixel-Shift werte benutzen.
+	     * Dies wird nicht im Programm, sondern vorher als statischer Wert zum Einfuegen berechnet.
+	     * Da es ein Faktor ist, bewegt man sich immer noch bei jeder Aufloesung gleich schnell.
+	     */
+	    
 	    switch (movementSpeed) {
 	    case 1:
-		this.speedFactor = 540.0;
+		this.speedFactor = 360.0;		// 1080 / 3
 		break;
 	    case 2:
-		this.speedFactor = 360.0;
+		this.speedFactor = 308.6;		// 1080 / 3.5
 		break;
 	    case 3:
-		this.speedFactor = 270.0;
+		this.speedFactor = 270.0;		// 1080 / 4
 		break;
 	    case 4:
-		this.speedFactor = 216.0;
+		this.speedFactor = 240.0;		// 1080 / 4,5
 		break;
 	    case 5:
-		this.speedFactor = 180.0;
+		this.speedFactor = 216.0;		// 1080 / 5
 	    }
 	    
 	    switch (this.direction) {
@@ -378,19 +405,19 @@ public class Player extends Entity implements ActionListener{
 	    
 	    switch (movementSpeed) {
 	    case 1:
-		this.speedFactor = 540.0;
+		this.speedFactor = 360.0;		// 1080 / 3
 		break;
 	    case 2:
-		this.speedFactor = 360.0;
+		this.speedFactor = 308.6;		// 1080 / 3.5
 		break;
 	    case 3:
-		this.speedFactor = 270.0;
+		this.speedFactor = 270.0;		// 1080 / 4
 		break;
 	    case 4:
-		this.speedFactor = 216.0;
+		this.speedFactor = 240.0;		// 1080 / 4,5
 		break;
 	    case 5:
-		this.speedFactor = 180.0;
+		this.speedFactor = 216.0;		// 1080 / 5
 	    }
 	    
 	    switch (this.direction) {

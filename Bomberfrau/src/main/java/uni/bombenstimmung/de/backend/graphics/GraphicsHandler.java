@@ -305,24 +305,25 @@ public class GraphicsHandler {
 		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
 		    if(i==0) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), null);
 		    }
 		    if(i==1) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), null);
 		    }
 		    if(i==2) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), null);
 		    }
 		    if(i==3) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15));
+				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), null);
 		    }
 		}
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
+	    	ConsoleHandler.print("Player Count: " + PlayerHandler.getAllPlayer().size(), MessageType.GAME);
 	    	GameCounter zaehler = new GameCounter();
 	    	zaehler.startCounter();
 	    	

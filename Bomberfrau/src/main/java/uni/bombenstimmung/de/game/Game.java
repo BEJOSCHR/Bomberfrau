@@ -17,6 +17,7 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class Game {
 
@@ -24,6 +25,7 @@ public class Game {
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
+    private static ServerHandler ingameServerHandler;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -292,8 +294,8 @@ public class Game {
     
     public static void gameOver() {
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
-	gameOver = true;
 	PlayerHandler.getClientPlayer().actionStop();
+	gameOver = true;
 //	try {
 //	    Thread.sleep(4000);
 //	}
