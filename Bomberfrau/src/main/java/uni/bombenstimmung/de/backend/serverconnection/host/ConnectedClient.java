@@ -33,6 +33,7 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class ConnectedClient extends IoHandlerAdapter{
 	
@@ -206,21 +207,72 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
 		
+			
 		// LOBBY TEST - Server Antwort
-		case 456:
-		    	String[] pMessage456 = message.split("-");
-		    	if (pMessage456[0] == "3") {
-			    if (pMessage456[1] == "red") {
+		case 500:
+		    	String[] pMessage500 = message.split("-");
+		    	if (pMessage500[0] == "3") {
+			    if (pMessage500[1] == "red") {
 				//Setze Farbe red
-				sendMessageToAllClients("457-" +pMessage456[1] + "-" + pMessage456[0]);
+				sendMessageToAllClients("457-" +pMessage500[1] + "-" + pMessage500[0]);
 			    }  
 		    	}
 		    	break;
 		    	
-		case 457:
+		case 5001:
 		    	String [] pMessage457 = message.split("-");
 		    	// set Farbe von PlayerID pMessage457[2]
+		    	break;
+		// LOBBY TEST - 
+		
+		// LOBBY Join Nachrichten von Clients an Server und anschließend Aufruf von Sever an alle Clients um neuen Client zu adden case 502
+		case 501:
+		    	String[] pMessage501 = message.split("-");
+		    	if(pMessage501[1].equals("binGeJoined")) {
+		    	    // Der gejointe Player muss die anderen Player Objekte auch noch erstellen. case 503-505
+		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberPlayer), pMessage501[2], pMessage501[3]);
 
+		    	    for(int i=0; i<LobbyCreate.numberPlayer; i++) {
+		    		ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
+		    	    	sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName());
+		    	    }
+
+		    	    sendMessageToAllClients("502-" + LobbyCreate.numberPlayer + "-" + pMessage501[2] + "-" + pMessage501[3]);
+		    	    sendMessage(session, "506-" + LobbyCreate.numberPlayer);
+		    	}
+		    	break;
+		// Aufruf an alle Clients einen neuen Client zu adden
+		case 502:
+		    	ConsoleHandler.print("Der case 502 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage502 = message.split("-");
+//		    	if(this.id != Integer.parseInt(pMessage502[2])) {
+			LobbyCreate.addPlayer(pMessage502[1], pMessage502[2], pMessage502[3]);
+
+		    	break;
+		
+		// Case 503-505 wird vom Server in 501 aufgerufen, sodass der zu joinende Client alle schon existierenen Player erstmal einfügt
+		case 503:
+		    	ConsoleHandler.print("Der case 503 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage503 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage503[1], pMessage503[2], pMessage503[3]);
+		    	break;
+		    	
+		case 504:
+		    	ConsoleHandler.print("Der case 504 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage504 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage504[1], pMessage504[2], pMessage504[3]);
+		    	break;
+		    	
+		case 505:
+		    	ConsoleHandler.print("Der case 505 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage505 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage505[1], pMessage505[2], pMessage505[3]);
+		    	break;
+		// Set numberPlayer for newly joined Players
+		case 506:
+			String[] pMessage506 = message.split("-");
+			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
+			break;
 		    	
 		case 900:
 			String[] pMessage900 = message.split("-");
@@ -230,8 +282,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
-		case 500: 
-		    	ConsoleHandler.print("Lobby Test", MessageType.LOBBY);
+
+		    
 		case 903:
 			String[] pMessage903 = message.split("-");
         	    	long currentTime = System.currentTimeMillis();

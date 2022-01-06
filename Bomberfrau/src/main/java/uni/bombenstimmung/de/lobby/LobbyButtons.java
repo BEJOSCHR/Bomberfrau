@@ -373,74 +373,74 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		
 		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////
 		
-		// Player 2
-		new MouseActionArea(xPlayer2Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("CheckBox Player 2", MessageType.LOBBY);
-				LobbyCreate.player[1].setisReady();
-			}
-			@Override
-			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
-					return true;
-				else
-					return false;
-			}
-			@Override
-			public void drawCustomParts(Graphics g){
-					if(LobbyCreate.player[1].getisReady() == true)
-						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
-			}
-		};
-		// Player 3
-		new MouseActionArea(xPlayer3Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("CheckBox Player 3", MessageType.LOBBY);
-				LobbyCreate.player[2].setisReady();
-			}
-			@Override
-			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
-					return true;
-				else
-					return false;
-			}
-			@Override
-			public void drawCustomParts(Graphics g){
-					if(LobbyCreate.player[2].getisReady() == true)
-						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null);
-			}
-		};
-		// Player 4
-		new MouseActionArea(xPlayer4Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
-			@Override
-			public void performAction_LEFT_RELEASE() {
-				ConsoleHandler.print("CheckBox Player 4", MessageType.LOBBY);
-				LobbyCreate.player[3].setisReady();
-			}
-			@Override
-			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
-					return true;
-				else
-					return false;
-			}
-			@Override
-			public void drawCustomParts(Graphics g){
-					if(LobbyCreate.player[3].getisReady() == true)
-						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
-			}
-		};
-		
-		
-		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
-
-			
+//		// Player 2
+//		new MouseActionArea(xPlayer2Right-100-40, yPlayerMap+15, 50, 50,
+//				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print("CheckBox Player 2", MessageType.LOBBY);
+//				LobbyCreate.player[1].setisReady();
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2)
+//					return true;
+//				else
+//					return false;
+//			}
+//			@Override
+//			public void drawCustomParts(Graphics g){
+//					if(LobbyCreate.player[1].getisReady() == true)
+//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
+//			}
+//		};
+//		// Player 3
+//		new MouseActionArea(xPlayer3Right-100-40, yPlayerMap+15, 50, 50,
+//				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print("CheckBox Player 3", MessageType.LOBBY);
+//				LobbyCreate.player[2].setisReady();
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3)
+//					return true;
+//				else
+//					return false;
+//			}
+//			@Override
+//			public void drawCustomParts(Graphics g){
+//					if(LobbyCreate.player[2].getisReady() == true)
+//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null);
+//			}
+//		};
+//		// Player 4
+//		new MouseActionArea(xPlayer4Right-100-40, yPlayerMap+15, 50, 50,
+//				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+//			@Override
+//			public void performAction_LEFT_RELEASE() {
+//				ConsoleHandler.print("CheckBox Player 4", MessageType.LOBBY);
+//				LobbyCreate.player[3].setisReady();
+//			}
+//			@Override
+//			public boolean isActiv() {
+//				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4)
+//					return true;
+//				else
+//					return false;
+//			}
+//			@Override
+//			public void drawCustomParts(Graphics g){
+//					if(LobbyCreate.player[3].getisReady() == true)
+//						g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
+//			}
+//		};
+//		
+//		
+//		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
+//
+//			
 		}
 
 	

@@ -50,9 +50,6 @@ public class GraphicsHandler {
 	private static boolean shuttingDown = false;
 	private static FrameDragListener frameDragListener;
 	public static LobbyCreate lobby;
-	public static ConnectedClient server;
-	public static ConnectedClient client;
-
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -301,25 +298,28 @@ public class GraphicsHandler {
 		
 
 		if (isHost == true) {
-		    try {
-			server = new ConnectedClient(true, null);
-			Thread.sleep(500);
-		    }
-		    catch (Exception e) {
-			e.printStackTrace();
-		    }
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
+//		    try {
+//			server = new ConnectedClient(true, null);
+//			Thread.sleep(500);
+//		    }
+//		    catch (Exception e) {
+//			e.printStackTrace();
+//		    }
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), isHost);
 		}
 		else {
-		    try {
-			client = new ConnectedClient(false, "127.0.0.1");
-			Thread.sleep(500);
-		    }
-		    catch (Exception e) {
-			e.printStackTrace();
-		    }
-		    lobby = new LobbyCreate();
-		    lobby.addPlayer(new LobbyPlayer("test1", Settings.getIp()));
+//		    try {
+//			client = new ConnectedClient(false, "127.0.0.1");
+//			Thread.sleep(500);
+//		    }
+//		    catch (Exception e) {
+//			e.printStackTrace();
+//		    }
+		    
+		    
+//		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
+		    
 		}
 
 //		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));

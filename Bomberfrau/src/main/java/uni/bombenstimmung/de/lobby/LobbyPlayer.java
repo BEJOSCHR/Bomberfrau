@@ -36,24 +36,18 @@ public class LobbyPlayer {
 		this.name = name;
 
 		isHost = true;
-		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
-		connectedClient = new ConnectedClient(true, null);
-		id = connectedClient.getId();
 	}
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
 	 */
 	public LobbyPlayer(String name, String ip) {
-		this.ip = ip;
 		this.name = name;
-
+		this.ip = ip;
 		isHost = false;
 		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
-		connectedClient = new ConnectedClient(true, ip);
-		id = connectedClient.getId();
 		
 	}
 	
@@ -112,8 +106,8 @@ public class LobbyPlayer {
     public int getId() {
     	return id;
     }
-    public void setId() {
-	id = connectedClient.getId();
+    public void setId(int id) {
+	this.id = id;
     }
     
     public String getIpAdress() {
@@ -125,6 +119,10 @@ public class LobbyPlayer {
     public boolean getisHost() {
     	return isHost;
     }
+    
+    public void setisHost(boolean x) {
+	isHost = x;
+    }
 	/**
 	 * Veraendert den Status, ob der Player ready ist, sodass der Host das Spiel starten kann.
 	 * Wird von der Checkbox aufgerufen, wo alle Player (ausser dem Host) den Button klicken koennen.
@@ -132,7 +130,7 @@ public class LobbyPlayer {
     public void setisReady() {
     	if (isReady == false) {
     	    isReady = true;
-    	    connectedClient.sendMessage(connectedClient.getSession(), "456-ready");
+    	    connectedClient.sendMessage(connectedClient.getSession(), "500-ready");
     	}
 
     	else if (isReady == true)

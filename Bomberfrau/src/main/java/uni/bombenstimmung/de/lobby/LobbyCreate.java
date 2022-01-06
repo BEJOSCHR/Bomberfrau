@@ -12,12 +12,15 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import org.apache.mina.core.session.IoSession;
+
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class LobbyCreate {
@@ -27,6 +30,7 @@ public class LobbyCreate {
 	static int zaehlerMapSelection = 0;
 	static int hochRunterNavigation = 0;
 	public static int numberPlayer = 0;
+	public static ConnectedClient client;
 	
 	
 	/**
@@ -34,33 +38,62 @@ public class LobbyCreate {
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Host wird als player 0 im Array gespeichert.
-	public LobbyCreate (LobbyPlayer player){
-		LobbyCreate.player[numberPlayer] = player;
+	public LobbyCreate (LobbyPlayer player, boolean isHost) {
+		client = new ConnectedClient(true, null);
+		this.player[client.getId()] = player;
+		this.player[client.getId()].setId(client.getId());
 		numberPlayer++;
 		initializeImages();
 //		connectedClient[0] = new ConnectedClient(true, null);
 	}
 	
-	//Test Konstruktor um Cleints zu createn
-	public LobbyCreate () {
+	/**
+	 * Wird aufgerufen, wenn ein Player der Lobby beitritt. 
+	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
+	 */
+	public LobbyCreate (LobbyPlayer player) {
+	    
+	    try {
+		client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von der Main gezogen wird: Settings.getIp() oder so
+		Thread.sleep(500);
+	    }
+	    catch (Exception e) {
+		e.printStackTrace();
+	    }
 
+		client.sendMessage(client.getSession(), "501" + "-" + "binGeJoined" + "-" + client.getId() + "-" + player.getName());
 	}
 	
+	
+	
+	
 	/**
-	 * Wird aufgerufen, wenn ein Player der Lobby beitritt
+	 * Wird aufgerufen, wenn der Host seinen Clients mitteilt, dass ein neuer Player der Lobby gejoint ist, sodass diese auf ihrem lokalen Rechner diese darstellen können.
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Ein weiterer Player wird als nächstes im Array erstellt
-	public void addPlayer(LobbyPlayer player) {
-		LobbyCreate.player[numberPlayer] = player;
-//		connectedClient[0] = new ConnectedClient(false, player.getIpAdress());
-		numberPlayer++;
+	public static void addPlayer(String numberPlayers, String id, String name) {
+	    	LobbyCreate.player[Integer.parseInt(numberPlayers)] = new LobbyPlayer(name, "");
+		LobbyCreate.player[Integer.parseInt(numberPlayers)].setId(Integer.parseInt(id));
+
+		if(client.isHost()) {
+		    numberPlayer++;	
+		    ConsoleHandler.print("Host hat das aufgerufen:" + client.getId(), MessageType.LOBBY);
+		    
+		}
+		else {
+		    numberPlayer = Integer.parseInt(numberPlayers);
+		    ConsoleHandler.print("Client hat das aufgerufen" + client.getId(), MessageType.LOBBY);
+		}
+		initializeImages();
+		ConsoleHandler.print("numberOlayer: " + numberPlayer + "Alle Player jetz: ", null);
 	}
+
 	
 	/**
 	 * Laed alle Images der Mapauswahl in einem Array. Die Mapauswahl wird vom Host gesteuert.
 	 */
-	public void initializeImages() {
+	public static void initializeImages() {
 		LobbyCreate.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
 		LobbyCreate.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
 		LobbyCreate.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
@@ -152,6 +185,9 @@ public class LobbyCreate {
 		}
 		return host;
 	}
+	public static void setNumberPlayer(int numberPlayers) {
+	    numberPlayer = numberPlayers;
+	}
 
 	/**
 	 * Wird von Label.java aufgerufen und drawed alles ausser die Buttons.
@@ -162,6 +198,11 @@ public class LobbyCreate {
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
+//		try {
+//		Thread.sleep(3000);
+//		}catch(Exception e) {
+//		    e.printStackTrace();
+//		}
 		
 		for(int i=0; i < numberPlayer; i++) {
 			if (player[i].getisHost() == true) {
