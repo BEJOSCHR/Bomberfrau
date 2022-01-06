@@ -244,10 +244,7 @@ public class Menu {
 
 	comboboxReso.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		// wird extra aufgerufen, da inzwischen der Monitor (bei mehreren)
-		// durch Verschieben des Fensters ein anderer sein kann
-		Settings.getMonitorResoltion();
-		
+
 		int t = (int) comboboxReso.getSelectedIndex();
 		t = Settings.setResolution(t);
 		Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
@@ -304,7 +301,7 @@ public class Menu {
 	    }
 	});
 
-	sliderMusic = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getVol_music());
+	sliderMusic = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIni_VolMusic());
 	sliderMusic.setBackground(Color.WHITE);
 	sliderMusic.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.2),
 		(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
@@ -321,20 +318,18 @@ public class Menu {
 		// zuerst wird die laufende Musik angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = (float) (-36F + (30 * Math.log10(1 + sliderMusic.getValue() / 9)));
+		float vol = VolumeIntToFloat(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
-		if (sliderMusic.getValue() == 0)
-		    vol = -80;
 		volume.setValue(vol);
 
 		// danach wird die 'Music Category' Lautstärke angepasst
-		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.15D + sliderMusic.getValue() / 133);
-		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.15D + sliderMusic.getValue() / 133);
+		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
+		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
 	    }
 	});
 
-	sliderSound = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getVol_sound());
+	sliderSound = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIni_VolSound());
 	sliderSound.setBackground(Color.WHITE);
 	sliderSound.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.3),
 		(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
@@ -348,19 +343,23 @@ public class Menu {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
 		ConsoleHandler.print("mousePressed", MessageType.MENU);
-		SoundHandler.playSound(SoundType.OPTIONS, true);
+		SoundHandler.playSound2(SoundType.OPTIONS, true);
 		ConsoleHandler.print("Sound gestartet", MessageType.MENU);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = (31f * (Settings.getVol_sound() / 100f) - 25f);
+		float vol = VolumeIntToFloat(sliderSound.getValue());
 		volume.setValue(vol);
 
 	    }
-	    
+
 	    @Override
 	    public void mouseReleased(MouseEvent e) {
 		ConsoleHandler.print("mouseReleased", MessageType.MENU);
 		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
+		
+		// am Ende wird die 'Sound Category' Lautstärke angepasst
+		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
+		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
 	    }
 
@@ -382,15 +381,11 @@ public class Menu {
 		Settings.setVol_sound(sliderSound.getValue());
 		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
 
-		// zuerst wird der laufende Sound angepasst
+		// währenddessen wird der laufende Sound angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = (31f * (Settings.getVol_sound() / 100f) - 25f);
+		float vol = VolumeIntToFloat(sliderSound.getValue());
 		volume.setValue(vol);
-
-		// danach wird die 'Sound Category' Lautstärke angepasst
-		SoundHandler.setCategoryVolume(SoundCategory.MENU_SOUND, -0.15D + sliderSound.getValue() / 133);
-		SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.15D + sliderSound.getValue() / 133);
 
 	    }
 	});
@@ -778,6 +773,18 @@ public class Menu {
      * HILFSMETHODEN
      *****************************************************************************************************************/
 
+    /**
+     * Rechnet linearen Werte zwischen min u. max (für Lautstärken) in Float um
+     */
+    public static float VolumeIntToFloat(int i) {
+	float vol, min = -40F, max = -6F;
+	// Für Werte von -36F (fast aus) bis -6F (laut)
+	vol = (float)(min + (max-min)*Math.log10(1+i*0.09));
+	if (vol == min) vol = -80F;
+	if (vol > 6F) vol = 6F;
+	return vol;
+    }
+    
     /**
      * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
      */

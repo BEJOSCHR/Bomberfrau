@@ -19,8 +19,6 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
-import uni.bombenstimmung.de.backend.sounds.SoundCategory;
-import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -116,11 +114,11 @@ public class Settings {
 	return res_height_max;
     }
 
-    public static int getVol_music() {
+    public static int getIni_VolMusic() {
 	return vol_music;
     }
 
-    public static int getVol_sound() {
+    public static int getIni_VolSound() {
 	return vol_sound;
     }
 
@@ -144,10 +142,10 @@ public class Settings {
 	return plant_bomb;
     }
 
-    public static Float getFactor() {
+    public static float getFactor() {
 	return factor;
     }
-
+    
     /*****************************************************************************************************************
      * SETTER
      *****************************************************************************************************************/
@@ -317,30 +315,30 @@ public class Settings {
     }
     
 
-    public static void setAllVolumes() {
-
-	// Volume Tests
-//	SoundHandler.setCategoryVolume(SoundCategory.MUSIC, -0.1D);
-//	SoundHandler.playSound(SoundType.INTRO, false);
-//	Menu.sleep(5000);
+//    public static void setAllVolumes() {
+//
+//	// Volume Tests
+////	SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.15D);
+////	SoundHandler.playSound(SoundType.INTRO, false);
+////	Menu.sleep(5000);
+////	
+////	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+10/9)));
+////	Menu.sleep(5000);
+////	
+////	
+////	SoundHandler.setCategoryVolume(SoundCategory.MUSIC, 0.6D);
+////	SoundHandler.playSound(SoundType.INTRO, false);
+////	Menu.sleep(5000);
+////	
+////	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+100/9)));
+////	Menu.sleep(5000);
 //	
-//	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+10/9)));
-//	Menu.sleep(5000);
-//	
-//	
-//	SoundHandler.setCategoryVolume(SoundCategory.MUSIC, 0.6D);
-//	SoundHandler.playSound(SoundType.INTRO, false);
-//	Menu.sleep(5000);
-//	
-//	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+100/9)));
-//	Menu.sleep(5000);
-	
-	SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC,   -0.15D + Settings.getVol_music()/133);
-	SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.15D + Settings.getVol_music()/133);
-
-	SoundHandler.setCategoryVolume(SoundCategory.MENU_SOUND,    -0.15D + Settings.getVol_sound()/133);
-	SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.15D + Settings.getVol_sound()/133);
-    }
+//	SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC,   -0.2D + Settings.getIni_VolMusic()/125);
+//	SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + Settings.getIni_VolMusic()/125);
+//
+//	SoundHandler.setCategoryVolume(SoundCategory.MENU_SOUND,    -0.2D + Settings.getIni_VolSound()/125);
+//	SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.2D + Settings.getIni_VolSound()/125);
+//    }
 
     
     /*****************************************************************************************************************
