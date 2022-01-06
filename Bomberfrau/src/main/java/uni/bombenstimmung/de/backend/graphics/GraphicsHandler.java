@@ -151,12 +151,10 @@ public class GraphicsHandler {
 	    
 		ConsoleHandler.print("Switched to 'INTRO' from 'START'!", MessageType.BACKEND);
 		
-		Settings.setAllVolumes();
-		
 		AnimationHandler.stopAllAnimations();
 		
-	    	//SoundHandler.playSound(SoundType.INTRO, false);
-	    	SoundHandler.playSound(SoundType.INTRO, false, (float)(-36F + 30*Math.log10(1+(Settings.getVol_music())/9)));
+	    	SoundHandler.playSound2(SoundType.INTRO, false);
+	    	//SoundHandler.playSound(SoundType.INTRO, false,  Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 
 		MenuAnimations.introTextAni();
 		MenuAnimations.introAnimation();
@@ -187,8 +185,8 @@ public class GraphicsHandler {
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
 		
-	    	//SoundHandler.playSound(SoundType.MENU, true);
-	    	SoundHandler.playSound(SoundType.MENU, false, (float)(-36F + 30*Math.log10(1+(Settings.getVol_music())/9)));
+	    	SoundHandler.playSound2(SoundType.MENU, false);
+	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 		
 		displayType = DisplayType.MENU;
 
@@ -212,7 +210,7 @@ public class GraphicsHandler {
 	public static void switchToMenuFromOptions() {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'OPTIONS'!", MessageType.BACKEND);
-		Settings.setAllVolumes();
+
 		AnimationHandler.stopAllAnimations();
 		MenuAnimations.titlePulseAni();
 		//Menu.menuComponentsActive(true);
@@ -250,7 +248,7 @@ public class GraphicsHandler {
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		
-	    	SoundHandler.playSound(SoundType.MENU, true);
+	    	SoundHandler.playSound2(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
 	}
@@ -267,7 +265,7 @@ public class GraphicsHandler {
 		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		
-	    	SoundHandler.playSound(SoundType.MENU, true);
+	    	SoundHandler.playSound2(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
 	}
