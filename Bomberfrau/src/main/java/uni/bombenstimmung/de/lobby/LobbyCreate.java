@@ -61,7 +61,9 @@ public class LobbyCreate {
 		e.printStackTrace();
 	    }
 
-		client.sendMessage(client.getSession(), "501" + "-" + "binGeJoined" + "-" + client.getId() + "-" + player.getName());
+	    client.sendMessage(client.getSession(), "501" + "-" + "binGeJoined" + "-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
+	    initializeImages();
+		
 	}
 	
 	
@@ -72,13 +74,14 @@ public class LobbyCreate {
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Ein weiterer Player wird als nächstes im Array erstellt
-	public static void addPlayer(String numberPlayers, String id, String name) {
+	public static void addPlayer(String numberPlayers, String id, String name, String isHost) {
 	    	int IntnumberPlayers = Integer.parseInt(numberPlayers);
 	    	if(IntnumberPlayers == 4) {
 	    	    IntnumberPlayers = 3;
 	    	}
 	    	LobbyCreate.player[IntnumberPlayers] = new LobbyPlayer(name, "");
 		LobbyCreate.player[IntnumberPlayers].setId(Integer.parseInt(id));
+		LobbyCreate.player[IntnumberPlayers].setisHost(Boolean.parseBoolean(isHost));
 
 		if(client.isHost()) {
 		    numberPlayer++;	
@@ -89,7 +92,6 @@ public class LobbyCreate {
 		    numberPlayer = Integer.parseInt(numberPlayers);
 		    ConsoleHandler.print("Client hat das aufgerufen" + client.getId(), MessageType.LOBBY);
 		}
-		initializeImages();
 		ConsoleHandler.print("numberOlayer: " + numberPlayer + "Alle Player jetz: ", null);
 	}
 
