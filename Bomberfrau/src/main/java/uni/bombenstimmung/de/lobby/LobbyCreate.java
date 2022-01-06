@@ -74,7 +74,7 @@ public class LobbyCreate {
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 */
 	// Ein weiterer Player wird als nächstes im Array erstellt
-	public static void addPlayer(String numberPlayers, String id, String name, String isHost) {
+	public static void addPlayer(String numberPlayers, String id, String name, String isHost, String mapNr, String skinNr) {
 	    	int IntnumberPlayers = Integer.parseInt(numberPlayers);
 	    	if(IntnumberPlayers == 4) {
 	    	    IntnumberPlayers = 3;
@@ -82,6 +82,10 @@ public class LobbyCreate {
 	    	LobbyCreate.player[IntnumberPlayers] = new LobbyPlayer(name, "");
 		LobbyCreate.player[IntnumberPlayers].setId(Integer.parseInt(id));
 		LobbyCreate.player[IntnumberPlayers].setisHost(Boolean.parseBoolean(isHost));
+		if (mapNr != "" && skinNr != "") {
+		    LobbyCreate.player[IntnumberPlayers].setSkin(Integer.parseInt(skinNr));
+		    LobbyCreate.setMap(Integer.parseInt(mapNr));
+		}
 
 		if(client.isHost()) {
 		    numberPlayer++;	
