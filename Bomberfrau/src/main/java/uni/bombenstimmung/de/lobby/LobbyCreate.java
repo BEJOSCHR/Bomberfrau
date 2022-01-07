@@ -29,7 +29,7 @@ public class LobbyCreate {
 	static LoadedImage mapSelection[] = new LoadedImage[3];
 	static int zaehlerMapSelection = 0;
 	static int hochRunterNavigation = 0;
-	public static int numberPlayer = 0;
+	public static int numberOfMaxPlayers = 0;
 	public static ConnectedClient client;
 	
 	
@@ -42,7 +42,7 @@ public class LobbyCreate {
 		client = new ConnectedClient(true, null);
 		this.player[client.getId()] = player;
 		this.player[client.getId()].setId(client.getId());
-		numberPlayer++;
+		numberOfMaxPlayers++;
 		initializeImages();
 //		connectedClient[0] = new ConnectedClient(true, null);
 	}
@@ -79,24 +79,25 @@ public class LobbyCreate {
 	    	if(IntnumberPlayers == 4) {
 	    	    IntnumberPlayers = 3;
 	    	}
-	    	LobbyCreate.player[IntnumberPlayers] = new LobbyPlayer(name, "");
-		LobbyCreate.player[IntnumberPlayers].setId(Integer.parseInt(id));
-		LobbyCreate.player[IntnumberPlayers].setisHost(Boolean.parseBoolean(isHost));
+	    	LobbyCreate.player[Integer.parseInt(id)] = new LobbyPlayer(name, "");
+		LobbyCreate.player[Integer.parseInt(id)].setId(Integer.parseInt(id));
+		LobbyCreate.player[Integer.parseInt(id)].setisHost(Boolean.parseBoolean(isHost));
 		if (mapNr != "" && skinNr != "") {
-		    LobbyCreate.player[IntnumberPlayers].setSkin(Integer.parseInt(skinNr));
+		    LobbyCreate.player[Integer.parseInt(id)].setSkin(Integer.parseInt(skinNr));
 		    LobbyCreate.setMap(Integer.parseInt(mapNr));
 		}
 
 		if(client.isHost()) {
-		    numberPlayer++;	
-		    ConsoleHandler.print("Host hat das aufgerufen:" + client.getId(), MessageType.LOBBY);
-		    
+		    if(numberOfMaxPlayers < 4) {
+			numberOfMaxPlayers++;	
+			ConsoleHandler.print("Host hat das aufgerufen:" + client.getId(), MessageType.LOBBY);
+		    }
 		}
 		else {
-		    numberPlayer = Integer.parseInt(numberPlayers);
+		    numberOfMaxPlayers = Integer.parseInt(numberPlayers);
 		    ConsoleHandler.print("Client hat das aufgerufen" + client.getId(), MessageType.LOBBY);
 		}
-		ConsoleHandler.print("numberOlayer: " + numberPlayer + "Alle Player jetz: ", null);
+		ConsoleHandler.print("numberOlayer: " + numberOfMaxPlayers + "Alle Player jetz: ", null);
 	}
 
 	
@@ -113,7 +114,7 @@ public class LobbyCreate {
 	 * Gibt die toString der player aus
 	 */
 	public static void printPlayers() {
-			for(int i=0; i < numberPlayer; i++) {
+			for(int i=0; i < numberOfMaxPlayers; i++) {
 				ConsoleHandler.print(player[i].toString(), MessageType.LOBBY); 
 			}
 		}
@@ -227,7 +228,7 @@ public class LobbyCreate {
 	 * Fuer den Parameter int i wird die Anzahl der Player benötigt
 	 */
 	public static int getXValueForDraw(int i) {
-		if (numberPlayer != 0)
+		if (numberOfMaxPlayers != 0)
 			// Dieser Wert, damit der Screen sich variabel für die Anzahl der Player verändert. Die Buttons sind dann aber halt blöd
 //			return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*i*2);
 			return (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*i*2);
@@ -239,15 +240,17 @@ public class LobbyCreate {
 	 */
 	public static int getHost() {
 		int host = 0;
-		for(int i=0; i < numberPlayer; i++) {
+		for(int i=0; i < numberOfMaxPlayers; i++) {
+		    if(player[i] != null) {
 			if (player[i].getisHost() == true) {
 				host = i;
 			}
+		    }
 		}
 		return host;
 	}
 	public static void setNumberPlayer(int numberPlayers) {
-	    numberPlayer = numberPlayers;
+	    numberOfMaxPlayers = numberPlayers;
 	}
 
 	/**
@@ -265,7 +268,8 @@ public class LobbyCreate {
 //		    e.printStackTrace();
 //		}
 		
-		for(int i=0; i < numberPlayer; i++) {
+		for(int i=0; i < numberOfMaxPlayers; i++) {
+		    if (player[i] != null) {
 			if (player[i].getisHost() == true) {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (int)(getXValueForDraw(i)-12.5), (int)(GraphicsHandler.getHeight()*0.15)- 50, null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5), null);
@@ -274,7 +278,7 @@ public class LobbyCreate {
 			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
 
 			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
-			
+		    }
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
 		

@@ -60,12 +60,12 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
 			    	    int counterForReady = 1;
 			    	    // Hier wird gecheckt, ob alle Player die Checkbox aktiviert haben
-			    	    for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
+			    	    for(int i = 1; i < LobbyCreate.numberOfMaxPlayers ; i++) {
 			    		if(LobbyCreate.player[i].getisReady() == true) {
 			    		    counterForReady++;		    
 			    		}
 					}
-			    	    if (counterForReady == LobbyCreate.numberPlayer) {
+			    	    if (counterForReady == LobbyCreate.numberOfMaxPlayers) {
 			    		ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
 					GraphicsHandler.switchToIngameFromLobby();
 			    	    }
@@ -82,11 +82,26 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Exit", 20, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
-			    for(int i = 1; i < LobbyCreate.numberPlayer ; i++) {
-				LobbyCreate.player[i] = null;
-			}
-			    	LobbyCreate.numberPlayer = 0;
-//			    	GraphicsHandler.lobby = null;
+			    	if (LobbyCreate.client.isHost()) {
+			    	    if (LobbyCreate.numberOfMaxPlayers > 1) {
+			    		LobbyCreate.client.sendMessageToAllClients("514-");
+//				    	LobbyCreate.client.getSession().closeNow();
+			    	    }
+			    	}
+			    	else {
+			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
+			    	}
+			    	
+			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+				    LobbyCreate.player[i] = null;
+			    	}
+			    	
+//			    	if (LobbyCreate.client.isHost()) {
+//			    	    if (LobbyCreate.numberPlayer > 1) {
+//
+//			    	    }
+//			    	}
+			    	LobbyCreate.numberOfMaxPlayers = 0;
 				GraphicsHandler.switchToMenuFromLobby();
 			}
 			@Override
@@ -393,7 +408,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 2) {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberOfMaxPlayers >= 2 && LobbyCreate.player[1] != null) {
 				    return true;    
 				}
 				else {
@@ -402,9 +417,12 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
-					if(LobbyCreate.player[1].getisReady() == true) {
-					    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
-					}
+			    	if(LobbyCreate.player[1] != null) {
+			    	    if(LobbyCreate.player[1].getisReady() == true) {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
+			    	    }			    	    
+			    	}
+
 			}
 		};
 		// Player 3
@@ -419,7 +437,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 3) {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberOfMaxPlayers >= 3 && LobbyCreate.player[2] != null) {
 				    return true;    
 				}
 				else {
@@ -428,10 +446,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
+			    if(LobbyCreate.player[2] != null) {
 				if(LobbyCreate.player[2].getisReady() == true) {
 				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null); 
-				}
-
+				}				
+			    }
 			}
 		};
 		// Player 4
@@ -446,7 +465,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberPlayer >= 4) {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberOfMaxPlayers >= 4 && LobbyCreate.player[3] != null) {
 				    return true;
 				}
 				else {
@@ -455,9 +474,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public void drawCustomParts(Graphics g){
-					if(LobbyCreate.player[3].getisReady() == true) {
-					    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
-					}
+			    if(LobbyCreate.player[2] != null) {
+				if(LobbyCreate.player[3].getisReady() == true) {
+				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
+				}	
+			    }
 			}
 		};
 		

@@ -340,7 +340,7 @@ public class GraphicsHandler {
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	
 	    	// Add all Players into InGame ArrayList "PlayerFromLobby"
-		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
+		for(int i=0; i < LobbyCreate.numberOfMaxPlayers; i++) {
 		    if(i==0) {
 			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
 				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1));

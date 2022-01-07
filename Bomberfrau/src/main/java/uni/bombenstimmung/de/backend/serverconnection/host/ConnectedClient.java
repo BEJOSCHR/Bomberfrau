@@ -31,6 +31,7 @@ import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
@@ -231,15 +232,18 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	if(pMessage501[1].equals("binGeJoined")) {
 		    	    // Der gejointe Player muss die anderen Player Objekte auch noch erstellen. case 503-505
 
-		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberPlayer), pMessage501[2], pMessage501[3], pMessage501[4], "", "");
-		    	    for(int i=0; i<LobbyCreate.numberPlayer; i++) {
-		    		ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
-		    	    	sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
-		    	    		+ "-" + LobbyCreate.getMap() + "-" + LobbyCreate.player[i].getSkin());
+		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberOfMaxPlayers), pMessage501[2], pMessage501[3], pMessage501[4], "", "");
+		    	    for(int i=0; i<LobbyCreate.numberOfMaxPlayers; i++) {
+		    		if (LobbyCreate.player[i] != null) {
+		    		    ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
+			    	    sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
+			    	    	+ "-" + LobbyCreate.getMap() + "-" + LobbyCreate.player[i].getSkin()); 
+		    		}
+
 		    	    }
 
-		    	    sendMessageToAllClients("502-" + LobbyCreate.numberPlayer + "-" + pMessage501[2] + "-" + pMessage501[3] + "-" + pMessage501[4]);
-		    	    sendMessage(session, "506-" + LobbyCreate.numberPlayer);
+		    	    sendMessageToAllClients("502-" + LobbyCreate.numberOfMaxPlayers + "-" + pMessage501[2] + "-" + pMessage501[3] + "-" + pMessage501[4]);
+		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
 		    	}
 		    	break;
 		// Aufruf an alle Clients einen neuen Client zu adden
@@ -301,6 +305,36 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 511:
 		    	String[] pMessage511 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage511[1])].setisReadyForClients(pMessage511[2]);
+		    	break;
+		    
+		// EXIT per BUTTON
+		case 512:
+		    	String[] pMessage512 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
+		    	removeClient(session);
+		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
+			    LobbyCreate.numberOfMaxPlayers--;
+		    	}
+		    	sendMessageToAllClients("513-" + pMessage512[1]);
+		    	break;
+		    	
+		// Wird von allen Clients aufgerufen, sodass der geleavede Player aus dem Array geloescht wird    	
+		case 513:
+		    	String[] pMessage513 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage513[1])] = null;
+		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage513[1])) {
+			    LobbyCreate.numberOfMaxPlayers--;
+		    	}
+		    	break;
+		    	
+		// Wird aufgerufen, sobald der Host leaved
+		case 514:
+		    	for(int i=0;i<=LobbyCreate.numberOfMaxPlayers;i++){
+		    	    LobbyCreate.player[i] = null;
+		    	}
+		    	LobbyCreate.numberOfMaxPlayers = 0;
+		    	session.closeNow();
+		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
 		    	
 		case 900:
