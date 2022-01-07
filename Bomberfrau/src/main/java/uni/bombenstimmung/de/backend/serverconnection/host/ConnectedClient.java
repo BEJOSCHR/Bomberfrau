@@ -332,7 +332,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 //		    	for(int i=0;i<=3;i++){
 //		    	    LobbyCreate.player[i] = null;
 //		    	}
-//		    	LobbyCreate.numberOfMaxPlayers = 0;
+		    	LobbyCreate.numberOfMaxPlayers = 0;
 		    	GraphicsHandler.lobby = null;
 		    	session.closeNow();
 		    	GraphicsHandler.switchToMenuFromLobby();
