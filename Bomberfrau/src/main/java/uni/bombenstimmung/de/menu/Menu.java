@@ -139,7 +139,6 @@ public class Menu {
 
 	    public void keyReleased(KeyEvent e) {
 		String txt = name_box.getText();
-		// System.out.println("name_box text length = " + name_box.getText().length());
 		if (!txt.isEmpty()) {
 		    name_info.setText("");
 		    name_info.repaint();

@@ -14,6 +14,12 @@ public enum SoundType {
     	MENU,
     	OPTIONS,
     	
+    	FUSE,          //Zündschnur
+    	EXPLOSION,
+    	ITEM,
+    	WALL,
+    	DYING,
+    	
 	TEST_START;
 	
 }

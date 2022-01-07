@@ -21,6 +21,9 @@ import javax.swing.Timer;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.menu.Menu;
 
 public class Bomb implements ActionListener{
 
@@ -31,6 +34,8 @@ public class Bomb implements ActionListener{
     private int counter;
     private Field placedField;
     private ArrayList<Wall> targetedWalls;
+    
+    private boolean fuse = false;
     
     /**
      * Platziert die Bombe auf einem bestimmten Feld
@@ -64,8 +69,15 @@ public class Bomb implements ActionListener{
      */
     public void actionPerformed(ActionEvent e) {
 	this.counter++;
-	if (this.counter == this.timer) {
+	if (this.counter < this.timer) {
+	    if (!fuse) SoundHandler.playSound2(SoundType.FUSE, false);
+	    fuse = true;
+	}
+	else if (this.counter == this.timer) {
+	    fuse = false;
+	    SoundHandler.playSound2(SoundType.EXPLOSION, false);
 	    this.explodeFire();
+	    SoundHandler.stopSound(SoundType.FUSE);
 	} else if (this.counter >= this.timer + 2) {
 	    this.explode();
 	}
