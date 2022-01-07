@@ -338,6 +338,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
 		    	
+		case 515:
+		    	GraphicsHandler.switchToIngameFromLobby();
+		    	break;
+		    	
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);
