@@ -108,14 +108,13 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	
 //			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
 //				    LobbyCreate.player[i] = null;
-//			    	}
-			    	
-			    	
+//			    	}	
 //			    	if (LobbyCreate.client.isHost()) {
 //			    	    if (LobbyCreate.numberPlayer > 1) {
 //
 //			    	    }
 //			    	}
+			    	
 			    	LobbyCreate.numberOfMaxPlayers = 0;
 			    	GraphicsHandler.lobby = null;
 				GraphicsHandler.switchToMenuFromLobby();
@@ -138,10 +137,13 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost())
-					return true;
-				else
-					return false;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost()) {
+					return true; 
+				}
+				else {
+					return false;				    
+				}
+
 			}
 			@Override
 			public void draw(Graphics g) { 
@@ -164,10 +166,13 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost())
-					return true;
-				else
-					return false;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost()) {
+					return true;	    
+				}
+
+				else {
+					return false;				    
+				}
 			}
 			@Override
 			public void draw(Graphics g) { 
@@ -224,10 +229,13 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 0)
-					return true;
-				else
-					return false;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.getId() == 0) {
+				    return true;    
+				}
+
+				else {
+				    return false;				    
+				}
 			}
 			@Override
 			public void draw(Graphics g) {
@@ -438,7 +446,6 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
 			    	    }			    	    
 			    	}
-
 			}
 		};
 		// Player 3

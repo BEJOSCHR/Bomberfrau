@@ -342,28 +342,27 @@ public class GraphicsHandler {
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	
 	    	// Add all Players into InGame ArrayList "PlayerFromLobby"
-	    	
-		PlayerHandler.addPlayerFromLobby(LobbyCreate.client.getId(), LobbyCreate.player[LobbyCreate.client.getId()].getName(),  LobbyCreate.player[LobbyCreate.client.getId()].getIpAdress(),
-			LobbyCreate.client.isHost(), LobbyCreate.player[LobbyCreate.client.getId()].getSkin(), new Point(1,1), LobbyCreate.client);
 		
-//		for(int i=0; i < LobbyCreate.numberOfMaxPlayers; i++) {
-//		    if(i==0) {
-//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), LobbyCreate.client);
-//		    }
-//		    if(i==1) {
-//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), LobbyCreate.client);
-//		    }
-//		    if(i==2) {
-//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), LobbyCreate.client);
-//		    }
-//		    if(i==3) {
-//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
-//		    }
-//		}
+		for(int i=0; i < LobbyCreate.numberOfMaxPlayers; i++) {
+		    if (LobbyCreate.player[i] != null) {
+			    if(i==0) {
+				PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+					LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), LobbyCreate.client);
+			    }
+			    if(i==1) {
+				PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+					LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), LobbyCreate.client);
+			    }
+			    if(i==2) {
+				PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+					LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), LobbyCreate.client);
+			    }
+			    if(i==3) {
+				PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+					LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
+			    }
+		    }
+		}
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());

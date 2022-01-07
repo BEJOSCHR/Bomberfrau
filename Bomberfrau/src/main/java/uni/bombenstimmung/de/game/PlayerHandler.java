@@ -29,6 +29,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class PlayerHandler {
     private static Player clientPlayer;
@@ -407,7 +408,7 @@ public class PlayerHandler {
 	// TODO: Verteilung mit IP-Adressen Vergleich anpassen, wenn ServerConnection implementiert wird.
 	
 	for(Player p : playerFromLobby) {
-	    if(p.getId() == 0) {	// TODO: wenn Lobby connectedClient implementiert hat, dann hier ID von ConnectedClient abfragen
+	    if(p.getId() == LobbyCreate.client.getId()) {	// TODO: wenn Lobby connectedClient implementiert hat, dann hier ID von ConnectedClient abfragen
 		setClientPlayer(p);
 	    } else {
 		addOpponentPlayer(p);

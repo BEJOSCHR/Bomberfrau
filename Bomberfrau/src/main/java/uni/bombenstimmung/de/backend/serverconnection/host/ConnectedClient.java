@@ -355,7 +355,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	session.closeNow();
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
-		    	
+		// Wird von allen Clients aufgerufen, sobald alle in das Ingame sollen    	
 		case 515:
 		    	GraphicsHandler.switchToIngameFromLobby();
 		    	break;
