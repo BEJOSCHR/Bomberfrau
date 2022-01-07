@@ -21,7 +21,7 @@ public class ImageHandler {
 	private static List<LoadedImage> images = new ArrayList<LoadedImage>();
 	
 	/**
-	 * Wird am Start aufgerufen und läd alle Images
+	 * Wird am Start aufgerufen und lï¿½d alle Images
 	 */
 	public static void initImages() {
 		
@@ -100,10 +100,10 @@ public class ImageHandler {
 	}
 	
 	/**
-	 * Gibt das Bild zum zugehörigen Type zurück (Wenn richtig geladen gibt es für jeden Type ein Image)
+	 * Gibt das Bild zum zugehï¿½rigen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type ein Image)
 	 * @param type - Der Type der gesucht wird
 	 * @see ImageType
-	 * @return Das {@link LoadedImage} das zum Type gehört, wenn keins gefunden wird dann null
+	 * @return Das {@link LoadedImage} das zum Type gehï¿½rt, wenn keins gefunden wird dann null
 	 */
 	public static LoadedImage getImage(ImageType type) {
 		

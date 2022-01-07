@@ -34,6 +34,7 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameData;
 import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.lobby.LobbyButtons;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.main.BomberfrauMain;
@@ -283,6 +284,7 @@ public class GraphicsHandler {
 		
 	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
+		LobbyButtons.lobbyButtonsreset();
 		
 		boolean isHost = false;
 		if(Menu.getIs_host() == true) {
