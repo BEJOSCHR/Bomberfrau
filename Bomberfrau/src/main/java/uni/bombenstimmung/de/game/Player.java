@@ -24,6 +24,8 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
@@ -50,6 +52,7 @@ public class Player extends Entity implements ActionListener{
     private double yHitbox;
     private int direction;
     private double speedFactor;
+    private boolean playWallSound = true;
     private ConnectedClient connectedClient;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
@@ -103,6 +106,7 @@ public class Player extends Entity implements ActionListener{
 	 */
 	switch (this.direction) {
 	case 0:		// ohne Bewegung
+	    playWallSound = true;
 	    tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
 	    break;
 	case 1:		// hoch
@@ -129,6 +133,9 @@ public class Player extends Entity implements ActionListener{
 		&& tempField.getContent() != FieldContent.BORDER)) {
 	    this.realPosX += this.velX;
 	    this.realPosY += this.velY;
+	} else {
+	    if (playWallSound) SoundHandler.playSound2(SoundType.WALL, false);
+	    playWallSound = false;
 	}
 	
 	super.xPosition = (int)this.realPosX;
@@ -192,6 +199,7 @@ public class Player extends Entity implements ActionListener{
 	    	this.connectedClient.sendMessage(this.connectedClient.getSession(), "204-" + this.id);
 	    }*/
 	}
+	if (this.dead) SoundHandler.playSound2(SoundType.DYING, false);
 	this.dead = dead;
 	Game.checkIfAllDead();
     }
