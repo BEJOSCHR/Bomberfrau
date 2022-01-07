@@ -48,7 +48,7 @@ public class PlayerHandler {
      * @return Integer mit opponentPlayers + 1
      */
     public static int getPlayerAmount() {
-	return opponentPlayers.size()+1;
+    return opponentPlayers.size()+1;
     }
     
     public static Player getClientPlayer() {
