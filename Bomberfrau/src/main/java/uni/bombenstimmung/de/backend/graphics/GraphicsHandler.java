@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet die graphischen VerÄnderungen und Wechsel zwischen den Modulen
+ * Verwaltet die graphischen Verï¿½nderungen und Wechsel zwischen den Modulen
  */
 package uni.bombenstimmung.de.backend.graphics;
 
@@ -28,12 +28,14 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.game.GameData;
 import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.lobby.LobbyButtons;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.main.BomberfrauMain;
@@ -49,6 +51,7 @@ public class GraphicsHandler {
 	private static DisplayType displayType = DisplayType.LOADINGSCREEN;
 	private static boolean shuttingDown = false;
 	private static FrameDragListener frameDragListener;
+	public static LobbyCreate lobby;
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -181,10 +184,12 @@ public class GraphicsHandler {
 		
 	        Settings.setCreate_selected(true);
 		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
-		
+//	        Menu.titlePulseAni();
+
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
+		Menu.menuComponentsActive(true);
 		
 	    	SoundHandler.playSound2(SoundType.MENU, false);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
@@ -278,15 +283,50 @@ public class GraphicsHandler {
 		
 	    	//SoundHandler.reduceAllSounds();
 		AnimationHandler.stopAllAnimations();
+		LobbyButtons.lobbyButtonsreset();
+		
+		boolean isHost = false;
+		if(Menu.getIs_host() == true) {
+		    isHost = true;
+		}
+		
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		LobbyCreate lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()));
-		lobby.addPlayer(new LobbyPlayer("Player 2", "127.0.0.1"));
-		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
+		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
+		
+
+		if (isHost == true) {
+//		    try {
+//			server = new ConnectedClient(true, null);
+//			Thread.sleep(500);
+//		    }
+//		    catch (Exception e) {
+//			e.printStackTrace();
+//		    }
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), isHost);
+		    
+		}
+		else {
+//		    try {
+//			client = new ConnectedClient(false, "127.0.0.1");
+//			Thread.sleep(500);
+//		    }
+//		    catch (Exception e) {
+//			e.printStackTrace();
+//		    }
+		    
+		    
+//		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
+		    
+		}
+
+//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
+//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
+
 
 	}
 	
@@ -302,24 +342,28 @@ public class GraphicsHandler {
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	
 	    	// Add all Players into InGame ArrayList "PlayerFromLobby"
-		for(int i=0; i < LobbyCreate.numberPlayer; i++) {
-		    if(i==0) {
-			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), null);
-		    }
-		    if(i==1) {
-			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), null);
-		    }
-		    if(i==2) {
-			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), null);
-		    }
-		    if(i==3) {
-			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
-				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), null);
-		    }
-		}
+	    	
+		PlayerHandler.addPlayerFromLobby(LobbyCreate.client.getId(), LobbyCreate.player[LobbyCreate.client.getId()].getName(),  LobbyCreate.player[LobbyCreate.client.getId()].getIpAdress(),
+			LobbyCreate.client.isHost(), LobbyCreate.player[LobbyCreate.client.getId()].getSkin(), new Point(1,1), LobbyCreate.client);
+		
+//		for(int i=0; i < LobbyCreate.numberOfMaxPlayers; i++) {
+//		    if(i==0) {
+//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,1), LobbyCreate.client);
+//		    }
+//		    if(i==1) {
+//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,1), LobbyCreate.client);
+//		    }
+//		    if(i==2) {
+//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(1,15), LobbyCreate.client);
+//		    }
+//		    if(i==3) {
+//			PlayerHandler.addPlayerFromLobby(LobbyCreate.player[i].getId(), LobbyCreate.player[i].getName(),  LobbyCreate.player[i].getIpAdress(),
+//				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
+//		    }
+//		}
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
