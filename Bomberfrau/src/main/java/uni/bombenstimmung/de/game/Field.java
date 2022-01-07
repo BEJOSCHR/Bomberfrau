@@ -201,15 +201,12 @@ public class Field extends Entity {
 				}
 		break;
 	    case UPGRADE_ITEM_BOMB:
-		SoundHandler.playSound2(SoundType.ITEM, false);
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_BOMB).getImage(), x, y, null);
 		break;
 	    case UPGRADE_ITEM_FIRE:
-		SoundHandler.playSound2(SoundType.ITEM, false);
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_FIRE).getImage(), x, y, null);
 		break;
 	    case UPGRADE_ITEM_SHOE:
-		SoundHandler.playSound2(SoundType.ITEM, false);
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_SHOE).getImage(), x, y, null);
 		break;
 	  

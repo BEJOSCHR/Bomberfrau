@@ -160,14 +160,18 @@ public class Player extends Entity implements ActionListener{
 	/* Abfrage, ob Player ueber Upgrade laeuft. Falls ja, aufsammeln und passende Upgrade-Methode ausfuehren.*/
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_BOMB) {
 	    this.increaseMaxBombs();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
+	    
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_FIRE) {
 	    this.increaseBombRadius();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_SHOE) {
 	    this.increaseMovementSpeed();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
     }
@@ -199,7 +203,7 @@ public class Player extends Entity implements ActionListener{
 	    	this.connectedClient.sendMessage(this.connectedClient.getSession(), "204-" + this.id);
 	    }*/
 	}
-	if (this.dead) SoundHandler.playSound2(SoundType.DYING, false);
+	if (!this.dead) SoundHandler.playSound2(SoundType.DYING, false);
 	this.dead = dead;
 	Game.checkIfAllDead();
     }
