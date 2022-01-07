@@ -33,9 +33,15 @@ public class SoundHandler {
 		//TODO ADD SOUND TO LOAD HERE
 		//EXAMPLE: new LoadedSound("test123.wav", SoundType.SOUND_MENU_XXX, SoundCategory.SOUND_EFFECT, 0.02D);
 		
-		new LoadedSound("logo_opener.wav", SoundType.INTRO, SoundCategory.MENU_MUSIC, 0.2D);
-		new LoadedSound("menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIC, 0.2D);
-		new LoadedSound("sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.2D);
+		new LoadedSound("menu/logo_opener.wav", SoundType.INTRO, SoundCategory.MENU_MUSIC, 0.2D);
+		new LoadedSound("menu/menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIC, 0.2D);
+		new LoadedSound("menu/sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.2D);
+
+		new LoadedSound("ingame/fuse.wav", SoundType.FUSE, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/explosion.wav", SoundType.EXPLOSION, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/item.wav", SoundType.ITEM, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/wall.wav", SoundType.WALL, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/dying.wav", SoundType.DYING, SoundCategory.INGAME_SOUNDS, 0.2D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -69,6 +75,7 @@ public class SoundHandler {
 	public static void playSound2(SoundType type, boolean loop) {
 		float vol = -80F;
 		
+		ConsoleHandler.print("playing sound '" + type + "'", MessageType.BACKEND);
 		LoadedSound sound = getSound(type);
 		Clip clip = sound.getClip();
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -105,6 +112,17 @@ public class SoundHandler {
 		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
 		lastPlayedClip = clip;	
+	}
+	
+	/**
+	 * Stopt den Sound, der zum übergebenene Type gehört
+	 * @param type - Der {@link SoundType} der den Sound identifziert
+	 */
+	public static void stopSound(SoundType type) {
+	    LoadedSound sound = getSound(type);
+	    Clip clip = sound.getClip();
+	    clip.stop();
+	    ConsoleHandler.print("stoppe Sound " + type, MessageType.BACKEND);
 	}
 	
 	/**

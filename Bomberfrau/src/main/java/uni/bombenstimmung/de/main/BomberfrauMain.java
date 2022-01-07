@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class BomberfrauMain {
@@ -52,6 +54,7 @@ public class BomberfrauMain {
 		MouseActionAreaHandler.initMAAs();
 		ConsoleHandler.startInputScanner();
 		AnimationHandler.startTickTimer();
+		
 		
 		//2. INTRO
 		GraphicsHandler.switchToIntroFromLoadingscreen();
