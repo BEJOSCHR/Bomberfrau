@@ -88,9 +88,28 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Is the new created Client not the host, a new UDP Client will be initialized
 		} else { 
 			connector = new NioDatagramConnector();
-			getConnector().setHandler(new ClientHandler(this));
-			getConnector().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			ConnectFuture connFuture = getConnector().connect(new InetSocketAddress(IP, ConnectionData.PORT));
+			connector.setHandler(new ClientHandler(this));
+			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+			ConnectFuture connFuture = connector.connect(new InetSocketAddress(IP, ConnectionData.PORT));
+			connFuture.awaitUninterruptibly();
+			connFuture.addListener(new IoFutureListener<ConnectFuture>() {
+			    public void operationComplete(ConnectFuture future) {
+				ConsoleHandler.print(Boolean.toString(future.isConnected()), MessageType.BACKEND);
+				if (future.isConnected()) {
+				    conSession = future.getSession();
+				    try {
+					sendMessage(conSession);
+				    } catch (InterruptedException e) {
+					e.printStackTrace();
+				    }
+				} else {
+				    ConsoleHandler.print("Not connected...exiting", MessageType.BACKEND);
+				}
+			    }
+			});
+		}
+	}
+			/*
 			connFuture.addListener(new IoFutureListener() {
 				public void operationComplete(IoFuture future) {
 					ConnectFuture connFuture = (ConnectFuture) future;
@@ -106,9 +125,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 							ConsoleHandler.print("Client is not connected to the server....exiting", MessageType.BACKEND);
 						}
 					}
-				});
+				}); 
 		}
-	}
+	} */
 	
 	/**
 	 * Debug Methode, die vor finaler Version gelöscht werden soll!
@@ -116,7 +135,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @throws InterruptedException
 	 */
 	private void sendMessage(IoSession session) throws InterruptedException {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 5; i++) {
 			String message = "000-Hallo" + i;
 			session.write(message);
 			Thread.sleep(20);

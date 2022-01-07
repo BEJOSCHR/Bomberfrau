@@ -30,6 +30,11 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 		this.client = client;
 	}
 	
+	public void excepetionCaught(IoSession session, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		session.closeNow();
+	}
+	
 	/**
 	 * Diese Methode wird immer automatisch aufgerufen, sobald eine Session mit dem Server aufgebaut wird.
 	 * Hier werden die Grundlagen für das Spiel und die Verbindung gelegt. Außerdem wird auch ein Thread gestartet, über welchen der Ping berechnet wird.
