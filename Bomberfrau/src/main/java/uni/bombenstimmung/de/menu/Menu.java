@@ -201,6 +201,19 @@ public class Menu {
 	    }
 	});
 
+	ip_box.addFocusListener(new FocusListener() {
+
+	    @Override
+	    public void focusLost(FocusEvent e) {
+	    }
+
+	    @Override
+	    public void focusGained(FocusEvent e) {
+		if (ip_box.getText().equals("0.0.0.0"))
+		    ip_box.setText("");
+	    }
+	});
+
 	ip_info = new JLabel("");
 	ip_info.setHorizontalAlignment(JLabel.CENTER);
 	if (Settings.getCreate_selected())
