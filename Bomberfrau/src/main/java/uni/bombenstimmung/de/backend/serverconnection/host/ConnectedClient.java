@@ -329,10 +329,11 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	
 		// Wird aufgerufen, sobald der Host leaved
 		case 514:
-		    	for(int i=0;i<=LobbyCreate.numberOfMaxPlayers;i++){
-		    	    LobbyCreate.player[i] = null;
-		    	}
-		    	LobbyCreate.numberOfMaxPlayers = 0;
+//		    	for(int i=0;i<=3;i++){
+//		    	    LobbyCreate.player[i] = null;
+//		    	}
+//		    	LobbyCreate.numberOfMaxPlayers = 0;
+		    	GraphicsHandler.lobby = null;
 		    	session.closeNow();
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;

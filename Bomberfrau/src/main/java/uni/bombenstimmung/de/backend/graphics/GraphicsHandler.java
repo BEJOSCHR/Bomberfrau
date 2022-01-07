@@ -306,6 +306,7 @@ public class GraphicsHandler {
 //			e.printStackTrace();
 //		    }
 		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), isHost);
+		    
 		}
 		else {
 //		    try {

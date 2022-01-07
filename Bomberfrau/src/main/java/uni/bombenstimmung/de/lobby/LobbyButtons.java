@@ -92,9 +92,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
 			    	}
 			    	
-			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
-				    LobbyCreate.player[i] = null;
-			    	}
+//			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+//				    LobbyCreate.player[i] = null;
+//			    	}
+			    	
 			    	
 //			    	if (LobbyCreate.client.isHost()) {
 //			    	    if (LobbyCreate.numberPlayer > 1) {
@@ -102,6 +103,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 //			    	    }
 //			    	}
 			    	LobbyCreate.numberOfMaxPlayers = 0;
+			    	GraphicsHandler.lobby = null;
 				GraphicsHandler.switchToMenuFromLobby();
 			}
 			@Override
