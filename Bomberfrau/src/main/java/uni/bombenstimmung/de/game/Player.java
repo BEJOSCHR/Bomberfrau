@@ -209,8 +209,8 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void setDisplayCoordinates(int xPos, int yPos) {
-	super.xPosition = xPos;
-	super.yPosition = yPos;
+	this.realPosX = xPos;
+	this.realPosY = yPos;
     }
     
     public int getId() {
