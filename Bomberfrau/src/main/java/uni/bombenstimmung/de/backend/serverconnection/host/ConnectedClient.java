@@ -198,26 +198,29 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Format: "202-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
 			String[] pMessage202 = message.split("-");
-			//TODO: Setze X und Y des Spielers
+			if(id != Integer.parseInt(pMessage202[1])) {
+			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+			}
 			break;	
-		//203 = Setze die Position einer Bombe. 
-		//Format: "203-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
+		//203 = 
+		//Format: "203-[ID]-[X-Cord]-[Y-Cord]"
 		case 203:
 			String[] pMessage203 = message.split("-");
-			//TODO: Setze X und Y der Bombe
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
+			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3]);
 			break;
 		//204 = Signalisiere, dass Player tot ist
 		//Format: "204-[ID-OF-DEAD-PLAYER]"
 		case 204:
 		    String[] pMessage204 = message.split("-");
-		    int sentId = 0;
+		    /*int sentId = 0;
 		    try {
 		    	sentId = Integer.parseInt(pMessage204[1]);
 		    }
 		    catch(NumberFormatException ex) {}
 		    if(id != sentId) {
 		    	PlayerHandler.getAllPlayer().get(sentId).setDead(true);
-		    }
+		    }*/
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"

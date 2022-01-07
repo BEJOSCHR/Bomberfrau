@@ -129,18 +129,19 @@ public class Player extends Entity implements ActionListener{
 		&& tempField.getContent() != FieldContent.BORDER)) {
 	    this.realPosX += this.velX;
 	    this.realPosY += this.velY;
-	    
 	}
 	
 	super.xPosition = (int)this.realPosX;
 	super.yPosition = (int)this.realPosY;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	
-	/*if(this.connectedClient.isHost()) {
-	    this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
-	} else {
-	    this.connectedClient.sendMessage(this.connectedClient.getSession(), "202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
-	}*/
+	if (this.direction != 0) {
+	    if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	    } else {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	    }
+	}
 	
 	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
 	if (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
@@ -200,8 +201,8 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void setDisplayCoordinates(int xPos, int yPos) {
-	super.xPosition = xPos;
-	super.yPosition = yPos;
+	this.realPosX = xPos;
+	this.realPosY = yPos;
     }
     
     public int getId() {
