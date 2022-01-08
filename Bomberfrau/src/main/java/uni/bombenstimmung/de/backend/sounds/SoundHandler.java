@@ -86,7 +86,7 @@ public class SoundHandler {
 			vol = Menu.VolumeIntToFloat(Settings.getIni_VolMusic());
 		if (sound.getCategory() == SoundCategory.INGAME_SOUNDS)
 			vol = Menu.VolumeIntToFloat(Settings.getIni_VolSound());
-		if (vol > -80F) {
+		if ((vol > -80F) || (type==SoundType.MENU)) {
         		gainControl.setValue(vol);
         		ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
         		clip.setFramePosition(0);
