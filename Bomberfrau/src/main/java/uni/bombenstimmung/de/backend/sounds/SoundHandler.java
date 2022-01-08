@@ -38,7 +38,7 @@ public class SoundHandler {
 		new LoadedSound("menu/sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.2D);
 
 		new LoadedSound("ingame/fuse.wav", SoundType.FUSE, SoundCategory.INGAME_SOUNDS, 0.2D);
-		new LoadedSound("ingame/explosion.wav", SoundType.EXPLOSION, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/explosion.wav", SoundType.EXPLOSION, SoundCategory.INGAME_SOUNDS, 0.1D);
 		new LoadedSound("ingame/item.wav", SoundType.ITEM, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/wall.wav", SoundType.WALL, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/dying.wav", SoundType.DYING, SoundCategory.INGAME_SOUNDS, 0.2D);
@@ -75,7 +75,6 @@ public class SoundHandler {
 	public static void playSound2(SoundType type, boolean loop) {
 		float vol = -80F;
 		
-		ConsoleHandler.print("playing sound '" + type + "'", MessageType.BACKEND);
 		LoadedSound sound = getSound(type);
 		Clip clip = sound.getClip();
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -87,11 +86,13 @@ public class SoundHandler {
 			vol = Menu.VolumeIntToFloat(Settings.getIni_VolMusic());
 		if (sound.getCategory() == SoundCategory.INGAME_SOUNDS)
 			vol = Menu.VolumeIntToFloat(Settings.getIni_VolSound());
-		gainControl.setValue(vol);
-		clip.setFramePosition(0);
-		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
-		clip.start();
-		lastPlayedClip = clip;	
+		if (vol > -80F) {
+        		gainControl.setValue(vol);
+        		ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
+        		clip.setFramePosition(0);
+        		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
+        		clip.start();
+		}
 	}
 	
 	/**
@@ -137,19 +138,22 @@ public class SoundHandler {
 	/**
 	 * Reduziert die Lautstärke des gerade laufenden Clips kontinuierlich bis zur Stille
 	 */
-	public static void reduceLastPlayedSound() {
-	    	FloatControl volume = (FloatControl) lastPlayedClip.getControl(FloatControl.Type.MASTER_GAIN);
-                try {
-                    float vol = volume.getValue();
-                    while (vol>-60) {
-                        vol-=1.5f; 
-                        volume.setValue(vol);
-                        Thread.sleep(100);
+	public static void reduceLastPlayedSound(SoundType type) {
+	    	Clip clip = getSound(type).getClip();
+	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    	if (Settings.getIni_VolMusic() > 0) {
+                    try {
+                        float vol = volume.getValue();
+                        while (vol>-60) {
+                            vol-=1.5f; 
+                            volume.setValue(vol);
+                            Thread.sleep(100);
+                        }
+                        Thread.sleep(500);
+                        clip.stop();
                     }
-                    Thread.sleep(500);
-                    lastPlayedClip.stop();
-                }
-                catch (InterruptedException ex) {}
+                    catch (InterruptedException ex) {}
+	    	}
 	}
                 
 	/**
