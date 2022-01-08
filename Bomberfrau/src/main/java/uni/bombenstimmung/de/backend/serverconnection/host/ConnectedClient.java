@@ -213,7 +213,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 201:
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
-		//202 = Setze die Position eines Spieler. 
+		//202 = Setze die Position eines Players. (Client)
 		//Format: "202-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
 			String[] pMessage202 = message.split("-");
@@ -221,7 +221,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
 			}
 			break;	
-		//203 = 
+		//203 = Setze die Position eines Players. (Server)
 		//Format: "203-[ID]-[X-Cord]-[Y-Cord]"
 		case 203:
 			String[] pMessage203 = message.split("-");

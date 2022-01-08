@@ -354,14 +354,11 @@ public class PlayerHandler {
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
 	if (debugKeys) {
-	    /*if (keyCode == KeyEvent.VK_O) {
-		addOpponentPlayer(1, "Dave", "1.1.1.1", false, 1, new Point(1, 15));
-		addOpponentPlayer(2, "Jenny", "2.2.2.2", false, 2, new Point(15, 15));
-		addOpponentPlayer(3, "Christie", "3.3.3.3", false, 3, new Point(15, 1));
-		addToAllPlayers(PlayerHandler.getOpponentPlayers());
+	    if (keyCode == KeyEvent.VK_O) {
+		clientPlayer.increaseBombRadius();
 	    } else if (keyCode == KeyEvent.VK_L) {
-		clearOpponentPlayers();
-	    } else */if (keyCode == KeyEvent.VK_I) {
+		clientPlayer.decreaseBombRadius();
+	    } else if (keyCode == KeyEvent.VK_I) {
 		clientPlayer.increaseMaxBombs();
 	    } else if (keyCode == KeyEvent.VK_K) {
 		clientPlayer.decreaseMaxBombs();

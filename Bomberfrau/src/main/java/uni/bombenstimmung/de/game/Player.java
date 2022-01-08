@@ -130,7 +130,9 @@ public class Player extends Entity implements ActionListener{
 	    ConsoleHandler.print("Invalid Direction ID!", MessageType.GAME);
 	}
 	if (block == false && (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
-		&& tempField.getContent() != FieldContent.BORDER)) {
+		&& tempField.getContent() != FieldContent.BORDER &&
+		( tempField.getContent() != FieldContent.BOMB ||
+		( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ))) {
 	    this.realPosX += this.velX;
 	    this.realPosY += this.velY;
 	} else {
@@ -213,6 +215,12 @@ public class Player extends Entity implements ActionListener{
 	this.connectedClient = cC;
     }
     
+    /**
+     * Setzt die Bildschirmkoordinate des Players neu. Diese Methode ist hauptsaechlich
+     * fuer ConnectedClient gedacht.
+     * @param xPos	neue X Bildschirmkoordinate
+     * @param yPos	neue Y Bildschirmkoordinate
+     */
     public void setDisplayCoordinates(int xPos, int yPos) {
 	this.realPosX = xPos;
 	this.realPosY = yPos;
@@ -349,14 +357,21 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void decreasePlacedBombs() {
-	if (placedBombs > 0) {
-	    placedBombs--;
+	if (this.placedBombs > 0) {
+	    this.placedBombs--;
 	}
     }
     
     public void increaseBombRadius() {
 	if (this.bombRadius < GameData.MAP_DIMENSION) {
 	    this.bombRadius++;
+	}
+	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
+    }
+    
+    public void decreaseBombRadius() {
+	if (this.bombRadius > 1) {
+	    this.bombRadius--;
 	}
 	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
     }
