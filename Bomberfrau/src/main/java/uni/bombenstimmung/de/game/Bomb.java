@@ -111,6 +111,8 @@ public class Bomb implements ActionListener{
 			/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)));
+			    Game.changeFieldContent(FieldContent.EXPLOSION3_S, this.placedField.xPosition, this.placedField.yPosition + r);
+			    break;
 		    }
 		    if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
@@ -142,6 +144,8 @@ public class Bomb implements ActionListener{
 		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)));
+			    Game.changeFieldContent(FieldContent.EXPLOSION3_N, this.placedField.xPosition, this.placedField.yPosition - r);
+			    break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
@@ -173,6 +177,8 @@ public class Bomb implements ActionListener{
 		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 			if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)));
+			    Game.changeFieldContent(FieldContent.EXPLOSION3_O, this.placedField.xPosition + r, this.placedField.yPosition);
+			    break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
@@ -204,6 +210,8 @@ public class Bomb implements ActionListener{
 		    	/* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 			if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL) {
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)));
+			    Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r, this.placedField.yPosition);
+			    break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
@@ -228,7 +236,7 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
-	/* Aendern des FieldContent auf EMPTY und Loeschen der Bombe. */
+	/* Aendern des FieldContent auf EXPLOSION1. */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
@@ -292,7 +300,6 @@ public class Bomb implements ActionListener{
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
-		    // TODO: Ist das hier notwendig? Das wird eigentlich bei den anderen Clients berechnet und mit eigenem Client synchronisiert.
 		    i.decreasePlacedBombs();
 		}
 	    }
