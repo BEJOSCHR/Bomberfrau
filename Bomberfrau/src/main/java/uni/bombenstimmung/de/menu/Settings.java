@@ -146,6 +146,16 @@ public class Settings {
 	return factor;
     }
     
+    /**
+     * "Scalet" den übergebenen Wert entsprechend der Auflösung
+     * Rückgabe als INT für drawImage Methode
+     * 
+     * @param f steht einen float Wert, es funktioniert aber auch mit double+int
+     */
+    public static int scaleValue(float f) {
+	return (int)(f*factor);
+    }
+    
     /*****************************************************************************************************************
      * SETTER
      *****************************************************************************************************************/

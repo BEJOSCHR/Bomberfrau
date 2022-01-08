@@ -28,9 +28,9 @@ public class ImageHandler {
 		//TODO ADD IMAGES TO LOAD HERE
 		//EXAMPLE: new LoadedImage("test123.png", ImageType.IMAGE_MENU_XXX);
 
-	    	new LoadedImage("logo_white.png", ImageType.IMAGE_INTRO_PIC);
-	    	new LoadedImage("menu.png", ImageType.IMAGE_MENU_PIC);
-	    	new LoadedImage("menutitle.png", ImageType.IMAGE_MENU_TITLE);
+	    	new LoadedImage("Menu/logo.png", ImageType.IMAGE_INTRO_PIC);
+	    	new LoadedImage("Menu/menu.png", ImageType.IMAGE_MENU_PIC);
+	    	new LoadedImage("Menu/menutitle.png", ImageType.IMAGE_MENU_TITLE);
 	    	
 		//LOBBY PICS
 		// Arrow Location: https://pixabay.com/illustrations/arrow-choose-select-next-button-1217949/
