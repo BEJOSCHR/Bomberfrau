@@ -335,9 +335,9 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIngameFromLobby() {
 		
-		//SoundHandler.stopAllSounds();
 		SoundHandler.reduceLastPlayedSound();
 		AnimationHandler.stopAllAnimations();
+		SoundHandler.stopAllSounds();
 		Game.setMapNumber(LobbyCreate.getMap()+1);
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	

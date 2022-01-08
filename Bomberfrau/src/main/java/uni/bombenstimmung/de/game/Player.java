@@ -134,7 +134,8 @@ public class Player extends Entity implements ActionListener{
 	    this.realPosX += this.velX;
 	    this.realPosY += this.velY;
 	} else {
-	    if (playWallSound) SoundHandler.playSound2(SoundType.WALL, false);
+	    // Abfrage, damit Tod in RoD nicht Dauerton ergibt
+	    if (playWallSound && !this.dead && !Game.getGameOver()) SoundHandler.playSound2(SoundType.WALL, false);
 	    playWallSound = false;
 	}
 	
