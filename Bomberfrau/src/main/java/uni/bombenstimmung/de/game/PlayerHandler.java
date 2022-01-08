@@ -76,7 +76,6 @@ public class PlayerHandler {
 	    int id = clientPlayer.getId();
 	    allPlayer.addAll(array);
 	    allPlayer.add(id, clientPlayer);
-	    
 	}
     }
     /**
