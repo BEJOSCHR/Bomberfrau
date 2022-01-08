@@ -29,8 +29,8 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
-
-	private int id;
+    
+    private int id;
     private String name;
     private String ipAdress;
     private boolean host;
@@ -54,6 +54,7 @@ public class Player extends Entity implements ActionListener{
     private double speedFactor;
     private boolean playWallSound = true;
     private ConnectedClient connectedClient;
+    private int deathTime;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
 	/* Offset-Variablen fuer Berechnung*/
@@ -199,14 +200,24 @@ public class Player extends Entity implements ActionListener{
 	/* Bewegung zuruecksetzen im Todesfall. */
 	if (dead == true) {
 	    this.actionStop();
-	    PlayerHandler.resetMovement();
+	    if (this == PlayerHandler.getClientPlayer()) {
+		PlayerHandler.resetMovement();
+	    }
+	    
 	    /*if(this.connectedClient.isHost()) {
 	    	this.connectedClient.sendMessageToAllClients("204-" + this.id);
 	    } else {
 	    	this.connectedClient.sendMessage(this.connectedClient.getSession(), "204-" + this.id);
 	    }*/
 	}
-	if (!this.dead) SoundHandler.playSound2(SoundType.DYING, false);
+	if (!this.dead) {
+	    SoundHandler.playSound2(SoundType.DYING, false);
+	    this.deathTime = GameCounter.getClock();
+	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T", MessageType.GAME);
+	    this.t.stop();
+	} else {
+	    this.t.start();
+	}
 	this.dead = dead;
 	Game.checkIfAllDead();
     }
@@ -288,6 +299,10 @@ public class Player extends Entity implements ActionListener{
     
     public double getYHitbox() {
 	return yHitbox;
+    }
+    
+    public int getDeathTime() {
+	return deathTime;
     }
     
     /*
