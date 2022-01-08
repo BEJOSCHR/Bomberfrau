@@ -54,8 +54,8 @@ public class LobbyCreate {
 	public LobbyCreate (LobbyPlayer player) {
 	    
 	    try {
-		//client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von der Main gezogen wird: Settings.getIp() oder so
-		client = new ConnectedClient(false, "46.142.147.78"); // Noch aendern, damit die IP von der Main gezogen wird: Settings.getIp() oder so
+		client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von der Main gezogen wird: Settings.getIp() oder so
+		//client = new ConnectedClient(false, "46.142.147.78"); // Noch aendern, damit die IP von der Main gezogen wird: Settings.getIp() oder so
 		Thread.sleep(500);
 	    }
 	    catch (Exception e) {
