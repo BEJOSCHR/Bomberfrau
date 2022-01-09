@@ -31,8 +31,13 @@ public class LoadedLanguageBlock {
 	public String getContent() {
 		return languageContent[LanguageHandler.getActiveLanguage().getPos()];
 	}
+	
+	public void setLanguageContent(String[] languageContent) {
+		this.languageContent = languageContent;
+	}
+	
 	public LanguageBlockType getType() {
 		return type;
 	}
-	
+
 }

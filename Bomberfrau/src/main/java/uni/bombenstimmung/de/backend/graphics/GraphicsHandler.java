@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -242,6 +243,15 @@ public class GraphicsHandler {
 		
 	}
 	
+	public static void switchToLobbyFromAftergame() {
+		
+	    AnimationHandler.stopAllAnimations();
+
+	    displayType = DisplayType.LOBBY;
+	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
+
+	}
+	
 	/**
 	 * Wird aufgerufen wenn w�hrend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlie�t
 	 */
@@ -383,13 +393,16 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
+		DeadPlayerHandler.generateDummyDeadPlayer();
+		DeadPlayerHandler.calculateScore();
+		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
 		
 	}
 	//SWITCH TO SECTION
 	//------------------------------------------------------------------------------------------------------------------
-	
+	//
 	
 	/**
 	 *  sch�nerer Font mit abgerundeten Zeichen
