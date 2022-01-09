@@ -139,7 +139,6 @@ public class Label extends JLabel {
 			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*3/8);
 			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*4/8);
 			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*5/8);
-//			GraphicsHandler.drawCentralisedText(g, Color.BLACK, 12, LanguageHandler.getLLB(LanguageBlockType.LB_LOADINGSCREEN_AUTHOR).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()-30);
 			break;
 		default:
 			ConsoleHandler.print("Illegal displayType! Can't draw for type '"+GraphicsHandler.getDisplayType()+"'", MessageType.ERROR);
