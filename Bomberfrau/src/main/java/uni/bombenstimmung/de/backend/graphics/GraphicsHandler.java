@@ -338,6 +338,7 @@ public class GraphicsHandler {
 		SoundHandler.reduceLastPlayedSound(SoundType.MENU);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
+		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
 		Game.setMapNumber(LobbyCreate.getMap()+1);
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	

@@ -90,30 +90,30 @@ public class Field extends Entity {
     public void drawField(Graphics g, int x, int y, FieldContent cont) {
 	switch (cont) {
 		case BLOCK:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BLOCK).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case WALL:
 		if (Game.getMapNumber() == 3) {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_WALL).getImage(), x, y, null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_WALL).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}
-	    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, null);
+	    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WALL).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case BORDER:
 	    	if (Game.getMapNumber() == 3) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_BLOCK).getImage(), x, y, null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_BLOCK).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    	} else {
-	    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, null);
+	    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BORDER).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    	}
 		break;
 	    case BOMB:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5, null);
 		for(Bomb i : Game.getPlacedBombs()) {
 		    i.drawCounter(g);
 		    //int count = i.getCounter();
@@ -123,91 +123,91 @@ public class Field extends Entity {
 	// Spezifische Grafiken für die Himmelsrichtungen der Explosion
 	    case EXPLOSION1:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX1).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX1).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION2:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION2_NS:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2_NS).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX2_NS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION3_N:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_N).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_N).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION3_S:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_S).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_S).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION3_W:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_W).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_W).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EXPLOSION3_O:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_O).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB_EX3_O).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case EMPTY:
 		if (Game.getMapNumber() == 1) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_GRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		} 	else if (Game.getMapNumber() == 2) {
-		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, null);
+		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 				}
 		break;
 	    case UPGRADE_ITEM_BOMB:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_BOMB).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_BOMB).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case UPGRADE_ITEM_FIRE:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_FIRE).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_FIRE).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	    case UPGRADE_ITEM_SHOE:
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_SHOE).getImage(), x, y, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_UPGRADE_ITEM_SHOE).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		break;
 	  
 	}
@@ -222,11 +222,3 @@ public class Field extends Entity {
     }
     
 }
-    
-    
-    
-    
-    
-    
-    
-
