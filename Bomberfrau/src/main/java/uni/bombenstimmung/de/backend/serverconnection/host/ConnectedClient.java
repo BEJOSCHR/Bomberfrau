@@ -228,18 +228,20 @@ public class ConnectedClient extends IoHandlerAdapter{
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
 			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3]);
 			break;
-		//204 = Signalisiere, dass Player tot ist
+		//204 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "204-[ID-OF-DEAD-PLAYER]"
 		case 204:
-		    String[] pMessage204 = message.split("-");
-		    /*int sentId = 0;
-		    try {
-		    	sentId = Integer.parseInt(pMessage204[1]);
-		    }
-		    catch(NumberFormatException ex) {}
-		    if(id != sentId) {
-		    	PlayerHandler.getAllPlayer().get(sentId).setDead(true);
+		    /*String[] pMessage204 = message.split("-");
+		    if(id != Integer.parseInt(pMessage204[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).setDead(true);
 		    }*/
+		    break;
+		//205 = Signalisiere, dass Player tot ist. (Server)
+		//Format: "205-[ID-OF-DEAD-PLAYER]"
+		case 205:
+		    /*String[] pMessage205 = message.split("-");
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).setDead(true);
+		    this.sendMessageToAllClients("204-" + pMessage205[1]);*/
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"

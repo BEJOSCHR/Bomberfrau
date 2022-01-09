@@ -138,7 +138,7 @@ public class Player extends Entity implements ActionListener{
 	    this.realPosY += this.velY;
 	} else {
 	    // Abfrage, damit Tod in RoD nicht Dauerton ergibt
-	    if (playWallSound && !this.dead && !Game.getGameOver()) SoundHandler.playSound2(SoundType.WALL, false);
+	    if (playWallSound && !this.dead && !Game.getGameOver() && this == PlayerHandler.getClientPlayer()) SoundHandler.playSound2(SoundType.WALL, false);
 	    playWallSound = false;
 	}
 	
@@ -203,19 +203,18 @@ public class Player extends Entity implements ActionListener{
 	    if (this == PlayerHandler.getClientPlayer()) {
 		PlayerHandler.resetMovement();
 	    }
-	    
-	    /*if(this.connectedClient.isHost()) {
-	    	this.connectedClient.sendMessageToAllClients("204-" + this.id);
-	    } else {
-	    	this.connectedClient.sendMessage(this.connectedClient.getSession(), "204-" + this.id);
-	    }*/
 	}
-	if (!this.dead) {
+	if (this.dead == false && dead == true) {
 	    SoundHandler.playSound2(SoundType.DYING, false);
 	    this.deathTime = GameCounter.getClock();
 	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T", MessageType.GAME);
 	    this.t.stop();
-	} else {
+	    /*if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    } else {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
+	    }*/
+	} else if (this.dead == true && dead == false){
 	    this.t.start();
 	}
 	this.dead = dead;
