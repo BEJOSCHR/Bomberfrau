@@ -16,8 +16,6 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
-import uni.bombenstimmung.de.backend.language.LoadedLanguageBlock;
-import uni.bombenstimmung.de.aftergame.AftergameCreate;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
@@ -87,10 +85,10 @@ public class DeadPlayerHandler {
 			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore()};
 
 			switch(i) {
-			case 0: AftergameCreate.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); break;
-			case 1: AftergameCreate.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).setLanguageContent(aftergame_Ranking); break;
-			case 2: AftergameCreate.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).setLanguageContent(aftergame_Ranking); break;
-			case 3: AftergameCreate.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).setLanguageContent(aftergame_Ranking); break;
+			case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); break;
+			case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).setLanguageContent(aftergame_Ranking); break;
+			case 2: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).setLanguageContent(aftergame_Ranking); break;
+			case 3: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).setLanguageContent(aftergame_Ranking); break;
 			}
 		}
 
