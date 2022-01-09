@@ -13,7 +13,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
     public static void initAftergameButtons(){
 	
 	new MouseActionArea(GraphicsHandler.getWidth()*3/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Exit", 20, new Color(225,0,0), new Color(225,0,0).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, "Exit", 20, new Color(225,0,0), new Color(0,0,255)) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		GraphicsHandler.shutdownProgram();
@@ -25,7 +25,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 
 	new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Back to Manu", 20, new Color(225,0,0), new Color(225,0,0).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, "Back to Manu", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		GraphicsHandler.switchToMenuFromAftergame();
@@ -37,7 +37,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 	
 	new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Back to Lobby", 20, new Color(225,0,0), new Color(225,0,0).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, "Back to Lobby", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		GraphicsHandler.switchToLobbyFromAftergame();

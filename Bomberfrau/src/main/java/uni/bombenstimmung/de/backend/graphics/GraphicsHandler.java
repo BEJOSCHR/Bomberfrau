@@ -393,7 +393,11 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-		DeadPlayerHandler.generateDummyDeadPlayer();
+		//DeadPlayerHandler.generateDummyDeadPlayer();
+		
+		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
+		}
 		DeadPlayerHandler.calculateScore();
 		
 		displayType = DisplayType.AFTERGAME;
