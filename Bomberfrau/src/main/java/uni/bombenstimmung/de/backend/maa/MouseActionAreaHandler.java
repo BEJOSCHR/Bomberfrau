@@ -14,6 +14,7 @@ import java.util.List;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.lobby.LobbyButtons;
+import uni.bombenstimmung.de.aftergame.AftergameButtons;
 import uni.bombenstimmung.de.menu.Menu;
 
 public class MouseActionAreaHandler {
@@ -30,7 +31,7 @@ public class MouseActionAreaHandler {
 	    	Menu.initMaaOptions();
 
 		LobbyButtons.initLobbyButtons();
-		
+		AftergameButtons.initAftergameButtons();
 		ConsoleHandler.print("Initialised MouseActionAreas ("+mouseActionAreas.size()+")!", MessageType.BACKEND);
 		
 	}
