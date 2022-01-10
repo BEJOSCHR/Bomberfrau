@@ -44,7 +44,7 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class ConnectedClient extends IoHandlerAdapter{
 	
-	private int id; 
+	private int id = -1; 
 	private boolean host;
 	private long ping;
 	private IoSession conSession;
