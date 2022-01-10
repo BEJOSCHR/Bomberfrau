@@ -146,6 +146,7 @@ public class Player extends Entity implements ActionListener{
 	super.yPosition = (int)this.realPosY;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	
+	// ConnectedClient-Nachricht fuer Aktualisierung der Player-Position bei Bewegung
 	if (this.direction != 0) {
 	    if(this.connectedClient.isHost()) {
 		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
@@ -209,11 +210,12 @@ public class Player extends Entity implements ActionListener{
 	    this.deathTime = GameCounter.getClock();
 	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T", MessageType.GAME);
 	    this.t.stop();
-	    /*if(this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    // ConnectedClient-Nachricht fuer Player-Tod
+	    if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("206-" + this.id);
 	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
-	    }*/
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "207-" + this.id);
+	    }
 	} else if (this.dead == true && dead == false){
 	    this.t.start();
 	}
