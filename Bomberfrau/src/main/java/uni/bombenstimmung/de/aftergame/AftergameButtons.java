@@ -27,7 +27,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 
 	new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Back to Manu", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, "Back to Menu", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		GraphicsHandler.switchToMenuFromAftergame();

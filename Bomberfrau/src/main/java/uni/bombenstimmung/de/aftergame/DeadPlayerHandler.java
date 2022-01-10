@@ -55,7 +55,7 @@ public class DeadPlayerHandler {
 		//Player sortieren nach deathTime
 		Collections.sort(Ranking, new Comparator<DeadPlayer>() {
 			public int compare(DeadPlayer p1, DeadPlayer p2) {
-				return Integer.valueOf(p2.getDeathTime()).compareTo(p1.getDeathTime());
+				return Integer.valueOf(p1.getDeathTime()).compareTo(p2.getDeathTime());
 			}
 		});
 
@@ -82,7 +82,7 @@ public class DeadPlayerHandler {
 
 		//Ergebnisanzeige Aftergame
 		for(int i = 0; i < Ranking.size(); i++) {
-			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore()};
+			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore(),Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore()};
 
 			switch(i) {
 			case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); break;
