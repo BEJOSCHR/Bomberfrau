@@ -230,18 +230,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 		//204 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "204-[ID-OF-DEAD-PLAYER]"
-		case 204:
-		    /*String[] pMessage204 = message.split("-");
-		    if(id != Integer.parseInt(pMessage204[1])) {
-			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).setDead(true);
-		    }*/
+		case 204: //BOMBENSYNCHRO
+		    
 		    break;
 		//205 = Signalisiere, dass Player tot ist. (Server)
 		//Format: "205-[ID-OF-DEAD-PLAYER]"
-		case 205:
-		    /*String[] pMessage205 = message.split("-");
-		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).setDead(true);
-		    this.sendMessageToAllClients("204-" + pMessage205[1]);*/
+		case 205: //BOMBENSYNCHRO
+		   
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"
