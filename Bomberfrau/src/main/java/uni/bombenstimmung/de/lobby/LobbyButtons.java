@@ -109,6 +109,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	}
 			    	else {
 			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
+			    	    LobbyCreate.client.getAcceptor().dispose();
 			    	}
 			    	
 			    	// Setze alle Objekte = null und switche ins Menu
