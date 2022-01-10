@@ -358,7 +358,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	}
 		    	LobbyCreate.numberOfMaxPlayers = 0;
 		    	GraphicsHandler.lobby = null;
-		    	session.closeNow();
+//		    	session.closeNow();
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
 		    	

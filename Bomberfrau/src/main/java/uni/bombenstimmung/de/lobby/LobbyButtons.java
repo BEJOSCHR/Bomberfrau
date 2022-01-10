@@ -103,6 +103,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    // Wenn der Host nicht alleine in der Lobby ist
 			    	    if (LobbyCreate.numberOfMaxPlayers > 1) {
 			    		LobbyCreate.client.sendMessageToAllClients("514-");
+			    		LobbyCreate.client.getAcceptor().dispose();
+			    		ConsoleHandler.print("Server disposed " + LobbyCreate.client.getAcceptor().isDisposed() + " ... ", MessageType.BACKEND);
 			    	    }
 			    	}
 			    	else {
