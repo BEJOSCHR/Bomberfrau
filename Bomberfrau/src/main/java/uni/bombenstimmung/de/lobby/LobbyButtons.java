@@ -99,7 +99,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	if (LobbyCreate.client.isHost()) {
 			    	    if (LobbyCreate.numberOfMaxPlayers > 1) {
 			    		LobbyCreate.client.sendMessageToAllClients("514-");
-//				    	LobbyCreate.client.getSession().closeNow();
+			    		LobbyCreate.client.getAcceptor().dispose();
+			    		ConsoleHandler.print("Server disposed " + LobbyCreate.client.getAcceptor().isDisposed() + " ... ", MessageType.BACKEND);
 			    	    }
 			    	}
 			    	else {

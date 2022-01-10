@@ -74,14 +74,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 			addIdsToStack();
 			//hostGetPublicIP();
 			acceptor = new NioDatagramAcceptor();
-			acceptor.setHandler(new ServerHandler(this));
-			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
+			getAcceptor().setHandler(new ServerHandler(this));
+			getAcceptor().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+			DefaultIoFilterChainBuilder chain = getAcceptor().getFilterChain();
 			chain.addLast("logger", new LoggingFilter());
-			DatagramSessionConfig dcfg = acceptor.getSessionConfig();
+			DatagramSessionConfig dcfg = getAcceptor().getSessionConfig();
 			dcfg.setReuseAddress(true);
 			try {
-				acceptor.bind(new InetSocketAddress(ConnectionData.PORT));
+				getAcceptor().bind(new InetSocketAddress(ConnectionData.PORT));
 				ConsoleHandler.print("UDP Server started at "+hostGetPublicIP()+":"+ConnectionData.PORT, MessageType.BACKEND);
 				
 			} catch (IOException e) {
@@ -423,7 +423,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public void sendMessageToAllClients(String message) {
 		ConsoleHandler.print("DEBUG: Broadcasting message = " + message);
-		acceptor.broadcast(message);
+		getAcceptor().broadcast(message);
 	}
 	
 	/**
@@ -562,6 +562,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public long getPing() {
 	    return ping;
+	}
+
+	public NioDatagramAcceptor getAcceptor() {
+	    return acceptor;
 	}
 }
 
