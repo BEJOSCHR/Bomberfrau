@@ -64,7 +64,6 @@ public class ServerHandler extends IoHandlerAdapter {
 	 */
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
-		
 		String[] parts = message.toString().split("-");
 		if (Integer.parseInt(parts[0]) != 003) {
 		    SocketAddress remoteAddress = session.getRemoteAddress();

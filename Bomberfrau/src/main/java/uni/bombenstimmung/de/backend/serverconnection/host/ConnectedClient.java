@@ -8,9 +8,12 @@
  */
 package uni.bombenstimmung.de.backend.serverconnection.host;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +72,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
 			idStack = new Stack<Integer>();
 			addIdsToStack();
-
+			//hostGetPublicIP();
 			acceptor = new NioDatagramAcceptor();
 			acceptor.setHandler(new ServerHandler(this));
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
@@ -79,7 +82,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			dcfg.setReuseAddress(true);
 			try {
 				acceptor.bind(new InetSocketAddress(ConnectionData.PORT));
-				ConsoleHandler.print("UDP Server started at "+ConnectionData.IP+":"+ConnectionData.PORT, MessageType.BACKEND);
+				ConsoleHandler.print("UDP Server started at "+hostGetPublicIP()+":"+ConnectionData.PORT, MessageType.BACKEND);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -499,6 +502,18 @@ public class ConnectedClient extends IoHandlerAdapter{
 	    	idStack.push(id);
 		connectedClients.remove(session.getRemoteAddress());
 		session.closeNow();
+	}
+	
+	public String hostGetPublicIP() {
+	    try {
+	    URL getIP = new URL("http://checkip.amazonaws.com/");
+	    BufferedReader in = new BufferedReader(new InputStreamReader(getIP.openStream()));
+	    String hostIP = in.readLine();
+	    return hostIP;
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	    return null;
 	}
 	
 	/**
