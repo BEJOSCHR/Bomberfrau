@@ -88,6 +88,7 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/bombergirl_walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
+		new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	}
 	
 	/**
