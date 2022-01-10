@@ -66,7 +66,7 @@ public class Bomb implements ActionListener{
 	this.counter++;
 	if (this.counter == this.timer) {
 	    this.explodeFire();
-	} else if (this.counter >= this.timer + 2) {
+	} else if (this.counter >= this.timer + 1) {
 	    this.explode();
 	}
     }

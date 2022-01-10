@@ -20,7 +20,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class GameCounter implements ActionListener{
     
-    private static int gametime = 4;
+    private static int gametime = 100;
     private static int ringOfDeathNumber = 0;
     private Timer gameTimer;
     
