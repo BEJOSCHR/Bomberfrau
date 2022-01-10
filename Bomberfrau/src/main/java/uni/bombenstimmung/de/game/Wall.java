@@ -7,6 +7,8 @@ package uni.bombenstimmung.de.game;
 
 import java.lang.Math;
 
+import uni.bombenstimmung.de.lobby.LobbyCreate;
+
 public class Wall {
     private Field field;
     private double randNr;
@@ -21,20 +23,29 @@ public class Wall {
     }
     
     public void destroyed() {
-	if (randNr <= 0.15) {
+	if(LobbyCreate.client.isHost()) {
+	    if (randNr <= 0.15) {
 		if (tmp == 1) {
 			Game.changeFieldContent(FieldContent.UPGRADE_ITEM_BOMB, this.field.xPosition, this.field.yPosition);
+			LobbyCreate.client.sendMessageToAllClients("208-"+this.field.xPosition+"-"+this.field.yPosition+"-"+FieldContent.UPGRADE_ITEM_BOMB);
+			
 		}
 		if (tmp == 2) {
 			Game.changeFieldContent(FieldContent.UPGRADE_ITEM_FIRE, this.field.xPosition, this.field.yPosition);
+			LobbyCreate.client.sendMessageToAllClients("208-"+this.field.xPosition+"-"+this.field.yPosition+"-"+FieldContent.UPGRADE_ITEM_FIRE);
 		}
 		if (tmp == 3) {
 			Game.changeFieldContent(FieldContent.UPGRADE_ITEM_SHOE, this.field.xPosition, this.field.yPosition);
+			LobbyCreate.client.sendMessageToAllClients("208-"+this.field.xPosition+"-"+this.field.yPosition+"-"+FieldContent.UPGRADE_ITEM_SHOE);
+		
+		} else {
+		    Game.changeFieldContent(FieldContent.EMPTY, this.field.xPosition, this.field.yPosition);
+		    LobbyCreate.client.sendMessageToAllClients("208-"+this.field.xPosition+"-"+this.field.yPosition+"-"+FieldContent.EMPTY);
+
 		}
-	} else {
-	    Game.changeFieldContent(FieldContent.EMPTY, this.field.xPosition, this.field.yPosition);
+		this.field = null;
+		this.randNr = 0.0;
+	    }
 	}
-	this.field = null;
-	this.randNr = 0.0;
     }
 }

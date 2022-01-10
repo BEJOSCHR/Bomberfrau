@@ -37,6 +37,8 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
+import uni.bombenstimmung.de.game.FieldContent;
+import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.Player;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
@@ -275,11 +277,15 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
 		    this.sendMessageToAllClients("206-" + pMessage207[1]);
 		    break;
-		//208 = 
-		//Format: 
+		//208 = Spawnt die Items 
+		//Format: "208-[X-Cord]-[Y-Cord]-[FieldContent]"
 		case 208:
 		    String[] pMessage208 = message.split("-");
+		    int x = Integer.parseInt(pMessage208[1]);
+		    int y = Integer.parseInt(pMessage208[2]);
+		    FieldContent item = FieldContent.valueOf(pMessage208[3]);
 		    
+		    Game.changeFieldContent(item, x, y);
 		    break;
 		//209 = 
 		//Format: 
