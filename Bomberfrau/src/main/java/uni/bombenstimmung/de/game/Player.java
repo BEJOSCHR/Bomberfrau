@@ -238,6 +238,10 @@ public class Player extends Entity implements ActionListener{
 	this.realPosY = yPos;
     }
     
+    public void setBombRadius(int bR) {
+	this.bombRadius = bR;
+    }
+    
     public int getId() {
 	return id;
     }
@@ -358,9 +362,16 @@ public class Player extends Entity implements ActionListener{
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
 	    Game.addBomb(this.bombRadius, 3, this.id);
-	    placedBombs++;
+	    if (this == PlayerHandler.getClientPlayer()) {
+		placedBombs++;
+	    }
 	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);
+	    if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    } else {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
+	    }
 	}
     }
     
@@ -374,6 +385,10 @@ public class Player extends Entity implements ActionListener{
 	    this.maxBombs--;
 	}
 	ConsoleHandler.print("Player ID: " + id + ": New MaxBombs: " + this.maxBombs, MessageType.GAME);
+    }
+    
+    public void increasePlacedBombs() {
+	this.placedBombs++;
     }
     
     public void decreasePlacedBombs() {

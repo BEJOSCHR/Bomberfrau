@@ -243,13 +243,22 @@ public class ConnectedClient extends IoHandlerAdapter{
 			}
 			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4]);
 			break;
-		
+		//204 = Bombe legen (Client)
+		//Format: "204-[ID]"
 		case 204:
-		    
+		    String[] pMessage204 = message.split("-");
+		    if (id != Integer.parseInt(pMessage204[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).actionPlantBomb();
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).increasePlacedBombs();
+		    }
 		    break;
-		
+		//205 = Bombe legen (Server)
+		//Format: "205-[ID]"
 		case 205:
-		    
+		    String[] pMessage205 = message.split("-");
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).increasePlacedBombs();
+		    this.sendMessageToAllClients("204-" + pMessage205[1]);
 		    break;
 		//206 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "206-[ID-OF-DEAD-PLAYER]"
@@ -265,6 +274,18 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    String[] pMessage207 = message.split("-");
 		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
 		    this.sendMessageToAllClients("206-" + pMessage207[1]);
+		    break;
+		//208 = 
+		//Format: 
+		case 208:
+		    String[] pMessage208 = message.split("-");
+		    
+		    break;
+		//209 = 
+		//Format: 
+		case 209:
+		    String[] pMessage209 = message.split("-");
+		    
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"

@@ -148,7 +148,7 @@ public class PlayerHandler {
     public static void drawPlayers(Graphics g) {
 	if (clientPlayer.getDead() == false) {
 	    // Anzeigen der Hitbox
-	    /*if (debugKeys) {
+	    if (debugKeys) {
 		g.setColor(Color.red);
 		g.drawRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
 			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
@@ -156,7 +156,7 @@ public class PlayerHandler {
 		g.fillRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
 			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
 			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
-	    }*/
+	    }
 	    if (clientPlayer.getDirection() != 0) {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    } else {
