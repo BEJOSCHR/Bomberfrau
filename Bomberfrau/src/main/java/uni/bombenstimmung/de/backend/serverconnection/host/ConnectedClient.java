@@ -28,9 +28,9 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.DatagramSessionConfig;
 import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
+
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
-import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
@@ -226,139 +226,149 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
 		
+		/////////////////////////////////////////// 500-599 Lobby Cases ////////////////////////////////////////////////////////
 			
-//		// LOBBY TEST - Server Antwort
-//		case 500:
-//		    	String[] pMessage500 = message.split("-");
-//		    	if (pMessage500[0] == "3") {
-//			    if (pMessage500[1] == "red") {
-//				//Setze Farbe red
-//				sendMessageToAllClients("457-" +pMessage500[1] + "-" + pMessage500[0]);
-//			    }  
-//		    	}
-//		    	break;
-//		    	
-//		case 5001:
-//		    	String [] pMessage457 = message.split("-");
-//		    	// set Farbe von PlayerID pMessage457[2]
-//		    	break;
-//		// LOBBY TEST - 
-		
-		// LOBBY Join Nachrichten von Clients an Server und anschließend Aufruf von Sever an alle Clients um neuen Client zu adden case 502
+
+		//501 = Adde neuen Player im LobbyCreate.player[] des Hosts/Servers, dann uebergebe die Information von allen anderen Playern an den neu-gejointen,
+		// sodass dieser die in seinem LobbyCreate.player[] hinzufuegen kann. (Cases 503-505)
+		// Abschliessend wird die Information des neu-gejointen Player an alle gebroadcasted, sodass diese den Player auch in ihrem jeweiligen LobbyCreate.player[] adden koennen (Case 506)
+		//Format: "501-[ID]-[Name]-[isHost]"
 		case 501:
 		    	String[] pMessage501 = message.split("-");
-		    	if(pMessage501[1].equals("binGeJoined")) {
 		    	    // Der gejointe Player muss die anderen Player Objekte auch noch erstellen. case 503-505
-
-		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberOfMaxPlayers), pMessage501[2], pMessage501[3], pMessage501[4], "", "");
+		    	    LobbyCreate.addPlayer(pMessage501[1], pMessage501[2], pMessage501[3], "", "");
 		    	    for(int i=0; i<LobbyCreate.numberOfMaxPlayers; i++) {
 		    		if (LobbyCreate.player[i] != null) {
-		    		    ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
-			    	    sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
+		    		    // Cases in Abhaenigkeit der ID des zu speichernden Players werden aufgerufen
+			    	    sendMessage(session, "50" + Integer.toString(3+i) + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
 			    	    	+ "-" + LobbyCreate.getMap() + "-" + LobbyCreate.player[i].getSkin()); 
 		    		}
-
 		    	    }
-
-		    	    sendMessageToAllClients("502-" + LobbyCreate.numberOfMaxPlayers + "-" + pMessage501[2] + "-" + pMessage501[3] + "-" + pMessage501[4]);
+		    	    sendMessageToAllClients("502-" + pMessage501[1] + "-" + pMessage501[2] + "-" + pMessage501[3]);
 		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
-		    	}
 		    	break;
-		// Aufruf an alle Clients einen neuen Client zu adden
+		    	
+		// 502 = Aufruf an alle Clients den neu-gejointen Player zu adden
+		//Format: "502-[ID]-[Name]-[isHost]"
 		case 502:
-		    	ConsoleHandler.print("Der case 502 wurde aufgerufen vom Backend", MessageType.LOBBY);
+//		    	ConsoleHandler.print("Der case 502 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage502 = message.split("-");
-//		    	if(this.id != Integer.parseInt(pMessage502[2])) {
-			LobbyCreate.addPlayer(pMessage502[1], pMessage502[2], pMessage502[3], pMessage502[4], "", "");
-
+			LobbyCreate.addPlayer(pMessage502[1], pMessage502[2], pMessage502[3], "", "");
 		    	break;
 		
 		// Case 503-505 wird vom Server in 501 aufgerufen, sodass der zu joinende Client alle schon existierenen Player erstmal einfügt
+		    	
+		//503 = Fuer LobbyCreate.player[0]
+		//Format: "503-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]" 
 		case 503:
-		    	ConsoleHandler.print("Der case 503 wurde aufgerufen vom Backend", MessageType.LOBBY);
+//		    	ConsoleHandler.print("Der case 503 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage503 = message.split("-");
-		    	LobbyCreate.addPlayer(pMessage503[1], pMessage503[2], pMessage503[3], pMessage503[4], pMessage503[5], pMessage503[6]);
+		    	LobbyCreate.addPlayer(pMessage503[1], pMessage503[2], pMessage503[3], pMessage503[4], pMessage503[5]);
 		    	break;
 		    	
+		//504 = Fuer LobbyCreate.player[1]
+		//Format: "504-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]"    	
 		case 504:
-		    	ConsoleHandler.print("Der case 504 wurde aufgerufen vom Backend", MessageType.LOBBY);
+//		    	ConsoleHandler.print("Der case 504 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage504 = message.split("-");
-		    	LobbyCreate.addPlayer(pMessage504[1], pMessage504[2], pMessage504[3], pMessage504[4], pMessage504[5], pMessage504[6]);
+		    	LobbyCreate.addPlayer(pMessage504[1], pMessage504[2], pMessage504[3], pMessage504[4], pMessage504[5]);
 		    	break;
 		    	
+		//505 = Fuer LobbyCreate.player[2]
+		//Format: "505-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]" 
 		case 505:
-		    	ConsoleHandler.print("Der case 505 wurde aufgerufen vom Backend", MessageType.LOBBY);
+//		    	ConsoleHandler.print("Der case 505 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage505 = message.split("-");
-		    	LobbyCreate.addPlayer(pMessage505[1], pMessage505[2], pMessage505[3], pMessage505[4], pMessage505[5], pMessage505[6]);
+		    	LobbyCreate.addPlayer(pMessage505[1], pMessage505[2], pMessage505[3], pMessage505[4], pMessage505[5]);
 		    	break;
-		// Set numberPlayer for newly joined Players
+		    	
+		//506 = Set numberPlayer mainly for newly joined Players
+		//Format: "506-[numberOfMaxPlayers]"
 		case 506:
 			String[] pMessage506 = message.split("-");
 			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
 			break;
 			
-		// Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	
+		//507 = Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	
+		//Format: "507-[MapNr]"
 		case 507:
 		    	String[] pMessage507 = message.split("-");
 		    	LobbyCreate.setMap(Integer.parseInt(pMessage507[1]));
 		    	break;
-		// Wenn Clients Ihre Skin wechseln, dann sendet Server an alle weiter, damit die case 509 ausfuehren    	
+		    	
+		// Wenn Clients Ihre Skin wechseln, dann setzt der Server diese bei sich und sendet an alle weiter, damit diese case 509 ausfuehren   
+		//Format: "508-[ID]-[SkinNr]"
 		case 508:
 			String[] pMessage508 = message.split("-");
 			LobbyCreate.setSkin(Integer.parseInt(pMessage508[1]), Integer.parseInt(pMessage508[2]));;
 			sendMessageToAllClients("509-" + pMessage508[1] + "-" + pMessage508[2]);
 		    	break;
-		// Befehl um Skin Auswahl eines anderen Clients zu aendern    	
+		    	
+		//509 = Befehl um Skin Auswahl eines anderen Clients zu aendern  
+		//Format: "509-[ID]-[SkinNr]"
 		case 509:
 			String[] pMessage509 = message.split("-");
 			LobbyCreate.setSkin(Integer.parseInt(pMessage509[1]), Integer.parseInt(pMessage509[2]));;
 		    	break;
-		// Wenn Clients isReady aendern, dann sendet Server an alle weiter, damit die case 511 ausfuehren
+		    	
+		//510 = Wenn Clients isReady aendern, dann sendet setzt Server diese bei sich und sendet an alle weiter, damit die case 511 ausfuehren
+		//Format: "510-[ID]-[isReady]"
 		case 510:
 		    	String[] pMessage510 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage510[1])].setisReadyForClients(pMessage510[2]);
 		    	sendMessageToAllClients("511-" + pMessage510[1] + "-" + pMessage510[2]);
 		    	break;
-		// Befehl um IsReady Checkboxen eines Clients zu aendern
+		    	
+		//511 = Befehl um IsReady Checkboxen eines Clients zu aendern
+		//Format: "511-[ID]-[isReady]"
 		case 511:
 		    	String[] pMessage511 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage511[1])].setisReadyForClients(pMessage511[2]);
 		    	break;
 		    
-		// EXIT per BUTTON
+		//512 = Wird vom Client gesendet, wenn dieser EXIT per BUTTON drueckt
+		//Format: "512-[ID]"
 		case 512:
 		    	String[] pMessage512 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
 		    	removeClient(session);
+		    	// Befiehlt dem am verlassenden Client zu verlassen
+		    	sendMessage(session, "999-");
+		    	// Checken ob der verlassene Player der letzte Player war
 		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
 			    LobbyCreate.numberOfMaxPlayers--;
 		    	}
 		    	sendMessageToAllClients("513-" + pMessage512[1]);
+		    	// numberOfMaxPlayers an alle anderen Clients senden
+		    	sendMessageToAllClients("506-" + LobbyCreate.numberOfMaxPlayers);
 		    	break;
 		    	
-		// Wird von allen Clients aufgerufen, sodass der geleavede Player aus dem Array geloescht wird    	
+		//513 = Wird von allen Clients aufgerufen, sodass der geleavede Player aus dem Array geloescht wird  
+		//Format: "513-[ID]"
 		case 513:
 		    	String[] pMessage513 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage513[1])] = null;
-		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage513[1])) {
-			    LobbyCreate.numberOfMaxPlayers--;
-		    	}
 		    	break;
 		    	
-		// Wird aufgerufen, sobald der Host leaved
+		//514 = Wird aufgerufen, sobald der Host leaved
+		//Format: "514-"
 		case 514:
-//		    	for(int i=0;i<=3;i++){
-//		    	    LobbyCreate.player[i] = null;
-//		    	}
+		    	for (int i=0; i<LobbyCreate.player.length; i++) {
+			    LobbyCreate.player[i] = null;
+		    	}
 		    	LobbyCreate.numberOfMaxPlayers = 0;
 		    	GraphicsHandler.lobby = null;
 		    	session.closeNow();
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
-		// Wird von allen Clients aufgerufen, sobald alle in das Ingame sollen    	
+		    	
+		//515 = Wird von allen Clients aufgerufen, sobald alle in das Ingame sollen    
+		//Format: "515-"
 		case 515:
 		    	GraphicsHandler.switchToIngameFromLobby();
 		    	break;
+		    	
+		    	
 		    	
 		case 900:
 			String[] pMessage900 = message.split("-");

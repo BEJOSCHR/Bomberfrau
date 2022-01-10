@@ -8,15 +8,15 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -28,7 +28,6 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -285,49 +284,18 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		LobbyButtons.lobbyButtonsreset();
 		
-		boolean isHost = false;
-		if(Menu.getIs_host() == true) {
-		    isHost = true;
-		}
-		
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
-		
-
-		if (isHost == true) {
-//		    try {
-//			server = new ConnectedClient(true, null);
-//			Thread.sleep(500);
-//		    }
-//		    catch (Exception e) {
-//			e.printStackTrace();
-//		    }
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), isHost);
-		    
+		if (Menu.getIs_host()) {
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host());
 		}
 		else {
-//		    try {
-//			client = new ConnectedClient(false, "127.0.0.1");
-//			Thread.sleep(500);
-//		    }
-//		    catch (Exception e) {
-//			e.printStackTrace();
-//		    }
-		    
-		    
 //		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
 		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
-		    
 		}
-
-//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
-
-
 	}
 	
 	/**
@@ -342,7 +310,6 @@ public class GraphicsHandler {
 	    	Game.updateMap(LobbyCreate.getMap()+1);
 	    	
 	    	// Add all Players into InGame ArrayList "PlayerFromLobby"
-		
 		for(int i=0; i < LobbyCreate.numberOfMaxPlayers; i++) {
 		    if (LobbyCreate.player[i] != null) {
 			    if(i==0) {

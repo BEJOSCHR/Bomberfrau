@@ -10,12 +10,9 @@
 package uni.bombenstimmung.de.lobby;
 
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
-import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 
 public class LobbyPlayer {
@@ -26,11 +23,11 @@ public class LobbyPlayer {
 	private boolean isReady = false;
 	public LoadedImage skinSelection[] = new LoadedImage[3];
 	private int zaehlerSkinSelection = 0;
-	private ConnectedClient connectedClient;
 
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird vom zu erstellenden HOST aufgerufen.
+	 * @param name 		String, den Namen des Players wird gespeichert.
 	 */
 	public LobbyPlayer(String name) {
 		this.name = name;
@@ -40,6 +37,8 @@ public class LobbyPlayer {
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
+	 * @param name 		String, den Namen des Players wird gespeichert.
+	 * @param ip 		ip-Adresse, wird gespeichert.
 	 */
 	public LobbyPlayer(String name, String ip) {
 		this.name = name;
@@ -56,38 +55,23 @@ public class LobbyPlayer {
 		skinSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
 		skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
 		skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
+	}	
+
+
+	public int getSkin() {
+	    return zaehlerSkinSelection;
 	}
-	
-//	public LoadedImage getskinSelection() {
-//	    
-//	}
-	
 	
 
-	/**
-	 * Gibt die Skinnummer zurueck.
-	 */
-	public int getSkin() {
-		return zaehlerSkinSelection;
-	}
 	public void setSkin(int skin) {
-		zaehlerSkinSelection = skin;
+	    zaehlerSkinSelection = skin;
 	}
-	/**
-	 * Setzt den Namen
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * Gibt den Namen zurueck.
-	 */
+
+
     public String getName() {
     	return name;
     }
-	/**
-	 * Gibt die Player Id zurueck.
-	 */
+
     public int getId() {
     	return id;
     }
@@ -98,9 +82,7 @@ public class LobbyPlayer {
     public String getIpAdress() {
     	return ip;
     }
-	/**
-	 * Gibt zurueck ob der Player der Host ist.
-	 */
+
     public boolean getisHost() {
     	return isHost;
     }
@@ -112,7 +94,7 @@ public class LobbyPlayer {
 	 * Veraendert den Status, ob der Player ready ist, sodass der Host das Spiel starten kann.
 	 * Wird von der Checkbox aufgerufen, wo alle Player (ausser dem Host) den Button klicken koennen.
 	 */
-    public void setisReady() {
+    public void changeisReady() {
     	if (isReady == false) {
     	    isReady = true;
     	}
@@ -120,8 +102,9 @@ public class LobbyPlayer {
     	else if (isReady == true) {
     	    isReady = false; 
     	}
-
     }
+    
+    
     public void setisReadyForClients(String ready) {
 	isReady = Boolean.parseBoolean(ready);
     }
@@ -131,10 +114,5 @@ public class LobbyPlayer {
     public boolean getisReady() {
     	return isReady;
     }
-	/**
-	 * Die toString, wo alle wichtigsten Informationen des Players in einem String zurueck gibt.
-	 */
-    @Override public String toString() {
-    	return "Player ID: " + id + " Name: " + name + " IP-Adress: " + ip;
-    }
+
 }

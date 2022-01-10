@@ -12,6 +12,7 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
@@ -69,6 +70,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
+			    	// Nur der Host kann den Startbutton klicken
 			    	if (LobbyCreate.client.isHost()) {
 			    	    ConsoleHandler.print("Button was Clicked", MessageType.LOBBY);
 			    	    int counterForReady = 1;
@@ -96,27 +98,25 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Exit", 20, Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
+			    
 			    	if (LobbyCreate.client.isHost()) {
+			    	    // Wenn der Host nicht alleine in der Lobby ist
 			    	    if (LobbyCreate.numberOfMaxPlayers > 1) {
 			    		LobbyCreate.client.sendMessageToAllClients("514-");
-//				    	LobbyCreate.client.getSession().closeNow();
 			    	    }
 			    	}
 			    	else {
 			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
 			    	}
 			    	
-//			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
-//				    LobbyCreate.player[i] = null;
-//			    	}	
-//			    	if (LobbyCreate.client.isHost()) {
-//			    	    if (LobbyCreate.numberPlayer > 1) {
-//
-//			    	    }
-//			    	}
-			    	
+			    	// Setze alle Objekte = null und switche ins Menu
+			    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+				    LobbyCreate.player[i] = null;
+			    	}	
 			    	LobbyCreate.numberOfMaxPlayers = 0;
 			    	GraphicsHandler.lobby = null;
+			    	// Schliessung der Session
+//			    	LobbyCreate.client.getSession().closeNow();
 				GraphicsHandler.switchToMenuFromLobby();
 			}
 			@Override
@@ -127,7 +127,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		
 		
 		
-		//LOBBY Unsichtbarer LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
+		//LOBBY LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
 		mapleft = new MouseActionArea(xPlayer1Left, yPlayerMap, 45, 44,
 				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
 			@Override
@@ -156,7 +156,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 		};
 		
-		//LOBBY Unsichtbarer RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
+		//LOBBY RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
 		mapright = new MouseActionArea(xPlayer1Right, yPlayerMap, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
 				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
 			@Override
