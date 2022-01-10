@@ -214,34 +214,54 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
 		//202 = Setze die Position eines Players. (Client)
-		//Format: "202-[ID]-[X-Cord]-[Y-Cord]"
+		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
 		case 202:
 			String[] pMessage202 = message.split("-");
 			if(id != Integer.parseInt(pMessage202[1])) {
-			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+			    if (Integer.parseInt(pMessage202[4]) == GraphicsHandler.getHeight()) {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+			    } else {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(
+					(int)( (  Double.parseDouble(pMessage202[2])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+			    }
 			}
 			break;	
 		//203 = Setze die Position eines Players. (Server)
-		//Format: "203-[ID]-[X-Cord]-[Y-Cord]"
+		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
 		case 203:
 			String[] pMessage203 = message.split("-");
-			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
-			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3]);
+			if (Integer.parseInt(pMessage203[4]) == GraphicsHandler.getHeight()) {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
+			} else {
+			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(
+				(int)( (  Double.parseDouble(pMessage203[2])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+				(int)( (  Double.parseDouble(pMessage203[3])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+			}
+			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4]);
 			break;
+		
+		case 204:
+		    
+		    break;
+		
+		case 205:
+		    
+		    break;
 		//204 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "204-[ID-OF-DEAD-PLAYER]"
-		case 204:
-		    /*String[] pMessage204 = message.split("-");
-		    if(id != Integer.parseInt(pMessage204[1])) {
-			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).setDead(true);
+		case 206:
+		    /*String[] pMessage206 = message.split("-");
+		    if(id != Integer.parseInt(pMessage206[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage206[1])).setDead(true);
 		    }*/
 		    break;
 		//205 = Signalisiere, dass Player tot ist. (Server)
 		//Format: "205-[ID-OF-DEAD-PLAYER]"
-		case 205:
-		    /*String[] pMessage205 = message.split("-");
-		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).setDead(true);
-		    this.sendMessageToAllClients("204-" + pMessage205[1]);*/
+		case 207:
+		    /*String[] pMessage207 = message.split("-");
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
+		    this.sendMessageToAllClients("206-" + pMessage207[1]);*/
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"

@@ -148,9 +148,9 @@ public class Player extends Entity implements ActionListener{
 	
 	if (this.direction != 0) {
 	    if(this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    }
 	}
 	
