@@ -53,7 +53,9 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		ConsoleHandler.print("Session closed .... ", MessageType.BACKEND);
-//		server.removeClient(session);
+		if (server.containsClient(session.getRemoteAddress())) {
+		    server.removeClient(session);
+		}
 	}
 	
 	/**
@@ -64,7 +66,6 @@ public class ServerHandler extends IoHandlerAdapter {
 	 */
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
-		
 		String[] parts = message.toString().split("-");
 		if (Integer.parseInt(parts[0]) != 003) {
 		    SocketAddress remoteAddress = session.getRemoteAddress();

@@ -8,19 +8,20 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -28,7 +29,6 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -242,6 +242,15 @@ public class GraphicsHandler {
 		
 	}
 	
+	public static void switchToLobbyFromAftergame() {
+		
+	    AnimationHandler.stopAllAnimations();
+
+	    displayType = DisplayType.LOBBY;
+	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
+
+	}
+	
 	/**
 	 * Wird aufgerufen wenn w�hrend einem Spiel das Spiel verlassen wird bzw der Host das Spiel schlie�t
 	 */
@@ -285,49 +294,18 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		LobbyButtons.lobbyButtonsreset();
 		
-		boolean isHost = false;
-		if(Menu.getIs_host() == true) {
-		    isHost = true;
-		}
-		
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		ConsoleHandler.print("Width: " + getWidth() + "Height: " + getHeight(), MessageType.LOBBY);
-		
-
-		if (isHost == true) {
-//		    try {
-//			server = new ConnectedClient(true, null);
-//			Thread.sleep(500);
-//		    }
-//		    catch (Exception e) {
-//			e.printStackTrace();
-//		    }
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), isHost);
-		    
+		if (Menu.getIs_host()) {
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host());
 		}
 		else {
-//		    try {
-//			client = new ConnectedClient(false, "127.0.0.1");
-//			Thread.sleep(500);
-//		    }
-//		    catch (Exception e) {
-//			e.printStackTrace();
-//		    }
-		    
-		    
 //		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
 		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
-		    
 		}
-
-//		lobby.addPlayer(new LobbyPlayer("Player 3", "2.0.0.2"));
-//		lobby.addPlayer(new LobbyPlayer("Player 4", "1.0.0.0"));
-
-
 	}
 	
 	/**
@@ -384,13 +362,20 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
+		//DeadPlayerHandler.generateDummyDeadPlayer();
+		
+		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
+		}
+		DeadPlayerHandler.calculateScore();
+		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
 		
 	}
 	//SWITCH TO SECTION
 	//------------------------------------------------------------------------------------------------------------------
-	
+	//
 	
 	/**
 	 *  sch�nerer Font mit abgerundeten Zeichen
