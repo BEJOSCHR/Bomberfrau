@@ -7,6 +7,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class AftergameButtons extends MouseActionAreaHandler{
     
@@ -16,6 +17,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		MouseActionAreaType.MAA_AFTERGAME, "Exit", 20, new Color(225,0,0), new Color(0,0,255)) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
+		//ServerHandler.sessionClosed();
 		GraphicsHandler.shutdownProgram();
 	    }
 	    @Override
