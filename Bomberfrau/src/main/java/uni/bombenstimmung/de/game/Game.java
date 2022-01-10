@@ -13,10 +13,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Color;
 
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class Game {
 
@@ -182,9 +184,9 @@ public class Game {
 	for(Player i : PlayerHandler.getAllPlayer()) {
 	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + " :" + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
 	    if(i.getDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
 	    }
 	    counter++;
 	}
@@ -285,19 +287,27 @@ public class Game {
 		livingPlayers++;
 	    }
 	}
-	if (livingPlayers <= 1) {
+	if (gameOver == false && livingPlayers <= 1) {
 	    gameOver();
 	}
     }
     
     public static void gameOver() {
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
-	gameOver = true;
-	PlayerHandler.getClientPlayer().actionStop();
-//	try {
-//	    Thread.sleep(4000);
-//	}
-//	catch (InterruptedException ex) {}
-//	GraphicsHandler.switchToAftergameFromIngame();
+	new Animation(400, 1) {
+	    @Override
+	    public void initValues() {
+		PlayerHandler.getClientPlayer().actionStop();
+		gameOver = true;
+	    }
+	    
+	    @Override
+	    public void changeValues() {}
+	    
+	    @Override
+	    public void finaliseValues() {
+		GraphicsHandler.switchToAftergameFromIngame();
+	    }
+	};
     }
 }

@@ -28,6 +28,8 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class PlayerHandler {
     private static Player clientPlayer;
@@ -47,7 +49,7 @@ public class PlayerHandler {
      * @return Integer mit opponentPlayers + 1
      */
     public static int getPlayerAmount() {
-	return opponentPlayers.size()+1;
+    return opponentPlayers.size()+1;
     }
     
     public static Player getClientPlayer() {
@@ -71,8 +73,9 @@ public class PlayerHandler {
 	if(allPlayer.contains(clientPlayer)) {
 	    allPlayer.addAll(array);
 	} else {
-	    allPlayer.add(clientPlayer);
+	    int id = clientPlayer.getId();
 	    allPlayer.addAll(array);
+	    allPlayer.add(id, clientPlayer);
 	}
     }
     /**
@@ -84,8 +87,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	clientPlayer = new Player(id, name, ipAdress, host, skin, pos);
+    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	clientPlayer = new Player(id, name, ipAdress, host, skin, pos, cC);
     }
     
     /**
@@ -105,8 +108,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	opponentPlayers.add(new Player(id, name, ipAdress, host, skin, pos));
+    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	opponentPlayers.add(new Player(id, name, ipAdress, host, skin, pos, cC));
 	opponentCount++;
     }
     
@@ -154,24 +157,32 @@ public class PlayerHandler {
 			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
 			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
 	    }*/
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), null);
+	    if (clientPlayer.getDirection() != 0) {
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+	    } else {
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+	    }
 	} else {
 	    g.setColor(Color.black);
-	    g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+	    /*g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
 	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
 	}
 	for (Player i : opponentPlayers) {
 	    if (i.getDead() == false) {
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), null);
+		if (i.getDirection() != 0) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
 	    } else {
 		g.setColor(Color.black);
-		g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
+		/*g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
 		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
 			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
 			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
@@ -351,14 +362,11 @@ public class PlayerHandler {
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
 	if (debugKeys) {
-	    /*if (keyCode == KeyEvent.VK_O) {
-		addOpponentPlayer(1, "Dave", "1.1.1.1", false, 1, new Point(1, 15));
-		addOpponentPlayer(2, "Jenny", "2.2.2.2", false, 2, new Point(15, 15));
-		addOpponentPlayer(3, "Christie", "3.3.3.3", false, 3, new Point(15, 1));
-		addToAllPlayers(PlayerHandler.getOpponentPlayers());
+	    if (keyCode == KeyEvent.VK_O) {
+		clientPlayer.increaseBombRadius();
 	    } else if (keyCode == KeyEvent.VK_L) {
-		clearOpponentPlayers();
-	    } else */if (keyCode == KeyEvent.VK_I) {
+		clientPlayer.decreaseBombRadius();
+	    } else if (keyCode == KeyEvent.VK_I) {
 		clientPlayer.increaseMaxBombs();
 	    } else if (keyCode == KeyEvent.VK_K) {
 		clientPlayer.decreaseMaxBombs();
@@ -394,8 +402,8 @@ public class PlayerHandler {
      * @param skin	Skin-ID des Players
      * @param pos	Position des Players
      */
-    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
-	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos));
+    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos, cC));
     }
     
     /**
@@ -404,9 +412,13 @@ public class PlayerHandler {
      */
     public static void initPlayers() {
 	// TODO: Verteilung mit IP-Adressen Vergleich anpassen, wenn ServerConnection implementiert wird.
-	setClientPlayer(playerFromLobby.get(0));
-	for (int i = 1; i < playerFromLobby.size(); i++) {
-	    addOpponentPlayer(playerFromLobby.get(i));
+	
+	for(Player p : playerFromLobby) {
+	    if(p.getId() == LobbyCreate.client.getId()) {	// TODO: wenn Lobby connectedClient implementiert hat, dann hier ID von ConnectedClient abfragen
+		setClientPlayer(p);
+	    } else {
+		addOpponentPlayer(p);
+	    }
 	}
     }
 }

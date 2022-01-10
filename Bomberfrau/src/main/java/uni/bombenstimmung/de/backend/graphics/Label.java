@@ -128,11 +128,11 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
 		    	if(Game.getGameOver()) {
-		    	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 50, "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
 			break;
 		case AFTERGAME:
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
+			GraphicsHandler.drawCentralisedText(g, Color.BLACK, 180, "AFTERGAME", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2-30);
 			break;
 		default:
 			ConsoleHandler.print("Illegal displayType! Can't draw for type '"+GraphicsHandler.getDisplayType()+"'", MessageType.ERROR);

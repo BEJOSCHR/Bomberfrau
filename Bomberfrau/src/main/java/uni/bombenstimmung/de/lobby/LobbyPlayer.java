@@ -15,44 +15,38 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 
 public class LobbyPlayer {
 	private String ip;
 	private String name;
-	static int idZaehler = 0;
 	private int id;
 	private boolean isHost;
 	private boolean isReady = false;
-	
 	public LoadedImage skinSelection[] = new LoadedImage[3];
-	public int zaehlerSkinSelection = 0;
+	private int zaehlerSkinSelection = 0;
+	private ConnectedClient connectedClient;
 
-	
-	/**
-	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
-	 */
-	public LobbyPlayer(String name, String ip) {
-		this.ip = ip;
-		this.name = name;
-		id = idZaehler;
-		idZaehler ++;
-		isHost = false;
-		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
-		initializeImages();
-		
-	}
 	
 	/**
 	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird vom zu erstellenden HOST aufgerufen.
 	 */
 	public LobbyPlayer(String name) {
 		this.name = name;
-		id = idZaehler;
-		idZaehler ++;
 		isHost = true;
-		ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name, MessageType.LOBBY);
 		initializeImages();
+	}
+	
+	/**
+	 * Konstruktor, wo die IP Adresse auch uebergeben wird. Wird von zu erstellenden PLAYERN aufgerufen.
+	 */
+	public LobbyPlayer(String name, String ip) {
+		this.name = name;
+		this.ip = ip;
+		isHost = false;
+		initializeImages();
+		
 	}
 	
 	/**
@@ -64,29 +58,20 @@ public class LobbyPlayer {
 		skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
 	}
 	
+//	public LoadedImage getskinSelection() {
+//	    
+//	}
 	
-	/**
-	 * Wenn die naechste Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
-	 */
-	public void setIncrementSkin() {
-		zaehlerSkinSelection = (zaehlerSkinSelection + 1)%3;
-	}
-	/**
-	 * Wenn die vorherige Skin ausgewaehlt wird, dann wird diese Methode aufgerufen.
-	 */
-	public void setDecrementSkin() {
-		if (zaehlerSkinSelection == 0) {
-			zaehlerSkinSelection = 2;
-		}
-		else {
-			zaehlerSkinSelection = (zaehlerSkinSelection - 1)%3;	
-		}
-	}
+	
+
 	/**
 	 * Gibt die Skinnummer zurueck.
 	 */
 	public int getSkin() {
 		return zaehlerSkinSelection;
+	}
+	public void setSkin(int skin) {
+		zaehlerSkinSelection = skin;
 	}
 	/**
 	 * Setzt den Namen
@@ -106,6 +91,9 @@ public class LobbyPlayer {
     public int getId() {
     	return id;
     }
+    public void setId(int id) {
+	this.id = id;
+    }
     
     public String getIpAdress() {
     	return ip;
@@ -116,15 +104,26 @@ public class LobbyPlayer {
     public boolean getisHost() {
     	return isHost;
     }
+    
+    public void setisHost(boolean x) {
+	isHost = x;
+    }
 	/**
 	 * Veraendert den Status, ob der Player ready ist, sodass der Host das Spiel starten kann.
 	 * Wird von der Checkbox aufgerufen, wo alle Player (ausser dem Host) den Button klicken koennen.
 	 */
     public void setisReady() {
-    	if (isReady == false)
-    		isReady = true;
-    	else if (isReady == true)
-    		isReady = false;
+    	if (isReady == false) {
+    	    isReady = true;
+    	}
+
+    	else if (isReady == true) {
+    	    isReady = false; 
+    	}
+
+    }
+    public void setisReadyForClients(String ready) {
+	isReady = Boolean.parseBoolean(ready);
     }
 	/**
 	 * Gibt zurueck, ob der Player ready ist.

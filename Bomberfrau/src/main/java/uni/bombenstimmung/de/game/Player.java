@@ -23,10 +23,13 @@ import javax.swing.Timer;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Player extends Entity implements ActionListener{
-
+    
     private int id;
     private String name;
     private String ipAdress;
@@ -49,8 +52,11 @@ public class Player extends Entity implements ActionListener{
     private double yHitbox;
     private int direction;
     private double speedFactor;
+    private boolean playWallSound = true;
+    private ConnectedClient connectedClient;
+    private int deathTime;
     
-    public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos) {
+    public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
 	/* Offset-Variablen fuer Berechnung*/
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yOffset = GameData.MAP_SIDE_BORDER;
@@ -75,14 +81,15 @@ public class Player extends Entity implements ActionListener{
 	this.velX = 0.0;
 	this.velY = 0.0;
 	this.currentButtonConfig = new PlayerButtonConfig(Settings.getMove_up(), Settings.getMove_down(),
-							Settings.getMove_left(), Settings.getMove_right(),
-							Settings.getPlant_bomb());
+								Settings.getMove_left(), Settings.getMove_right(),
+								Settings.getPlant_bomb());
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
 	this.yHitbox = (double)GraphicsHandler.getHeight()/36;
 	this.direction = 0;
-	this.speedFactor = 540.0;
+	this.speedFactor = 360.0;
+	this.connectedClient = cC;
 	this.t = new Timer(8, this);
 	this.t.start();
 	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name + ", Pos(" + currentField.xPosition +
@@ -100,6 +107,7 @@ public class Player extends Entity implements ActionListener{
 	 */
 	switch (this.direction) {
 	case 0:		// ohne Bewegung
+	    playWallSound = true;
 	    tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
 	    break;
 	case 1:		// hoch
@@ -123,15 +131,28 @@ public class Player extends Entity implements ActionListener{
 	    ConsoleHandler.print("Invalid Direction ID!", MessageType.GAME);
 	}
 	if (block == false && (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
-		&& tempField.getContent() != FieldContent.BORDER)) {
+		&& tempField.getContent() != FieldContent.BORDER &&
+		( tempField.getContent() != FieldContent.BOMB ||
+		( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ))) {
 	    this.realPosX += this.velX;
 	    this.realPosY += this.velY;
-	    
+	} else {
+	    // Abfrage, damit Tod in RoD nicht Dauerton ergibt
+	    if (playWallSound && !this.dead && !Game.getGameOver() && this == PlayerHandler.getClientPlayer()) SoundHandler.playSound2(SoundType.WALL, false);
+	    playWallSound = false;
 	}
 	
 	super.xPosition = (int)this.realPosX;
 	super.yPosition = (int)this.realPosY;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
+	
+	if (this.direction != 0) {
+	    if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	    } else {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition);
+	    }
+	}
 	
 	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
 	if (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
@@ -143,14 +164,18 @@ public class Player extends Entity implements ActionListener{
 	/* Abfrage, ob Player ueber Upgrade laeuft. Falls ja, aufsammeln und passende Upgrade-Methode ausfuehren.*/
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_BOMB) {
 	    this.increaseMaxBombs();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
+	    
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_FIRE) {
 	    this.increaseBombRadius();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_SHOE) {
 	    this.increaseMovementSpeed();
+	    SoundHandler.playSound2(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
     }
@@ -175,10 +200,40 @@ public class Player extends Entity implements ActionListener{
 	/* Bewegung zuruecksetzen im Todesfall. */
 	if (dead == true) {
 	    this.actionStop();
-	    PlayerHandler.resetMovement();
+	    if (this == PlayerHandler.getClientPlayer()) {
+		PlayerHandler.resetMovement();
+	    }
+	}
+	if (this.dead == false && dead == true) {
+	    SoundHandler.playSound2(SoundType.DYING, false);
+	    this.deathTime = GameCounter.getClock();
+	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T", MessageType.GAME);
+	    this.t.stop();
+	    /*if(this.connectedClient.isHost()) {
+		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    } else {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
+	    }*/
+	} else if (this.dead == true && dead == false){
+	    this.t.start();
 	}
 	this.dead = dead;
 	Game.checkIfAllDead();
+    }
+    
+    public void setConnectedClient(ConnectedClient cC) {
+	this.connectedClient = cC;
+    }
+    
+    /**
+     * Setzt die Bildschirmkoordinate des Players neu. Diese Methode ist hauptsaechlich
+     * fuer ConnectedClient gedacht.
+     * @param xPos	neue X Bildschirmkoordinate
+     * @param yPos	neue Y Bildschirmkoordinate
+     */
+    public void setDisplayCoordinates(int xPos, int yPos) {
+	this.realPosX = xPos;
+	this.realPosY = yPos;
     }
     
     public int getId() {
@@ -243,6 +298,14 @@ public class Player extends Entity implements ActionListener{
     
     public double getYHitbox() {
 	return yHitbox;
+    }
+    
+    public int getDeathTime() {
+	return this.deathTime;
+    }
+    
+    public int getDirection() {
+	return this.direction;
     }
     
     /*
@@ -312,14 +375,21 @@ public class Player extends Entity implements ActionListener{
     }
     
     public void decreasePlacedBombs() {
-	if (placedBombs > 0) {
-	    placedBombs--;
+	if (this.placedBombs > 0) {
+	    this.placedBombs--;
 	}
     }
     
     public void increaseBombRadius() {
 	if (this.bombRadius < GameData.MAP_DIMENSION) {
 	    this.bombRadius++;
+	}
+	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
+    }
+    
+    public void decreaseBombRadius() {
+	if (this.bombRadius > 1) {
+	    this.bombRadius--;
 	}
 	ConsoleHandler.print("Player ID: " + id + ": New Bomb Radius: " + this.bombRadius, MessageType.GAME);
     }
@@ -334,21 +404,30 @@ public class Player extends Entity implements ActionListener{
 	if (this.movementSpeed < 5) {
 	    this.movementSpeed++;
 	    
+	    /*
+	     * Berechnen des Speed Factors:
+	     * Bildschirmhoehe / gewuenschter Pixel-Shift = SpeedFactor
+	     * Bsp: 1080 / 3 = 360 (Standardlaufgeschwindigkeit)
+	     * Man kann natuerlich auch andere Bildschirmhoehen und Pixel-Shift werte benutzen.
+	     * Dies wird nicht im Programm, sondern vorher als statischer Wert zum Einfuegen berechnet.
+	     * Da es ein Faktor ist, bewegt man sich immer noch bei jeder Aufloesung gleich schnell.
+	     */
+	    
 	    switch (movementSpeed) {
 	    case 1:
-		this.speedFactor = 540.0;
+		this.speedFactor = 360.0;		// 1080 / 3
 		break;
 	    case 2:
-		this.speedFactor = 360.0;
+		this.speedFactor = 308.6;		// 1080 / 3.5
 		break;
 	    case 3:
-		this.speedFactor = 270.0;
+		this.speedFactor = 270.0;		// 1080 / 4
 		break;
 	    case 4:
-		this.speedFactor = 216.0;
+		this.speedFactor = 240.0;		// 1080 / 4,5
 		break;
 	    case 5:
-		this.speedFactor = 180.0;
+		this.speedFactor = 216.0;		// 1080 / 5
 	    }
 	    
 	    switch (this.direction) {
@@ -378,19 +457,19 @@ public class Player extends Entity implements ActionListener{
 	    
 	    switch (movementSpeed) {
 	    case 1:
-		this.speedFactor = 540.0;
+		this.speedFactor = 360.0;		// 1080 / 3
 		break;
 	    case 2:
-		this.speedFactor = 360.0;
+		this.speedFactor = 308.6;		// 1080 / 3.5
 		break;
 	    case 3:
-		this.speedFactor = 270.0;
+		this.speedFactor = 270.0;		// 1080 / 4
 		break;
 	    case 4:
-		this.speedFactor = 216.0;
+		this.speedFactor = 240.0;		// 1080 / 4,5
 		break;
 	    case 5:
-		this.speedFactor = 180.0;
+		this.speedFactor = 216.0;		// 1080 / 5
 	    }
 	    
 	    switch (this.direction) {
@@ -413,6 +492,7 @@ public class Player extends Entity implements ActionListener{
 	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
     }
     
+    //TODO: CornerDetection fixen, bei 1600x900 ist die sehr buggy
     /**
      * Dies ist eine Corner-Detection. In dieser Methode wird ermittelt, ob sich vorne links oder
      * vorne rechts vom Player ein nicht begehbares Feld befindet. Ist dies der Fall wird der Player

@@ -28,11 +28,16 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.DatagramSessionConfig;
 import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
-
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
+import uni.bombenstimmung.de.game.Player;
+import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
+
 
 public class ConnectedClient extends IoHandlerAdapter{
 	
@@ -45,6 +50,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	private Stack<Integer> idStack;
+	
+	private Player player;
 	
 	/**
 	 * Erzeugt einen neuen ConnectedClient. 
@@ -81,9 +88,28 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Is the new created Client not the host, a new UDP Client will be initialized
 		} else { 
 			connector = new NioDatagramConnector();
-			getConnector().setHandler(new ClientHandler(this));
-			getConnector().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
-			ConnectFuture connFuture = getConnector().connect(new InetSocketAddress(IP, ConnectionData.PORT));
+			connector.setHandler(new ClientHandler(this));
+			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+			ConnectFuture connFuture = connector.connect(new InetSocketAddress(IP, ConnectionData.PORT));
+			connFuture.awaitUninterruptibly();
+			connFuture.addListener(new IoFutureListener<ConnectFuture>() {
+			    public void operationComplete(ConnectFuture future) {
+				ConsoleHandler.print(Boolean.toString(future.isConnected()), MessageType.BACKEND);
+				if (future.isConnected()) {
+				    conSession = future.getSession();
+				    try {
+					sendMessage(conSession);
+				    } catch (InterruptedException e) {
+					e.printStackTrace();
+				    }
+				} else {
+				    ConsoleHandler.print("Not connected...exiting", MessageType.BACKEND);
+				}
+			    }
+			});
+		}
+	}
+			/*
 			connFuture.addListener(new IoFutureListener() {
 				public void operationComplete(IoFuture future) {
 					ConnectFuture connFuture = (ConnectFuture) future;
@@ -99,9 +125,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 							ConsoleHandler.print("Client is not connected to the server....exiting", MessageType.BACKEND);
 						}
 					}
-				});
+				}); 
 		}
-	}
+	} */
 	
 	/**
 	 * Debug Methode, die vor finaler Version gelöscht werden soll!
@@ -109,7 +135,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @throws InterruptedException
 	 */
 	private void sendMessage(IoSession session) throws InterruptedException {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 5; i++) {
 			String message = "000-Hallo" + i;
 			session.write(message);
 			Thread.sleep(20);
@@ -187,24 +213,177 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 201:
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
-		//202 = Setze die Position eines Spieler. 
-		//Format: "201-[ID]-[X-Cord]-[Y-Cord]"
+		//202 = Setze die Position eines Players. (Client)
+		//Format: "202-[ID]-[X-Cord]-[Y-Cord]"
 		case 202:
-			@SuppressWarnings("unused") String[] pMessage202 = message.split("-");
-			//TODO: Setze X und Y des Spielers
+			String[] pMessage202 = message.split("-");
+			if(id != Integer.parseInt(pMessage202[1])) {
+			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+			}
 			break;	
-		//203 = Setze die Position einer Bombe. 
-		//Format: "203-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
+		//203 = Setze die Position eines Players. (Server)
+		//Format: "203-[ID]-[X-Cord]-[Y-Cord]"
 		case 203:
-			@SuppressWarnings("unused") String[] pMessage203 = message.split("-");
-			//TODO: Setze X und Y der Bombe
+			String[] pMessage203 = message.split("-");
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
+			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3]);
 			break;
+		//204 = Signalisiere, dass Player tot ist. (Client)
+		//Format: "204-[ID-OF-DEAD-PLAYER]"
+		case 204:
+		    /*String[] pMessage204 = message.split("-");
+		    if(id != Integer.parseInt(pMessage204[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).setDead(true);
+		    }*/
+		    break;
+		//205 = Signalisiere, dass Player tot ist. (Server)
+		//Format: "205-[ID-OF-DEAD-PLAYER]"
+		case 205:
+		    /*String[] pMessage205 = message.split("-");
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).setDead(true);
+		    this.sendMessageToAllClients("204-" + pMessage205[1]);*/
+		    break;
 		//300 = Starte das Spiel
 		//Format: "300"
 		case 300:
 			//TODO: Starte Spiel
 			break;
 		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
+		
+			
+//		// LOBBY TEST - Server Antwort
+//		case 500:
+//		    	String[] pMessage500 = message.split("-");
+//		    	if (pMessage500[0] == "3") {
+//			    if (pMessage500[1] == "red") {
+//				//Setze Farbe red
+//				sendMessageToAllClients("457-" +pMessage500[1] + "-" + pMessage500[0]);
+//			    }  
+//		    	}
+//		    	break;
+//		    	
+//		case 5001:
+//		    	String [] pMessage457 = message.split("-");
+//		    	// set Farbe von PlayerID pMessage457[2]
+//		    	break;
+//		// LOBBY TEST - 
+		
+		// LOBBY Join Nachrichten von Clients an Server und anschließend Aufruf von Sever an alle Clients um neuen Client zu adden case 502
+		case 501:
+		    	String[] pMessage501 = message.split("-");
+		    	if(pMessage501[1].equals("binGeJoined")) {
+		    	    // Der gejointe Player muss die anderen Player Objekte auch noch erstellen. case 503-505
+
+		    	    LobbyCreate.addPlayer(Integer.toString(LobbyCreate.numberOfMaxPlayers), pMessage501[2], pMessage501[3], pMessage501[4], "", "");
+		    	    for(int i=0; i<LobbyCreate.numberOfMaxPlayers; i++) {
+		    		if (LobbyCreate.player[i] != null) {
+		    		    ConsoleHandler.print("Case 50" + Integer.toString(3+i),MessageType.LOBBY);
+			    	    sendMessage(session, "50" + Integer.toString(3+i) + "-" + i + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
+			    	    	+ "-" + LobbyCreate.getMap() + "-" + LobbyCreate.player[i].getSkin()); 
+		    		}
+
+		    	    }
+
+		    	    sendMessageToAllClients("502-" + LobbyCreate.numberOfMaxPlayers + "-" + pMessage501[2] + "-" + pMessage501[3] + "-" + pMessage501[4]);
+		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
+		    	}
+		    	break;
+		// Aufruf an alle Clients einen neuen Client zu adden
+		case 502:
+		    	ConsoleHandler.print("Der case 502 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage502 = message.split("-");
+//		    	if(this.id != Integer.parseInt(pMessage502[2])) {
+			LobbyCreate.addPlayer(pMessage502[1], pMessage502[2], pMessage502[3], pMessage502[4], "", "");
+
+		    	break;
+		
+		// Case 503-505 wird vom Server in 501 aufgerufen, sodass der zu joinende Client alle schon existierenen Player erstmal einfügt
+		case 503:
+		    	ConsoleHandler.print("Der case 503 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage503 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage503[1], pMessage503[2], pMessage503[3], pMessage503[4], pMessage503[5], pMessage503[6]);
+		    	break;
+		    	
+		case 504:
+		    	ConsoleHandler.print("Der case 504 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage504 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage504[1], pMessage504[2], pMessage504[3], pMessage504[4], pMessage504[5], pMessage504[6]);
+		    	break;
+		    	
+		case 505:
+		    	ConsoleHandler.print("Der case 505 wurde aufgerufen vom Backend", MessageType.LOBBY);
+		    	String[] pMessage505 = message.split("-");
+		    	LobbyCreate.addPlayer(pMessage505[1], pMessage505[2], pMessage505[3], pMessage505[4], pMessage505[5], pMessage505[6]);
+		    	break;
+		// Set numberPlayer for newly joined Players
+		case 506:
+			String[] pMessage506 = message.split("-");
+			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
+			break;
+			
+		// Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	
+		case 507:
+		    	String[] pMessage507 = message.split("-");
+		    	LobbyCreate.setMap(Integer.parseInt(pMessage507[1]));
+		    	break;
+		// Wenn Clients Ihre Skin wechseln, dann sendet Server an alle weiter, damit die case 509 ausfuehren    	
+		case 508:
+			String[] pMessage508 = message.split("-");
+			LobbyCreate.setSkin(Integer.parseInt(pMessage508[1]), Integer.parseInt(pMessage508[2]));;
+			sendMessageToAllClients("509-" + pMessage508[1] + "-" + pMessage508[2]);
+		    	break;
+		// Befehl um Skin Auswahl eines anderen Clients zu aendern    	
+		case 509:
+			String[] pMessage509 = message.split("-");
+			LobbyCreate.setSkin(Integer.parseInt(pMessage509[1]), Integer.parseInt(pMessage509[2]));;
+		    	break;
+		// Wenn Clients isReady aendern, dann sendet Server an alle weiter, damit die case 511 ausfuehren
+		case 510:
+		    	String[] pMessage510 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage510[1])].setisReadyForClients(pMessage510[2]);
+		    	sendMessageToAllClients("511-" + pMessage510[1] + "-" + pMessage510[2]);
+		    	break;
+		// Befehl um IsReady Checkboxen eines Clients zu aendern
+		case 511:
+		    	String[] pMessage511 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage511[1])].setisReadyForClients(pMessage511[2]);
+		    	break;
+		    
+		// EXIT per BUTTON
+		case 512:
+		    	String[] pMessage512 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
+		    	removeClient(session);
+		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
+			    LobbyCreate.numberOfMaxPlayers--;
+		    	}
+		    	sendMessageToAllClients("513-" + pMessage512[1]);
+		    	break;
+		    	
+		// Wird von allen Clients aufgerufen, sodass der geleavede Player aus dem Array geloescht wird    	
+		case 513:
+		    	String[] pMessage513 = message.split("-");
+		    	LobbyCreate.player[Integer.parseInt(pMessage513[1])] = null;
+		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage513[1])) {
+			    LobbyCreate.numberOfMaxPlayers--;
+		    	}
+		    	break;
+		    	
+		// Wird aufgerufen, sobald der Host leaved
+		case 514:
+//		    	for(int i=0;i<=3;i++){
+//		    	    LobbyCreate.player[i] = null;
+//		    	}
+		    	LobbyCreate.numberOfMaxPlayers = 0;
+		    	GraphicsHandler.lobby = null;
+		    	session.closeNow();
+		    	GraphicsHandler.switchToMenuFromLobby();
+		    	break;
+		    	
+		case 515:
+		    	GraphicsHandler.switchToIngameFromLobby();
+		    	break;
+		    	
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);
@@ -213,6 +392,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 			break;
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
+
+		    
 		case 903:
 			String[] pMessage903 = message.split("-");
         	    	long currentTime = System.currentTimeMillis();

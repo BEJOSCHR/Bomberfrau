@@ -14,8 +14,6 @@ import java.util.Random;
 import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class MenuAnimations {
@@ -45,10 +43,7 @@ public class MenuAnimations {
 	    @Override
 	    public void finaliseValues() {
 		AnimationData.intro_zoom = 0;
-		// ConsoleHandler.print("Wechsel vom Intro zu Menü am Ende der Animation",
-		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
-		//GraphicsHandler.switchToMenuFromIntro();
 	    }
 	};
 
@@ -87,7 +82,7 @@ public class MenuAnimations {
      */
     public static void titlePulseAni() {
 
-	ConsoleHandler.print("Starting Animation Title Text Pulsing", MessageType.MENU);
+//	ConsoleHandler.print("Starting Animation Title Text Pulsing", MessageType.MENU);
 	new Animation(2, -1) {
 	    @Override
 	    public void initValues() {
@@ -96,9 +91,6 @@ public class MenuAnimations {
 
 	    @Override
 	    public void changeValues() {
-//		if (getSteps() % 15 == 0)
-//		    ConsoleHandler.print("AnimationData.title_Modifier = " + AnimationData.title_Modifier,
-//			    MessageType.MENU);
 		if (AnimationData.title_Modifier >= 30)
 		    grow = false;
 		if (AnimationData.title_Modifier == 0)

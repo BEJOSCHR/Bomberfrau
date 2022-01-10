@@ -16,13 +16,16 @@ import java.awt.Color;
 
 import javax.swing.Timer;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class GameCounter implements ActionListener{
     
-    private static int gametime = 100;
+    private static int gametime = 240;
     private static int ringOfDeathNumber = 0;
     private Timer gameTimer;
+    private static int clock = 0;
     
     public GameCounter() {
 	gameTimer = new Timer(1000,this);
@@ -41,6 +44,12 @@ public class GameCounter implements ActionListener{
 		    GameCounter.gametime--;
 		}
 	    }
+	    clock++;
+	    //ConsoleHandler.print("Game clock: " + clock, MessageType.GAME);
+    }
+    
+    public static int getClock() {
+	return clock;
     }
     
     public static int getGameTime() {
