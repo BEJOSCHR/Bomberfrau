@@ -17,6 +17,7 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class LobbyCreate {
 
@@ -50,8 +51,8 @@ public class LobbyCreate {
 	    
 	    try {
 
-		client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von dem Menu gezogen wird
-		//client = new ConnectedClient(false, Settings.getIp());
+//		client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von dem Menu gezogen wird
+		client = new ConnectedClient(false, Settings.getIp());
 		Thread.sleep(300);
 	    } catch (Exception e) {
 		e.printStackTrace();
