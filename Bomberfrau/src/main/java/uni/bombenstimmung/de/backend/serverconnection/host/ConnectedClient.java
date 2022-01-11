@@ -37,6 +37,8 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
+import uni.bombenstimmung.de.game.FieldContent;
+import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.Player;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
@@ -243,13 +245,20 @@ public class ConnectedClient extends IoHandlerAdapter{
 			}
 			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4]);
 			break;
-		
+		//204 = Bombe legen (Client)
+		//Format: "204-[ID]"
 		case 204:
-		    
+		    String[] pMessage204 = message.split("-");
+		    if (id != Integer.parseInt(pMessage204[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).actionPlantBomb();
+		    }
 		    break;
-		
+		//205 = Bombe legen (Server)
+		//Format: "205-[ID]"
 		case 205:
-		    
+		    String[] pMessage205 = message.split("-");
+		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
+		    this.sendMessageToAllClients("204-" + pMessage205[1]);
 		    break;
 		//206 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "206-[ID-OF-DEAD-PLAYER]"
@@ -265,6 +274,22 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    String[] pMessage207 = message.split("-");
 		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
 		    this.sendMessageToAllClients("206-" + pMessage207[1]);
+		    break;
+		//208 = Spawnt die Items 
+		//Format: "208-[X-Cord]-[Y-Cord]-[FieldContent]"
+		case 208:
+		    String[] pMessage208 = message.split("-");
+		    int x = Integer.parseInt(pMessage208[1]);
+		    int y = Integer.parseInt(pMessage208[2]);
+		    FieldContent item = FieldContent.valueOf(pMessage208[3]);
+		    
+		    Game.changeFieldContent(item, x, y);
+		    break;
+		//209 = 
+		//Format: 
+		case 209:
+		    String[] pMessage209 = message.split("-");
+		    
 		    break;
 		//300 = Starte das Spiel
 		//Format: "300"
