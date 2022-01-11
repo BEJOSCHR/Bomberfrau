@@ -236,13 +236,14 @@ public class Bomb implements ActionListener{
 		}
 	    }
 	}
-	/* Aendern des FieldContent auf EXPLOSION1. */
+	/* Dekrement der gelegten Bombe bei Players & Aendern des FieldContent auf EXPLOSION1. */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 	} else {
 	    for (Player i : PlayerHandler.getOpponentPlayers()) {
 		if (i.getId() == this.ownerId) {
+		    i.decreasePlacedBombs();
 		    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 		}
 	    }
@@ -291,16 +292,6 @@ public class Bomb implements ActionListener{
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3_W)) {
 				Game.changeFieldContent(FieldContent.EMPTY,this.placedField.xPosition - r, this.placedField.yPosition);
 				r++;
-		}
-	    }
-	}
-	/* Dekrement der gelegten Bombe bei Players */
-	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
-	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
-	} else {
-	    for (Player i : PlayerHandler.getOpponentPlayers()) {
-		if (i.getId() == this.ownerId) {
-		    i.decreasePlacedBombs();
 		}
 	    }
 	}

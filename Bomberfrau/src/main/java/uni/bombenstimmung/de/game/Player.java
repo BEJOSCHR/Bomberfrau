@@ -362,9 +362,7 @@ public class Player extends Entity implements ActionListener{
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
 	    Game.addBomb(this.bombRadius, 3, this.id);
-	    if (this == PlayerHandler.getClientPlayer()) {
-		placedBombs++;
-	    }
+	    placedBombs++;
 	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);
 	    if(this.connectedClient.isHost()) {

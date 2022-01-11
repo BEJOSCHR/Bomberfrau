@@ -251,7 +251,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    String[] pMessage204 = message.split("-");
 		    if (id != Integer.parseInt(pMessage204[1])) {
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).actionPlantBomb();
-			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).increasePlacedBombs();
 		    }
 		    break;
 		//205 = Bombe legen (Server)
@@ -259,7 +258,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 205:
 		    String[] pMessage205 = message.split("-");
 		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
-		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).increasePlacedBombs();
 		    this.sendMessageToAllClients("204-" + pMessage205[1]);
 		    break;
 		//206 = Signalisiere, dass Player tot ist. (Client)
