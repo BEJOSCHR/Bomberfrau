@@ -86,6 +86,7 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/tile_env3_wall.png", ImageType.IMAGE_INGAME_LAVA_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/bombergirl_idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/bombergirl_walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	new LoadedImage("Ingame/bombergirl_dead.png", ImageType.IMAGE_INGAME_CHARACTER_DEAD, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 		
 	}

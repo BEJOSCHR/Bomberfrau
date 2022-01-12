@@ -182,7 +182,7 @@ public class Game {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + " :" + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + ": " + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
 	    if(i.getDead()) {
 		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
 	    } else {
