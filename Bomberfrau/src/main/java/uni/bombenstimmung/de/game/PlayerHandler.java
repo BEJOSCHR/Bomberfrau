@@ -39,7 +39,7 @@ public class PlayerHandler {
     private static boolean playerMoving = false;
     private static boolean multiPress = false;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
-    private static boolean debugKeys = true;
+    private static boolean debugKeys = false;
     
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
@@ -163,13 +163,7 @@ public class PlayerHandler {
 		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    }
 	} else {
-	    g.setColor(Color.black);
-	    /*g.drawRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
-	    g.fillRect((int)(clientPlayer.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-		    	(int)(clientPlayer.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-		    	(int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	}
 	for (Player i : opponentPlayers) {
 	    if (i.getDead() == false) {
@@ -179,15 +173,8 @@ public class PlayerHandler {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}
 	    } else {
-		g.setColor(Color.black);
-		/*g.drawRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));*/
-		g.fillRect((int)(i.getPosition().getX() - GraphicsHandler.getWidth()/44.5/2),
-			    (int)(i.getPosition().getY() - GraphicsHandler.getHeight()/25/2),
-			    (int)(GraphicsHandler.getWidth()/44.5), (int)(GraphicsHandler.getHeight()/25));
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    }
-	    
 	}
     }
     
