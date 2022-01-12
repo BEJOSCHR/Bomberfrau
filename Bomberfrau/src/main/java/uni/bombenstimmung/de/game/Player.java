@@ -75,8 +75,8 @@ public class Player extends Entity implements ActionListener{
 	this.realPosY = (pos.getY()*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2);
 	
 	/* Variablen der Oberklasse Entity. Werden als Bildschirmkoordinaten behandelt. */
-	super.xPosition = (int)this.realPosX;
-	super.yPosition = (int)this.realPosY;
+	super.xPosition = (int)(this.realPosX + 0.5);
+	super.yPosition = (int)(this.realPosY + 0.5);
 	
 	this.velX = 0.0;
 	this.velY = 0.0;
@@ -85,8 +85,8 @@ public class Player extends Entity implements ActionListener{
 								Settings.getPlant_bomb());
 	this.dead = false;
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
-	this.xHitbox = (double)GraphicsHandler.getHeight()/66;
-	this.yHitbox = (double)GraphicsHandler.getHeight()/36;
+	this.xHitbox = (double)GraphicsHandler.getHeight()/66.0;
+	this.yHitbox = (double)GraphicsHandler.getHeight()/36.0;
 	this.direction = 0;
 	this.speedFactor = 360.0;
 	this.connectedClient = cC;
@@ -112,19 +112,19 @@ public class Player extends Entity implements ActionListener{
 	    break;
 	case 1:		// hoch
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - this.yHitbox));
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition - this.yHitbox) + 0.5 ) );
 	    break;
 	case 2:		// runter
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + this.yHitbox));
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition + this.yHitbox) + 0.5 ) );
 	    break;
 	case 3:		// links
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord((int)(super.xPosition - this.xHitbox), super.yPosition);
+	    tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition - this.xHitbox) + 0.5 ), super.yPosition);
 	    break;
 	case 4:		// rechts
 	    block = this.isPlayerHittingCorner();
-	    tempField = Game.getFieldFromCoord((int)(super.xPosition + this.xHitbox), super.yPosition);
+	    tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition + this.xHitbox) + 0.5 ), super.yPosition);
 	    break;
 	default:
 	    tempField = null;
@@ -142,13 +142,13 @@ public class Player extends Entity implements ActionListener{
 	    playWallSound = false;
 	}
 	
-	super.xPosition = (int)this.realPosX;
-	super.yPosition = (int)this.realPosY;
+	super.xPosition = (int)(this.realPosX + 0.5);
+	super.yPosition = (int)(this.realPosY + 0.5);
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	
 	// ConnectedClient-Nachricht fuer Aktualisierung der Player-Position bei Bewegung
 	if (this.direction != 0) {
-	    if(this.connectedClient.isHost()) {
+	    if (this.connectedClient.isHost()) {
 		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    } else {
 		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
@@ -385,10 +385,6 @@ public class Player extends Entity implements ActionListener{
 	ConsoleHandler.print("Player ID: " + id + ": New MaxBombs: " + this.maxBombs, MessageType.GAME);
     }
     
-    public void increasePlacedBombs() {
-	this.placedBombs++;
-    }
-    
     public void decreasePlacedBombs() {
 	if (this.placedBombs > 0) {
 	    this.placedBombs--;
@@ -520,100 +516,162 @@ public class Player extends Entity implements ActionListener{
 	Field tempField_fl = null;
 	Field tempField_r = null;
 	Field tempField_fr = null;
+	Field tempField = null;
 	double xCornerHitbox = this.xHitbox * 0.9;
 	double yCornerHitbox = this.yHitbox * 0.9;
 	
 	switch (this.direction) {
 	case 1:		// hoch
 	    
-	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), super.yPosition);
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
-	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), super.yPosition);
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
+	    tempField_l = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), super.yPosition);
+	    tempField_fl = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), (int)(((double)super.yPosition - yCornerHitbox) + 0.5));
+	    tempField_r = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), super.yPosition);
+	    tempField_fr = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), (int)(((double)super.yPosition - yCornerHitbox) + 0.5));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosX += (this.xHitbox * 0.1);
+		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition + this.xHitbox) + 0.5 ), super.yPosition);
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosX += (this.xHitbox * 0.1);
+		} else {
+		    //this.realPosX -= (this.xHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosX -= (this.xHitbox * 0.1);
+		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition - this.xHitbox) + 0.5 ), super.yPosition);
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosX -= (this.xHitbox * 0.1);
+		} else {
+		    //this.realPosX += (this.xHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    break;
 	case 2:		// runter
 	    
-	    tempField_l = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), super.yPosition);
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
-	    tempField_r = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), super.yPosition);
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
+	    tempField_l = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), super.yPosition);
+	    tempField_fl = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
+	    tempField_r = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), super.yPosition);
+	    tempField_fr = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosX -= (this.xHitbox * 0.1);
+		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition - this.xHitbox) + 0.5 ), super.yPosition);
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosX -= (this.xHitbox * 0.1);
+		} else {
+		    //this.realPosX += (this.xHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosX += (this.xHitbox * 0.1);
+		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition + this.xHitbox) + 0.5 ), super.yPosition);
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosX += (this.xHitbox * 0.1);
+		} else {
+		    //this.realPosX -= (this.xHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    break;
 	case 3:		// links
 	    
-	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + yCornerHitbox));
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
-	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - yCornerHitbox));
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition - xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
+	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
+	    tempField_fl = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
+	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(((double)super.yPosition - yCornerHitbox) + 0.5));
+	    tempField_fr = Game.getFieldFromCoord((int)(((double)super.xPosition - xCornerHitbox) + 0.5), (int)(((double)super.yPosition - yCornerHitbox) + 0.5));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosY -= (this.yHitbox * 0.1);
+		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition - this.yHitbox) + 0.5 ) );
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosY -= (this.yHitbox * 0.1);
+		} else {
+		    //this.realPosY += (this.yHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosY += (this.yHitbox * 0.1);
+		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition + this.yHitbox) + 0.5 ) );
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosY += (this.yHitbox * 0.1);
+		} else {
+		    //this.realPosY -= (this.yHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    break;
 	case 4:		// rechts
 	    
-	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition - yCornerHitbox));
-	    tempField_fl = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition - yCornerHitbox));
-	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(super.yPosition + yCornerHitbox));
-	    tempField_fr = Game.getFieldFromCoord((int)(super.xPosition + xCornerHitbox), (int)(super.yPosition + yCornerHitbox));
+	    tempField_l = Game.getFieldFromCoord(super.xPosition, (int)(((double)super.yPosition - yCornerHitbox) + 0.5 ));
+	    tempField_fl = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), (int)(((double)super.yPosition - yCornerHitbox) + 0.5));
+	    tempField_r = Game.getFieldFromCoord(super.xPosition, (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
+	    tempField_fr = Game.getFieldFromCoord((int)(((double)super.xPosition + xCornerHitbox) + 0.5), (int)(((double)super.yPosition + yCornerHitbox) + 0.5));
 	    
 	    if ( (tempField_l.getContent() != FieldContent.WALL && tempField_l.getContent() != FieldContent.BLOCK
 			&& tempField_l.getContent() != FieldContent.BORDER) && (tempField_fl.getContent() == FieldContent.WALL
 			|| tempField_fl.getContent() == FieldContent.BLOCK || tempField_fl.getContent() == FieldContent.BORDER) ) {
-		this.realPosY += (this.yHitbox * 0.1);
+		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition + this.yHitbox) + 0.5 ) );
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosY += (this.yHitbox * 0.1);
+		} else {
+		    //this.realPosY -= (this.yHitbox * 0.1);
+		}
 		block = true;
 	    }
 	    
 	    if ( (tempField_r.getContent() != FieldContent.WALL && tempField_r.getContent() != FieldContent.BLOCK
 			&& tempField_r.getContent() != FieldContent.BORDER) && (tempField_fr.getContent() == FieldContent.WALL
 			|| tempField_fr.getContent() == FieldContent.BLOCK || tempField_fr.getContent() == FieldContent.BORDER) ) {
-		this.realPosY -= (this.yHitbox * 0.1);
+		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition - this.yHitbox) + 0.5 ) );
+		if ( tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+			&& tempField.getContent() != FieldContent.BORDER &&
+			( tempField.getContent() != FieldContent.BOMB ||
+			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ) ) {
+		    this.realPosY -= (this.yHitbox * 0.1);
+		} else {
+		    //this.realPosY += (this.yHitbox * 0.1);
+		}
 		block = true;
 	    }
-	    
 	}
-	
 	return block;
     }
-    
 }
