@@ -503,7 +503,6 @@ public class Player extends Entity implements ActionListener{
 	ConsoleHandler.print("Player ID: " + id + ": New Movement Speed: " + this.movementSpeed, MessageType.GAME);
     }
     
-    //TODO: CornerDetection fixen, bei 1600x900 ist die sehr buggy
     /**
      * Dies ist eine Corner-Detection. In dieser Methode wird ermittelt, ob sich vorne links oder
      * vorne rechts vom Player ein nicht begehbares Feld befindet. Ist dies der Fall wird der Player
@@ -673,5 +672,16 @@ public class Player extends Entity implements ActionListener{
 	    }
 	}
 	return block;
+    }
+    
+    public void printPlayerInfo() {
+	ConsoleHandler.print("===============================================", MessageType.GAME);
+	ConsoleHandler.print("Player ID: " + this.id, MessageType.GAME);
+	ConsoleHandler.print("Skin: " + this.skin, MessageType.GAME);
+	ConsoleHandler.print("Dead: " + this.dead, MessageType.GAME);
+    }
+    
+    public void stopTimer() {
+	this.t.stop();
     }
 }

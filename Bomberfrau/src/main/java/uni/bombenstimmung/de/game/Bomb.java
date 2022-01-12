@@ -320,4 +320,8 @@ public class Bomb implements ActionListener{
 		GraphicsHandler.drawCentralisedText(g, Color.RED, 30, this.getCounter() + "", (this.placedField.xPosition*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2), (this.placedField.yPosition*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
 	}
     }
+    
+    public void stopTimer() {
+	this.sysTimer.stop();
+    }
 }
