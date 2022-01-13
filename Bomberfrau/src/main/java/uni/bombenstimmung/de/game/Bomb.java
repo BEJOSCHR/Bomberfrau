@@ -23,7 +23,6 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
-import uni.bombenstimmung.de.menu.Menu;
 
 public class Bomb implements ActionListener{
 
