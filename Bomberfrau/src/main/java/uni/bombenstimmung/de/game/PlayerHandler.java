@@ -33,7 +33,7 @@ public class PlayerHandler {
     private static ArrayList<Player> allPlayer = new ArrayList<Player>();
     private static int opponentCount = 0;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
-    private static boolean debugKeys = true;
+    private static boolean debugKeys = false;
     
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();

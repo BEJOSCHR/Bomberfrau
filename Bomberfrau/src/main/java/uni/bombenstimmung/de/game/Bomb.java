@@ -301,6 +301,7 @@ public class Bomb implements ActionListener{
 	}
 	ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 			", " + placedField.yPosition + ")", MessageType.GAME);
+	this.targetedWalls.clear();
 	Game.removeBomb(this);
     }
     
