@@ -16,8 +16,6 @@ import java.awt.Color;
 
 import javax.swing.Timer;
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class GameCounter implements ActionListener{

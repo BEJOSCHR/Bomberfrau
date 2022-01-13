@@ -18,7 +18,6 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
-import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class Game {
 
