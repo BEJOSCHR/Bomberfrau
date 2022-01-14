@@ -145,7 +145,7 @@ public class LobbyCreate {
 	 * @param player	Integer, welcher Player im Array gemeint ist.
 	 */
 	public static void setIncrementSkin(int player) {
-		LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() + 1) %3);
+		LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() + 1) %4);
 		if (client.isHost()) {
 		    client.sendMessageToAllClients("509-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
 		}
@@ -164,7 +164,7 @@ public class LobbyCreate {
 		    LobbyCreate.player[player].setSkin(2);
 		}
 		else {
-		    LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() - 1) %3);	
+		    LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() - 1) %4);	
 		}
 		if (client.isHost()) {
 		    client.sendMessageToAllClients("509-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
@@ -254,19 +254,19 @@ public class LobbyCreate {
 		//Fuer die HintergrundFarbe
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
-		GraphicsHandler.drawCentralisedText(g, Color.WHITE, 50, "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
+		GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
 
 		for(int i=0; i < numberOfMaxPlayers; i++) {
 		    if (player[i] != null) {
 			// Malt die fuer den Host zustaendigen Sachen. 
 			if (player[i].getisHost() == true) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), (int)(getXValueForDraw(i)-12.5), (int)(GraphicsHandler.getHeight()*0.15)- 50, null);
-				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5), null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
+				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			}
 			
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].getName(), getXValueForDraw(i), (int)(GraphicsHandler.getHeight()*0.15)+35);
+			GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));
 			// Die Parameter für ImageScaling (x,y,hier,hier,null)
-			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), getXValueForDraw(i)-100, (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1), null);
+			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
 		    }
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}

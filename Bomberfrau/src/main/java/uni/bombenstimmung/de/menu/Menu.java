@@ -599,7 +599,7 @@ public class Menu {
 	    }
 
 	} else {
-	    ConsoleHandler.print("removing Mainmenü Components", MessageType.MENU);
+	    ConsoleHandler.print("removing Mainmenu Components", MessageType.MENU);
 	    GraphicsHandler.getLabel().remove(create);
 	    GraphicsHandler.getLabel().remove(join);
 	    GraphicsHandler.getLabel().remove(name_box);
@@ -609,6 +609,7 @@ public class Menu {
 		GraphicsHandler.getLabel().remove(ip_info);
 	    }
 	}
+	Menu.sleep(50);
 
     }
 
@@ -641,6 +642,7 @@ public class Menu {
 	    GraphicsHandler.getLabel().remove(checkBoxFPS);
 	    GraphicsHandler.getLabel().remove(comboboxLang);
 	}
+	Menu.sleep(50);
     }
 
     /*****************************************************************************************************************
