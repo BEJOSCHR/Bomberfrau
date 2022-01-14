@@ -39,7 +39,7 @@ public class PlayerHandler {
     private static boolean playerMoving = false;
     private static boolean multiPress = false;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
-    private static boolean debugKeys = false;
+    private static boolean debugKeys = true;
     
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();

@@ -102,9 +102,11 @@ public class Bomb implements ActionListener{
 			i.setDead(true);
 		    }
 		}
+		Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition);
 	    } else if (direction == 1) { //SUEDEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EMPTY || 
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.UPGRADE_ITEM_BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.UPGRADE_ITEM_SHOE ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
@@ -114,6 +116,11 @@ public class Bomb implements ActionListener{
 			    Game.changeFieldContent(FieldContent.EXPLOSION3_S, this.placedField.xPosition, this.placedField.yPosition + r);
 			    break;
 		    }
+		    if(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION1 || 
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION2_NS ||
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EXPLOSION3_N ) {
+				break;
+			    }
 		    if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
 			    	PlayerHandler.getClientPlayer().setDead(true);
@@ -123,14 +130,19 @@ public class Bomb implements ActionListener{
 	    	    	    i.setDead(true);
 	    	    	}
 		    }
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.BOMB) {
+			chainreaction(this.placedField.xPosition, this.placedField.yPosition + r);
+			break;
+		    }
 		    if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BORDER ||
-				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BLOCK ||
-				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BOMB) ||
-				(this.radius - r == 0)) {
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BLOCK) ||
+				(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r+1)).getContent() == FieldContent.BOMB &&
+				(this.radius - r == 0)) || (this.radius - r == 0)) {
 			    		Game.changeFieldContent(FieldContent.EXPLOSION3_S, this.placedField.xPosition, this.placedField.yPosition + r);
 			    		r++;
 			    		break;
-		    }else {
+		
+		    } else {
 			    Game.changeFieldContent(FieldContent.EXPLOSION2_NS, this.placedField.xPosition, this.placedField.yPosition + r);
 		    }
 		    r++;
@@ -138,6 +150,7 @@ public class Bomb implements ActionListener{
 	    } else if(direction == 2) { //NORDEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.UPGRADE_ITEM_BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.UPGRADE_ITEM_SHOE ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
@@ -146,6 +159,11 @@ public class Bomb implements ActionListener{
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)));
 			    Game.changeFieldContent(FieldContent.EXPLOSION3_N, this.placedField.xPosition, this.placedField.yPosition - r);
 			    break;
+			}
+			if(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION1 || 
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION2_NS ||
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EXPLOSION3_S ) {
+				break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
@@ -156,10 +174,14 @@ public class Bomb implements ActionListener{
 	    	    		    i.setDead(true);
 	    	    		}
 	    		}
+			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.BOMB) {
+				chainreaction(this.placedField.xPosition, this.placedField.yPosition - r);
+				break;
+			}
 			if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BORDER ||
-				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BLOCK ||
-				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BOMB) ||
-				(this.radius - r == 0)) {
+				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BLOCK) ||
+				(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r+1)).getContent() == FieldContent.BOMB &&
+				(this.radius - r == 0)) || (this.radius - r == 0)){
 			    		Game.changeFieldContent(FieldContent.EXPLOSION3_N, this.placedField.xPosition, this.placedField.yPosition - r);
 			    		r++;
 			    		break;
@@ -171,6 +193,7 @@ public class Bomb implements ActionListener{
 	    } else if (direction == 3) { // OSTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_SHOE ||
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
@@ -179,6 +202,11 @@ public class Bomb implements ActionListener{
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)));
 			    Game.changeFieldContent(FieldContent.EXPLOSION3_O, this.placedField.xPosition + r, this.placedField.yPosition);
 			    break;
+			}
+			if(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION1 || 
+				Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION2 ||
+				Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3_W ) {
+				break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
@@ -189,10 +217,15 @@ public class Bomb implements ActionListener{
 	    	    		    i.setDead(true);
 	    	    		}
 	    		}
+			if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.BOMB) {
+				chainreaction(this.placedField.xPosition + r, this.placedField.yPosition);
+				//b.setCounter(b.getTimer());
+				break;
+			    }
 			if ((Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
-				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK ||
-				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BOMB) ||
-				(this.radius - r == 0)) {
+				Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
+				(Game.getFieldFromMap(this.placedField.xPosition + (r+1), this.placedField.yPosition).getContent() == FieldContent.BOMB &&
+				(this.radius - r == 0)) || (this.radius - r == 0)) {
 			    		Game.changeFieldContent(FieldContent.EXPLOSION3_O, this.placedField.xPosition + r, this.placedField.yPosition);
 			    		r++;
 			    		break;
@@ -204,6 +237,7 @@ public class Bomb implements ActionListener{
 	    } else if (direction == 4) { // WESTEN
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EMPTY ||
+			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_BOMB ||
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_SHOE ||
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
@@ -212,6 +246,11 @@ public class Bomb implements ActionListener{
 			    targetedWalls.add(new Wall(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)));
 			    Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r, this.placedField.yPosition);
 			    break;
+			}
+			if(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION1 || 
+				Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION2 ||
+				Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EXPLOSION3_O ) {
+				break;
 			}
 			if (PlayerHandler.getClientPlayer().getCurrentField() ==
 				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
@@ -222,10 +261,14 @@ public class Bomb implements ActionListener{
 	    	    		    i.setDead(true);
 	    	    		}
 	    		}
+			if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.BOMB) {
+				chainreaction(this.placedField.xPosition - r, this.placedField.yPosition);
+				break;
+			    }
 			if ((Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BORDER ||
-				Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK ||
-					Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BOMB) ||
-				(this.radius - r == 0)) {
+				Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BLOCK) ||
+				(Game.getFieldFromMap(this.placedField.xPosition - (r+1), this.placedField.yPosition).getContent() == FieldContent.BOMB &&
+				(this.radius - r == 0)) || (this.radius - r == 0)) {
 			    		Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r, this.placedField.yPosition);
 			    		r++;
 			    		break;
@@ -307,6 +350,38 @@ public class Bomb implements ActionListener{
     
     public int getCounter() {
 	return this.timer-this.counter;
+    }
+    
+    public void setCounter(int c) {
+	this.counter = c;
+    }
+    
+    public Field getPlacedField() {
+	return placedField;
+    }
+    
+//    public Bomb chainReaction(int x, int y) {
+//	ArrayList<Bomb> placed = Game.getPlacedBombs();
+//	Bomb b = null;
+//	for (Bomb j : placed) {
+//		if (j.getPlacedField().xPosition == x && j.getPlacedField().yPosition == y) {
+//			   b = j;
+//		}
+//	}
+//	return b;
+//    }
+    
+    public void chainreaction(int x, int y) {
+	ArrayList<Bomb> placed = Game.getPlacedBombs();
+	for (Bomb j : placed) {
+		if (j.getPlacedField().xPosition == x && j.getPlacedField().yPosition == y) {
+			   j.explodeFire();
+		}
+	}
+    }
+    
+    public int getTimer() {
+	return this.timer;
     }
     
     public ArrayList<Wall> getTargetedWalls() {
