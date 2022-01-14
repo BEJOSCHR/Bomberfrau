@@ -37,8 +37,8 @@ public class Game {
 		map[x][y] = new Field(x, y, FieldContent.EMPTY);
 	    }
 	}	
-    }	
-
+    }
+    
     /**
      * Malt die aktuelle Map
      * in der Mitte des Bildschirms

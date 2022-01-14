@@ -37,6 +37,8 @@ public class PlayerHandler {
     private static boolean change_ani = false;
     private static int change_int = 0;
     private static int remember_move = 0;
+    // Bestimmt die Zeit zwischen den Animationen
+    private static final int ANI_TIMER = 20;
     
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
@@ -171,7 +173,7 @@ public class PlayerHandler {
 		else
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		change_int++;
-		if (change_int==20) {
+		if (change_int==ANI_TIMER) {
 		    change_int = 0;
 		    change_ani = !change_ani;
 		}
@@ -183,7 +185,7 @@ public class PlayerHandler {
 		else
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_2).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		change_int++;
-		if (change_int==20) {
+		if (change_int==ANI_TIMER) {
 		    change_int = 0;
 		    change_ani = !change_ani;
 		}
@@ -195,7 +197,7 @@ public class PlayerHandler {
 		else
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		change_int++;
-		if (change_int==20) {
+		if (change_int==ANI_TIMER) {
 		    change_int = 0;
 		    change_ani = !change_ani;
 		}
@@ -207,7 +209,7 @@ public class PlayerHandler {
 		else
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		change_int++;
-		if (change_int==20) {
+		if (change_int==ANI_TIMER) {
 		    change_int = 0;
 		    change_ani = !change_ani;
 		}
