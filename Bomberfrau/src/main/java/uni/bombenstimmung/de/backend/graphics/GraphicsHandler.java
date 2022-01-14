@@ -180,7 +180,7 @@ public class GraphicsHandler {
 		    public void run() {
 			MenuAnimations.titlePulseAni(); 
 		    }
-		} , 100);
+		} , 150);
 		
 	        Settings.setCreate_selected(true);
 		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
@@ -189,7 +189,7 @@ public class GraphicsHandler {
 	        Menu.buildOptions();
 		Menu.buildMenu();
 		Menu.optionsComponentsActive(false);
-		Menu.menuComponentsActive(true);
+		//Menu.menuComponentsActive(true);
 		
 	    	SoundHandler.playSound2(SoundType.MENU, false);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
@@ -209,6 +209,7 @@ public class GraphicsHandler {
 		Menu.optionsComponentsActive(true);
 
 		displayType = DisplayType.OPTIONS;
+		Menu.menuComponentsActive(false);
 	}
 	/**
 	 * Wird bei R�ckkehr von den Optionen zum Men� aufgerufen
@@ -233,6 +234,8 @@ public class GraphicsHandler {
 
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
+		//LobbyButtons.lobbyButtonsRemove();
+		Menu.menuComponentsActive(false);
 
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
@@ -260,7 +263,6 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		MenuAnimations.titlePulseAni();
-		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		
 	    	SoundHandler.playSound2(SoundType.MENU, true);
@@ -277,7 +279,6 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		MenuAnimations.titlePulseAni();
-		//Menu.menuComponentsActive(true);
 		Menu.buildMenu();
 		
 	    	SoundHandler.playSound2(SoundType.MENU, true);
@@ -291,12 +292,14 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromMenu() {
 		
 	    	//SoundHandler.reduceAllSounds();
+		LobbyButtons.lobbyButtonsReset();
+		Menu.menuComponentsActive(false);
 		AnimationHandler.stopAllAnimations();
-		LobbyButtons.lobbyButtonsreset();
 		
 		Menu.menuComponentsActive(false);
 		
 		displayType = DisplayType.LOBBY;
+		
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		if (Menu.getIs_host()) {

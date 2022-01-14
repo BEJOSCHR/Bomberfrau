@@ -45,11 +45,12 @@ public class ImageHandler {
 		new LoadedImage("Lobby/SkinSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1, 200, 200);
 		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2, 200, 200);
 		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3, 200, 200);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_4.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_4, 200, 200);
 		
 		new LoadedImage("Lobby/checkmark.png", ImageType.IMAGE_LOBBY_CHECKMARK, 70, 70);
 		
 		//https://www.pngwing.com/en/free-png-zekql/download?width=107
-		new LoadedImage("Lobby/Crown.png", ImageType.IMAGE_LOBBY_CROWN, 25, 25);
+		new LoadedImage("Lobby/Crown.png", ImageType.IMAGE_LOBBY_CROWN, 40, 40);
 		
 		
 		//LOBBY UND INGAME SHARING ICONS

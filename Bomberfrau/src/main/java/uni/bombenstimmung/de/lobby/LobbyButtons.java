@@ -12,6 +12,8 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -19,29 +21,23 @@ import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
+import uni.bombenstimmung.de.menu.Menu;
+import uni.bombenstimmung.de.menu.MenuAnimations;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class LobbyButtons extends MouseActionAreaHandler{
 	
 	static boolean rightisPressed = false;
 	static boolean leftisPressed = false;
 	
-	private static int yPlayer = (int)(GraphicsHandler.getHeight()*0.15) + (int)(GraphicsHandler.getHeight()*0.1) + 75;
-	private static int yPlayerMap = (int)(GraphicsHandler.getHeight()*0.15) + (int)((GraphicsHandler.getHeight()*0.1)*3.5) + 75;
-	
-	private static int xPlayer1Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-100 - GraphicsHandler.getWidth()*0.04);
-	private static int xPlayer1Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
-	
-	private static int xPlayer2Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)-100 - GraphicsHandler.getWidth()*0.04);
-	private static int xPlayer2Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*1*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
-	
-	private static int xPlayer3Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)-100 - GraphicsHandler.getWidth()*0.04);
-	private static int xPlayer3Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*2*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
-	
-	private static int xPlayer4Left = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)-100 - GraphicsHandler.getWidth()*0.04);
-	private static int xPlayer4Right = (int)((((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*3*2)+100 + GraphicsHandler.getWidth()*0.04) - 50;
+	private static int yPlayer, yPlayerMap;
+	private static int xPlayer1Left, xPlayer2Left, xPlayer3Left, xPlayer4Left;
+	private static int xPlayer1Right, xPlayer2Right, xPlayer3Right, xPlayer4Right;
 
 	public static MouseActionArea startLobby;
 	public static MouseActionArea exitLobby;
@@ -64,10 +60,24 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	 * Inititalisiert alle MAAs der Lobby und definiert via Overwrite restliche Funktionalitäten
 	 */
 	public static void initLobbyButtons(){
+	    
+	    	yPlayer = (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(100);
+	    	yPlayerMap = (int)(GraphicsHandler.getHeight()*0.55) + Settings.scaleValue(100);
+	    	
+		xPlayer1Left = GraphicsHandler.getWidth()/8   - Settings.scaleValue(205);
+		xPlayer2Left = GraphicsHandler.getWidth()/8*3 - Settings.scaleValue(205);
+		xPlayer3Left = GraphicsHandler.getWidth()/8*5 - Settings.scaleValue(205);
+		xPlayer4Left = GraphicsHandler.getWidth()/8*7 - Settings.scaleValue(205);
 		
+		xPlayer1Right = GraphicsHandler.getWidth()/8   + Settings.scaleValue(150);
+		xPlayer2Right = GraphicsHandler.getWidth()/8*3 + Settings.scaleValue(150);
+		xPlayer3Right = GraphicsHandler.getWidth()/8*5 + Settings.scaleValue(150);
+		xPlayer4Right = GraphicsHandler.getWidth()/8*7 + Settings.scaleValue(150);
+		
+	    	ConsoleHandler.print("starting: initLobbyButtons", MessageType.LOBBY);
 		//LOBBY STARTBUTTON
-		startLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.25), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
-				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Starten", 20, Color.WHITE, Color.ORANGE) {
+		startLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "START", Settings.scaleValue(40), Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    	// Nur der Host kann den Startbutton klicken
@@ -94,8 +104,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		};
 		
 		//LOBBY EXITBUTTON
-		exitLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.75), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, 100, 70,
-				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "Exit", 20, Color.WHITE, Color.ORANGE) {
+		exitLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.65 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, LanguageHandler.getLLB(LanguageBlockType.LB_OPTIONS_BTN).getContent(), Settings.scaleValue(40), Color.WHITE, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    
@@ -109,7 +119,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	}
 			    	else {
 			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
-			    	    LobbyCreate.client.getAcceptor().dispose();
+//			    	    LobbyCreate.client.getAcceptor().dispose();
 			    	}
 			    	
 			    	// Setze alle Objekte = null und switche ins Menu
@@ -151,16 +161,16 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) { 
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(), xPlayer1Left, yPlayerMap+1, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left - Settings.scaleValue(5), yPlayerMap - (int)(GraphicsHandler.getHeight()*0.003), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
 //					}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayerMap, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayerMap, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
 		
 		//LOBBY RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
-		mapright = new MouseActionArea(xPlayer1Right, yPlayerMap, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
+		mapright = new MouseActionArea(GraphicsHandler.getWidth()/8 + Settings.scaleValue(150), yPlayerMap, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
 				MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
@@ -181,10 +191,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			public void draw(Graphics g) { 
 				if(isHovered() || (rightisPressed == true && LobbyCreate.getHochRunterNavigation() == 0)) { // Hier kann man mit dem Key auch das Hovern imitieren
 					// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer1Right, yPlayerMap - (int)(GraphicsHandler.getWidth()*0.0015), null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right - Settings.scaleValue(5), yPlayerMap - (int)(GraphicsHandler.getHeight()*0.003), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 0){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayerMap, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayerMap, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -212,12 +222,12 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer1Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left - Settings.scaleValue(5), yPlayer, Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
 					// Unten andere Werte
 //					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-200, GraphicsHandler.getHeight()/4 + (int)((GraphicsHandler.getHeight()*0.1) + GraphicsHandler.getWidth()*0.05), null);
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -243,9 +253,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer1Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayer , null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -270,12 +280,12 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer2Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(),xPlayer2Left - Settings.scaleValue(5), yPlayer, Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
 					// Unten andere Werte
 //					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-200, GraphicsHandler.getHeight()/4 + (int)((GraphicsHandler.getHeight()*0.1) + GraphicsHandler.getWidth()*0.05), null);
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer2Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer2Left, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -298,9 +308,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer2Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer2Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer2Right, yPlayer , null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer2Right, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60) , null);
 				}
 			}
 		};
@@ -325,12 +335,12 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer3Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(),xPlayer3Left - Settings.scaleValue(5), yPlayer, Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
 //				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
 					// Unten andere Werte
 //					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-200, GraphicsHandler.getHeight()/4 + (int)((GraphicsHandler.getHeight()*0.1) + GraphicsHandler.getWidth()*0.05), null);
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer3Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer3Left, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -353,9 +363,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer3Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer3Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer3Right, yPlayer , null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer3Right, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60) , null);
 				}
 			}
 		};
@@ -381,12 +391,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT_BIGGER).getImage(),xPlayer4Left, yPlayer, null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(),xPlayer4Left - Settings.scaleValue(5), yPlayer, Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
-//				}else if (Lobby_Create.getHochRunterNavigation() == 1){ // So um die Pfeile nur auf Tastatur sichtbar zu machen
-					// Unten andere Werte
-//					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*0*2)-200, GraphicsHandler.getHeight()/4 + (int)((GraphicsHandler.getHeight()*0.1) + GraphicsHandler.getWidth()*0.05), null);
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer4Left, yPlayer, null);
+				    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer4Left, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -409,9 +416,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			@Override
 			public void draw(Graphics g) {
 				if(isHovered() || (leftisPressed == true && LobbyCreate.getHochRunterNavigation() == 1)) { // Hier kann man mit dem Key auch das Hovern imitieren
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT_BIGGER).getImage(), xPlayer4Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer4Right, yPlayer - (int)(GraphicsHandler.getWidth()*0.0015), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}else {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer4Right, yPlayer , null);
+					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer4Right, yPlayer, Settings.scaleValue(60), Settings.scaleValue(60), null);
 				}
 			}
 		};
@@ -424,8 +431,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////
 		
 		// Player 2
-		player2check = new MouseActionArea(xPlayer2Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+		player2check = new MouseActionArea(xPlayer2Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 1) {
@@ -446,14 +453,14 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			public void drawCustomParts(Graphics g){
 			    	if(LobbyCreate.player[1] != null) {
 			    	    if(LobbyCreate.player[1].getisReady() == true) {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Right-100-40, yPlayerMap , null);
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 			    	    }			    	    
 			    	}
 			}
 		};
 		// Player 3
-		player3check = new MouseActionArea(xPlayer3Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+		player3check = new MouseActionArea(xPlayer3Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 2) {
@@ -474,14 +481,14 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			public void drawCustomParts(Graphics g){
 			    if(LobbyCreate.player[2] != null) {
 				if(LobbyCreate.player[2].getisReady() == true) {
-				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Right-100-40, yPlayerMap , null); 
+				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
 				}				
 			    }
 			}
 		};
 		// Player 4
-		player4check = new MouseActionArea(xPlayer4Right-100-40, yPlayerMap+15, 50, 50,
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", 20, Color.DARK_GRAY, Color.ORANGE) {
+		player4check = new MouseActionArea(xPlayer4Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 3) {
@@ -502,7 +509,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			public void drawCustomParts(Graphics g){
 			    if(LobbyCreate.player[2] != null) {
 				if(LobbyCreate.player[3].getisReady() == true) {
-				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Right-100-40, yPlayerMap , null);
+				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 				}	
 			    }
 			}
@@ -514,7 +521,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			
 		}
 	
-	public static void lobbyButtonsreset() {
+	public static void lobbyButtonsReset() {
+	    	ConsoleHandler.print("reseting Lobbymenu MAAs", MessageType.LOBBY);
 		startLobby.remove();
 		exitLobby.remove();
 		mapleft.remove();
@@ -530,7 +538,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		player2check.remove();
 		player3check.remove();
 		player4check.remove();
-		
+		Menu.sleep(50);
 		initLobbyButtons();
 	}
 
