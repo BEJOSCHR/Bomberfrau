@@ -155,6 +155,7 @@ public class PlayerHandler {
 			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
 	    }
 	    if (clientPlayer.getDirection() == 0) {
+		// Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
 		if (remember_move == 0)
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		else if (remember_move == 1)
