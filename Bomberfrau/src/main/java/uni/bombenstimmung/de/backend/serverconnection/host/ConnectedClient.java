@@ -405,10 +405,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 512:
 		    	String[] pMessage512 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
-<<<<<<< HEAD
-=======
-		    	
->>>>>>> branch 'Lobby' of git@github.com:BEJOSCHR/Bomberfrau.git
 		    	// Befiehlt dem am verlassenden Client zu verlassen
 		    	sendMessage(session, "999-");
 		    	removeClient(session);
