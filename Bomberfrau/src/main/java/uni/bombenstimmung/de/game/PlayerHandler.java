@@ -174,7 +174,7 @@ public class PlayerHandler {
 		else
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		change_int++;
-		if (change_int==ANI_TIMER) {
+		if (change_int >= ANI_TIMER) {
 		    change_int = 0;
 		    change_ani = !change_ani;
 		}
