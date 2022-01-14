@@ -87,8 +87,7 @@ public class ImageHandler {
 //	    	new LoadedImage("Ingame/bombergirl_idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 //	    	new LoadedImage("Ingame/bombergirl_walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 //	    	new LoadedImage("Ingame/bombergirl_dead.png", ImageType.IMAGE_INGAME_CHARACTER_DEAD, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
-		new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	    	new LoadedImage("Ingame/Priest_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Priest_Walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Priest_Walk_2.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
@@ -98,6 +97,8 @@ public class ImageHandler {
 		new LoadedImage("Ingame/Priest_Walk_Side_Right_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Priest_Walk_North_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Priest_Walk_North_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		
+		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 	}
 	
 	/**
