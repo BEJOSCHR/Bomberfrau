@@ -432,7 +432,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		
 		// Player 2
 		player2check = new MouseActionArea(xPlayer2Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 1) {
@@ -460,7 +460,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		};
 		// Player 3
 		player3check = new MouseActionArea(xPlayer3Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 2) {
@@ -488,7 +488,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		};
 		// Player 4
 		player4check = new MouseActionArea(xPlayer4Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, "Ready", Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 3) {
