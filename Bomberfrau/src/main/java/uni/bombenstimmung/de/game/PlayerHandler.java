@@ -21,11 +21,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
-import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
@@ -36,8 +32,6 @@ public class PlayerHandler {
     private static ArrayList<Player> opponentPlayers = new ArrayList<Player>();
     private static ArrayList<Player> allPlayer = new ArrayList<Player>();
     private static int opponentCount = 0;
-    private static boolean playerMoving = false;
-    private static boolean multiPress = false;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = true;
     
@@ -136,8 +130,6 @@ public class PlayerHandler {
      * playerMoving und multiPress auf false gesetzt werden.
      */
     public static void resetMovement() {
-	playerMoving = false;
-	multiPress = false;
 	inputBuffer.clear();
     }
     
@@ -185,46 +177,18 @@ public class PlayerHandler {
      */
     public static void handleKeyEventPressed(int keyCode) {
 	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
-	    if (playerMoving == false) {
-		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
-		    ConsoleHandler.print("Client presses Button 'up'", MessageType.GAME);
-		    clientPlayer.actionUp();
-		    inputBuffer.add(keyCode);
-		    playerMoving = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
-		    ConsoleHandler.print("Client presses Button 'down'", MessageType.GAME);
-		    clientPlayer.actionDown();
-		    inputBuffer.add(keyCode);
-		    playerMoving = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
-		    ConsoleHandler.print("Client presses Button 'left'", MessageType.GAME);
-		    clientPlayer.actionLeft();
-		    inputBuffer.add(keyCode);
-		    playerMoving = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
-		    ConsoleHandler.print("Client presses Button 'right'", MessageType.GAME);
-		    clientPlayer.actionRight();
-		    inputBuffer.add(keyCode);
-		    playerMoving = true;
-		}
-	    } else {
-		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == false) {
-		    ConsoleHandler.print("Buffer 'up'", MessageType.GAME);
-		    inputBuffer.add(keyCode);
-		    multiPress = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && inputBuffer.contains(keyCode) == false) {
-		    ConsoleHandler.print("Buffer 'down'", MessageType.GAME);
-		    inputBuffer.add(keyCode);
-		    multiPress = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && inputBuffer.contains(keyCode) == false) {
-		    ConsoleHandler.print("Buffer 'left'", MessageType.GAME);
-		    inputBuffer.add(keyCode);
-		    multiPress = true;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && inputBuffer.contains(keyCode) == false) {
-		    ConsoleHandler.print("Buffer 'right'", MessageType.GAME);
-		    inputBuffer.add(keyCode);
-		    multiPress = true;
-		}
+	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == false) {
+		inputBuffer.add(keyCode);
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && inputBuffer.contains(keyCode) == false) {
+		inputBuffer.add(keyCode);
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && inputBuffer.contains(keyCode) == false) {
+		inputBuffer.add(keyCode);
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && inputBuffer.contains(keyCode) == false) {
+		inputBuffer.add(keyCode);
+		updateMovement();
 	    }
 	}
     }
@@ -234,109 +198,20 @@ public class PlayerHandler {
      * bereits runtergedrueckte Taste losgelassen wird.
      * @param keyCode	Tasten-Code in Integer-Form
      */
-    @SuppressWarnings("removal")	/* Um Warnung von 'new Integer(keyCode)' auszublenden. */
     public static void handleKeyEventReleased(int keyCode) {
-	if (clientPlayer.getDead() == false && playerMoving == true) {
-	    if (multiPress == true) {
-		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
-		    if (keyCode != inputBuffer.get(0)) {
-			ConsoleHandler.print("Unbuffer 'up'", MessageType.GAME);
-			inputBuffer.remove(new Integer(keyCode));
-		    } else {
-			ConsoleHandler.print("Client released Button 'up'", MessageType.GAME);
-			if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getDown()) {
-			    clientPlayer.actionDown();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getLeft()) {
-			    clientPlayer.actionLeft();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getRight()) {
-			    clientPlayer.actionRight();
-			}
-			inputBuffer.remove(0);
-			Collections.swap(inputBuffer, 0, inputBuffer.size() - 1);
-		    }
-		    if (inputBuffer.size() == 1) {
-			multiPress = false;
-		    }
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
-		    if (keyCode != inputBuffer.get(0)) {
-			ConsoleHandler.print("Unbuffer 'down'", MessageType.GAME);
-			inputBuffer.remove(new Integer(keyCode));
-		    } else {
-			ConsoleHandler.print("Client released Button 'down'", MessageType.GAME);
-			if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getUp()) {
-			    clientPlayer.actionUp();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getLeft()) {
-			    clientPlayer.actionLeft();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getRight()) {
-			    clientPlayer.actionRight();
-			}
-			inputBuffer.remove(0);
-			Collections.swap(inputBuffer, 0, inputBuffer.size() - 1);
-		    }
-		    if (inputBuffer.size() == 1) {
-			multiPress = false;
-		    }
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
-		    if (keyCode != inputBuffer.get(0)) {
-			ConsoleHandler.print("Unbuffer 'left'", MessageType.GAME);
-			inputBuffer.remove(new Integer(keyCode));
-		    } else {
-			ConsoleHandler.print("Client released Button 'left'", MessageType.GAME);
-			if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getUp()) {
-			    clientPlayer.actionUp();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getDown()) {
-			    clientPlayer.actionDown();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getRight()) {
-			    clientPlayer.actionRight();
-			}
-			inputBuffer.remove(0);
-			Collections.swap(inputBuffer, 0, inputBuffer.size() - 1);
-		    }
-		    if (inputBuffer.size() == 1) {
-			multiPress = false;
-		    }
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
-		    if (keyCode != inputBuffer.get(0)) {
-			ConsoleHandler.print("Unbuffer 'right'", MessageType.GAME);
-			inputBuffer.remove(new Integer(keyCode));
-		    } else {
-			ConsoleHandler.print("Client released Button 'right'", MessageType.GAME);
-			if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getUp()) {
-			    clientPlayer.actionUp();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getDown()) {
-			    clientPlayer.actionDown();
-			} else if (inputBuffer.get(inputBuffer.size() - 1) == clientPlayer.getCurrentButtonConfig().getLeft()) {
-			    clientPlayer.actionLeft();
-			}
-			inputBuffer.remove(0);
-			Collections.swap(inputBuffer, 0, inputBuffer.size() - 1);
-		    }
-		    if (inputBuffer.size() == 1) {
-			multiPress = false;
-		    }
-		}
-	    } else {
-		if (keyCode == clientPlayer.getCurrentButtonConfig().getUp()) {
-		    ConsoleHandler.print("Client released Button 'up'", MessageType.GAME);
-		    clientPlayer.actionStop();
-		    inputBuffer.clear();
-		    playerMoving = false;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()) {
-		    ConsoleHandler.print("Client released Button 'down'", MessageType.GAME);
-		    clientPlayer.actionStop();
-		    inputBuffer.clear();
-		    playerMoving = false;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()) {
-		    ConsoleHandler.print("Client released Button 'left'", MessageType.GAME);
-		    clientPlayer.actionStop();
-		    inputBuffer.clear();
-		    playerMoving = false;
-		} else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()) {
-		    ConsoleHandler.print("Client released Button 'right'", MessageType.GAME);
-		    clientPlayer.actionStop();
-		    inputBuffer.clear();
-		    playerMoving = false;
-		}
+	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
+	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == true) {
+		inputBuffer.remove(Integer.valueOf(keyCode));
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && inputBuffer.contains(keyCode) == true) {
+		inputBuffer.remove(Integer.valueOf(keyCode));
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && inputBuffer.contains(keyCode) == true) {
+		inputBuffer.remove(Integer.valueOf(keyCode));
+		updateMovement();
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && inputBuffer.contains(keyCode) == true) {
+		inputBuffer.remove(Integer.valueOf(keyCode));
+		updateMovement();
 	    }
 	}
 	/* 
@@ -344,7 +219,7 @@ public class PlayerHandler {
 	 * (ergo kein InputBuffer noetig).
 	 * Bombe wird erst bei Loslassen der Taste gelegt.
 	 */
-	if (clientPlayer.getDead() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
+	if (clientPlayer.getDead() == false && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
 	    clientPlayer.actionPlantBomb();
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
@@ -367,7 +242,29 @@ public class PlayerHandler {
 		clientPlayer.increaseMovementSpeed();
 	    } else if (keyCode == KeyEvent.VK_J) {
 		clientPlayer.decreaseMovementSpeed();
+	    } else if (keyCode == KeyEvent.VK_M) {
+		for (Player i : allPlayer) {
+		    i.printPlayerInfo();
+		}
+		clientPlayer.printPlayerInfo();
+		for (Player i : opponentPlayers) {
+		    i.printPlayerInfo();
+		}
 	    }
+	}
+    }
+    
+    public static void updateMovement() {
+	if (inputBuffer.isEmpty()) {
+	    clientPlayer.actionStop();
+	} else if (inputBuffer.get(0) == clientPlayer.getCurrentButtonConfig().getUp()) {
+	    clientPlayer.actionUp();
+	} else if (inputBuffer.get(0) == clientPlayer.getCurrentButtonConfig().getDown()) {
+	    clientPlayer.actionDown();
+	} else if (inputBuffer.get(0) == clientPlayer.getCurrentButtonConfig().getLeft()) {
+	    clientPlayer.actionLeft();
+	} else if (inputBuffer.get(0) == clientPlayer.getCurrentButtonConfig().getRight()) {
+	    clientPlayer.actionRight();
 	}
     }
     
@@ -407,5 +304,14 @@ public class PlayerHandler {
 		addOpponentPlayer(p);
 	    }
 	}
+    }
+    
+    public static void resetPlayerHandler() {
+	clientPlayer = null;
+	opponentPlayers.clear();
+	allPlayer.clear();
+	opponentCount = 0;
+	inputBuffer.clear();
+	playerFromLobby.clear();
     }
 }

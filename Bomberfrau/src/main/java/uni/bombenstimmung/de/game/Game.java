@@ -18,7 +18,6 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
-import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 
 public class Game {
 
@@ -287,6 +286,7 @@ public class Game {
 		livingPlayers++;
 	    }
 	}
+	ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
 	    gameOver();
 	}
@@ -298,6 +298,12 @@ public class Game {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
+		for (Player i : PlayerHandler.getAllPlayer()) {
+		    i.stopTimer();
+		}
+		for (Bomb i : placedBombs) {
+		    i.stopTimer();
+		}
 		gameOver = true;
 	    }
 	    
@@ -309,5 +315,12 @@ public class Game {
 		GraphicsHandler.switchToAftergameFromIngame();
 	    }
 	};
+    }
+    
+    public static void resetIngame() {
+	placedBombs.clear();
+	gameOver = false;
+	PlayerHandler.resetPlayerHandler();
+	GameCounter.resetGameCounter();
     }
 }

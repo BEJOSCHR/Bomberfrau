@@ -257,8 +257,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Format: "205-[ID]"
 		case 205:
 		    String[] pMessage205 = message.split("-");
-		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
-		    this.sendMessageToAllClients("204-" + pMessage205[1]);
+		    if (id != Integer.parseInt(pMessage205[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
+		    }
 		    break;
 		//206 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "206-[ID-OF-DEAD-PLAYER]"
@@ -272,8 +273,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Format: "207-[ID-OF-DEAD-PLAYER]"
 		case 207:
 		    String[] pMessage207 = message.split("-");
-		    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
-		    this.sendMessageToAllClients("206-" + pMessage207[1]);
+		    if (id != Integer.parseInt(pMessage207[1])) {
+			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
+		    }
 		    break;
 		//208 = Spawnt die Items 
 		//Format: "208-[X-Cord]-[Y-Cord]-[FieldContent]"

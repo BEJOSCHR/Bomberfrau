@@ -23,7 +23,6 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
-import uni.bombenstimmung.de.menu.Menu;
 
 public class Bomb implements ActionListener{
 
@@ -345,6 +344,7 @@ public class Bomb implements ActionListener{
 	}
 	ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 			", " + placedField.yPosition + ")", MessageType.GAME);
+	this.targetedWalls.clear();
 	Game.removeBomb(this);
     }
     
@@ -394,5 +394,9 @@ public class Bomb implements ActionListener{
 		int yOffset = GameData.MAP_SIDE_BORDER;
 		GraphicsHandler.drawCentralisedText(g, Color.RED, 30, this.getCounter() + "", (this.placedField.xPosition*GameData.FIELD_DIMENSION)+(xOffset/2)+(GameData.FIELD_DIMENSION/2), (this.placedField.yPosition*GameData.FIELD_DIMENSION)+(yOffset/2)+(GameData.FIELD_DIMENSION/2));
 	}
+    }
+    
+    public void stopTimer() {
+	this.sysTimer.stop();
     }
 }

@@ -16,8 +16,6 @@ import java.awt.Color;
 
 import javax.swing.Timer;
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class GameCounter implements ActionListener{
@@ -90,5 +88,11 @@ public class GameCounter implements ActionListener{
 	
 	g.setColor(Color.BLACK);
 	g.fillRect(xStart+25, yStart+150, rectWidth, 200);
+    }
+    
+    public static void resetGameCounter() {
+	gametime = 240;
+	ringOfDeathNumber = 0;
+	clock = 0;
     }
 }

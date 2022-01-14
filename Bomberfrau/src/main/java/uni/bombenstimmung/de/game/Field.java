@@ -19,8 +19,6 @@ import java.awt.Graphics;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
-import uni.bombenstimmung.de.backend.sounds.SoundHandler;
-import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Field extends Entity {
 
