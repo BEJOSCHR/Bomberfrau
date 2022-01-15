@@ -35,6 +35,8 @@ public class Bomb implements ActionListener{
     private ArrayList<Wall> targetedWalls;
     
     private boolean fuse = false;
+    private boolean grow;
+    private double scale;
     
     /**
      * Platziert die Bombe auf einem bestimmten Feld
@@ -57,7 +59,9 @@ public class Bomb implements ActionListener{
 	    }
 	}
 	this.targetedWalls = new ArrayList<Wall>();
-	sysTimer = new Timer(1000, this);
+	this.grow = false;
+	this.scale = 1.0;
+	sysTimer = new Timer(100, this);
 	sysTimer.start();
     }
     
@@ -68,6 +72,19 @@ public class Bomb implements ActionListener{
      */
     public void actionPerformed(ActionEvent e) {
 	this.counter++;
+	
+	if (grow) {
+	    this.scale += 0.05;
+	    if (scale >= 1.0) {
+		this.grow = false;
+	    }
+	} else {
+	    this.scale -= 0.05;
+	    if (scale <= 0.75) {
+		this.grow = true;
+	    }
+	}
+	
 	if (this.counter < this.timer) {
 	    if (!fuse) SoundHandler.playSound2(SoundType.FUSE, false);
 	    fuse = true;
@@ -77,7 +94,7 @@ public class Bomb implements ActionListener{
 	    SoundHandler.playSound2(SoundType.EXPLOSION, false);
 	    this.explodeFire();
 	    SoundHandler.stopSound(SoundType.FUSE);
-	} else if (this.counter >= this.timer + 2) {
+	} else if (this.counter >= this.timer + 20) {
 	    this.explode();
 	}
     }
@@ -350,6 +367,10 @@ public class Bomb implements ActionListener{
     
     public int getCounter() {
 	return this.timer-this.counter;
+    }
+    
+    public double getScale() {
+	return scale;
     }
     
     public void setCounter(int c) {
