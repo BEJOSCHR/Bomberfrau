@@ -17,6 +17,9 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
+
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
 
@@ -38,12 +41,17 @@ public class DeadPlayerHandler {
 			allPlayer.add(id, new DeadPlayer(id, name , deathTime));
 			ConsoleHandler.print("new Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 		}else if(allPlayer.size() > id) {
-			allPlayer.get(id).updateDeathPlayer(id, name, deathTime);
+			allPlayer.get(id).setDeathPlayer(id, name, deathTime, allPlayer.get(id).getScore());
 			ConsoleHandler.print("updated Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 		}
 		else {
 			ConsoleHandler.print("addDeadPlayer: id is not allowed!", MessageType.AFTERGAME);
 		}
+	}
+	
+	public static void updateDeadPlayer(String id, String name, String score) {
+	    	allPlayer.get(Integer.parseInt(id)).setName(name);;
+		allPlayer.get(Integer.parseInt(id)).setScore(Integer.parseInt(score));
 	}
 
     /**
@@ -52,7 +60,7 @@ public class DeadPlayerHandler {
 	public static void calculateScore() {
 		ArrayList<DeadPlayer> Ranking = allPlayer;
 
-		//Player sortieren nach deathTime
+		//DeadPlayerPlayer sortieren nach deathTime
 		Collections.sort(Ranking, new Comparator<DeadPlayer>() {
 			public int compare(DeadPlayer p1, DeadPlayer p2) {
 				return Integer.valueOf(p1.getDeathTime()).compareTo(p2.getDeathTime());
@@ -68,7 +76,7 @@ public class DeadPlayerHandler {
 			}
 		}
 
-		//Player sortieren nach Score
+		//DeadPlayer sortieren nach Score
 		Collections.sort(Ranking, new Comparator<DeadPlayer>() {
 			public int compare(DeadPlayer p1, DeadPlayer p2) {
 				return Integer.valueOf(p2.getScore()).compareTo(p1.getScore());
@@ -82,8 +90,7 @@ public class DeadPlayerHandler {
 
 		//Ergebnisanzeige Aftergame
 		for(int i = 0; i < Ranking.size(); i++) {
-			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore(),Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score:" + Ranking.get(i).getScore()};
-
+			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score: " + Ranking.get(i).getScore(), Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score: " + Ranking.get(i).getScore()};
 			switch(i) {
 			case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); break;
 			case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).setLanguageContent(aftergame_Ranking); break;
@@ -98,13 +105,14 @@ public class DeadPlayerHandler {
 				return Integer.valueOf(p1.getId()).compareTo(p2.getId());
 			}
 		});
-		allPlayer=Ranking;
-
-//		for(DeadPlayer test: allPlayer) {
-//			ConsoleHandler.print("Player: " + test.getId() + " ,Name: "+ test.getName() + ", deathTime: " + test.getDeathTime(), MessageType.AFTERGAME);
-//		}
-
-
+		allPlayer = Ranking;
+		
+//		client.sendMessage(client.getSession(), "601-Hallo");
+		
+//		LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "601-Hallo");
+		//LobbyCreate.client.sendMessageToAllClients("601-");
+//		LobbyCreate.client.sendMessageToAllClients("601-");
+//		System.out.println("Test :" + LobbyCreate.client.getSession());
 
 	}
 

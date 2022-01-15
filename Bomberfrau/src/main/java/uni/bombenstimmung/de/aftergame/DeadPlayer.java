@@ -27,14 +27,15 @@ public class DeadPlayer {
 		this.deathTime = deathTime;
 	}
 	
-	public void updateDeathPlayer(int id, String name, int deathTime) {
+	public void setDeathPlayer(int id, String name, int deathTime, int score) {
 		this.id = id;
 		this.name = name;
 		this.deathTime = deathTime;
-		this.score = 0;
+		this.score = score;
 		this.ranking = 0;
 		//this.preferredMapID = 0;
 	}
+	
 
 	public int getDeathTime() {
 		return deathTime;
@@ -42,6 +43,10 @@ public class DeadPlayer {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public void setScore(int score) {
+	    	this.score = score;
 	}
 
 
@@ -62,6 +67,10 @@ public class DeadPlayer {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public int getId() {
