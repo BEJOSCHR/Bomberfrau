@@ -18,6 +18,7 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.game.Player;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class DeadPlayerHandler {
@@ -115,5 +116,9 @@ public class DeadPlayerHandler {
 //		System.out.println("Test :" + LobbyCreate.client.getSession());
 
 	}
+	
+	    public static ArrayList<DeadPlayer> getAllDeadPlayer(){
+		return allPlayer;
+	    }
 
 }

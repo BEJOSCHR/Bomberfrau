@@ -21,6 +21,7 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayer;
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
@@ -369,6 +370,10 @@ public class GraphicsHandler {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}
 		DeadPlayerHandler.calculateScore();
+		
+		LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(1).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(1).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(1).getScore()+ "-"
+								+ DeadPlayerHandler.getAllDeadPlayer().get(2).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(2).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(2).getScore()+ "-"
+								+ DeadPlayerHandler.getAllDeadPlayer().get(3).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(3).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(3).getScore() );
 		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
