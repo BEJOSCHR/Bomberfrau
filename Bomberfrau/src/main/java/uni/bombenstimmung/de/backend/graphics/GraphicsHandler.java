@@ -248,6 +248,8 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromAftergame() {
 		
 	    AnimationHandler.stopAllAnimations();
+	    LobbyButtons.lobbyButtonsReset();
+	    
 
 	    displayType = DisplayType.LOBBY;
 	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -303,11 +305,11 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		if (Menu.getIs_host()) {
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host());
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host(), false);
 		}
 		else {
 //		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"), false);
 		}
 	}
 	
@@ -344,6 +346,13 @@ public class GraphicsHandler {
 				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
 		    }
 		}
+		
+		// Alle Player Objekte der Lobby löschen, sodass man es resettet ist fuers Aftergame
+	    	// Setze alle Objekte = null und switche ins Menu
+	    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+		    LobbyCreate.player[i] = null;
+	    	}
+	    	LobbyCreate.numberOfMaxPlayers = 0;
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
