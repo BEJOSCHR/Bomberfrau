@@ -149,9 +149,9 @@ public class Player extends Entity implements ActionListener{
 	// ConnectedClient-Nachricht fuer Aktualisierung der Player-Position bei Bewegung
 	if (this.direction != 0) {
 	    if (this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    }
 	}
 	
@@ -233,10 +233,9 @@ public class Player extends Entity implements ActionListener{
      * @param xPos	neue X Bildschirmkoordinate
      * @param yPos	neue Y Bildschirmkoordinate
      */
-    public void setDisplayCoordinates(int xPos, int yPos, int dir) {
+    public void setDisplayCoordinates(int xPos, int yPos) {
 	this.realPosX = xPos;
 	this.realPosY = yPos;
-	this.direction = dir;
     }
     
     public void setBombRadius(int bR) {
@@ -349,11 +348,6 @@ public class Player extends Entity implements ActionListener{
 	this.direction = 0;
 	this.velX = 0;
 	this.velY = 0;
-	if (this.connectedClient.isHost()) {
-	    this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
-	} else {
-	    this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
-	}
     }
     
     /* ========= Ende des Blocks fuer Bewegungsmethoden. =========== */
@@ -367,7 +361,7 @@ public class Player extends Entity implements ActionListener{
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
-	    Game.addBomb(this.bombRadius, 30, this.id);
+	    Game.addBomb(this.bombRadius, 3, this.id);
 	    placedBombs++;
 	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);
