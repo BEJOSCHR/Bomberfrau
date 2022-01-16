@@ -32,6 +32,7 @@ import org.apache.mina.transport.socket.DatagramSessionConfig;
 import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -442,8 +443,25 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	GraphicsHandler.switchToIngameFromLobby();
 		    	break;
 		    	
+	
 		    	
+			/////////////////////////////////////////// 600-699 Aftergame Cases ////////////////////////////////////////////////////////
 		    	
+		//601 = DeadPlayerHandler.updateDeadPlayer
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
+		case 601: 
+		    	String[] pMessage601 = message.split("-");
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4]);
+		    	break;
+		    	
+		case 602: 
+		    
+		    	break;
+		    	
+		case 603: 
+		    
+		    	break;
+		    
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);
