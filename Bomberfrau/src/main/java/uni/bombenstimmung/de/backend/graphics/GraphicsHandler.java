@@ -253,17 +253,12 @@ public class GraphicsHandler {
 	    
 	    LobbyButtons.lobbyButtonsReset();
 	    
-//	    if (DeadPlayerHandler.getAllDeadPlayer().get(0).connectedClient.isHost()) {
-//		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), true);
-//	    }
-//	    else {
-////		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
-//		for (int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
-//		    if (DeadPlayerHandler.getAllDeadPlayer().get(i).connectedClient.getId() == i  ) {
-//			lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getAllDeadPlayer().get(i).getName(), DeadPlayerHandler.getAllDeadPlayer().get(0).getIp()));
-//		    }
-//		}
-//		}
+	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
+	    }
+	    else {
+		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
+	    }
 
 	    displayType = DisplayType.LOBBY;
 	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -389,12 +384,18 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
+//		if (PlayerHandler.getClientPlayer().getId() == 0) {
+//		    DeadPlayerHandler.setIshost(true);
+//		}
+		
+		//setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
+		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
+		
+		
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-		    if(i==0) {
-			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
+			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
 			DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
-				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin(), PlayerHandler.getAllPlayer().get(i).connectedClient);
-		    }
+				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
 
 		}
 		

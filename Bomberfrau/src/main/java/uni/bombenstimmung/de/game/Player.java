@@ -53,7 +53,7 @@ public class Player extends Entity implements ActionListener{
     private int direction;
     private double speedFactor;
     private boolean playWallSound = true;
-    public ConnectedClient connectedClient;
+    private ConnectedClient connectedClient;
     private int deathTime;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
@@ -683,5 +683,9 @@ public class Player extends Entity implements ActionListener{
     
     public void stopTimer() {
 	this.t.stop();
+    }
+
+    public ConnectedClient getConnectedClient() {
+        return connectedClient;
     }
 }

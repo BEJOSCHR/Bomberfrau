@@ -24,8 +24,21 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
-	
+	//private boolean ishost = false;
 	private static ArrayList<DeadPlayer> playerFromIngame = new ArrayList<DeadPlayer>();
+	private static DeadPlayer clientPlayer;
+
+	public static DeadPlayer getClientPlayer() {
+	    return clientPlayer;
+	}
+
+//	public static void setClientPlayer(DeadPlayer clientPlayer) {
+//	    DeadPlayerHandler.clientPlayer = clientPlayer;
+//	}
+	
+	public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
+		clientPlayer = new DeadPlayer(id, name, ipAdress, host, skin, cC);
+	}	
 
 	public static void generateDummyDeadPlayer() {
 		addDeadPlayer(0, "A", 45);
@@ -43,9 +56,17 @@ public class DeadPlayerHandler {
     	     * @param skin	Skin-ID des Players
     	     * @param cC	ConnectedClient
     	     */
-	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
-	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin, cC));
+	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin) {
+	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin));
     	}
+
+//    public boolean isIshost() {
+//	    return ishost;
+//	}
+//
+//	public static void setIshost(boolean ishost) {
+//	    ishost = ishost;
+//	}
 
     /**
      * Player Datensatz hinzufügen oder einen bestehenden Datensatz anpassen.
