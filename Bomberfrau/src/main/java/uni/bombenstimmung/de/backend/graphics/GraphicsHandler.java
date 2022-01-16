@@ -249,12 +249,14 @@ public class GraphicsHandler {
 	    AnimationHandler.stopAllAnimations();
 	    
 	    if (DeadPlayerHandler.getAllDeadPlayer().get(0).connectedClient.isHost()) {
-		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), true, true);
+		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), true);
 	    }
 	    else {
 //		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
 		for (int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
-		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getAllDeadPlayer().get(i).getName(), DeadPlayerHandler.getAllDeadPlayer().get(0).getIp() , true));
+		    if (DeadPlayerHandler.getAllDeadPlayer().get(i).connectedClient.getId() == i  ) {
+			lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getAllDeadPlayer().get(i).getName(), DeadPlayerHandler.getAllDeadPlayer().get(0).getIp()));
+		    }
 		}
 		}
 
