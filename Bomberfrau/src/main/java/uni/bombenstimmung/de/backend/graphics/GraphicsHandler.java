@@ -30,6 +30,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -246,6 +247,16 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromAftergame() {
 		
 	    AnimationHandler.stopAllAnimations();
+	    
+	    if (DeadPlayerHandler.getAllDeadPlayer().get(0).connectedClient.isHost()) {
+		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), true, true);
+	    }
+	    else {
+//		lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
+		for (int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
+		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getAllDeadPlayer().get(i).getName(), DeadPlayerHandler.getAllDeadPlayer().get(0).getIp() , true));
+		}
+		}
 
 	    displayType = DisplayType.LOBBY;
 	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -363,6 +374,15 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
+		
+		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+		    if(i==0) {
+			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
+			DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
+				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin(), PlayerHandler.getAllPlayer().get(i).connectedClient);
+		    }
+
+		}
 		
 		//DeadPlayerHandler.generateDummyDeadPlayer();
 		

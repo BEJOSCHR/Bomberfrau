@@ -53,7 +53,7 @@ public class Player extends Entity implements ActionListener{
     private int direction;
     private double speedFactor;
     private boolean playWallSound = true;
-    private ConnectedClient connectedClient;
+    public ConnectedClient connectedClient;
     private int deathTime;
     
     public Player(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {

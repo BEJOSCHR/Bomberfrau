@@ -11,9 +11,29 @@
  
 package uni.bombenstimmung.de.aftergame;
 
+import java.awt.Point;
+
+import javax.swing.Timer;
+
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameData;
+import uni.bombenstimmung.de.game.PlayerButtonConfig;
+import uni.bombenstimmung.de.menu.Settings;
+
 public class DeadPlayer {
 	private int id;
 	private String name;
+	
+	private String ipAdress;
+	private boolean host;
+	private int skin;
+	
+	public ConnectedClient connectedClient;
+	
 	private int deathTime;
 	private int score = 0;
 	private int ranking = 0;
@@ -26,6 +46,15 @@ public class DeadPlayer {
 		this.name = name;
 		this.deathTime = deathTime;
 	}
+	
+	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
+		this.id = id;
+		this.name = name;
+		this.ipAdress = ipAdress;
+		this.host = host;
+		this.skin = skin;		
+		this.connectedClient = cC;
+	    }
 	
 	public void setDeathPlayer(int id, String name, int deathTime, int score) {
 		this.id = id;
@@ -75,6 +104,10 @@ public class DeadPlayer {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public String getIp() {
+		return ipAdress;
 	}
 	
 }

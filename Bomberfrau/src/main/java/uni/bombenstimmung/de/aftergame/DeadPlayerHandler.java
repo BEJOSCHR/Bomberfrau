@@ -8,6 +8,7 @@
  */
 package uni.bombenstimmung.de.aftergame;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +24,8 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
+	
+	private static ArrayList<DeadPlayer> playerFromIngame = new ArrayList<DeadPlayer>();
 
 	public static void generateDummyDeadPlayer() {
 		addDeadPlayer(0, "A", 45);
@@ -30,6 +33,19 @@ public class DeadPlayerHandler {
 		addDeadPlayer(2, "C", 325);
 		addDeadPlayer(3, "D", 84);
 	}
+	
+    	 /**
+    	     * zur uebergabe von PlayerDaten an das Aftergame
+    	     * @param id	ID des Players
+    	     * @param name	Name des Player
+    	     * @param ipAdress	IP-Adresse zugehoerig zu dem Player
+    	     * @param host	Boolean, ob dieser Player der Host des Spiels ist
+    	     * @param skin	Skin-ID des Players
+    	     * @param cC	ConnectedClient
+    	     */
+	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
+	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin, cC));
+    	}
 
     /**
      * Player Datensatz hinzufügen oder einen bestehenden Datensatz anpassen.
@@ -118,6 +134,10 @@ public class DeadPlayerHandler {
 	
 	    public static ArrayList<DeadPlayer> getAllDeadPlayer(){
 		return allPlayer;
+	    }
+	    
+	    public static ArrayList<DeadPlayer> getPlayerFromIngame(){
+		return playerFromIngame;
 	    }
 
 }
