@@ -369,12 +369,19 @@ public class GraphicsHandler {
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}
+		
+		
+		if (LobbyCreate.client.isHost()) {
+		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
+			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+		    }
+		}
+		
+		try {
+		    Thread.sleep(1000);
+		} catch (InterruptedException iex) {}
 		DeadPlayerHandler.calculateScore();
-		
-		LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(1).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(1).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(1).getScore()+ "-"
-								+ DeadPlayerHandler.getAllDeadPlayer().get(2).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(2).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(2).getScore()+ "-"
-								+ DeadPlayerHandler.getAllDeadPlayer().get(3).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(3).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(3).getScore() );
-		
+        		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
 		

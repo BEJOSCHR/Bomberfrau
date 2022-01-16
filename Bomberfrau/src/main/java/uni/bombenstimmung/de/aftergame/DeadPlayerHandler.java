@@ -50,9 +50,8 @@ public class DeadPlayerHandler {
 		}
 	}
 	
-	public static void updateDeadPlayer(String id, String name, String score) {
-	    	allPlayer.get(Integer.parseInt(id)).setName(name);;
-		allPlayer.get(Integer.parseInt(id)).setScore(Integer.parseInt(score));
+	public static void updateDeadPlayer(String id, String name, String deathTime, String score) {
+	    	allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score));
 	}
 
     /**

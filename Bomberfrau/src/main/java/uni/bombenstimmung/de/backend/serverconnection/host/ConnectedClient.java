@@ -448,12 +448,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 			/////////////////////////////////////////// 600-699 Aftergame Cases ////////////////////////////////////////////////////////
 		    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
-		//Format: "601-[ID1]-[NAME1]-[Score1]-[ID2]-[NAME2]-[Score2]-[ID3]-[NAME3]-[Score3]"
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
 		case 601: 
 		    	String[] pMessage601 = message.split("-");
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3]);
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[4], pMessage601[5], pMessage601[6]);
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[7], pMessage601[8], pMessage601[9]);
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4]);
 		    	break;
 		    	
 		case 602: 
