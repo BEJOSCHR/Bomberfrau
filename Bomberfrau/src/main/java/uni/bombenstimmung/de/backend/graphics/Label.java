@@ -8,6 +8,8 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
+import java.util.ConcurrentModificationException;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -162,20 +164,19 @@ public class Label extends JLabel {
 		}
 		
 		//MAA
-		for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
+		try {
+		    for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 			if(maa.isActiv()) {
 				maa.draw(g);
 			}
-		}
+		    }
+		}catch(ConcurrentModificationException error) {}
 		
 		//DRAW FPS
 		if(showFPS == true) {
 			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
 			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
-			
-			// sch�ner durch ersetzen f�hrender Nuller durch Leerzeichen
-//			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
 		}
 		
 		//CALCULATE FPS
