@@ -194,7 +194,7 @@ public class GraphicsHandler {
 		Menu.optionsComponentsActive(false);
 		//Menu.menuComponentsActive(true);
 		
-	    	SoundHandler.playSound2(SoundType.MENU, false);
+	    	SoundHandler.playSound2(SoundType.MENU, true);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 		
 		displayType = DisplayType.MENU;
@@ -251,6 +251,8 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromAftergame() {
 		
 	    AnimationHandler.stopAllAnimations();
+	    
+	    SoundHandler.playSound2(SoundType.MENU, true);
 
 	    displayType = DisplayType.LOBBY;
 	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -362,6 +364,7 @@ public class GraphicsHandler {
 		    @Override
 		    public void initValues() {
 			Game.setCountdown(1);
+			SoundHandler.playSound2(SoundType.COUNTDOWN, false);
 		    }
 		    
 		    @Override
