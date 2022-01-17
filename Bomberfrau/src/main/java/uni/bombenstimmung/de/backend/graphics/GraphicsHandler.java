@@ -393,6 +393,22 @@ public class GraphicsHandler {
 			Game.setCountdown(0);
 			zaehler.startCounter();
 			PlayerHandler.setMovable(true);
+			switch (Game.getMapNumber()) {
+			case 1:
+			    SoundHandler.playSound2(SoundType.MAP1, true);
+			    break;
+			    
+			case 2:
+			    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+			    break;
+			    
+			case 3:
+			    SoundHandler.playSound2(SoundType.MAP3, true);
+			    break;
+			    
+			default:
+			    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+			}
 		    }
 		};
 	}

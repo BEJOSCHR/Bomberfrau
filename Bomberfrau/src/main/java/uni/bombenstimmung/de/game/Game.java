@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
@@ -299,6 +301,22 @@ public class Game {
     
     public static void gameOver() {
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
+	switch (mapNumber) {
+	case 1:
+	    SoundHandler.stopSound(SoundType.MAP1);
+	    break;
+	    
+	case 2:
+	    
+	    break;
+	    
+	case 3:
+	    SoundHandler.stopSound(SoundType.MAP3);
+	    break;
+	    
+	default:
+	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+	}
 	new Animation(400, 1) {
 	    @Override
 	    public void initValues() {
