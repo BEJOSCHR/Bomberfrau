@@ -32,6 +32,7 @@ import org.apache.mina.transport.socket.DatagramSessionConfig;
 import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -361,6 +362,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 506:
 			String[] pMessage506 = message.split("-");
 			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
+			ConsoleHandler.print("Case 506 wurde aufgerufen", MessageType.LOBBY);
 			break;
 			
 		//507 = Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	
@@ -406,7 +408,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	String[] pMessage512 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
 		    	// Befiehlt dem am verlassenden Client zu verlassen
-		    	sendMessage(session, "999-");
+//		    	sendMessage(session, "999-");
 		    	removeClient(session);
 		    	// Checken ob der verlassene Player der letzte Player war
 		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
@@ -432,7 +434,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	}
 		    	LobbyCreate.numberOfMaxPlayers = 0;
 		    	GraphicsHandler.lobby = null;
-//		    	session.closeNow();
+		    	LobbyCreate.client.getConnector().dispose();
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
 		    	
@@ -442,8 +444,25 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	GraphicsHandler.switchToIngameFromLobby();
 		    	break;
 		    	
+	
 		    	
+			/////////////////////////////////////////// 600-699 Aftergame Cases ////////////////////////////////////////////////////////
 		    	
+		//601 = DeadPlayerHandler.updateDeadPlayer
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
+		case 601: 
+		    	String[] pMessage601 = message.split("-");
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4]);
+		    	break;
+		    	
+		case 602: 
+		    
+		    	break;
+		    	
+		case 603: 
+		    
+		    	break;
+		    
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);

@@ -21,6 +21,7 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayer;
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
@@ -29,6 +30,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -248,6 +250,15 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromAftergame() {
 		
 	    AnimationHandler.stopAllAnimations();
+	    
+	    LobbyButtons.lobbyButtonsReset();
+	    
+	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
+	    }
+	    else {
+		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
+	    }
 
 	    displayType = DisplayType.LOBBY;
 	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
@@ -303,11 +314,11 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
 		if (Menu.getIs_host()) {
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host());
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host(), false);
 		}
 		else {
 //		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"));
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"), false);
 		}
 	}
 	
@@ -344,6 +355,13 @@ public class GraphicsHandler {
 				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
 		    }
 		}
+		
+		// Alle Player Objekte der Lobby löschen, sodass man es resettet ist fuers Aftergame
+	    	// Setze alle Objekte = null und switche ins Menu
+	    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+		    LobbyCreate.player[i] = null;
+	    	}
+	    	LobbyCreate.numberOfMaxPlayers = 0;
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
@@ -366,13 +384,39 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
+//		if (PlayerHandler.getClientPlayer().getId() == 0) {
+//		    DeadPlayerHandler.setIshost(true);
+//		}
+		
+		//setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
+		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
+		
+		
+		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
+			DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
+				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
+
+		}
+		
 		//DeadPlayerHandler.generateDummyDeadPlayer();
 		
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}
-		DeadPlayerHandler.calculateScore();
 		
+		
+		if (LobbyCreate.client.isHost()) {
+		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
+			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+		    }
+		}
+		
+		try {
+		    Thread.sleep(1000);
+		} catch (InterruptedException iex) {}
+		DeadPlayerHandler.calculateScore();
+        		
 		displayType = DisplayType.AFTERGAME;
 		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
 		
