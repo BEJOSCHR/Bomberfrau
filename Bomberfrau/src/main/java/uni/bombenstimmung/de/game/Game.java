@@ -26,6 +26,7 @@ public class Game {
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
+    private static int countdown = 0;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -302,6 +303,7 @@ public class Game {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
+		PlayerHandler.setMovable(false);
 		for (Player i : PlayerHandler.getAllPlayer()) {
 		    i.stopTimer();
 		}
@@ -326,5 +328,13 @@ public class Game {
 	gameOver = false;
 	PlayerHandler.resetPlayerHandler();
 	GameCounter.resetGameCounter();
+    }
+    
+    public static int getCountdown() {
+	return countdown;
+    }
+    
+    public static void setCountdown(int c) {
+	countdown = c;
     }
 }

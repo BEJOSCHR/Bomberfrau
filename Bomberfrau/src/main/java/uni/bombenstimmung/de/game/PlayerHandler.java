@@ -36,6 +36,7 @@ public class PlayerHandler {
     private static boolean change_ani = false;
     private static int change_int = 0;
     private static int[] remember_move = new int[4];
+    private static boolean movable = false;
     // Bestimmt die Zeit zwischen den Animationen
     private static final int ANI_TIMER = 20;
     
@@ -218,7 +219,7 @@ public class PlayerHandler {
      * @param keyCode	Tasten-Code in Integer-Form
      */
     public static void handleKeyEventPressed(int keyCode) {
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
+	if (clientPlayer.getDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
@@ -241,7 +242,7 @@ public class PlayerHandler {
      * @param keyCode	Tasten-Code in Integer-Form
      */
     public static void handleKeyEventReleased(int keyCode) {
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
+	if (clientPlayer.getDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
@@ -261,7 +262,7 @@ public class PlayerHandler {
 	 * (ergo kein InputBuffer noetig).
 	 * Bombe wird erst bei Loslassen der Taste gelegt.
 	 */
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
+	if (clientPlayer.getDead() == false && movable == true && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
 	    clientPlayer.actionPlantBomb();
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
@@ -355,5 +356,16 @@ public class PlayerHandler {
 	opponentCount = 0;
 	inputBuffer.clear();
 	playerFromLobby.clear();
+	for (int i = 0; i < 4; i++) {
+	    remember_move[i] = 0;
+	}
+    }
+    
+    public static boolean getMovable() {
+	return movable;
+    }
+    
+    public static void setMovable(boolean m) {
+	movable = m;
     }
 }
