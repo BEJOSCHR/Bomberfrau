@@ -91,6 +91,13 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, aftergame_Ranking);
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, aftergame_Ranking);
 		
+		String[] aftergame_bt1 = {"BACK TO MENU", "ZURÜCK ZUM MENÜ"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT1, aftergame_bt1);
+		String[] aftergame_bt2 = {"REPEAT", "WIEDERHOLEN"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT2, aftergame_bt2);
+		String[] aftergame_bt3 = {"EXIT", "ENDE"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT3, aftergame_bt3);
+		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);	
 	}
 	

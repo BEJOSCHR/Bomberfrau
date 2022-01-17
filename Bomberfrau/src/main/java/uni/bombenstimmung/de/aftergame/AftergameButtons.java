@@ -6,6 +6,8 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
@@ -17,7 +19,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
     public static void initAftergameButtons(){
 	
 	new MouseActionArea(GraphicsHandler.getWidth()*3/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Quit", 20, new Color(225,0,0), new Color(0,0,255)) {
+		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT3).getContent(), 20, new Color(225,0,0), new Color(0,0,255)) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 //	    	if (DeadPlayerHandler.getClientPlayer().isHost()) {
@@ -43,7 +45,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 
 	new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Back to Menu", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 	    	if (LobbyCreate.client.isHost()) {
@@ -79,7 +81,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 	
 	new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
-		MouseActionAreaType.MAA_AFTERGAME, "Back to Lobby", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
+		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
