@@ -8,7 +8,6 @@
  */
 package uni.bombenstimmung.de.aftergame;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,10 +16,7 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
-
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
-import uni.bombenstimmung.de.game.Player;
-import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
