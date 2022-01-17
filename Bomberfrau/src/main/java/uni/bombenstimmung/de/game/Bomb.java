@@ -87,11 +87,11 @@ public class Bomb implements ActionListener{
      * ob Spieler im Radius der Explosion liegen. 
      */
     public void explodeFire() {
-	//sysTimer.stop();
 	
 	for(int direction = 0; direction < 5; direction++) {
 	    int r = 1;
-	    if (direction == 0) {	// Stelle der Bombe
+	    //Stelle der Bombe wird ueberprueft auf Spieler, und Explosion wird eingefuegt
+	    if (direction == 0) {	
 		if (PlayerHandler.getClientPlayer().getCurrentField() ==
 		Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
 		    	PlayerHandler.getClientPlayer().setDead(true);
@@ -102,7 +102,8 @@ public class Bomb implements ActionListener{
 		    }
 		}
 		Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition);
-	    } else if (direction == 1) { //SUEDEN
+	    } else if (direction == 1) {
+		//Stellen suedlich der Bombe wird ueberprueft auf Spieler, und Explosion wird eingefuegt
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.EMPTY || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.BOMB ||
@@ -146,7 +147,8 @@ public class Bomb implements ActionListener{
 		    }
 		    r++;
 		}
-	    } else if(direction == 2) { //NORDEN
+	    } else if(direction == 2) {
+		//Stellen noerdlich der Bombe werden ueberprueft auf Spieler, und Explosion wird eingefuegt
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.EMPTY ||
 			Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.BOMB ||
@@ -189,7 +191,8 @@ public class Bomb implements ActionListener{
 				}
 			r++;
 		}
-	    } else if (direction == 3) { // OSTEN
+	    } else if (direction == 3) {
+		//Stellen oestlich der Bombe werden ueberprueft auf Spieler, und Explosion wird eingefuegt
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.EMPTY ||
 			Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.BOMB ||
@@ -233,7 +236,8 @@ public class Bomb implements ActionListener{
 			}
 			r++;
 		}
-	    } else if (direction == 4) { // WESTEN
+	    } else if (direction == 4) {
+		//Stellen westliche der Bombe werden ueberprueft auf Spieler, und Explosion wird eingefuegt
 		while (r <= this.radius && (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.WALL || 
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.EMPTY ||
 			Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.BOMB ||
@@ -359,17 +363,6 @@ public class Bomb implements ActionListener{
     public Field getPlacedField() {
 	return placedField;
     }
-    
-//    public Bomb chainReaction(int x, int y) {
-//	ArrayList<Bomb> placed = Game.getPlacedBombs();
-//	Bomb b = null;
-//	for (Bomb j : placed) {
-//		if (j.getPlacedField().xPosition == x && j.getPlacedField().yPosition == y) {
-//			   b = j;
-//		}
-//	}
-//	return b;
-//    }
     
     public void chainreaction(int x, int y) {
 	ArrayList<Bomb> placed = Game.getPlacedBombs();
