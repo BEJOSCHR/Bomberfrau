@@ -25,6 +25,5 @@ public enum FieldContent {
     EXPLOSION3_W,
     EXPLOSION3_O,
     EMPTY;
-
 }	
 
