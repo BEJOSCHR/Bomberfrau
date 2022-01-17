@@ -406,15 +406,16 @@ public class GraphicsHandler {
 		}
 		
 		
-//		if (LobbyCreate.client.isHost()) {
-//		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
-//			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
-//		    }
-//		}
-		
-		try {
-		    Thread.sleep(1000);
-		} catch (InterruptedException iex) {}
+		if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size()-1; i++) {
+			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+		    }
+		}else {
+		    try {
+			Thread.sleep(1000);
+		    } catch (InterruptedException iex) {
+		}
+}
 		DeadPlayerHandler.calculateScore();
         		
 		displayType = DisplayType.AFTERGAME;
