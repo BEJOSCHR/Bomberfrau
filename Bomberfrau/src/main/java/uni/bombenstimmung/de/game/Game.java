@@ -18,6 +18,7 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
 
@@ -162,10 +163,13 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    break;
+		case 3:
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
 	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
