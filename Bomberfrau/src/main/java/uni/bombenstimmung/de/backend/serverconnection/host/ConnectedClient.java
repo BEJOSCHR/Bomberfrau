@@ -446,7 +446,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 	
 		    	
 			/////////////////////////////////////////// 600-699 Aftergame Cases ////////////////////////////////////////////////////////
-		    	
+		   
+		//600 = Wird aufgerufen, wenn Der Host eine neue Runde starten will
+		//Format: "600-"    	
+		case 600: 
+		    	GraphicsHandler.switchToLobbyFromAftergame();
+		    	break;    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
 		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
 		case 601: 

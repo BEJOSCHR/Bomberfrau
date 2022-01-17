@@ -45,7 +45,13 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		MouseActionAreaType.MAA_AFTERGAME, "Back to Lobby", 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		GraphicsHandler.switchToLobbyFromAftergame();
+		if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		    ConsoleHandler.print("Button Back to Lobby", MessageType.AFTERGAME);
+		    GraphicsHandler.switchToLobbyFromAftergame();
+		    LobbyCreate.client.sendMessageToAllClients("600-");
+
+		}
+
 	    }
 	    @Override
 	    public boolean isActiv() {
