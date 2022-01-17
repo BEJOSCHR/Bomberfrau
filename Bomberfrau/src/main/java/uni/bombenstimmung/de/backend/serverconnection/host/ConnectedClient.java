@@ -434,7 +434,11 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	}
 		    	LobbyCreate.numberOfMaxPlayers = 0;
 		    	GraphicsHandler.lobby = null;
-		    	LobbyCreate.client.getConnector().dispose();
+		    	try {
+		    	    LobbyCreate.client.getConnector().dispose();
+		    	} catch(Exception e) {
+		    	    e.printStackTrace();
+		    	}
 		    	GraphicsHandler.switchToMenuFromLobby();
 		    	break;
 		    	
