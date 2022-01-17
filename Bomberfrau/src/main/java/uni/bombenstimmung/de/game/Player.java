@@ -278,7 +278,7 @@ public class Player extends Entity implements ActionListener{
 	return currentButtonConfig;
     }
     
-    public boolean getDead() {
+    public boolean isDead() {
 	return dead;
     }
     
@@ -354,9 +354,11 @@ public class Player extends Entity implements ActionListener{
 	this.velY = 0;
 	if (this == PlayerHandler.getClientPlayer()) {
 	    if (this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition 
+			+ "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
 	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition 
+			+ "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
 	    }
 	}
     }

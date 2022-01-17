@@ -1,7 +1,7 @@
 /*
  * Bomb
  *
- * Version 1.0
+ * Version 2.0
  * Author: Dennis
  *
  * Verwaltet die Bombe im Spiel
@@ -113,9 +113,9 @@ public class Bomb implements ActionListener{
 		Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
 		    	PlayerHandler.getClientPlayer().setDead(true);
 		}
-		for (Player i : PlayerHandler.getOpponentPlayers()) {
-		    if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
-			i.setDead(true);
+		for (Player player : PlayerHandler.getOpponentPlayers()) {
+		    if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
+			player.setDead(true);
 		    }
 		}
 		Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition);
@@ -142,9 +142,9 @@ public class Bomb implements ActionListener{
 				Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
 			    	PlayerHandler.getClientPlayer().setDead(true);
 		    }
-		    for (Player i : PlayerHandler.getOpponentPlayers()) {
-	    	    	if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
-	    	    	    i.setDead(true);
+		    for (Player player : PlayerHandler.getOpponentPlayers()) {
+	    	    	if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
+	    	    	    player.setDead(true);
 	    	    	}
 		    }
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r).getContent() == FieldContent.BOMB) {
@@ -187,9 +187,9 @@ public class Bomb implements ActionListener{
 				    Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
 					PlayerHandler.getClientPlayer().setDead(true);
 			}
-			for (Player i : PlayerHandler.getOpponentPlayers()) {
-	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
-	    	    		    i.setDead(true);
+			for (Player player : PlayerHandler.getOpponentPlayers()) {
+	    	    		if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
+	    	    		    player.setDead(true);
 	    	    		}
 	    		}
 			if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r).getContent() == FieldContent.BOMB) {
@@ -231,9 +231,9 @@ public class Bomb implements ActionListener{
 				    Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
 					PlayerHandler.getClientPlayer().setDead(true);
 			}
-			for (Player i : PlayerHandler.getOpponentPlayers()) {
-	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
-	    	    		    i.setDead(true);
+			for (Player player : PlayerHandler.getOpponentPlayers()) {
+	    	    		if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
+	    	    		    player.setDead(true);
 	    	    		}
 	    		}
 			if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition).getContent() == FieldContent.BOMB) {
@@ -276,9 +276,9 @@ public class Bomb implements ActionListener{
 				    Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
 					PlayerHandler.getClientPlayer().setDead(true);
 			}
-			for (Player i : PlayerHandler.getOpponentPlayers()) {
-	    	    		if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
-	    	    		    i.setDead(true);
+			for (Player player : PlayerHandler.getOpponentPlayers()) {
+	    	    		if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
+	    	    		    player.setDead(true);
 	    	    		}
 	    		}
 			if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition).getContent() == FieldContent.BOMB) {
@@ -304,9 +304,9 @@ public class Bomb implements ActionListener{
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
 	    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 	} else {
-	    for (Player i : PlayerHandler.getOpponentPlayers()) {
-		if (i.getId() == this.ownerId) {
-		    i.decreasePlacedBombs();
+	    for (Player player : PlayerHandler.getOpponentPlayers()) {
+		if (player.getId() == this.ownerId) {
+		    player.decreasePlacedBombs();
 		    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 		}
 	    }
@@ -326,9 +326,9 @@ public class Bomb implements ActionListener{
 		Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
 		    	PlayerHandler.getClientPlayer().setDead(true);
 		}
-		for (Player i : PlayerHandler.getOpponentPlayers()) {
-		    if (i.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
-			i.setDead(true);
+		for (Player player : PlayerHandler.getOpponentPlayers()) {
+		    if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
+			player.setDead(true);
 		    }
 		}
 	    } else if(direction == 1) { //SUEDEN
@@ -360,8 +360,8 @@ public class Bomb implements ActionListener{
 	}
 	/* Aufrufen von destroyed-Methode aller erzeugten Wall-Objekte. */
 	Game.changeFieldContent(FieldContent.EMPTY, placedField.xPosition, placedField.yPosition);
-	for (Wall i : this.targetedWalls) {
-	    i.destroyed();
+	for (Wall wall : this.targetedWalls) {
+	    wall.destroyed();
 	}
 	ConsoleHandler.print("Bomb from Player ID " + this.ownerId + " exploded at (" + placedField.xPosition +
 			", " + placedField.yPosition + ")", MessageType.GAME);
@@ -387,9 +387,9 @@ public class Bomb implements ActionListener{
     
     public void chainreaction(int x, int y) {
 	ArrayList<Bomb> placed = Game.getPlacedBombs();
-	for (Bomb j : placed) {
-		if (j.getPlacedField().xPosition == x && j.getPlacedField().yPosition == y) {
-			   j.explodeFire();
+	for (Bomb bomb : placed) {
+		if (bomb.getPlacedField().xPosition == x && bomb.getPlacedField().yPosition == y) {
+			   bomb.explodeFire();
 		}
 	}
     }

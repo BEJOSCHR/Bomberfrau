@@ -67,8 +67,6 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/Yellow_background.png", ImageType.IMAGE_INGAME_YELLOWGRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/bomb.png", ImageType.IMAGE_INGAME_BOMB, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5);
 	    	new LoadedImage("Ingame/lightTileBackground.png", ImageType.IMAGE_INGAME_LIGHTTILE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-//	    	new LoadedImage("Ingame/easteregg.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
-//	    	new LoadedImage("Ingame/easteregg_Wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	    	new LoadedImage("Ingame/new_skin_left.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	    	new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
 	    	new LoadedImage("Ingame/flame1.png", ImageType.IMAGE_INGAME_BOMB_EX1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
@@ -85,9 +83,6 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/tile_env3_block.png", ImageType.IMAGE_INGAME_LAVA_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/tile_env3_floor.png", ImageType.IMAGE_INGAME_LAVA_FLOOR, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/tile_env3_wall.png", ImageType.IMAGE_INGAME_LAVA_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-//	    	new LoadedImage("Ingame/bombergirl_idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-//	    	new LoadedImage("Ingame/bombergirl_walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-//	    	new LoadedImage("Ingame/bombergirl_dead.png", ImageType.IMAGE_INGAME_CHARACTER_DEAD, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Priest_Dead.png", ImageType.IMAGE_INGAME_CHARACTER_DEAD, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Priest_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Priest_Walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);

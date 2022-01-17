@@ -113,13 +113,12 @@ public class Field extends Entity {
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}
 		try {
-		    for(Bomb i : Game.getPlacedBombs()) {
-			    if (this == i.getPlacedField()) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x + 4 + (int)((1 - i.getScale()) * 16D), y + 4 + (int)((1 - i.getScale()) * 16D), (int)((GameData.FIELD_DIMENSION-5) * i.getScale()), (int)((GameData.FIELD_DIMENSION-5) * i.getScale()), null);
+		    for(Bomb bomb : Game.getPlacedBombs()) {
+			    if (this == bomb.getPlacedField()) {
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x + 4 + (int)((1 - bomb.getScale()) * 16D), y + 4 + (int)((1 - bomb.getScale()) * 16D), (int)((GameData.FIELD_DIMENSION-5) * bomb.getScale()), (int)((GameData.FIELD_DIMENSION-5) * bomb.getScale()), null);
 			    }
 		    }
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 		    ConsoleHandler.print("Fehler beim Malen der Bomben!!!", MessageType.GAME);
 		}
 		break;
