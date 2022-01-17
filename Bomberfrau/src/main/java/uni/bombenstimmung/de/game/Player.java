@@ -697,4 +697,8 @@ public class Player extends Entity implements ActionListener{
     public void stopTimer() {
 	this.t.stop();
     }
+
+    public ConnectedClient getConnectedClient() {
+        return connectedClient;
+    }
 }

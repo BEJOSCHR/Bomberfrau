@@ -16,6 +16,8 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -33,9 +35,15 @@ public class LobbyCreate {
 	 * Wird aufgerufen, wenn der Host die Lobby erstellt.
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
 	 * @param isHost	Dieser Parameter wird nur verwendet, um 2 unterschiedliche Konstruktor zu erstellen.
+	 * @param fromAfterGame Ist wichtig um eine Unterscheidung zwischen den Wechsel vom Menu in die Lobby und den
+	 * 			Wechsel vom AfterGame in die Lobby zu haben. Vom Aftergame ist eine neue Connection
+	 * 			nicht noetig.
 	 */
-	public LobbyCreate (LobbyPlayer player, boolean isHost) {
-		client = new ConnectedClient(true, null);
+	public LobbyCreate (LobbyPlayer player, boolean isHost, boolean fromAfterGame) {
+	    	// Also von dem Menu aufgerufen wird
+	    	if(fromAfterGame == false) {
+	    	    client = new ConnectedClient(true, null);
+	    	}
 		// Host wird als player, der die selbe ID hat wie im ConnectedClient im Array gespeichert.
 		LobbyCreate.player[client.getId()] = player;
 		LobbyCreate.player[client.getId()].setId(client.getId());
@@ -46,21 +54,33 @@ public class LobbyCreate {
 	/**
 	 * Wird aufgerufen, wenn ein Client dem Server beitritt. 
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
+	 * @param fromAfterGame Ist wichtig um eine Unterscheidung zwischen den Wechsel vom Menu in die Lobby und den
+	 * 			Wechsel vom AfterGame in die Lobby zu haben. Vom Aftergame ist eine neue Connection
+	 * 			nicht noetig.
 	 */
-	public LobbyCreate (LobbyPlayer player) {
-	    
-	    try {
-
-//		client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von dem Menu gezogen wird
-		client = new ConnectedClient(false, Settings.getIp());
-		Thread.sleep(300);
-	    } catch (Exception e) {
-		e.printStackTrace();
+	public LobbyCreate (LobbyPlayer player, boolean fromAfterGame) {
+	    // Also von dem Menu aufgerufen wird
+	    if(fromAfterGame == false) {
+		try {
+//			client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von dem Menu gezogen wird
+		    client = new ConnectedClient(false, Settings.getIp());
+		    Thread.sleep(300);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	    }
+	    
 	    // Eigentlich sollte der gejointe Player nie Host sein!
 	    client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
 	    initializeImages();	
 	}
+	
+//	public static void vomAfterGame(LobbyPlayer player, boolean isHost) {
+//	    
+//	    client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
+//	    initializeImages();
+//	    
+//	}
 	
 	
 	/**
@@ -263,11 +283,23 @@ public class LobbyCreate {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			}
-			
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));
+			// Loest den viel zu grossen Namen, bei einem Namen unter 3 Zeichen
+			if(player[i].getName().length() < 3) {
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
+			} else {
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
+			}
+
+			try {
 			// Die Parameter für ImageScaling (x,y,hier,hier,null)
 			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
-		    }
+			if (player[i].getisHost() == false) {
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
+			}
+			} catch(Exception e) {
+			    e.printStackTrace();
+			}
+		}
 //			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
 	}

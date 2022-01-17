@@ -77,7 +77,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	    	ConsoleHandler.print("starting: initLobbyButtons", MessageType.LOBBY);
 		//LOBBY STARTBUTTON
 		startLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
-				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "START", Settings.scaleValue(40), Color.WHITE, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "START", Settings.scaleValue(40), Color.WHITE, Color.GREEN) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    	// Nur der Host kann den Startbutton klicken
@@ -99,13 +99,41 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
+				    return true;  
+				}
+
+				else {
+				    return false;   
+				}
+			}
+			
+			@Override
+			public void draw(Graphics g) {
+
+				if(isHovered() && LobbyCreate.client.getId() == 0) {
+					g.setColor(Color.GREEN);
+					g.drawRect((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100));
+					GraphicsHandler.drawCentralisedText(g, Color.GREEN, Settings.scaleValue(40), "START", (int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100))+Settings.scaleValue(200)/2, 
+						GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3+Settings.scaleValue(100)/2); 
+//				}else if(isHovered()){
+//					g.setColor(Color.LIGHT_GRAY);
+//					g.fillRect((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100));
+//					GraphicsHandler.drawCentralisedText(g, Color.DARK_GRAY, Settings.scaleValue(40), "START", (int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100))+Settings.scaleValue(200)/2, 
+//						GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3+Settings.scaleValue(100)/2); 
+//				
+				}else{
+					g.setColor(Color.WHITE);
+					g.drawRect((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100));
+					GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(40), "START", (int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100))+Settings.scaleValue(200)/2, 
+						GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3+Settings.scaleValue(100)/2); 
+				}
 			}
 		};
 		
 		//LOBBY EXITBUTTON
 		exitLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.65 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
-				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, LanguageHandler.getLLB(LanguageBlockType.LB_OPTIONS_BTN).getContent(), Settings.scaleValue(40), Color.WHITE, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_STARTBUTTON, LanguageHandler.getLLB(LanguageBlockType.LB_OPTIONS_BTN).getContent(), Settings.scaleValue(40), Color.WHITE, Color.RED) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    
@@ -118,8 +146,11 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    }
 			    	}
 			    	else {
+			    	// Wenn der Client nicht alleine in der Lobby ist
+			    	if (LobbyCreate.numberOfMaxPlayers > 1) {
 			    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
-//			    	    LobbyCreate.client.getAcceptor().dispose();
+			    	    LobbyCreate.client.getConnector().dispose();
+			    	}
 			    	}
 			    	
 			    	// Setze alle Objekte = null und switche ins Menu
@@ -432,7 +463,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		
 		// Player 2
 		player2check = new MouseActionArea(xPlayer2Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.GREEN) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 1) {
@@ -450,17 +481,32 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				}
 			}
 			@Override
-			public void drawCustomParts(Graphics g){
+			public void draw(Graphics g){
 			    	if(LobbyCreate.player[1] != null) {
+			    	    if(LobbyCreate.client.getId() == 1){
+			    		
+
+			    		if(isHovered()) {
+			    		    g.setColor(Color.GREEN);
+			    		}
+			    		else {
+			    		    g.setColor(Color.DARK_GRAY);
+			    		}
+					g.drawRect(xPlayer2Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			    	    }
+			    	
 			    	    if(LobbyCreate.player[1].getisReady() == true) {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
-			    	    }			    	    
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    	    }
+			    	    else {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer2Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    	    }
 			    	}
 			}
 		};
 		// Player 3
 		player3check = new MouseActionArea(xPlayer3Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.GREEN) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 2) {
@@ -478,17 +524,32 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				}
 			}
 			@Override
-			public void drawCustomParts(Graphics g){
-			    if(LobbyCreate.player[2] != null) {
-				if(LobbyCreate.player[2].getisReady() == true) {
-				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
-				}				
+			public void draw(Graphics g){
+			    	if(LobbyCreate.player[2] != null) {
+			    	    if(LobbyCreate.client.getId() == 2){
+			    		
+
+			    		if(isHovered()) {
+			    		    g.setColor(Color.GREEN);
+			    		}
+			    		else {
+			    		    g.setColor(Color.DARK_GRAY);
+			    		}
+					g.drawRect(xPlayer3Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			    	    }
+			    	
+			    	    if(LobbyCreate.player[2].getisReady() == true) {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			    	    }
+			    	    else {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer3Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			    	    }
+			    	}				
 			    }
-			}
 		};
 		// Player 4
 		player4check = new MouseActionArea(xPlayer4Left+Settings.scaleValue(140), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(130), Settings.scaleValue(80),
-				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.ORANGE) {
+				MouseActionAreaType.MAA_LOBBY_CHECKMARK, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), Settings.scaleValue(30), Color.DARK_GRAY, Color.GREEN) {
 			@Override
 			public void performAction_LEFT_RELEASE() {
 			    if (LobbyCreate.client.getId() == 3) {
@@ -498,7 +559,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			}
 			@Override
 			public boolean isActiv() {
-				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberOfMaxPlayers >= 4 && LobbyCreate.player[3] != null) {
+				if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.numberOfMaxPlayers == 4 && LobbyCreate.player[3] != null) {
 				    return true;
 				}
 				else {
@@ -506,13 +567,28 @@ public class LobbyButtons extends MouseActionAreaHandler{
 				}	
 			}
 			@Override
-			public void drawCustomParts(Graphics g){
-			    if(LobbyCreate.player[2] != null) {
-				if(LobbyCreate.player[3].getisReady() == true) {
-				    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
-				}	
+			public void draw(Graphics g){
+			    	if(LobbyCreate.player[3] != null) {
+			    	    if(LobbyCreate.client.getId() == 3){
+			    		
+
+			    		if(isHovered()) {
+			    		    g.setColor(Color.GREEN);
+			    		}
+			    		else {
+			    		    g.setColor(Color.DARK_GRAY);
+			    		}
+					g.drawRect(xPlayer4Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			    	    }
+			    	
+			    	    if(LobbyCreate.player[3].getisReady() == true) {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    	    }
+			    	    else {
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer4Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    	    }
+			    	}	
 			    }
-			}
 		};
 		
 		
