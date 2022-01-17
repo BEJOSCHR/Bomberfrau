@@ -8,21 +8,22 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import uni.bombenstimmung.de.aftergame.DeadPlayer;
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -30,7 +31,6 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
-import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -193,7 +193,7 @@ public class GraphicsHandler {
 		Menu.optionsComponentsActive(false);
 		//Menu.menuComponentsActive(true);
 		
-	    	SoundHandler.playSound2(SoundType.MENU, false);
+	    	SoundHandler.playSound2(SoundType.MENU, true);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 		
 		displayType = DisplayType.MENU;
@@ -251,13 +251,13 @@ public class GraphicsHandler {
 		
 	    AnimationHandler.stopAllAnimations();
 	    
+	    SoundHandler.playSound2(SoundType.MENU, true);
 	    LobbyButtons.lobbyButtonsReset();
 	    
 	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
-	    }
-	    else {
-		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
+		    lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
+	    }else {
+		    lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
 	    }
 
 	    displayType = DisplayType.LOBBY;
@@ -367,13 +367,31 @@ public class GraphicsHandler {
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	ConsoleHandler.print("Player Count: " + PlayerHandler.getAllPlayer().size(), MessageType.GAME);
 	    	GameCounter zaehler = new GameCounter();
-	    	zaehler.startCounter();
+	    	
 	    	
 	    	frame.requestFocus();
 	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
-		
+		new Animation(100, 4) {
+		    @Override
+		    public void initValues() {
+			Game.setCountdown(1);
+			SoundHandler.playSound2(SoundType.COUNTDOWN, false);
+		    }
+		    
+		    @Override
+		    public void changeValues() {
+			Game.setCountdown(Game.getCountdown() + 1);
+		    }
+		    
+		    @Override
+		    public void finaliseValues() {
+			Game.setCountdown(0);
+			zaehler.startCounter();
+			PlayerHandler.setMovable(true);
+		    }
+		};
 	}
 	
 	/**

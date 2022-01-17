@@ -16,7 +16,6 @@
 
 package uni.bombenstimmung.de.game;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -34,6 +33,12 @@ public class PlayerHandler {
     private static int opponentCount = 0;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
     private static boolean debugKeys = false;
+    private static boolean change_ani = false;
+    private static int change_int = 0;
+    private static int[] remember_move = new int[4];
+    private static boolean movable = false;
+    // Bestimmt die Zeit zwischen den Animationen
+    private static final int ANI_TIMER = 20;
     
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
@@ -138,34 +143,72 @@ public class PlayerHandler {
      * @param g	Graphics-Variable, auf welcher die neuen Elemente gemalt werden sollen.
      */
     public static void drawPlayers(Graphics g) {
-	if (clientPlayer.getDead() == false) {
-	    // Anzeigen der Hitbox
-	    if (debugKeys) {
-		g.setColor(Color.red);
-		g.drawRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
-			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
-			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
-		g.fillRect((int)(clientPlayer.getPosition().getX() - clientPlayer.getXHitbox()),
-			(int)(clientPlayer.getPosition().getY() - clientPlayer.getYHitbox()),
-			(int)(clientPlayer.getXHitbox()*2), (int)(clientPlayer.getYHitbox()*2));
-	    }
-	    if (clientPlayer.getDirection() != 0) {
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-	    }
-	} else {
-	    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(clientPlayer.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(clientPlayer.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-	}
-	for (Player i : opponentPlayers) {
-	    if (i.getDead() == false) {
-		if (i.getDirection() != 0) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-		} else {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+	
+	for (Player player : allPlayer) {
+	    if (player.isDead() == false) {
+		if (player.getDirection() == 0) {
+		    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+		    if (remember_move[player.getId()] == 0)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else if (remember_move[player.getId()] == 1)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else if (remember_move[player.getId()] == 2)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else if (remember_move[player.getId()] == 3)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else if (remember_move[player.getId()] == 4)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
+		if (player.getDirection() == 1) {
+		    remember_move[player.getId()] = 1;
+		    if (change_ani)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    change_int++;
+		    if (change_int >= ANI_TIMER) {
+			change_int = 0;
+			change_ani = !change_ani;
+		    }
+		}
+		if (player.getDirection() == 2) {
+		    remember_move[player.getId()] = 2;
+		    if (change_ani)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    change_int++;
+		    if (change_int==ANI_TIMER) {
+			change_int = 0;
+			change_ani = !change_ani;
+		    }
+		}
+		if (player.getDirection() == 3) {
+		    remember_move[player.getId()] = 3;
+		    if (change_ani)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    change_int++;
+		    if (change_int==ANI_TIMER) {
+			change_int = 0;
+			change_ani = !change_ani;
+		    }
+		}
+		if (player.getDirection() == 4) {
+		    remember_move[player.getId()] = 4;
+		    if (change_ani)
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    else
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    change_int++;
+		    if (change_int==ANI_TIMER) {
+			change_int = 0;
+			change_ani = !change_ani;
+		    }
 		}
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(i.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(i.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 	    }
 	}
     }
@@ -176,7 +219,7 @@ public class PlayerHandler {
      * @param keyCode	Tasten-Code in Integer-Form
      */
     public static void handleKeyEventPressed(int keyCode) {
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
+	if (clientPlayer.isDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
@@ -199,7 +242,7 @@ public class PlayerHandler {
      * @param keyCode	Tasten-Code in Integer-Form
      */
     public static void handleKeyEventReleased(int keyCode) {
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false) {
+	if (clientPlayer.isDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
@@ -219,7 +262,7 @@ public class PlayerHandler {
 	 * (ergo kein InputBuffer noetig).
 	 * Bombe wird erst bei Loslassen der Taste gelegt.
 	 */
-	if (clientPlayer.getDead() == false && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
+	if (clientPlayer.isDead() == false && movable == true && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
 	    clientPlayer.actionPlantBomb();
 	}
 	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
@@ -233,7 +276,7 @@ public class PlayerHandler {
 	    } else if (keyCode == KeyEvent.VK_K) {
 		clientPlayer.decreaseMaxBombs();
 	    } else if (keyCode == KeyEvent.VK_P) {
-		if (clientPlayer.getDead() == false) {
+		if (clientPlayer.isDead() == false) {
 		    clientPlayer.setDead(true);
 		} else {
 		    clientPlayer.setDead(false);
@@ -313,5 +356,16 @@ public class PlayerHandler {
 	opponentCount = 0;
 	inputBuffer.clear();
 	playerFromLobby.clear();
+	for (int i = 0; i < 4; i++) {
+	    remember_move[i] = 0;
+	}
+    }
+    
+    public static boolean isMovable() {
+	return movable;
+    }
+    
+    public static void setMovable(boolean m) {
+	movable = m;
     }
 }

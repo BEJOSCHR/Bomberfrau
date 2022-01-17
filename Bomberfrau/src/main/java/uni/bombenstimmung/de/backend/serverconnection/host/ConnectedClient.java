@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.future.ConnectFuture;
-import org.apache.mina.core.future.IoFuture;
 import org.apache.mina.core.future.IoFutureListener;
 import org.apache.mina.core.service.IoConnector;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -40,7 +39,6 @@ import uni.bombenstimmung.de.backend.serverconnection.ConnectionData;
 import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
 import uni.bombenstimmung.de.game.FieldContent;
 import uni.bombenstimmung.de.game.Game;
-import uni.bombenstimmung.de.game.Player;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 
@@ -57,8 +55,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
 	private Stack<Integer> idStack;
 	
-	private Player player;
-	
 	/**
 	 * Erzeugt einen neuen ConnectedClient. 
 	 * Ist dieser ein Host, dann wird ein neuer UDP-Server erstellt.
@@ -66,7 +62,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @param sHost - Boolean ob der ConnectedClient ein Host ist, oder nicht
 	 * @param IP - IP-Addresse zu dem der Client sich verbinden soll
 	 */
-	@SuppressWarnings("rawtypes")
 	public ConnectedClient(boolean sHost, String IP) {
 		host = sHost;
 		//Is the new created Client the host, a new server will be initialized
@@ -200,14 +195,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//100 = Position eines Spieler wird gesendet und an alle anderen Spieler gebroadcastet. 
 		//Format: "100-[ID]-[X-Cord]-[Y-Cord]"
 		case 100:
-			//TODO: SetX und SetY für den Host muss noch implementiert werden.
-			String[] pMessage100 = message.split("-");
+		    message.split("-");
 			//sendMessageToAllClients("202-"+pMessage100[1]+"-"+pMessage100[2]+"-"+pMessage100[3]);
 			break;	
 		//101 = Position einer gesetzen Bombe wird gesendet und an alle anderen Spieler gebroadcastet. 
 		//Format: "101-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
 		case 101:
-			String[] pMessage101 = message.split("-");
+		    message.split("-");
 			//sendMessageToAllClients("203-"+pMessage101[1]+"-"+pMessage101[2]+"-"+pMessage101[3]);
 			//sendMessageToAllClients(message);
 			break;	
@@ -220,31 +214,35 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
 		//202 = Setze die Position eines Players. (Client)
-		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
+		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 202:
 			String[] pMessage202 = message.split("-");
-			if(id != Integer.parseInt(pMessage202[1])) {
+			if (id != Integer.parseInt(pMessage202[1])) {
 			    if (Integer.parseInt(pMessage202[4]) == GraphicsHandler.getHeight()) {
-				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]), Integer.parseInt(pMessage202[5]));
 			    } else {
 				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(
 					(int)( (  Double.parseDouble(pMessage202[2])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
-					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					Integer.parseInt(pMessage202[5]));
 			    }
 			}
 			break;	
 		//203 = Setze die Position eines Players. (Server)
-		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
+		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 203:
 			String[] pMessage203 = message.split("-");
-			if (Integer.parseInt(pMessage203[4]) == GraphicsHandler.getHeight()) {
-				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
-			} else {
-			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(
-				(int)( (  Double.parseDouble(pMessage203[2])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
-				(int)( (  Double.parseDouble(pMessage203[3])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+			if (id != Integer.parseInt(pMessage203[1])) {
+			    if (Integer.parseInt(pMessage203[4]) == GraphicsHandler.getHeight()) {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]), Integer.parseInt(pMessage203[5]));
+			    } else {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(
+					(int)( (  Double.parseDouble(pMessage203[2])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					(int)( (  Double.parseDouble(pMessage203[3])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					Integer.parseInt(pMessage203[5]));
+			    }
 			}
-			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4]);
+			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4] + "-" + pMessage203[5]);
 			break;
 		//204 = Bombe legen (Client)
 		//Format: "204-[ID]"
@@ -291,7 +289,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//209 = 
 		//Format: 
 		case 209:
-		    String[] pMessage209 = message.split("-");
+		    message.split("-");
 		    
 		    break;
 		//300 = Starte das Spiel

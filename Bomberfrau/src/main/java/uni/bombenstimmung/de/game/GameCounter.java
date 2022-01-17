@@ -43,7 +43,6 @@ public class GameCounter implements ActionListener{
 		}
 	    }
 	    clock++;
-	    //ConsoleHandler.print("Game clock: " + clock, MessageType.GAME);
     }
     
     public static int getClock() {

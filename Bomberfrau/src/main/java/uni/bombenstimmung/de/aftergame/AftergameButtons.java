@@ -11,7 +11,6 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
-import uni.bombenstimmung.de.backend.serverconnection.host.ServerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class AftergameButtons extends MouseActionAreaHandler{
