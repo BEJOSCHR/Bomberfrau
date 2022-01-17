@@ -362,6 +362,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 506:
 			String[] pMessage506 = message.split("-");
 			LobbyCreate.setNumberPlayer(Integer.parseInt(pMessage506[1]));
+			ConsoleHandler.print("Case 506 wurde aufgerufen", MessageType.LOBBY);
 			break;
 			
 		//507 = Wird von dem Host in dem Mapaenderungen aufgerufen, sodass alle Player die zaehlerSelectionMap aendern	

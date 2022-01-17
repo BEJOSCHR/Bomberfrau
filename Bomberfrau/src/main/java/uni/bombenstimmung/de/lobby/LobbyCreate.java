@@ -73,6 +73,13 @@ public class LobbyCreate {
 	    initializeImages();	
 	}
 	
+//	public static void vomAfterGame(LobbyPlayer player, boolean isHost) {
+//	    
+//	    client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
+//	    initializeImages();
+//	    
+//	}
+	
 	
 	/**
 	 * Wird aufgerufen, wenn der Host seinen Clients mitteilt, dass ein neuer Player der Lobby gejoint ist, sodass diese auf ihrem lokalen Rechner diese darstellen koennen.
@@ -274,8 +281,13 @@ public class LobbyCreate {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			}
-			
-			GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));
+			// Loest den viel zu grossen Namen, bei einem Namen unter 3 Zeichen
+			if(player[i].getName().length() < 3) {
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
+			} else {
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
+			}
+
 			try {
 			// Die Parameter für ImageScaling (x,y,hier,hier,null)
 			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
