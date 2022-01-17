@@ -372,7 +372,7 @@ public class Player extends Entity implements ActionListener{
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
-	    Game.addBomb(this.bombRadius, 3, this.id);
+	    Game.addBomb(this.bombRadius, 30, this.id);
 	    placedBombs++;
 	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);

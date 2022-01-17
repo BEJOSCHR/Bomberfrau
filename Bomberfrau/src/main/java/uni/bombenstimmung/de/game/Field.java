@@ -17,6 +17,7 @@ package uni.bombenstimmung.de.game;
 import java.awt.Graphics;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 
@@ -109,13 +110,17 @@ public class Field extends Entity {
 		} 	else if (Game.getMapNumber() == 2) {
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_YELLOWGRAS).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		}	else if (Game.getMapNumber() == 3) {
-					g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-				}
-		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x, y, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5, null);
-		for(Bomb i : Game.getPlacedBombs()) {
-		    i.drawCounter(g);
-		    //int count = i.getCounter();
-		    //GraphicsHandler.drawCentralisedText(g, Color.RED, 30, i.getCounter() + "", i.getPlacedField().xPosition+(GameData.FIELD_DIMENSION/2), i.getPlacedField().yPosition+(GameData.FIELD_DIMENSION/2));
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_LAVA_FLOOR).getImage(), x, y, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
+		try {
+		    for(Bomb i : Game.getPlacedBombs()) {
+			    if (this == i.getPlacedField()) {
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_BOMB).getImage(), x + 4 + (int)((1 - i.getScale()) * 16D), y + 4 + (int)((1 - i.getScale()) * 16D), (int)((GameData.FIELD_DIMENSION-5) * i.getScale()), (int)((GameData.FIELD_DIMENSION-5) * i.getScale()), null);
+			    }
+		    }
+		}
+		catch (Exception ex) {
+		    ConsoleHandler.print("Fehler beim Malen der Bomben!!!", MessageType.GAME);
 		}
 		break;
 	// Spezifische Grafiken für die Himmelsrichtungen der Explosion
