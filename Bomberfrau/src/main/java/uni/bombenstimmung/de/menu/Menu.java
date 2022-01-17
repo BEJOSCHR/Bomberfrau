@@ -35,7 +35,7 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Menu {
 
-    public static final int MIN_NAME_LENGTH = 3;
+    public static final int MIN_NAME_LENGTH = 1;
     public static final int MAX_NAME_LENGTH = 30;
 
     private static JRadioButton create, join;
@@ -815,7 +815,7 @@ public class Menu {
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
-	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?")) || (name_box.getText().length() < 3)) {
+	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?")) || (name_box.getText().length() < MIN_NAME_LENGTH)) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
 	    //name_box.setText("");
