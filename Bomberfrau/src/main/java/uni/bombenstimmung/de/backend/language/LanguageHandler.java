@@ -13,6 +13,7 @@ import java.util.List;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.menu.Menu;
 
 public class LanguageHandler {
 
@@ -32,10 +33,12 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT1, menu_txt1);
 		String[] menu_txt2 = {"Join", "Beitreten"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT2, menu_txt2);
-		String[] menu_info1 = {"max. 30 signs", "max. 30 Zeichen"};
+		String[] menu_info1 = {"min. " + Menu.MIN_NAME_LENGTH + " signs", "min. " + Menu.MIN_NAME_LENGTH + " Zeichen"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO1, menu_info1);
-		String[] menu_info2 = {"invalid IP", "ungültige IP"};
+		String[] menu_info2 = {"max. " + Menu.MAX_NAME_LENGTH + " signs", "max. " + Menu.MAX_NAME_LENGTH + " Zeichen"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO2, menu_info2);
+		String[] menu_info3 = {"invalid IP", "ungültige IP"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO3, menu_info3);
 		String[] menu_btn2 = {"OPTIONS", "OPTIONEN"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN2, menu_btn2);
 		String[] menu_btn3 = {"EXIT", "ENDE"};
@@ -69,7 +72,7 @@ public class LanguageHandler {
 		String[] key_right = {"Right", "Rechts"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_RIGHT, key_right);
 
-		String[] bad_name = {"Please enter a name before starting ...", "Bitte vor dem Start einen Namen eingeben ..."};
+		String[] bad_name = {"Please enter a valid name before starting ...", "Bitte vor dem Start einen gültigen Namen eingeben ..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_NAME, bad_name);
 		String[] bad_ip = {"Please enter an IP before starting ...", "Bitte vor dem Start eine IP eingeben ..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_IP, bad_ip);

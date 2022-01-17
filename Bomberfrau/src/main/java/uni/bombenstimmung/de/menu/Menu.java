@@ -35,6 +35,7 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Menu {
 
+    public static final int MIN_NAME_LENGTH = 3;
     public static final int MAX_NAME_LENGTH = 30;
 
     private static JRadioButton create, join;
@@ -143,12 +144,18 @@ public class Menu {
 		    name_info.setText("");
 		    name_info.repaint();
 		}
-		if (txt.length() > MAX_NAME_LENGTH) {
-		    // name_box.setText(txt.substring(0, MAX_NAME_LENGTH));
-		    name_box.setText(Settings.getUser_name());
+		if ((txt.length() < MIN_NAME_LENGTH) && (txt != "?")) {
+		    // name_box.setText(txt.substring(0, MIN_NAME_LENGTH));
+		    // name_box.setText(Settings.getUser_name());
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
+		} else if (txt.length() > MAX_NAME_LENGTH) {
+		    // name_box.setText(txt.substring(0, MAX_NAME_LENGTH));
+		    name_box.setText(Settings.getUser_name());
+		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
+		    name_info.repaint();
 		} else {
+		    name_info.setText("");
 		    Settings.setUser_name(txt);
 		    name_box.setFont(GraphicsHandler.usedFont(40)
 			    .deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
@@ -163,8 +170,11 @@ public class Menu {
 
 	    @Override
 	    public void focusGained(FocusEvent e) {
-		if (name_box.getText().equals("?"))
+		if (name_box.getText().equals("?")) {
 		    name_box.setText("");
+		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
+		    name_info.repaint();
+		}
 	    }
 	});
 
@@ -194,7 +204,7 @@ public class Menu {
 		}
 		Settings.setIp(txt);
 		if (!checkIp(false)) {
-		    ip_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
+		    ip_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO3).getContent());
 		    ip_info.repaint();
 		}
 
@@ -805,10 +815,10 @@ public class Menu {
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
-	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
+	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?")) || (name_box.getText().length() < 3)) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-	    name_box.setText("");
+	    //name_box.setText("");
 	    name_box.requestFocus();
 	    check = false;
 	}

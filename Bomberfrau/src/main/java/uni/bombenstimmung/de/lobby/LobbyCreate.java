@@ -260,7 +260,7 @@ public class LobbyCreate {
 		    if (player[i] != null) {
 			// Malt die fuer den Host zustaendigen Sachen. 
 			if (player[i].getisHost() == true) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(20), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(40), Settings.scaleValue(40), null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			}
 			
