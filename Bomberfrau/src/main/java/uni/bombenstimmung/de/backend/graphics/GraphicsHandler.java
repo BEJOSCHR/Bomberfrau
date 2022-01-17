@@ -406,11 +406,11 @@ public class GraphicsHandler {
 		}
 		
 		
-		if (LobbyCreate.client.isHost()) {
-		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
-			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
-		    }
-		}
+//		if (LobbyCreate.client.isHost()) {
+//		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
+//			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+//		    }
+//		}
 		
 		try {
 		    Thread.sleep(1000);

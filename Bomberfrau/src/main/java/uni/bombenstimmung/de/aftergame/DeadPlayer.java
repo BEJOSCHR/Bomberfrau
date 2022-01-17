@@ -32,7 +32,7 @@ public class DeadPlayer {
 	private boolean host;
 	private int skin;
 	
-	public ConnectedClient connectedClient;
+	private ConnectedClient connectedClient;
 	
 	private int deathTime;
 	private int score = 0;
@@ -119,6 +119,10 @@ public class DeadPlayer {
 	
 	public String getIp() {
 		return ipAdress;
+	}
+	
+	public ConnectedClient getCC() {
+	    return connectedClient;
 	}
 	
 }

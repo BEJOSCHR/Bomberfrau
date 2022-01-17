@@ -465,11 +465,24 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	break;
 		    	
 		case 602: 
-		    
+		    	GraphicsHandler.switchToMenuFromAftergame();
 		    	break;
-		    	
+		
+		//512 = Wird vom Client gesendet, wenn dieser QUIT per BUTTON drueckt
+		//Format: "603-[ID]"    	
 		case 603: 
-		    
+//		    	String[] pMessage603 = message.split("-");
+//		    	LobbyCreate.player[Integer.parseInt(pMessage603[1])] = null;
+//		    	// Befiehlt dem am verlassenden Client zu verlassen
+////		    	sendMessage(session, "999-");
+//		    	removeClient(session);
+//		    	// Checken ob der verlassene Player der letzte Player war
+//		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
+//			    LobbyCreate.numberOfMaxPlayers--;
+//		    	}
+//		    	sendMessageToAllClients("513-" + pMessage512[1]);
+//		    	// numberOfMaxPlayers an alle anderen Clients senden
+//		    	sendMessageToAllClients("506-" + LobbyCreate.numberOfMaxPlayers);
 		    	break;
 		    
 		case 900:
