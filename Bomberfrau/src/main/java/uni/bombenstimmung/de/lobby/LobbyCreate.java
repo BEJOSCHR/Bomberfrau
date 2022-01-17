@@ -16,6 +16,8 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.images.LoadedImage;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -292,7 +294,7 @@ public class LobbyCreate {
 			// Die Parameter für ImageScaling (x,y,hier,hier,null)
 			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			if (player[i].getisHost() == false) {
-			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), "Ready?", GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
 			}
 			} catch(Exception e) {
 			    e.printStackTrace();

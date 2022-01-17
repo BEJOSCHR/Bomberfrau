@@ -496,10 +496,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    }
 			    	
 			    	    if(LobbyCreate.player[1].getisReady() == true) {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 			    	    }
 			    	    else {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer2Left+Settings.scaleValue(177), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer2Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 			    	    }
 			    	}
 			}
@@ -539,10 +539,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    }
 			    	
 			    	    if(LobbyCreate.player[2].getisReady() == true) {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
 			    	    }
 			    	    else {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer3Left+Settings.scaleValue(177), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer3Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
 			    	    }
 			    	}				
 			    }
@@ -582,10 +582,10 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			    	    }
 			    	
 			    	    if(LobbyCreate.player[3].getisReady() == true) {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Left+Settings.scaleValue(175), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer4Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 			    	    }
 			    	    else {
-			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer4Left+Settings.scaleValue(177), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			    		g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer4Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 			    	    }
 			    	}	
 			    }
