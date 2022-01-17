@@ -130,6 +130,22 @@ public class Label extends JLabel {
 		    	if(Game.getGameOver()) {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
+		    	switch (Game.getCountdown()) {
+		    	case 1:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 2:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 3:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 4:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GO!", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	}
 			break;
 		case AFTERGAME:
 			g.setColor(Color.WHITE);

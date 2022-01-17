@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -31,9 +32,11 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.game.Bomb;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.game.GameData;
+import uni.bombenstimmung.de.game.Player;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyButtons;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
@@ -349,13 +352,30 @@ public class GraphicsHandler {
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	ConsoleHandler.print("Player Count: " + PlayerHandler.getAllPlayer().size(), MessageType.GAME);
 	    	GameCounter zaehler = new GameCounter();
-	    	zaehler.startCounter();
+	    	
 	    	
 	    	frame.requestFocus();
 	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
-		
+		new Animation(100, 4) {
+		    @Override
+		    public void initValues() {
+			Game.setCountdown(1);
+		    }
+		    
+		    @Override
+		    public void changeValues() {
+			Game.setCountdown(Game.getCountdown() + 1);
+		    }
+		    
+		    @Override
+		    public void finaliseValues() {
+			Game.setCountdown(0);
+			zaehler.startCounter();
+			PlayerHandler.setMovable(true);
+		    }
+		};
 	}
 	
 	/**

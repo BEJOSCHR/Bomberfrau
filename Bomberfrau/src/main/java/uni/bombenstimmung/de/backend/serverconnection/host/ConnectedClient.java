@@ -219,31 +219,35 @@ public class ConnectedClient extends IoHandlerAdapter{
 			//TODO: Neues Spielerobjekt erzeugen
 			break;	
 		//202 = Setze die Position eines Players. (Client)
-		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
+		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 202:
 			String[] pMessage202 = message.split("-");
-			if(id != Integer.parseInt(pMessage202[1])) {
+			if (id != Integer.parseInt(pMessage202[1])) {
 			    if (Integer.parseInt(pMessage202[4]) == GraphicsHandler.getHeight()) {
-				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]));
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]), Integer.parseInt(pMessage202[5]));
 			    } else {
 				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(
 					(int)( (  Double.parseDouble(pMessage202[2])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
-					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					Integer.parseInt(pMessage202[5]));
 			    }
 			}
 			break;	
 		//203 = Setze die Position eines Players. (Server)
-		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]"
+		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 203:
 			String[] pMessage203 = message.split("-");
-			if (Integer.parseInt(pMessage203[4]) == GraphicsHandler.getHeight()) {
-				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]));
-			} else {
-			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(
-				(int)( (  Double.parseDouble(pMessage203[2])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
-				(int)( (  Double.parseDouble(pMessage203[3])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ));
+			if (id != Integer.parseInt(pMessage203[1])) {
+			    if (Integer.parseInt(pMessage203[4]) == GraphicsHandler.getHeight()) {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(Integer.parseInt(pMessage203[2]), Integer.parseInt(pMessage203[3]), Integer.parseInt(pMessage203[5]));
+			    } else {
+				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage203[1])).setDisplayCoordinates(
+					(int)( (  Double.parseDouble(pMessage203[2])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					(int)( (  Double.parseDouble(pMessage203[3])  /  ( Double.parseDouble(pMessage203[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
+					Integer.parseInt(pMessage203[5]));
+			    }
 			}
-			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4]);
+			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4] + "-" + pMessage203[5]);
 			break;
 		//204 = Bombe legen (Client)
 		//Format: "204-[ID]"
