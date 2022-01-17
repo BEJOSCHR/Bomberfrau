@@ -181,7 +181,7 @@ public class LobbyCreate {
 	 */
 	public static void setDecrementSkin(int player) {
 		if (LobbyCreate.player[player].getSkin() == 0) {
-		    LobbyCreate.player[player].setSkin(2);
+		    LobbyCreate.player[player].setSkin(3);
 		}
 		else {
 		    LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() - 1) %4);	
