@@ -86,6 +86,10 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_RANKING_2, aftergame_Ranking);
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_RANKING_3, aftergame_Ranking);
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_RANKING_4, aftergame_Ranking);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_1, aftergame_Ranking);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_2, aftergame_Ranking);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, aftergame_Ranking);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, aftergame_Ranking);
 		
 		ConsoleHandler.print("Initialised LanguageBlocks ("+languageBlocks.size()+")", MessageType.BACKEND);	
 	}
