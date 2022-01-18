@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uni.bombenstimmung.de</groupId>
   <artifactId>bombenfrau</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <properties>
   <maven.compiler.source>14</maven.compiler.source>
   <maven.compiler.target>14</maven.compiler.target>
@@ -67,4 +67,11 @@
 	</plugin>
 	</plugins>
 </build>
+<distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub leThrax Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/BEJOSCHR/Bomberfrau</url>
+   </repository>
+</distributionManagement>
 </project>
