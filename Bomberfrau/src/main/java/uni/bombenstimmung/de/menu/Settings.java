@@ -461,14 +461,15 @@ public class Settings {
 	
 	int i;
 	GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
-	ConsoleHandler.print("*************************************************", MessageType.MENU);
-        ConsoleHandler.print("Device with Mouse = " + myDevice + " / " + myDevice.getType(), MessageType.MENU);
-	ConsoleHandler.print("*************************************************", MessageType.MENU);
+	ConsoleHandler.print("***************************************************", MessageType.MENU);
+        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
+	ConsoleHandler.print("***************************************************", MessageType.MENU);
         
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
 	double[] scalingWidth = new double[gs.length];
 	double[] scalingHeight = new double[gs.length];
+	int myScreenIndex = 0;
 	
         for (i = 0; i < gs.length; i++) {
             ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth() + " x " + gs[i].getDisplayMode().getHeight(), MessageType.MENU);
@@ -476,16 +477,16 @@ public class Settings {
     	    ConsoleHandler.print("Scaling Factor Width:  " + scalingWidth[i], MessageType.MENU);
     	    scalingHeight[i] = gs[i].getDisplayMode().getHeight() / (double) gs[i].getDefaultConfiguration().getBounds().height;
     	    ConsoleHandler.print("Scaling Factor Height: " + scalingHeight[i], MessageType.MENU);
-    	ConsoleHandler.print("*************************************************", MessageType.MENU);
+    	    if (gs[i].equals(myDevice)) myScreenIndex = i;
+    	    ConsoleHandler.print("***************************************************", MessageType.MENU);
         }
         
-        i = myDevice.getType();
-        res_width_max = gs[i].getDisplayMode().getWidth();
-        res_height_max = gs[i].getDisplayMode().getHeight();
-	res_width_max = (int)(res_width_max/scalingWidth[i]);
-	res_height_max = (int)(res_height_max/scalingHeight[i]);
-	ConsoleHandler.print("Using this Resolution: " + res_width_max + " x " + res_height_max , MessageType.MENU);
-	ConsoleHandler.print("*************************************************", MessageType.MENU);
+        res_width_max = gs[myScreenIndex].getDisplayMode().getWidth();
+        res_height_max = gs[myScreenIndex].getDisplayMode().getHeight();
+	res_width_max = (int)(res_width_max/scalingWidth[myScreenIndex]);
+	res_height_max = (int)(res_height_max/scalingHeight[myScreenIndex]);
+	ConsoleHandler.print("Using this Resolution of Monitor " + myScreenIndex + " : " + res_width_max + " x " + res_height_max , MessageType.MENU);
+	ConsoleHandler.print("***************************************************", MessageType.MENU);
 	
     }
     
