@@ -263,24 +263,6 @@ public class Settings {
 	}
     }
     
-    private static void getDevice() {
-	double scalingfactor;
-        GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
-	ConsoleHandler.print("#################################################", MessageType.MENU);
-        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
-	ConsoleHandler.print("#################################################", MessageType.MENU);
-        
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice[] gs = ge.getScreenDevices();
-        for (int i = 0; i < gs.length; i++) {
-            ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth()+" * "+gs[i].getDisplayMode().getHeight(), MessageType.MENU);
-            scalingfactor = gs[i].getDisplayMode().getWidth() / (double) gs[i].getDefaultConfiguration().getBounds().width;
-    	    ConsoleHandler.print("Scaling Factor Width : " + scalingfactor, MessageType.MENU);
-            scalingfactor = gs[i].getDisplayMode().getHeight() / (double) gs[i].getDefaultConfiguration().getBounds().height;
-    	    ConsoleHandler.print("Scaling Factor Height: " + scalingfactor, MessageType.MENU);
-    	    ConsoleHandler.print("#################################################", MessageType.MENU);
-        }
-    }
 
     /**
      * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü werden
@@ -440,41 +422,66 @@ public class Settings {
      */
     public static void getMonitorResoltion() {
 
+	double scalingWidth = 1, scalingHeight = 1;
+//	
+//	ConsoleHandler.print("*************************************************", MessageType.MENU);
+//	// getting resolution of the DEFAULT monitor via Toolkit
+//	// scaling is taken into account !!!
+//	res_width_max = Toolkit.getDefaultToolkit().getScreenSize().width;
+//	res_height_max = Toolkit.getDefaultToolkit().getScreenSize().height;
+//	ConsoleHandler.print("Toolkit resolution (scaling)      : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+//
+//	ConsoleHandler.print("*************************************************", MessageType.MENU);
+//	// getting resolution of the DEFAULT monitor
+//	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//	res_width_max = gd.getDisplayMode().getWidth();
+//	res_height_max = gd.getDisplayMode().getHeight();
+//	ConsoleHandler.print("resolution (default screen)       : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+//	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+//	// next line gets the scaling factor set in the OS
+//	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+//	ConsoleHandler.print("scaling    (default screen)       : " + scalingfactor, MessageType.MENU);
+//	res_width_max = (int)(res_width_max/scalingfactor);
+//	res_height_max = (int)(res_height_max/scalingfactor);
+//	ConsoleHandler.print("resolution (default screen new)   : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+//	ConsoleHandler.print("*************************************************", MessageType.MENU);
+//
+//	// getting resolution of the monitor with the mouse pointer
+//	gd = MouseInfo.getPointerInfo().getDevice();
+//	res_width_max = gd.getDisplayMode().getWidth();
+//	res_height_max = gd.getDisplayMode().getHeight();
+//	ConsoleHandler.print("resolution (screen with mouse)    : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+//	// next line gets the scaling factor set in the OS
+//	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
+//	ConsoleHandler.print("scaling    (screen with mouse)    : " + scalingfactor, MessageType.MENU);
+//	res_width_max = (int)(res_width_max/scalingfactor);
+//	res_height_max = (int)(res_height_max/scalingfactor);
+//	ConsoleHandler.print("resolution (screen with mouse new): " + res_width_max + " x " + res_height_max, MessageType.MENU);
+//	ConsoleHandler.print("*************************************************", MessageType.MENU);
+//	
+	
+	GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
-	// getting resolution of the DEFAULT monitor via Toolkit
-	// scaling is taken into account !!!
-	res_width_max = Toolkit.getDefaultToolkit().getScreenSize().width;
-	res_height_max = Toolkit.getDefaultToolkit().getScreenSize().height;
-	ConsoleHandler.print("Toolkit resolution (scaling)      : " + res_width_max + " x " + res_height_max, MessageType.MENU);
-
+        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
-	// getting resolution of the DEFAULT monitor
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	res_width_max = gd.getDisplayMode().getWidth();
-	res_height_max = gd.getDisplayMode().getHeight();
-	ConsoleHandler.print("resolution (default screen)       : " + res_width_max + " x " + res_height_max, MessageType.MENU);
-	double scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
-	// next line gets the scaling factor set in the OS
-	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
-	ConsoleHandler.print("scaling    (default screen)       : " + scalingfactor, MessageType.MENU);
-	res_width_max = (int)(res_width_max/scalingfactor);
-	res_height_max = (int)(res_height_max/scalingfactor);
-	ConsoleHandler.print("resolution (default screen new)   : " + res_width_max + " x " + res_height_max, MessageType.MENU);
+        
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        for (int i = 0; i < gs.length; i++) {
+            ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth() + " x " + gs[i].getDisplayMode().getHeight(), MessageType.MENU);
+            scalingWidth = gs[i].getDisplayMode().getWidth() / (double) gs[i].getDefaultConfiguration().getBounds().width;
+    	    ConsoleHandler.print("Scaling Factor Width:  " + scalingWidth, MessageType.MENU);
+    	    scalingHeight = gs[i].getDisplayMode().getHeight() / (double) gs[i].getDefaultConfiguration().getBounds().height;
+    	    ConsoleHandler.print("Scaling Factor Height: " + scalingHeight, MessageType.MENU);
+    	ConsoleHandler.print("*************************************************", MessageType.MENU);
+        }
+        res_width_max = MouseInfo.getPointerInfo().getDevice().getDisplayMode().getWidth();
+        res_height_max = MouseInfo.getPointerInfo().getDevice().getDisplayMode().getHeight();
+	res_width_max = (int)(res_width_max/scalingWidth);
+	res_height_max = (int)(res_height_max/scalingHeight);
+	ConsoleHandler.print("Using this Resolution: " + res_width_max + " x " + res_height_max , MessageType.MENU);
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
-
-	// getting resolution of the monitor with the mouse pointer
-	gd = MouseInfo.getPointerInfo().getDevice();
-	res_width_max = gd.getDisplayMode().getWidth();
-	res_height_max = gd.getDisplayMode().getHeight();
-	ConsoleHandler.print("resolution (screen with mouse)    : " + res_width_max + " x " + res_height_max, MessageType.MENU);
-	// next line gets the scaling factor set in the OS
-	scalingfactor = gd.getDisplayMode().getWidth() / (double) gd.getDefaultConfiguration().getBounds().width;
-	ConsoleHandler.print("scaling    (screen with mouse)    : " + scalingfactor, MessageType.MENU);
-	res_width_max = (int)(res_width_max/scalingfactor);
-	res_height_max = (int)(res_height_max/scalingfactor);
-	ConsoleHandler.print("resolution (screen with mouse new): " + res_width_max + " x " + res_height_max, MessageType.MENU);
-	ConsoleHandler.print("*************************************************", MessageType.MENU);
-
+	
     }
     
     /**
@@ -484,7 +491,6 @@ public class Settings {
     public static void initIni() {
 
 	getMonitorResoltion();
-	getDevice();
 
 	try {
 	    File save_ini = new File(INI);
