@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Dient zur Identifizierung jedes LoadedSound Objektes über den SoundHandler
+ * Dient zur Identifizierung jedes LoadedSound Objektes ï¿½ber den SoundHandler
  */
 package uni.bombenstimmung.de.backend.sounds;
 
@@ -14,11 +14,15 @@ public enum SoundType {
     	MENU,
     	OPTIONS,
     	
-    	FUSE,          //Zündschnur
+    	MAP1,
+    	MAP3,
+    	FUSE,          //Zï¿½ndschnur
     	EXPLOSION,
     	ITEM,
     	WALL,
     	DYING,
+    	COUNTDOWN,
+    	GO,
     	
 	TEST_START;
 	

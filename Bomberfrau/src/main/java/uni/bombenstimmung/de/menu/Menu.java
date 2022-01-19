@@ -122,14 +122,14 @@ public class Menu {
 	name_info.setForeground(Color.RED);
 	name_info.setFont(GraphicsHandler.usedFont(20));
 	name_info.setHorizontalAlignment(JLabel.CENTER);
-	name_info.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.37),
-		(int) (Settings.getRes_width() / 4.8), (int) (Settings.getRes_height() / 12));
+	name_info.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.37),
+		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
 
 	name_box = new JTextField(Settings.getUser_name());
 	name_box.setHorizontalAlignment(JTextField.CENTER);
 	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.setBounds((int) (Settings.getRes_width() * 0.50), (int) (Settings.getRes_height() * 0.44),
-		(int) (Settings.getRes_width() / 4.8), (int) (Settings.getRes_height() / 12));
+	name_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.44),
+		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
 	name_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };

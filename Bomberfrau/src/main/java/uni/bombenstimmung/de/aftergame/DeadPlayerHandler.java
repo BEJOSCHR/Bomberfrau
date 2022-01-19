@@ -8,7 +8,6 @@
  */
 package uni.bombenstimmung.de.aftergame;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,10 +16,7 @@ import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
-
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
-import uni.bombenstimmung.de.game.Player;
-import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
@@ -129,10 +125,18 @@ public class DeadPlayerHandler {
 		for(int i = 0; i < Ranking.size(); i++) {
 			String[] aftergame_Ranking = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score: " + Ranking.get(i).getScore(), Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName() + "    Score: " + Ranking.get(i).getScore()};
 			switch(i) {
-			case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); break;
-			case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).setLanguageContent(aftergame_Ranking); break;
-			case 2: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).setLanguageContent(aftergame_Ranking); break;
-			case 3: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).setLanguageContent(aftergame_Ranking); break;
+			case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).setLanguageContent(aftergame_Ranking); 
+				LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_Ranking); 
+			break;
+			case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).setLanguageContent(aftergame_Ranking);
+				LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_Ranking); 
+			break;
+			case 2: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).setLanguageContent(aftergame_Ranking);
+				LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_Ranking); 
+			break;
+			case 3: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).setLanguageContent(aftergame_Ranking);
+				LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_Ranking); 
+			break;
 			}
 		}
 

@@ -20,7 +20,6 @@ import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 public class ClientHandler extends IoHandlerAdapter implements Runnable{
 
 	private ConnectedClient client;
-	private boolean serverIsFull;
 	
 	/**
 	 * Erzeugt einen neuen ClientHandler.
@@ -44,19 +43,13 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	public void sessionOpened(IoSession session) throws Exception {
 		ConsoleHandler.print("Client connected with Server" + session.getRemoteAddress(), MessageType.BACKEND);
 		try {
-			session.write((String) "001-");						//Sende 001 zum Server um den Client der HashMap des Servers hinzuzufügen.
+			//session.write((String) "001-");			//Sende 001 zum Server um den Client der HashMap des Servers hinzuzufügen.
 			client.setSession(session);
 			Thread.sleep(50);
-			if (!serverIsFull) {
-			    session.write((String) "002-");					//Sende 002 um die Client ID vom Server zu erhalten.
-			    Thread.sleep(50);
-			    //client.sendMessage(client.getSession(), "000-Test Message");	//Template, um eine Nachricht mit einem ConnectedClient Objekt zu senden
-			    Thread.sleep(50);
-			    Thread pingThread = new Thread (this);
-			    pingThread.start();
-			} else {
-			    return;
-			}
+			//session.write((String) "002-");			//Sende 002 um die Client ID vom Server zu erhalten.
+			Thread.sleep(50);
+			Thread pingThread = new Thread (this);
+			pingThread.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,10 +78,9 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 		SocketAddress remoteAddress = session.getRemoteAddress();
 		if (Integer.parseInt(parts[0]) == 999) {
 		    client.sendMessage(session, "010-");
-		    serverIsFull = true;
 		}
 		else if (Integer.parseInt(parts[0]) != 903) {
-		    if (client.getId() != 0) {
+		    if (client.getId() != -1) {
 			ConsoleHandler.print("Client " + client.getId() + ": Message received from Server " + remoteAddress + ": " + message.toString(), MessageType.BACKEND);
 		    }
 		    else {

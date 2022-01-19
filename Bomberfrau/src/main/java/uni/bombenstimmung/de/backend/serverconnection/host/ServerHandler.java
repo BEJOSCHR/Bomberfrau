@@ -44,6 +44,11 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
 		ConsoleHandler.print("Server: session created with Client " + session.getRemoteAddress(), MessageType.BACKEND);
+		if (server.isIdStackEmpty() == true) {
+		    Thread.sleep(300);
+		    session.write("514-");
+		    ConsoleHandler.print("Server is full, disconnecting ...", MessageType.BACKEND);
+		}
 	}
 	
 	/**
