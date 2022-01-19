@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Carsten
  *
- * Das Haupt- und Optionsmenü des Spieles
+ * Das Haupt- und Optionsmenï¿½ des Spieles
  */
 
 package uni.bombenstimmung.de.menu;
@@ -56,14 +56,14 @@ public class Menu {
     // "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     /**
-     * Getter für Lobby
+     * Getter fï¿½r Lobby
      */
     public static boolean getIs_host() {
 	return isHost;
     }
 
     /**
-     * Erstellt Swingkomponenten für das Hauptmenü
+     * Erstellt Swingkomponenten fï¿½r das Hauptmenï¿½
      */
     public static void buildMenu() {
 
@@ -250,11 +250,11 @@ public class Menu {
     }
 
     /**
-     * Erstellt Swingkomponenten für das Optionsmenü
+     * Erstellt Swingkomponenten fï¿½r das Optionsmenï¿½
      */
     public static void buildOptions() {
 
-	// Der "factor" passt alle Grössen und Positionen der Auflösung an
+	// Der "factor" passt alle Grï¿½ssen und Positionen der Auflï¿½sung an
 	Settings.setResolution(Settings.getRes_nr());
 	Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
 
@@ -349,7 +349,7 @@ public class Menu {
 		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
 
-		// danach wird die 'Music Category' Lautstärke angepasst
+		// danach wird die 'Music Category' Lautstï¿½rke angepasst
 		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
@@ -384,7 +384,7 @@ public class Menu {
 		ConsoleHandler.print("mouseReleased", MessageType.MENU);
 		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
 		
-		// am Ende wird die 'Sound Category' Lautstärke angepasst
+		// am Ende wird die 'Sound Category' Lautstï¿½rke angepasst
 		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
@@ -408,7 +408,7 @@ public class Menu {
 		Settings.setVol_sound(sliderSound.getValue());
 		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
 
-		// währenddessen wird der laufende Sound angepasst
+		// wï¿½hrenddessen wird der laufende Sound angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		float vol = VolumeIntToFloat(sliderSound.getValue());
@@ -599,7 +599,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Hauptmenüs
+     * Setzt oder entfernt die Swing Komponenten des Hauptmenï¿½s
      */
     public static void menuComponentsActive(Boolean bool) {
 	if (bool) {
@@ -629,7 +629,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Optionsmenüs
+     * Setzt oder entfernt die Swing Komponenten des Optionsmenï¿½s
      */
     public static void optionsComponentsActive(Boolean bool) {
 	if (bool) {
@@ -661,11 +661,11 @@ public class Menu {
     }
 
     /*****************************************************************************************************************
-     * INIT MAA MENÜ
+     * INIT MAA MENï¿½
      *****************************************************************************************************************/
 
     /**
-     * MAA des Intros - Vollbild Klick zum Überspringen
+     * MAA des Intros - Vollbild Klick zum ï¿½berspringen
      */
     public static void initMaaIntro() {
 
@@ -673,7 +673,7 @@ public class Menu {
 		MouseActionAreaType.MAA_INTRO, "", 1, Color.WHITE, Color.WHITE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick",
+		// ConsoleHandler.print("Wechsel vom Intro zu Menï¿½ per Klick",
 		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		intro.remove();
@@ -688,8 +688,8 @@ public class Menu {
     }
 
     /**
-     * Knöpfe/MAAs des Hauptmenüs: - Start: Übergang in die Lobby nach Überprüfung
-     * von Namen und IP Adresse - Options: Übergang zu den Optionen - Exit: Beenden
+     * Knï¿½pfe/MAAs des Hauptmenï¿½s: - Start: ï¿½bergang in die Lobby nach ï¿½berprï¿½fung
+     * von Namen und IP Adresse - Options: ï¿½bergang zu den Optionen - Exit: Beenden
      * des Spieles
      */
     public static void initMaaMainmenu() {
@@ -772,7 +772,7 @@ public class Menu {
     }
 
     /**
-     * Knöpfe/MAAs des Optionsmenüs - Back: zurück ins Hauptmenü
+     * Knï¿½pfe/MAAs des Optionsmenï¿½s - Back: zurï¿½ck ins Hauptmenï¿½
      */
     public static void initMaaOptions() {
 
@@ -803,11 +803,11 @@ public class Menu {
      *****************************************************************************************************************/
 
     /**
-     * Rechnet linearen Werte zwischen min u. max (für Lautstärken) in Float um
+     * Rechnet linearen Werte zwischen min u. max (fï¿½r Lautstï¿½rken) in Float um
      */
     public static float VolumeIntToFloat(int i) {
 	float vol, min = -40F, max = -6F;
-	// Für Werte von -36F (fast aus) bis -6F (laut)
+	// Fï¿½r Werte von -36F (fast aus) bis -6F (laut)
 	vol = (float)(min + (max-min)*Math.log10(1+i*0.09));
 	if (vol == min) vol = -80F;
 	if (vol > 6F) vol = 6F;
@@ -815,7 +815,7 @@ public class Menu {
     }
     
     /**
-     * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
+     * ï¿½berprï¿½fung des eingegebenen Namens false, wenn leer oder "?"
      */
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
@@ -831,7 +831,7 @@ public class Menu {
     }
 
     /**
-     * Überprüfung des Musters der eingegebenen IP-Adresse false, wenn nicht
+     * ï¿½berprï¿½fung des Musters der eingegebenen IP-Adresse false, wenn nicht
      * folgendes Muster vorliegt: x.x.x.x mit x von 0 bis 255
      */
     private static boolean isValideIp(final String ip) {
@@ -839,7 +839,7 @@ public class Menu {
     }
 
     /**
-     * Überprüfung der eingegebenen IP-Adresse false, wenn leer oder ungültiges
+     * ï¿½berprï¿½fung der eingegebenen IP-Adresse false, wenn leer oder ungï¿½ltiges
      * Muster
      */
     private static Boolean checkIp(Boolean ausgabe) {
@@ -854,7 +854,7 @@ public class Menu {
     }
 
     /**
-     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in große um was weder
+     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in groï¿½e um was weder
      * Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
      */
     private static String codeToText(int i) {
