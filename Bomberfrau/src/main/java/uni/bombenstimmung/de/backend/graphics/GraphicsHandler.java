@@ -396,7 +396,7 @@ public class GraphicsHandler {
 			    break;
 			    
 			case 2:
-			    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+			    SoundHandler.playSound2(SoundType.MAP2, true);
 			    break;
 			    
 			case 3:

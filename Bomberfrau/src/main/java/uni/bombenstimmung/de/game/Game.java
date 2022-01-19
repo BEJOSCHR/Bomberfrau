@@ -300,14 +300,13 @@ public class Game {
     }
     
     public static void gameOver() {
-	// TODO: hier kommt alles rein, was bei einem Game Over passiert
 	switch (mapNumber) {
 	case 1:
 	    SoundHandler.stopSound(SoundType.MAP1);
 	    break;
 	    
 	case 2:
-	    
+	    SoundHandler.stopSound(SoundType.MAP2);
 	    break;
 	    
 	case 3:
