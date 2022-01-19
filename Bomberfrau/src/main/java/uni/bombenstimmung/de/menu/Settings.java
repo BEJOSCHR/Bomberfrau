@@ -273,9 +273,11 @@ public class Settings {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
         for (int i = 0; i < gs.length; i++) {
-            ConsoleHandler.print("screen " + i + " resolution: " + gs[i].getDisplayMode().getWidth()+" * "+gs[i].getDisplayMode().getHeight(), MessageType.MENU);
+            ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth()+" * "+gs[i].getDisplayMode().getHeight(), MessageType.MENU);
             scalingfactor = gs[i].getDisplayMode().getWidth() / (double) gs[i].getDefaultConfiguration().getBounds().width;
-    	    ConsoleHandler.print("scaling factor: " + scalingfactor, MessageType.MENU);
+    	    ConsoleHandler.print("Scaling Factor Width : " + scalingfactor, MessageType.MENU);
+            scalingfactor = gs[i].getDisplayMode().getHeight() / (double) gs[i].getDefaultConfiguration().getBounds().height;
+    	    ConsoleHandler.print("Scaling Factor Height: " + scalingfactor, MessageType.MENU);
     	    ConsoleHandler.print("#################################################", MessageType.MENU);
         }
     }
