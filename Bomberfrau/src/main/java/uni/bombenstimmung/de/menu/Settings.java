@@ -253,17 +253,32 @@ public class Settings {
     public static void checkOS() {
 	os = System.getProperty("os.name").toLowerCase();
 	if (os.contains("win")){
-	    ConsoleHandler.print("System = Windows (" + os + ")", MessageType.BACKEND);
+	    ConsoleHandler.print("System = Windows (" + os + ")", MessageType.MENU);
 	}
 	else if (os.contains("nix") || os.contains("aix") || os.contains("nux")){
-	    ConsoleHandler.print("System = Unix/Linux (" + os + ")", MessageType.BACKEND);
+	    ConsoleHandler.print("System = Unix/Linux (" + os + ")", MessageType.MENU);
 	}      
 	else if (os.contains("osx")){
-	    ConsoleHandler.print("System = Apple (" + os + ")", MessageType.BACKEND);
+	    ConsoleHandler.print("System = Apple (" + os + ")", MessageType.MENU);
 	}
     }
     
-    
+    private static void getDevice() {
+	double scalingfactor;
+        GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
+	ConsoleHandler.print("#################################################", MessageType.MENU);
+        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
+	ConsoleHandler.print("#################################################", MessageType.MENU);
+        
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        for (int i = 0; i < gs.length; i++) {
+            ConsoleHandler.print("screen " + i + " resolution: " + gs[i].getDisplayMode().getWidth()+" * "+gs[i].getDisplayMode().getHeight(), MessageType.MENU);
+            scalingfactor = gs[i].getDisplayMode().getWidth() / (double) gs[i].getDefaultConfiguration().getBounds().width;
+    	    ConsoleHandler.print("scaling factor: " + scalingfactor, MessageType.MENU);
+    	    ConsoleHandler.print("#################################################", MessageType.MENU);
+        }
+    }
 
     /**
      * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü werden
@@ -467,6 +482,7 @@ public class Settings {
     public static void initIni() {
 
 	getMonitorResoltion();
+	getDevice();
 
 	try {
 	    File save_ini = new File(INI);
