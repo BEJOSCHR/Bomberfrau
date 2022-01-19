@@ -244,9 +244,7 @@ public class Menu {
 	GraphicsHandler.getLabel().add(ip_box);
 	GraphicsHandler.getLabel().add(ip_info);
 	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.requestFocus();
 	name_box.repaint();
-	//GraphicsHandler.getLabel().getParent().requestFocus();
     }
 
     /**
