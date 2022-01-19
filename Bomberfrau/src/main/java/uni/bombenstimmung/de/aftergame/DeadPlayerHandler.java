@@ -55,7 +55,8 @@ public class DeadPlayerHandler {
 	    if (allPlayer.size() == id) {
 		allPlayer.add(id, new DeadPlayer(id, name , deathTime));
 		ConsoleHandler.print("new Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
-	    }else if(allPlayer.size() > id) {
+	    }
+	    else if(allPlayer.size() > id) {
 		allPlayer.get(id).setDeathPlayer(id, name, deathTime, allPlayer.get(id).getScore());
 		ConsoleHandler.print("updated Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 	    }
@@ -72,8 +73,11 @@ public class DeadPlayerHandler {
          * @param score		Punktzahl des Players
          */
 	public static void updateDeadPlayer(String id, String name, String deathTime, String score) {
-	    if (allPlayer.size() >= Integer.parseInt(id)) {
-		    allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score));
+	    if (allPlayer.size() == Integer.parseInt(id)) {
+		    allPlayer.add(Integer.parseInt(id), new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score)));
+	    }
+	    else if(allPlayer.size() > Integer.parseInt(id)) {
+		allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score));
 	    }
 	}
 
