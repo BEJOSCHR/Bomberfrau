@@ -188,8 +188,8 @@ public class Menu {
 	    ip_box.setVisible(false);
 	else
 	    ip_box.setVisible(true);
-	ip_box.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
+	ip_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.54),
+		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
 	ip_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
