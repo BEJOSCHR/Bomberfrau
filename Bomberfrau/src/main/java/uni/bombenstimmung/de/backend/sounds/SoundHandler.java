@@ -37,6 +37,8 @@ public class SoundHandler {
 		new LoadedSound("menu/menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIC, 0.2D);
 		new LoadedSound("menu/sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.2D);
 
+		new LoadedSound("ingame/MAP1.wav", SoundType.MAP1, SoundCategory.INGAME_MUSIC, 0.2D);
+		new LoadedSound("ingame/MAP3.wav", SoundType.MAP3, SoundCategory.INGAME_MUSIC, 0.2D);
 		new LoadedSound("ingame/fuse.wav", SoundType.FUSE, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/explosion.wav", SoundType.EXPLOSION, SoundCategory.INGAME_SOUNDS, 0.1D);
 		new LoadedSound("ingame/item.wav", SoundType.ITEM, SoundCategory.INGAME_SOUNDS, 0.2D);

@@ -14,6 +14,8 @@ public enum SoundType {
     	MENU,
     	OPTIONS,
     	
+    	MAP1,
+    	MAP3,
     	FUSE,          //Z�ndschnur
     	EXPLOSION,
     	ITEM,
