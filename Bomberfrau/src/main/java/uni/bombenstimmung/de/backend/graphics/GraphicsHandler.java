@@ -327,7 +327,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIngameFromLobby() {
 		
-		SoundHandler.reduceLastPlayedSound(SoundType.MENU);
+		SoundHandler.reducePlayingSound(SoundType.MENU);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
