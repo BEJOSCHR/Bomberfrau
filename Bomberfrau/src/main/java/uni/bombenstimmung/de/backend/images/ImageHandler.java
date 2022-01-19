@@ -93,7 +93,20 @@ public class ImageHandler {
 		new LoadedImage("Ingame/Characters/Priest_Walk_Side_Right_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Priest_Walk_North_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Priest_Walk_North_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-		//new LoadedImage("Ingame/Characters/Skeleton_Idle.png", ImageType.IMAGE_INGAME_SKELETON_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		//Character 2
+		new LoadedImage("Ingame/Characters/Skeleton_Idle.png", ImageType.IMAGE_INGAME_SKELETON_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_1.png", ImageType.IMAGE_INGAME_SKELETON_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_2.png", ImageType.IMAGE_INGAME_SKELETON_WALK_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Left_1.png", ImageType.IMAGE_INGAME_SKELETON_LEFT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Left_2.png", ImageType.IMAGE_INGAME_SKELETON_LEFT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Left_Idle.png", ImageType.IMAGE_INGAME_SKELETON_LEFT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_North_1.png", ImageType.IMAGE_INGAME_SKELETON_NORTH_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_North_2.png", ImageType.IMAGE_INGAME_SKELETON_NORTH_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_North_Idle.png", ImageType.IMAGE_INGAME_SKELETON_NORTH_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_1.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_2.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 	}
 	
