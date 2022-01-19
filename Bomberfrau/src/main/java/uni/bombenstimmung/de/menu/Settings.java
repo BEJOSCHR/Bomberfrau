@@ -485,7 +485,7 @@ public class Settings {
         res_height_max = gs[myScreenIndex].getDisplayMode().getHeight();
 	res_width_max = (int)(res_width_max/scalingWidth[myScreenIndex]);
 	res_height_max = (int)(res_height_max/scalingHeight[myScreenIndex]);
-	ConsoleHandler.print("Using this Resolution", MessageType.MENU);
+	ConsoleHandler.print("Using this Resolution:", MessageType.MENU);
 	ConsoleHandler.print("Monitor " + myScreenIndex + " with Scaling " + scalingWidth[myScreenIndex] + "/" + scalingHeight[myScreenIndex]
 		+ " : " + res_width_max + " x " + res_height_max , MessageType.MENU);
 	ConsoleHandler.print("***************************************************", MessageType.MENU);
