@@ -217,7 +217,71 @@ public class PlayerHandler {
 		break;
 		
 	    case 1:
-		
+		if (player.isDead() == false) {
+			if (player.getDirection() == 0) {
+			    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+			    if (remember_move[player.getId()] == 0)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else if (remember_move[player.getId()] == 1)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else if (remember_move[player.getId()] == 2)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else if (remember_move[player.getId()] == 3)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else if (remember_move[player.getId()] == 4)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			}
+			if (player.getDirection() == 1) {
+			    remember_move[player.getId()] = 1;
+			    if (change_ani)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    change_int++;
+			    if (change_int >= ANI_TIMER) {
+				change_int = 0;
+				change_ani = !change_ani;
+			    }
+			}
+			if (player.getDirection() == 2) {
+			    remember_move[player.getId()] = 2;
+			    if (change_ani)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    change_int++;
+			    if (change_int==ANI_TIMER) {
+				change_int = 0;
+				change_ani = !change_ani;
+			    }
+			}
+			if (player.getDirection() == 3) {
+			    remember_move[player.getId()] = 3;
+			    if (change_ani)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    change_int++;
+			    if (change_int==ANI_TIMER) {
+				change_int = 0;
+				change_ani = !change_ani;
+			    }
+			}
+			if (player.getDirection() == 4) {
+			    remember_move[player.getId()] = 4;
+			    if (change_ani)
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    else
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			    change_int++;
+			    if (change_int==ANI_TIMER) {
+				change_int = 0;
+				change_ani = !change_ani;
+			    }
+			}
+		    } else {
+			//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    }
 		break;
 		
 	    case 2:
