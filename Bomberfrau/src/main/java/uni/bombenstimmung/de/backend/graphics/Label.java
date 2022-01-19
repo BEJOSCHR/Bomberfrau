@@ -97,9 +97,9 @@ public class Label extends JLabel {
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.getRes_width()*0.05) ,
 		    		(int)(Settings.getRes_height()*0.05) , (int)(2100*Settings.getRes_width()/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.getRes_height()/2160 + AnimationData.title_Modifier), null);
 		    	
-		    	GraphicsHandler.drawRightText(g, Color.BLACK, 30, "Name:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.48));
+		    	GraphicsHandler.drawRightText(g, Color.BLACK, 30, "Name:", (int)(Settings.getRes_width()*0.48), (int)(Settings.getRes_height()*0.48));
 		    	if (!Settings.getCreate_selected())
-		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.58));
+		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.getRes_width()*0.48), (int)(Settings.getRes_height()*0.58));
 		    	break;
 		case OPTIONS:
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.getRes_width(), Settings.getRes_height(), null);

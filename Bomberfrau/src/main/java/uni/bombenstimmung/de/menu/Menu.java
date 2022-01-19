@@ -69,7 +69,7 @@ public class Menu {
 
 	create = new JRadioButton();
 	create.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT1).getContent());
-	create.setBounds((int) (Settings.getRes_width() * 0.32), (int) (Settings.getRes_height() * 0.485),
+	create.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.485),
 		(int) (Settings.getRes_width() / 10), (int) (Settings.getRes_height() / 20));
 	create.setBackground(Color.WHITE);
 	create.setFont(GraphicsHandler.usedFont(30));
@@ -92,7 +92,7 @@ public class Menu {
 
 	join = new JRadioButton();
 	join.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT2).getContent());
-	join.setBounds((int) (Settings.getRes_width() * 0.32), (int) (Settings.getRes_height() * 0.528),
+	join.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.528),
 		(int) (Settings.getRes_width() / 9), (int) (Settings.getRes_height() / 20));
 	join.setBackground(Color.WHITE);
 	join.setFont(GraphicsHandler.usedFont(30));
@@ -123,14 +123,13 @@ public class Menu {
 	name_info.setFont(GraphicsHandler.usedFont(20));
 	name_info.setHorizontalAlignment(JLabel.CENTER);
 	name_info.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.37),
-		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
+		(int) (Settings.getRes_width() / 4.8), (int) (Settings.getRes_height() / 12));
 
 	name_box = new JTextField(Settings.getUser_name());
 	name_box.setHorizontalAlignment(JTextField.CENTER);
-	name_box.setFont(
-		GraphicsHandler.usedFont(40).deriveFont(40f * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.44),
-		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
+	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+	name_box.setBounds((int) (Settings.getRes_width() * 0.50), (int) (Settings.getRes_height() * 0.44),
+		(int) (Settings.getRes_width() / 4.8), (int) (Settings.getRes_height() / 12));
 	name_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
@@ -157,8 +156,8 @@ public class Menu {
 		} else {
 		    name_info.setText("");
 		    Settings.setUser_name(txt);
-		    name_box.setFont(GraphicsHandler.usedFont(40)
-			    .deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
+		    //name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
+		    name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
 		}
 	    }
 	});
@@ -175,6 +174,8 @@ public class Menu {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
 		}
+		name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+		name_box.repaint();
 	    }
 	});
 
@@ -242,6 +243,10 @@ public class Menu {
 	GraphicsHandler.getLabel().add(name_info);
 	GraphicsHandler.getLabel().add(ip_box);
 	GraphicsHandler.getLabel().add(ip_info);
+	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+	name_box.requestFocus();
+	name_box.repaint();
+	//GraphicsHandler.getLabel().getParent().requestFocus();
     }
 
     /**
@@ -689,7 +694,7 @@ public class Menu {
      */
     public static void initMaaMainmenu() {
 
-	start = new MouseActionArea((int) (Settings.getRes_width() * 0.1), (int) (Settings.getRes_height() * 0.49),
+	start = new MouseActionArea((int) (Settings.getRes_width() * 0.08), (int) (Settings.getRes_height() * 0.49),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN1, "START", (int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
@@ -720,7 +725,7 @@ public class Menu {
 	    }
 	};
 
-	options = new MouseActionArea((int) (Settings.getRes_width() * 0.23), (int) (Settings.getRes_height() * 0.65),
+	options = new MouseActionArea((int) (Settings.getRes_width() * 0.22), (int) (Settings.getRes_height() * 0.65),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN2, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN2).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {

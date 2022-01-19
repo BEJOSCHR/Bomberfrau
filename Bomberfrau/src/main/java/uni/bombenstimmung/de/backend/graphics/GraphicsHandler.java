@@ -182,7 +182,7 @@ public class GraphicsHandler {
 		    public void run() {
 			MenuAnimations.titlePulseAni(); 
 		    }
-		} , 150);
+		} , 200);
 		
 	        Settings.setCreate_selected(true);
 		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
