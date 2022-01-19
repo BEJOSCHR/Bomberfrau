@@ -462,7 +462,7 @@ public class Settings {
 	int i;
 	GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
-        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
+        ConsoleHandler.print("Device with Mouse = " + myDevice + " / " + myDevice.getType(), MessageType.MENU);
 	ConsoleHandler.print("*************************************************", MessageType.MENU);
         
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
