@@ -255,9 +255,9 @@ public class GraphicsHandler {
 	    LobbyButtons.lobbyButtonsReset();
 	    
 	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		    lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
+		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
 	    }else {
-		    lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
+		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
 	    }
 
 	    displayType = DisplayType.LOBBY;
@@ -418,38 +418,34 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-//		if (PlayerHandler.getClientPlayer().getId() == 0) {
-//		    DeadPlayerHandler.setIshost(true);
-//		}
-		
-		//setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
+		//ubermittlung der daten des aktuellen Player
 		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
 		
 		
-		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
-			DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
-				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
-
-		}
-		
-		//DeadPlayerHandler.generateDummyDeadPlayer();
+//		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+//		    //addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
+//		    DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
+//			    PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
+//		}
 		
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}
 		
-		
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size()-1; i++) {
-			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+		    //Host uebermittelt aktuelle Punktzahl an die Clients
+		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
+			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
 		    }
-		}else {
+		}
+		else {
+		    //Clients sollen kurz warten, bis aktuelle Punktzahl vom Host uebermittelt wurde
 		    try {
 			Thread.sleep(1000);
-		    } catch (InterruptedException iex) {
+		    } catch (InterruptedException iex) {}
 		}
-}
+		
+		//Punktzahl und Plazierung berechnen
 		DeadPlayerHandler.calculateScore();
         		
 		displayType = DisplayType.AFTERGAME;

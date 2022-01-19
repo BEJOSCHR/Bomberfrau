@@ -107,6 +107,10 @@ public class ImageHandler {
 		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_2.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		
+		//AFTERGAME
+		new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, 200, 200);
+		new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.IMAGE_AFTERGAME_2, 200, 200);
+		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 	}
 	
