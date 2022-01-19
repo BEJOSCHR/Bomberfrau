@@ -180,12 +180,7 @@ public class LobbyCreate {
 	 * @param player	Integer, welcher Player im Array gemeint ist.
 	 */
 	public static void setDecrementSkin(int player) {
-		if (LobbyCreate.player[player].getSkin() == 0) {
-		    LobbyCreate.player[player].setSkin(2);
-		}
-		else {
-		    LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() - 1) %4);	
-		}
+	    	LobbyCreate.player[player].setSkin((LobbyCreate.player[player].getSkin() + 3) %4);
 		if (client.isHost()) {
 		    client.sendMessageToAllClients("509-" + client.getId() + "-" + LobbyCreate.player[player].getSkin());
 		}
