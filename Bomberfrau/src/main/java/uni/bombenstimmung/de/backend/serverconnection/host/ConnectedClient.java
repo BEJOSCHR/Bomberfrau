@@ -48,8 +48,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 	private int id = -1; 
 	private boolean host;
 	private long ping;
-	private IoSession conSession;
-	private IoConnector connector;
+	private IoSession conSession = null;
+	private IoConnector connector = null;
 	NioDatagramAcceptor acceptor;
 	
 	private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
@@ -83,7 +83,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 				ConsoleHandler.print("UDP Server started at "+hostGetPublicIP()+":"+ConnectionData.PORT, MessageType.BACKEND);
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		//Is the new created Client not the host, a new UDP Client will be initialized
@@ -91,6 +91,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			connector = new NioDatagramConnector();
 			connector.setHandler(new ClientHandler(this));
 			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+			connector.setConnectTimeoutMillis(20000);
 			ConnectFuture connFuture = connector.connect(new InetSocketAddress(IP, ConnectionData.PORT));
 			connFuture.awaitUninterruptibly();
 			connFuture.addListener(new IoFutureListener<ConnectFuture>() {
@@ -99,8 +100,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 				if (future.isConnected()) {
 				    conSession = future.getSession();
 				    try {
-					sendMessage(conSession);
-				    } catch (InterruptedException e) {
+					//ConsoleHandler.print("Test", MessageType.BACKEND);
+					//sendMessage(conSession);
+					conSession.write("001-");
+				    } catch (Exception e) {
 					e.printStackTrace();
 				    }
 				} else {
@@ -110,26 +113,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			});
 		}
 	}
-			/*
-			connFuture.addListener(new IoFutureListener() {
-				public void operationComplete(IoFuture future) {
-					ConnectFuture connFuture = (ConnectFuture) future;
-					if (connFuture.isConnected()) {
-						conSession = future.getSession();
-						try {
-							sendMessage(conSession);
-							ConsoleHandler.print("UDP Client successfully created and connected to the server", MessageType.BACKEND);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					} else {
-							ConsoleHandler.print("Client is not connected to the server....exiting", MessageType.BACKEND);
-						}
-					}
-				}); 
-		}
-	} */
-	
+
 	/**
 	 * Debug Methode, die vor finaler Version gelöscht werden soll!
 	 * @param session
@@ -163,6 +147,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Format: "001-"
 		case 001:
 		    	addClientToList(session);
+		    	session.write("901-");
 		    	break;
 		//002 = Wird vom Client gesendet, um eine ID zu erhalten.
 		case 002:
@@ -488,11 +473,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 			int clientID  = Integer.parseInt(pMessage900[1]);
 			this.id = clientID;
 			ConsoleHandler.print("Client: Set ID = " + this.id, MessageType.BACKEND);
+			//GraphicsHandler.switchToLobbyFromMenu();
 			break;
+			
+		case 901:
+		    	String[] pMessage901 = message.split("-");
+		    	session.write("002-");
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
-
-		    
 		case 903:
 			String[] pMessage903 = message.split("-");
         	    	long currentTime = System.currentTimeMillis();
@@ -563,6 +551,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    }
 		}
 	} 
+	
+	public boolean isIdStackEmpty() {
+	    if (idStack.isEmpty()) {
+		return true; 
+	    } else {
+		return false;
+	    }
+	}
 		
 	/**
 	 * Ausgabe aller Verbundenen Clients.
