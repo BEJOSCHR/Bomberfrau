@@ -99,49 +99,47 @@ public class Player extends Entity implements ActionListener{
     /* Zustaendig fuer das kontinuierliche Aktualisieren der Player-Position inklusive Kollisionsabfrage. */
     
     public void actionPerformed(ActionEvent e) {
-	if (this == PlayerHandler.getClientPlayer()) {
-	    boolean block = false;
-	    Field tempField;
-	    /* 
-	     * tempField stellt die Hitbox dar. Es wird das vorliegende Field in Bewegungsrichtung bestimmt
-	     * und fuer die Abfrage, ob das Field betretbar ist, weiterverwendet.
-	     */
-	    switch (this.direction) {
-	    case 0:		// ohne Bewegung
-		playWallSound = true;
-		tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
-		break;
-	    case 1:		// hoch
-		block = this.isPlayerHittingCorner();
-		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition - this.yHitbox) + 0.5 ) );
-		break;
-	    case 2:		// runter
-		block = this.isPlayerHittingCorner();
-		tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition + this.yHitbox) + 0.5 ) );
-		break;
-	    case 3:		// links
-		block = this.isPlayerHittingCorner();
-		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition - this.xHitbox) + 0.5 ), super.yPosition);
-		break;
-	    case 4:		// rechts
-		block = this.isPlayerHittingCorner();
-		tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition + this.xHitbox) + 0.5 ), super.yPosition);
-		break;
-	    default:
-		tempField = null;
-		ConsoleHandler.print("Invalid Direction ID!", MessageType.GAME);
-	    }
-	    if (block == false && (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
-			&& tempField.getContent() != FieldContent.BORDER &&
-			( tempField.getContent() != FieldContent.BOMB ||
-			( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ))) {
-		this.realPosX += this.velX;
-		this.realPosY += this.velY;
-	    } else {
-		// Abfrage, damit Tod in RoD nicht Dauerton ergibt
-		if (playWallSound && !this.dead && !Game.getGameOver() && this == PlayerHandler.getClientPlayer()) SoundHandler.playSound2(SoundType.WALL, false);
-		playWallSound = false;
-	    }
+	boolean block = false;
+	Field tempField;
+	/* 
+	 * tempField stellt die Hitbox dar. Es wird das vorliegende Field in Bewegungsrichtung bestimmt
+	 * und fuer die Abfrage, ob das Field betretbar ist, weiterverwendet.
+	 */
+	switch (this.direction) {
+	case 0:		// ohne Bewegung
+	    playWallSound = true;
+	    tempField = Game.getFieldFromCoord(super.xPosition, super.yPosition);
+	    break;
+	case 1:		// hoch
+	    block = this.isPlayerHittingCorner();
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition - this.yHitbox) + 0.5 ) );
+	    break;
+	case 2:		// runter
+	    block = this.isPlayerHittingCorner();
+	    tempField = Game.getFieldFromCoord(super.xPosition, (int)( ( (double)super.yPosition + this.yHitbox) + 0.5 ) );
+	    break;
+	case 3:		// links
+	    block = this.isPlayerHittingCorner();
+	    tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition - this.xHitbox) + 0.5 ), super.yPosition);
+	    break;
+	case 4:		// rechts
+	    block = this.isPlayerHittingCorner();
+	    tempField = Game.getFieldFromCoord((int)( ( (double)super.xPosition + this.xHitbox) + 0.5 ), super.yPosition);
+	    break;
+	default:
+	    tempField = null;
+	    ConsoleHandler.print("Invalid Direction ID!", MessageType.GAME);
+	}
+	if (block == false && (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
+		&& tempField.getContent() != FieldContent.BORDER &&
+		( tempField.getContent() != FieldContent.BOMB ||
+		( tempField.getContent() == FieldContent.BOMB && this.currentField.getContent() == FieldContent.BOMB ) ))) {
+	    this.realPosX += this.velX;
+	    this.realPosY += this.velY;
+	} else {
+	    // Abfrage, damit Tod in RoD nicht Dauerton ergibt
+	    if (playWallSound && !this.dead && !Game.getGameOver() && this == PlayerHandler.getClientPlayer()) SoundHandler.playSound2(SoundType.WALL, false);
+	    playWallSound = false;
 	}
 	
 	super.xPosition = (int)(this.realPosX + 0.5);
@@ -149,20 +147,19 @@ public class Player extends Entity implements ActionListener{
 	this.currentField = Game.getFieldFromCoord(xPosition, yPosition);
 	
 	// ConnectedClient-Nachricht fuer Aktualisierung der Player-Position bei Bewegung
-	if (this.direction != 0 && this == PlayerHandler.getClientPlayer()) {
+	if (this.direction != 0) {
 	    if (this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition + "-" + super.yPosition + "-" + GraphicsHandler.getHeight());
 	    }
 	}
 	
 	/* Abfrage, ob sich Player in Explosion befindet. Falls ja, dann tot. */
-	if (this == PlayerHandler.getClientPlayer() &&
-	    (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
+	if (this.currentField.getContent() == FieldContent.EXPLOSION1 || this.currentField.getContent() == FieldContent.EXPLOSION2 ||
 	    this.currentField.getContent() == FieldContent.EXPLOSION2_NS || this.currentField.getContent() == FieldContent.EXPLOSION3_N ||
 	    this.currentField.getContent() == FieldContent.EXPLOSION3_S || this.currentField.getContent() == FieldContent.EXPLOSION3_W ||
-	    this.currentField.getContent() == FieldContent.EXPLOSION3_O)) {
+	    this.currentField.getContent() == FieldContent.EXPLOSION3_O) {
 	    this.setDead(true);
 	}
 	/* Abfrage, ob Player ueber Upgrade laeuft. Falls ja, aufsammeln und passende Upgrade-Methode ausfuehren.*/
@@ -236,10 +233,9 @@ public class Player extends Entity implements ActionListener{
      * @param xPos	neue X Bildschirmkoordinate
      * @param yPos	neue Y Bildschirmkoordinate
      */
-    public void setDisplayCoordinates(int xPos, int yPos, int dir) {
+    public void setDisplayCoordinates(int xPos, int yPos) {
 	this.realPosX = xPos;
 	this.realPosY = yPos;
-	this.direction = dir;
     }
     
     public void setBombRadius(int bR) {
@@ -278,7 +274,7 @@ public class Player extends Entity implements ActionListener{
 	return currentButtonConfig;
     }
     
-    public boolean isDead() {
+    public boolean getDead() {
 	return dead;
     }
     
@@ -352,15 +348,6 @@ public class Player extends Entity implements ActionListener{
 	this.direction = 0;
 	this.velX = 0;
 	this.velY = 0;
-	if (this == PlayerHandler.getClientPlayer()) {
-	    if (this.connectedClient.isHost()) {
-		this.connectedClient.sendMessageToAllClients("202-" + this.id + "-" + super.xPosition 
-			+ "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
-	    } else {
-		this.connectedClient.sendMessage(this.connectedClient.getSession(), "203-" + this.id + "-" + super.xPosition 
-			+ "-" + super.yPosition + "-" + GraphicsHandler.getHeight() + "-" + this.direction);
-	    }
-	}
     }
     
     /* ========= Ende des Blocks fuer Bewegungsmethoden. =========== */
@@ -374,7 +361,7 @@ public class Player extends Entity implements ActionListener{
 	Field temp = Game.getFieldFromCoord(xPosition, yPosition);
 	if (placedBombs < maxBombs && temp.getContent() == FieldContent.EMPTY) {
 	    Game.changeFieldContent(FieldContent.BOMB, temp.xPosition, temp.yPosition);
-	    Game.addBomb(this.bombRadius, 30, this.id);
+	    Game.addBomb(this.bombRadius, 3, this.id);
 	    placedBombs++;
 	    ConsoleHandler.print("Player ID: " + this.id + " placed Bomb at Pos(" + temp.xPosition + ", "
 		    			+ temp.yPosition + ")", MessageType.GAME);

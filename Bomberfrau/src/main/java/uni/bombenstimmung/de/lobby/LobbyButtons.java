@@ -12,6 +12,8 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -25,6 +27,7 @@ import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
 import uni.bombenstimmung.de.menu.Menu;
+import uni.bombenstimmung.de.menu.MenuAnimations;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class LobbyButtons extends MouseActionAreaHandler{

@@ -11,7 +11,18 @@
  
 package uni.bombenstimmung.de.aftergame;
 
+import java.awt.Point;
+
+import javax.swing.Timer;
+
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.game.Game;
+import uni.bombenstimmung.de.game.GameData;
+import uni.bombenstimmung.de.game.PlayerButtonConfig;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class DeadPlayer {
 	private int id;
@@ -21,103 +32,93 @@ public class DeadPlayer {
 	private boolean host;
 	private int skin;
 	
+	public ConnectedClient connectedClient;
+	
 	private int deathTime;
 	private int score = 0;
 	private int ranking = 0;
-	
-	private ConnectedClient connectedClient;
+	//private int preferredMapID = 0;
 	
 	
 	//Konstruktor
 	public DeadPlayer(int id, String name, int deathTime) {
-	    this.id = id;
-	    this.name = name;
-	    this.deathTime = deathTime;
+		this.id = id;
+		this.name = name;
+		this.deathTime = deathTime;
 	}
 	
-	//alter Konstruktor
 	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin) {
-	    this.id = id;
-	    this.name = name;
-	    this.ipAdress = ipAdress;
-	    this.host = host;
-	    this.skin = skin;		
+		this.id = id;
+		this.name = name;
+		this.ipAdress = ipAdress;
+		this.host = host;
+		this.skin = skin;		
 	    }
-	
-	//Konstruktor
-	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
-	    this.id = id;
-	    this.name = name;
-	    this.ipAdress = ipAdress;
-	    this.host = host;
-	    this.skin = skin;
-	    this.connectedClient = cC;
-	}
-	
-	public DeadPlayer(int id, String name, int deathTime, int score) {
-	    this.id = id;
-	    this.name = name;
-	    this.deathTime = deathTime;
-	    this.score = score;
-	}
-
-	public void setDeathPlayer(int id, String name, int deathTime, int score) {
-	    this.id = id;
-	    this.name = name;
-	    this.deathTime = deathTime;
-	    this.score = score;
-	    this.ranking = 0;
-	}
-	
-	public int getId() {
-	    return id;
-	}
-	
-	public String getName() {
-	    return name;
-	}
-	
-	public void setName(String name) {
-	    this.name = name;
-	}
-	
-	public String getIp() {
-	    return ipAdress;
-	}
-	
 	public boolean isHost() {
 	    return host;
 	}
-	
-	public int getSkin() {
-	    return skin;
+
+	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
+		this.id = id;
+		this.name = name;
+		this.ipAdress = ipAdress;
+		this.host = host;
+		this.skin = skin;
+		this.connectedClient = cC;
 	}
+	
+	public void setDeathPlayer(int id, String name, int deathTime, int score) {
+		this.id = id;
+		this.name = name;
+		this.deathTime = deathTime;
+		this.score = score;
+		this.ranking = 0;
+		//this.preferredMapID = 0;
+	}
+	
 
 	public int getDeathTime() {
-	    return deathTime;
+		return deathTime;
 	}
 	
 	public int getScore() {
-	    return score;
+		return score;
 	}
 	
 	public void setScore(int score) {
-	    this.score = score;
+	    	this.score = score;
 	}
+
 
 	public void addScore(int score) {
-	    this.score += score;
+		this.score += score;
 	}
+
 
 	public int getRanking() {
-	    return ranking;
+		return ranking;
 	}
+
 
 	public void setRanking(int ranking) {
-	    this.ranking = ranking;
+		this.ranking = ranking;
 	}
 
-	public ConnectedClient getCC() {
-	    return connectedClient;
+
+	public String getName() {
+		return name;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public String getIp() {
+		return ipAdress;
+	}
+	
 }

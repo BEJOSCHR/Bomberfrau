@@ -8,22 +8,21 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayer;
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
-import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -31,6 +30,7 @@ import uni.bombenstimmung.de.backend.graphics.subhandler.KeyHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.MouseHandler;
 import uni.bombenstimmung.de.backend.graphics.subhandler.WindowHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.Game;
@@ -182,7 +182,7 @@ public class GraphicsHandler {
 		    public void run() {
 			MenuAnimations.titlePulseAni(); 
 		    }
-		} , 200);
+		} , 150);
 		
 	        Settings.setCreate_selected(true);
 		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
@@ -193,7 +193,7 @@ public class GraphicsHandler {
 		Menu.optionsComponentsActive(false);
 		//Menu.menuComponentsActive(true);
 		
-	    	SoundHandler.playSound2(SoundType.MENU, true);
+	    	SoundHandler.playSound2(SoundType.MENU, false);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 		
 		displayType = DisplayType.MENU;
@@ -251,12 +251,12 @@ public class GraphicsHandler {
 		
 	    AnimationHandler.stopAllAnimations();
 	    
-	    SoundHandler.playSound2(SoundType.MENU, true);
 	    LobbyButtons.lobbyButtonsReset();
 	    
 	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
 		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
-	    }else {
+	    }
+	    else {
 		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
 	    }
 
@@ -302,7 +302,8 @@ public class GraphicsHandler {
 	 */
 	public static void switchToLobbyFromMenu() {
 		
-	    	LobbyButtons.lobbyButtonsReset();
+	    	//SoundHandler.reduceAllSounds();
+		LobbyButtons.lobbyButtonsReset();
 		Menu.menuComponentsActive(false);
 		AnimationHandler.stopAllAnimations();
 		
@@ -326,7 +327,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIngameFromLobby() {
 		
-		SoundHandler.reducePlayingSound(SoundType.MENU);
+		SoundHandler.reduceLastPlayedSound(SoundType.MENU);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
@@ -366,47 +367,13 @@ public class GraphicsHandler {
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
 	    	ConsoleHandler.print("Player Count: " + PlayerHandler.getAllPlayer().size(), MessageType.GAME);
 	    	GameCounter zaehler = new GameCounter();
-	    	
+	    	zaehler.startCounter();
 	    	
 	    	frame.requestFocus();
 	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
-		new Animation(100, 4) {
-		    @Override
-		    public void initValues() {
-			Game.setCountdown(1);
-			SoundHandler.playSound2(SoundType.COUNTDOWN, false);
-		    }
-		    
-		    @Override
-		    public void changeValues() {
-			Game.setCountdown(Game.getCountdown() + 1);
-		    }
-		    
-		    @Override
-		    public void finaliseValues() {
-			Game.setCountdown(0);
-			zaehler.startCounter();
-			PlayerHandler.setMovable(true);
-			switch (Game.getMapNumber()) {
-			case 1:
-			    SoundHandler.playSound2(SoundType.MAP1, true);
-			    break;
-			    
-			case 2:
-			    SoundHandler.playSound2(SoundType.MAP2, true);
-			    break;
-			    
-			case 3:
-			    SoundHandler.playSound2(SoundType.MAP3, true);
-			    break;
-			    
-			default:
-			    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
-			}
-		    }
-		};
+		
 	}
 	
 	/**
@@ -417,34 +384,37 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-		//ubermittlung der daten des aktuellen Player
+//		if (PlayerHandler.getClientPlayer().getId() == 0) {
+//		    DeadPlayerHandler.setIshost(true);
+//		}
+		
+		//setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC)
 		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
 		
 		
-//		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-//		    //addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
-//		    DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
-//			    PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
-//		}
+		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+			//addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
+			DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
+				PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
+
+		}
+		
+		//DeadPlayerHandler.generateDummyDeadPlayer();
 		
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}
 		
-		if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		    //Host uebermittelt aktuelle Punktzahl an die Clients
-		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
-			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+		
+		if (LobbyCreate.client.isHost()) {
+		    for(int i=1; i < PlayerHandler.getPlayerAmount(); i++) {
+			LobbyCreate.client.sendMessageToAllClients("601-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getId()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-"+ DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() +"-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
 		    }
 		}
-		else {
-		    //Clients sollen kurz warten, bis aktuelle Punktzahl vom Host uebermittelt wurde
-		    try {
-			Thread.sleep(1000);
-		    } catch (InterruptedException iex) {}
-		}
 		
-		//Punktzahl und Plazierung berechnen
+		try {
+		    Thread.sleep(1000);
+		} catch (InterruptedException iex) {}
 		DeadPlayerHandler.calculateScore();
         		
 		displayType = DisplayType.AFTERGAME;

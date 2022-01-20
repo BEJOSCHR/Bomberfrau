@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Carsten
  *
- * Das Haupt- und Optionsmenï¿½ des Spieles
+ * Das Haupt- und Optionsmenü des Spieles
  */
 
 package uni.bombenstimmung.de.menu;
@@ -35,7 +35,6 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Menu {
 
-    public static final int MIN_NAME_LENGTH = 1;
     public static final int MAX_NAME_LENGTH = 30;
 
     private static JRadioButton create, join;
@@ -56,20 +55,20 @@ public class Menu {
     // "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     /**
-     * Getter fï¿½r Lobby
+     * Getter für Lobby
      */
     public static boolean getIs_host() {
 	return isHost;
     }
 
     /**
-     * Erstellt Swingkomponenten fï¿½r das Hauptmenï¿½
+     * Erstellt Swingkomponenten für das Hauptmenü
      */
     public static void buildMenu() {
 
 	create = new JRadioButton();
 	create.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT1).getContent());
-	create.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.485),
+	create.setBounds((int) (Settings.getRes_width() * 0.32), (int) (Settings.getRes_height() * 0.485),
 		(int) (Settings.getRes_width() / 10), (int) (Settings.getRes_height() / 20));
 	create.setBackground(Color.WHITE);
 	create.setFont(GraphicsHandler.usedFont(30));
@@ -92,7 +91,7 @@ public class Menu {
 
 	join = new JRadioButton();
 	join.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT2).getContent());
-	join.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.528),
+	join.setBounds((int) (Settings.getRes_width() * 0.32), (int) (Settings.getRes_height() * 0.528),
 		(int) (Settings.getRes_width() / 9), (int) (Settings.getRes_height() / 20));
 	join.setBackground(Color.WHITE);
 	join.setFont(GraphicsHandler.usedFont(30));
@@ -122,14 +121,15 @@ public class Menu {
 	name_info.setForeground(Color.RED);
 	name_info.setFont(GraphicsHandler.usedFont(20));
 	name_info.setHorizontalAlignment(JLabel.CENTER);
-	name_info.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.37),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	name_info.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.37),
+		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
 
 	name_box = new JTextField(Settings.getUser_name());
 	name_box.setHorizontalAlignment(JTextField.CENTER);
-	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.44),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	name_box.setFont(
+		GraphicsHandler.usedFont(40).deriveFont(40f * (1f - 0.022f * (name_box.getText().length() - 8))));
+	name_box.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.44),
+		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
 	name_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
@@ -143,21 +143,15 @@ public class Menu {
 		    name_info.setText("");
 		    name_info.repaint();
 		}
-		if ((txt.length() < MIN_NAME_LENGTH) && (txt != "?")) {
-		    // name_box.setText(txt.substring(0, MIN_NAME_LENGTH));
-		    // name_box.setText(Settings.getUser_name());
-		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
-		    name_info.repaint();
-		} else if (txt.length() > MAX_NAME_LENGTH) {
+		if (txt.length() > MAX_NAME_LENGTH) {
 		    // name_box.setText(txt.substring(0, MAX_NAME_LENGTH));
 		    name_box.setText(Settings.getUser_name());
-		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
+		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
 		} else {
-		    name_info.setText("");
 		    Settings.setUser_name(txt);
-		    //name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
-		    name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
+		    name_box.setFont(GraphicsHandler.usedFont(40)
+			    .deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
 		}
 	    }
 	});
@@ -169,13 +163,8 @@ public class Menu {
 
 	    @Override
 	    public void focusGained(FocusEvent e) {
-		if (name_box.getText().equals("?")) {
+		if (name_box.getText().equals("?"))
 		    name_box.setText("");
-		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
-		    name_info.repaint();
-		}
-		name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-		name_box.repaint();
 	    }
 	});
 
@@ -188,8 +177,8 @@ public class Menu {
 	    ip_box.setVisible(false);
 	else
 	    ip_box.setVisible(true);
-	ip_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	ip_box.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.54),
+		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
 	ip_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
@@ -205,7 +194,7 @@ public class Menu {
 		}
 		Settings.setIp(txt);
 		if (!checkIp(false)) {
-		    ip_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO3).getContent());
+		    ip_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
 		    ip_info.repaint();
 		}
 
@@ -243,16 +232,14 @@ public class Menu {
 	GraphicsHandler.getLabel().add(name_info);
 	GraphicsHandler.getLabel().add(ip_box);
 	GraphicsHandler.getLabel().add(ip_info);
-	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.repaint();
     }
 
     /**
-     * Erstellt Swingkomponenten fï¿½r das Optionsmenï¿½
+     * Erstellt Swingkomponenten für das Optionsmenü
      */
     public static void buildOptions() {
 
-	// Der "factor" passt alle Grï¿½ssen und Positionen der Auflï¿½sung an
+	// Der "factor" passt alle Grössen und Positionen der Auflösung an
 	Settings.setResolution(Settings.getRes_nr());
 	Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
 
@@ -347,7 +334,7 @@ public class Menu {
 		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
 
-		// danach wird die 'Music Category' Lautstï¿½rke angepasst
+		// danach wird die 'Music Category' Lautstärke angepasst
 		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
@@ -382,7 +369,7 @@ public class Menu {
 		ConsoleHandler.print("mouseReleased", MessageType.MENU);
 		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
 		
-		// am Ende wird die 'Sound Category' Lautstï¿½rke angepasst
+		// am Ende wird die 'Sound Category' Lautstärke angepasst
 		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 
@@ -406,7 +393,7 @@ public class Menu {
 		Settings.setVol_sound(sliderSound.getValue());
 		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
 
-		// wï¿½hrenddessen wird der laufende Sound angepasst
+		// währenddessen wird der laufende Sound angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		float vol = VolumeIntToFloat(sliderSound.getValue());
@@ -597,7 +584,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Hauptmenï¿½s
+     * Setzt oder entfernt die Swing Komponenten des Hauptmenüs
      */
     public static void menuComponentsActive(Boolean bool) {
 	if (bool) {
@@ -627,7 +614,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Optionsmenï¿½s
+     * Setzt oder entfernt die Swing Komponenten des Optionsmenüs
      */
     public static void optionsComponentsActive(Boolean bool) {
 	if (bool) {
@@ -659,11 +646,11 @@ public class Menu {
     }
 
     /*****************************************************************************************************************
-     * INIT MAA MENï¿½
+     * INIT MAA MENÜ
      *****************************************************************************************************************/
 
     /**
-     * MAA des Intros - Vollbild Klick zum ï¿½berspringen
+     * MAA des Intros - Vollbild Klick zum Überspringen
      */
     public static void initMaaIntro() {
 
@@ -671,7 +658,7 @@ public class Menu {
 		MouseActionAreaType.MAA_INTRO, "", 1, Color.WHITE, Color.WHITE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		// ConsoleHandler.print("Wechsel vom Intro zu Menï¿½ per Klick",
+		// ConsoleHandler.print("Wechsel vom Intro zu Menü per Klick",
 		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		intro.remove();
@@ -686,13 +673,13 @@ public class Menu {
     }
 
     /**
-     * Knï¿½pfe/MAAs des Hauptmenï¿½s: - Start: ï¿½bergang in die Lobby nach ï¿½berprï¿½fung
-     * von Namen und IP Adresse - Options: ï¿½bergang zu den Optionen - Exit: Beenden
+     * Knöpfe/MAAs des Hauptmenüs: - Start: Übergang in die Lobby nach Überprüfung
+     * von Namen und IP Adresse - Options: Übergang zu den Optionen - Exit: Beenden
      * des Spieles
      */
     public static void initMaaMainmenu() {
 
-	start = new MouseActionArea((int) (Settings.getRes_width() * 0.08), (int) (Settings.getRes_height() * 0.49),
+	start = new MouseActionArea((int) (Settings.getRes_width() * 0.1), (int) (Settings.getRes_height() * 0.49),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN1, "START", (int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
@@ -723,7 +710,7 @@ public class Menu {
 	    }
 	};
 
-	options = new MouseActionArea((int) (Settings.getRes_width() * 0.22), (int) (Settings.getRes_height() * 0.65),
+	options = new MouseActionArea((int) (Settings.getRes_width() * 0.23), (int) (Settings.getRes_height() * 0.65),
 		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN2, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN2).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
@@ -770,7 +757,7 @@ public class Menu {
     }
 
     /**
-     * Knï¿½pfe/MAAs des Optionsmenï¿½s - Back: zurï¿½ck ins Hauptmenï¿½
+     * Knöpfe/MAAs des Optionsmenüs - Back: zurück ins Hauptmenü
      */
     public static void initMaaOptions() {
 
@@ -801,11 +788,11 @@ public class Menu {
      *****************************************************************************************************************/
 
     /**
-     * Rechnet linearen Werte zwischen min u. max (fï¿½r Lautstï¿½rken) in Float um
+     * Rechnet linearen Werte zwischen min u. max (für Lautstärken) in Float um
      */
     public static float VolumeIntToFloat(int i) {
 	float vol, min = -40F, max = -6F;
-	// Fï¿½r Werte von -36F (fast aus) bis -6F (laut)
+	// Für Werte von -36F (fast aus) bis -6F (laut)
 	vol = (float)(min + (max-min)*Math.log10(1+i*0.09));
 	if (vol == min) vol = -80F;
 	if (vol > 6F) vol = 6F;
@@ -813,15 +800,15 @@ public class Menu {
     }
     
     /**
-     * ï¿½berprï¿½fung des eingegebenen Namens false, wenn leer oder "?"
+     * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
      */
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
-	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?")) || (name_box.getText().length() < MIN_NAME_LENGTH)) {
+	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-	    //name_box.setText("");
+	    name_box.setText("");
 	    name_box.requestFocus();
 	    check = false;
 	}
@@ -829,7 +816,7 @@ public class Menu {
     }
 
     /**
-     * ï¿½berprï¿½fung des Musters der eingegebenen IP-Adresse false, wenn nicht
+     * Überprüfung des Musters der eingegebenen IP-Adresse false, wenn nicht
      * folgendes Muster vorliegt: x.x.x.x mit x von 0 bis 255
      */
     private static boolean isValideIp(final String ip) {
@@ -837,7 +824,7 @@ public class Menu {
     }
 
     /**
-     * ï¿½berprï¿½fung der eingegebenen IP-Adresse false, wenn leer oder ungï¿½ltiges
+     * Überprüfung der eingegebenen IP-Adresse false, wenn leer oder ungültiges
      * Muster
      */
     private static Boolean checkIp(Boolean ausgabe) {
@@ -852,7 +839,7 @@ public class Menu {
     }
 
     /**
-     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in groï¿½e um was weder
+     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in große um was weder
      * Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
      */
     private static String codeToText(int i) {
