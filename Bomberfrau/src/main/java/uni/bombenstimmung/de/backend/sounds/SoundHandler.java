@@ -150,7 +150,7 @@ public class SoundHandler {
                         while (vol>-60) {
                             vol-=1.5f; 
                             volume.setValue(vol);
-                            Thread.sleep(100);
+                            Thread.sleep(150);
                         }
                         Thread.sleep(500);
                         clip.stop();
