@@ -76,8 +76,10 @@ public class LanguageHandler {
 		String[] bad_res = {"resolution to high - switching to fullscreen.", "Die Aufl�sung ist zu gross - Wechsel zu Vollbild."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_RESOLUTION, bad_res);
 		
-		String[] ready = {"READY?", "BEREIT?"};
+		String[] ready = {"READY", "BEREIT"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
+		String[] lobby_ip = {"IP address: ", "IP-Adresse: "};
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_IP, lobby_ip);
 		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);

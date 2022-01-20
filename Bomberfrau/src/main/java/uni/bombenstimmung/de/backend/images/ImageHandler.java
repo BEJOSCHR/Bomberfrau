@@ -41,9 +41,9 @@ public class ImageHandler {
 		new LoadedImage("Lobby/MapSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
 		
 		new LoadedImage("Lobby/SkinSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_4.jpg", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_4);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
+		new LoadedImage("Lobby/SkinSelection_Platzhalter_4.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_4);
 		//https://toppng.com/photo/99910/green-check-mark
 		new LoadedImage("Lobby/checkmark.png", ImageType.IMAGE_LOBBY_CHECKMARK);
 		
