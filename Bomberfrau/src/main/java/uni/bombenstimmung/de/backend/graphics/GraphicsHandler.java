@@ -302,8 +302,7 @@ public class GraphicsHandler {
 	 */
 	public static void switchToLobbyFromMenu() {
 		
-	    	//SoundHandler.reduceAllSounds();
-		LobbyButtons.lobbyButtonsReset();
+	    	LobbyButtons.lobbyButtonsReset();
 		Menu.menuComponentsActive(false);
 		AnimationHandler.stopAllAnimations();
 		

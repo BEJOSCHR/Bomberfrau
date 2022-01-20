@@ -16,6 +16,8 @@ import javax.sound.sampled.FloatControl;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -146,23 +148,23 @@ public class SoundHandler {
 	    	int step = 0;
 	    	Clip clip = getSound(type).getClip();
 	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                try {
-        	    	if (Settings.getIni_VolMusic() > 0) {
-                                float vol = volume.getValue();
-                                while ((vol>-60) || (step < 25)) {
-                                    step++;
-                                    // ConsoleHandler.print("reduce step = " + step, MessageType.BACKEND);
-                                    vol-=1.5f; 
-                                    volume.setValue(vol);
-                                    Thread.sleep(150);
-                                }
-                                Thread.sleep(200);
-                                clip.stop();
-        	    	} else {
-        	    	    Thread.sleep(3000);
-        	    	}
-                }
-                catch (InterruptedException ex) {}
+
+                if (Settings.getIni_VolMusic() > 0) {
+                    float vol = volume.getValue();
+                    while ((vol>-60) || (step < 25)) {
+                        step++;
+                        // ConsoleHandler.print("reduce step = " + step, MessageType.BACKEND);
+                        vol-=1.5f; 
+                        volume.setValue(vol);
+                        Menu.sleep(150);
+                    }
+                    Menu.sleep(200);
+                    clip.stop();
+	    	} else {
+        	    // ConsoleHandler.print("getDisplayType() = " + GraphicsHandler.getDisplayType(), MessageType.BACKEND);
+        	    if (GraphicsHandler.getDisplayType() == DisplayType.LOBBY)  Menu.sleep(1000);
+        	    if (GraphicsHandler.getDisplayType() == DisplayType.INGAME) Menu.sleep(4000);
+	    	}
 	}
                 
 	/**
