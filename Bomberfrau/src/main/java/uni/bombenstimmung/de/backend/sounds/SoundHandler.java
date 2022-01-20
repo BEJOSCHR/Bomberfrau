@@ -143,17 +143,19 @@ public class SoundHandler {
 	 * Reduziert die Lautst�rke des gerade laufenden Clips kontinuierlich bis zur Stille
 	 */
 	public static void reducePlayingSound(SoundType type) {
+	    	int step = 0;
 	    	Clip clip = getSound(type).getClip();
 	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 	    	if (Settings.getIni_VolMusic() > 0) {
                     try {
                         float vol = volume.getValue();
-                        while (vol>-60) {
+                        while ((vol>-60) || (step < 30)) {
+                            step++;
                             vol-=1.5f; 
                             volume.setValue(vol);
                             Thread.sleep(150);
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                         clip.stop();
                     }
                     catch (InterruptedException ex) {}
