@@ -12,6 +12,8 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
@@ -71,8 +73,14 @@ public class LobbyCreate {
 	    }
 	    
 	    // Eigentlich sollte der gejointe Player nie Host sein!
-	    client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
-	    initializeImages();	
+	    if (client.getId() != -1) {
+		client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
+		initializeImages();
+	    }
+	    else {
+		ConsoleHandler.print("There is no reachable server, switching back to Lobby ...", MessageType.BACKEND);
+		GraphicsHandler.switchToMenuFromLobby();
+	    }
 	}
 	
 //	public static void vomAfterGame(LobbyPlayer player, boolean isHost) {
