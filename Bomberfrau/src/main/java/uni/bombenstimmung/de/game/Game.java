@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
@@ -139,7 +141,6 @@ public class Game {
 	Color grayColor = new Color(143,90,90);
 	switch(bgnumber) {
 		case 1:
-		    //FIX Bild für Gras ist anscheinend zu klein...
 		    g.setColor(greenColor);
 		    g.fillRect(0,0,GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		    break;
@@ -166,13 +167,13 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 3:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
 	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
@@ -189,11 +190,11 @@ public class Game {
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), "Spielerin " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_PLAYER).getContent() + " " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
 	    if (i.getName().length() <= 15) {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
 	    } else {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
 	    }
 	    if(i.isDead()) {
 		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);

@@ -17,6 +17,9 @@ import java.awt.Color;
 import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class GameCounter implements ActionListener{
     
@@ -74,8 +77,13 @@ public class GameCounter implements ActionListener{
     }
     
     public static void drawCounter(Graphics g, int w, int h) {
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 30, "Time left: " + gametime, w, h+200);
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 30, "R of D: " + ringOfDeathNumber, w, h+300);
+	if (ringOfDeathNumber == 0) {
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_TIME).getContent() + ": " + gametime, w, h+200);
+	} else {
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD1).getContent(), w, h+200);
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD2).getContent(), w, h+250);
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD3).getContent(), w, h+300);
+	}
     }
     
     public static void drawCounterBackground(Graphics g) {

@@ -82,6 +82,17 @@ public class LanguageHandler {
 		String[] ready = {"READY?", "BEREIT?"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
 		
+		String[] ingame_player = {"Player", "Spielerin"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_PLAYER, ingame_player);
+		String[] ingame_time = {"Time left", "Uebrige Zeit"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_TIME, ingame_time);
+		String[] ingame_rod1 = {"CAUTION!!!", "ACHTUNG!!!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD1, ingame_rod1);
+		String[] ingame_rod2 = {"The ring of death", "Der Ring des Todes"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD2, ingame_rod2);
+		String[] ingame_rod3 = {"is gonna get ya!", "kommt euch holen!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD3, ingame_rod3);
+		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);
 		String[] aftergame_Ranking = {"",""};
@@ -94,7 +105,7 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, aftergame_Ranking);
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, aftergame_Ranking);
 		
-		String[] aftergame_bt1 = {"BACK TO MENU", "ZURÜCK ZUM MENUE"};
+		String[] aftergame_bt1 = {"BACK TO MENU", "ZURï¿½CK ZUM MENUE"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT1, aftergame_bt1);
 		String[] aftergame_bt2 = {"REPEAT", "WIEDERHOLEN"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT2, aftergame_bt2);
