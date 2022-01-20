@@ -67,8 +67,8 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/Yellow_background.png", ImageType.IMAGE_INGAME_YELLOWGRAS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/bomb.png", ImageType.IMAGE_INGAME_BOMB, GameData.FIELD_DIMENSION-5, GameData.FIELD_DIMENSION-5);
 	    	new LoadedImage("Ingame/lightTileBackground.png", ImageType.IMAGE_INGAME_LIGHTTILE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
-	    	new LoadedImage("Ingame/new_skin_left.png", ImageType.INGAME_SKIN_01, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
-	    	new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.INGAME_SKIN_01_WASTED, GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3);
+	    	new LoadedImage("Ingame/new_skin_left.png", ImageType.INGAME_SKIN_01, (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1));
+	    	new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.INGAME_SKIN_01_WASTED, (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1));
 	    	new LoadedImage("Ingame/flame1.png", ImageType.IMAGE_INGAME_BOMB_EX1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/flame1_horizontal.png", ImageType.IMAGE_INGAME_BOMB_EX2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/flame1_vertical.png", ImageType.IMAGE_INGAME_BOMB_EX2_NS, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
@@ -83,6 +83,7 @@ public class ImageHandler {
 	    	new LoadedImage("Ingame/tile_env3_block.png", ImageType.IMAGE_INGAME_LAVA_BLOCK, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/tile_env3_floor.png", ImageType.IMAGE_INGAME_LAVA_FLOOR, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/tile_env3_wall.png", ImageType.IMAGE_INGAME_LAVA_WALL, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+	    	//Character 1
 	    	new LoadedImage("Ingame/Characters/Priest_Dead.png", ImageType.IMAGE_INGAME_CHARACTER_DEAD, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 	    	new LoadedImage("Ingame/Characters/Priest_Idle.png", ImageType.IMAGE_INGAME_CHARACTER_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Priest_Walk_1.png", ImageType.IMAGE_INGAME_CHARACTER_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
@@ -106,6 +107,36 @@ public class ImageHandler {
 		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_1.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_2.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		new LoadedImage("Ingame/Characters/Skeleton_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		//Character 3
+		new LoadedImage("Ingame/Characters/Red_Walk_Idle.png", ImageType.IMAGE_INGAME_RED_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_1.png", ImageType.IMAGE_INGAME_RED_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_2.png", ImageType.IMAGE_INGAME_RED_WALK_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Left_1.png", ImageType.IMAGE_INGAME_RED_LEFT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Left_2.png", ImageType.IMAGE_INGAME_RED_LEFT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Left_Idle.png", ImageType.IMAGE_INGAME_RED_LEFT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_North_1.png", ImageType.IMAGE_INGAME_RED_NORTH_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_North_2.png", ImageType.IMAGE_INGAME_RED_NORTH_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_North_Idle.png", ImageType.IMAGE_INGAME_RED_NORTH_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Right_1.png", ImageType.IMAGE_INGAME_RED_RIGHT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Right_2.png", ImageType.IMAGE_INGAME_RED_RIGHT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Red_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_RED_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		//Character 4
+		new LoadedImage("Ingame/Characters/Demon_Walk_Idle.png", ImageType.IMAGE_INGAME_DEMON_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_1.png", ImageType.IMAGE_INGAME_DEMON_WALK_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_2.png", ImageType.IMAGE_INGAME_DEMON_WALK_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Left_1.png", ImageType.IMAGE_INGAME_DEMON_LEFT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Left_2.png", ImageType.IMAGE_INGAME_DEMON_LEFT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Left_Idle.png", ImageType.IMAGE_INGAME_DEMON_LEFT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_North_1.png", ImageType.IMAGE_INGAME_DEMON_NORTH_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_North_2.png", ImageType.IMAGE_INGAME_DEMON_NORTH_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_North_Idle.png", ImageType.IMAGE_INGAME_DEMON_NORTH_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Right_1.png", ImageType.IMAGE_INGAME_DEMON_RIGHT_1, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Right_2.png", ImageType.IMAGE_INGAME_DEMON_RIGHT_2, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_DEMON_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
+		
+		//AFTERGAME
+		new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, 200, 200);
+		new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.IMAGE_AFTERGAME_2, 200, 200);
 		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 	}
