@@ -87,7 +87,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 				e.printStackTrace();
 			}
 		//Is the new created Client not the host, a new UDP Client will be initialized
-		} else { 
+		} else if (host == false && IP != null) { 
 			connector = new NioDatagramConnector();
 			connector.setHandler(new ClientHandler(this));
 			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
@@ -96,7 +96,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			connFuture.awaitUninterruptibly();
 			connFuture.addListener(new IoFutureListener<ConnectFuture>() {
 			    public void operationComplete(ConnectFuture future) {
-				ConsoleHandler.print(Boolean.toString(future.isConnected()), MessageType.BACKEND);
+				//ConsoleHandler.print(Boolean.toString(future.isConnected()), MessageType.BACKEND);
 				if (future.isConnected()) {
 				    conSession = future.getSession();
 				    try {
@@ -111,6 +111,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 				}
 			    }
 			});
+		}
+		else {
+		    ConsoleHandler.print("The IP-Address cannot be null!", MessageType.BACKEND);
+		    return;
 		}
 	}
 
@@ -152,9 +156,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//002 = Wird vom Client gesendet, um eine ID zu erhalten.
 		case 002:
 			if (containsClientKey(session.getRemoteAddress())) {
-				for (SocketAddress i : connectedClients.keySet()) {
+				for (SocketAddress i : getConnectedClients().keySet()) {
 					if (i == session.getRemoteAddress()) {
-						sendMessage(session, "900-"+ Integer.toString(connectedClients.get(i)));
+						sendMessage(session, "900-"+ Integer.toString(getConnectedClients().get(i)));
 					}
 					else {
 						ConsoleHandler.print("Error", MessageType.BACKEND);
@@ -479,6 +483,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 901:
 		    	String[] pMessage901 = message.split("-");
 		    	session.write("002-");
+		    	break;
 			//ClientID can be used now be used with .getId
 		//903 = Berechne den Ping und gebe diesen aus.
 		case 903:
@@ -523,10 +528,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * Fügt alle verfügbaren IDs dem Stack hinzu
 	 */
 	public void addIdsToStack () {
-	    if (idStack != null) {
-		idStack.push(3);
-		idStack.push(2);
-		idStack.push(1);
+	    if (getIdStack() != null) {
+		getIdStack().push(3);
+		getIdStack().push(2);
+		getIdStack().push(1);
 	    } else {
 		ConsoleHandler.print("Error, Stack is not initialized", MessageType.BACKEND );
 	    }
@@ -540,9 +545,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 	public void addClientToList(IoSession session) {
 	    SocketAddress remoteAddress = session.getRemoteAddress();
 	    if (!containsClient(remoteAddress)) {
-		if (!idStack.empty()) {
-		    int id = idStack.pop();
-			connectedClients.put(remoteAddress, id);
+		if (!getIdStack().empty()) {
+		    int id = getIdStack().pop();
+			getConnectedClients().put(remoteAddress, id);
 			ConsoleHandler.print("Client added to List", MessageType.BACKEND);
 			printConnectedClients();
 		    } else {
@@ -553,7 +558,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	} 
 	
 	public boolean isIdStackEmpty() {
-	    if (idStack.isEmpty()) {
+	    if (getIdStack().isEmpty()) {
 		return true; 
 	    } else {
 		return false;
@@ -564,7 +569,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * Ausgabe aller Verbundenen Clients.
 	 */
 	public void printConnectedClients() {
-		connectedClients.forEach((k,v)-> ConsoleHandler.print(k+"="+v, MessageType.BACKEND));
+		getConnectedClients().forEach((k,v)-> ConsoleHandler.print(k+"="+v, MessageType.BACKEND));
 	}
 	
 	/**
@@ -573,7 +578,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @return - Gibt true oder false zurück
 	 */
 	public boolean containsClient(SocketAddress remoteAddress) {
-		return connectedClients.contains(remoteAddress);
+		return getConnectedClients().contains(remoteAddress);
 	}
 	
 	/**
@@ -582,7 +587,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @return - Gibt true oder false zurück
 	 */
 	public boolean containsClientKey(SocketAddress remoteAddress) {
-		return connectedClients.containsKey(remoteAddress);
+		return getConnectedClients().containsKey(remoteAddress);
 	}
 	
 	/**
@@ -590,9 +595,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 * @param session - Session des Clients
 	 */
 	public void removeClient(IoSession session) {
-	    	int id = connectedClients.get(session.getRemoteAddress());
-	    	idStack.push(id);
-		connectedClients.remove(session.getRemoteAddress());
+	    	int id = getConnectedClients().get(session.getRemoteAddress());
+	    	getIdStack().push(id);
+		getConnectedClients().remove(session.getRemoteAddress());
 		session.closeNow();
 	}
 	
@@ -658,6 +663,14 @@ public class ConnectedClient extends IoHandlerAdapter{
 
 	public NioDatagramAcceptor getAcceptor() {
 	    return acceptor;
+	}
+
+	public Stack<Integer> getIdStack() {
+	    return idStack;
+	}
+
+	public ConcurrentHashMap<SocketAddress, Integer> getConnectedClients() {
+	    return connectedClients;
 	}
 }
 

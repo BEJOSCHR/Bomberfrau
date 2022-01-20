@@ -80,6 +80,9 @@ public class LobbyCreate {
 	    else {
 		ConsoleHandler.print("There is no reachable server, switching back to Lobby ...", MessageType.BACKEND);
 		GraphicsHandler.switchToMenuFromLobby();
+		if (client.getSession() != null) {
+		    client.getConnector().dispose();
+		}
 	    }
 	}
 	
