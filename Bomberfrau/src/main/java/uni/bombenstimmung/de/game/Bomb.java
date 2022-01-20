@@ -105,6 +105,8 @@ public class Bomb implements ActionListener{
      */
     public void explodeFire() {
 	
+	this.counter = this.timer;
+	
 	for(int direction = 0; direction < 5; direction++) {
 	    int r = 1;
 	    //Stelle der Bombe wird ueberprueft auf Spieler, und Explosion wird eingefuegt

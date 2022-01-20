@@ -185,14 +185,20 @@ public class Game {
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
 	int counter = 0;
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
+	double gapFactor = (double)GraphicsHandler.getHeight()/720.0;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + ": " + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
-	    if(i.isDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), "Spielerin " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    if (i.getName().length() <= 15) {
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+	    }
+	    if(i.isDead()) {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+	    } else {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    }
 	    counter++;
 	}
@@ -300,14 +306,13 @@ public class Game {
     }
     
     public static void gameOver() {
-	// TODO: hier kommt alles rein, was bei einem Game Over passiert
 	switch (mapNumber) {
 	case 1:
 	    SoundHandler.stopSound(SoundType.MAP1);
 	    break;
 	    
 	case 2:
-	    
+	    SoundHandler.stopSound(SoundType.MAP2);
 	    break;
 	    
 	case 3:
