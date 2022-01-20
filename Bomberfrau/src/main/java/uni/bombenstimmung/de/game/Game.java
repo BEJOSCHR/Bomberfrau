@@ -293,7 +293,27 @@ public class Game {
     }
     
     public static void gameOver() {
+<<<<<<< HEAD
 	// TODO: hier kommt alles rein, was bei einem Game Over passiert
+=======
+	switch (mapNumber) {
+	case 1:
+	    SoundHandler.reducePlayingSound(SoundType.MAP1, 2, false);
+	    break;
+	    
+	case 2:
+	    SoundHandler.reducePlayingSound(SoundType.MAP2, 2, false);
+	    break;
+	    
+	case 3:
+	    SoundHandler.reducePlayingSound(SoundType.MAP3, 2, false);
+	    break;
+	    
+	default:
+	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+	}
+
+>>>>>>> branch 'main' of git@github.com:BEJOSCHR/Bomberfrau.git
 	new Animation(400, 1) {
 	    @Override
 	    public void initValues() {
@@ -306,9 +326,6 @@ public class Game {
 		}
 		gameOver = true;
 	    }
-	    
-	    @Override
-	    public void changeValues() {}
 	    
 	    @Override
 	    public void finaliseValues() {

@@ -327,7 +327,11 @@ public class GraphicsHandler {
 	 */
 	public static void switchToIngameFromLobby() {
 		
+<<<<<<< HEAD
 		SoundHandler.reduceLastPlayedSound(SoundType.MENU);
+=======
+		SoundHandler.reducePlayingSound(SoundType.MENU, 2, true);
+>>>>>>> branch 'main' of git@github.com:BEJOSCHR/Bomberfrau.git
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
