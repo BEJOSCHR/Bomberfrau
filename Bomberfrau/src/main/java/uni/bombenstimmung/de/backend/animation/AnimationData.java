@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Enthält alle zeitlichen Variablen die durch Animationene verändert werden
+ * Enthï¿½lt alle zeitlichen Variablen die durch Animationene verï¿½ndert werden
  */
 package uni.bombenstimmung.de.backend.animation;
 
@@ -19,5 +19,7 @@ public class AnimationData {
 	public static int title_Modifier = 0;
 	public static int title_posXModifier = 0;
 	public static int title_posYModifier = 0;
+	
+	public static float vol = 0;
 
 }

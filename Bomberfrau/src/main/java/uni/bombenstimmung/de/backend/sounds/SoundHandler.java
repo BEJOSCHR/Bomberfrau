@@ -14,6 +14,8 @@ import java.util.List;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
+import uni.bombenstimmung.de.backend.animation.Animation;
+import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.DisplayType;
@@ -142,29 +144,46 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Reduziert die Lautst�rke des gerade laufenden Clips kontinuierlich bis zur Stille
+	 * Reduziert die Lautstaerke des gerade laufenden Clips kontinuierlich bis zur Stille.
+	 * @param type		Der SoundType, bei welchem die Lautstaerke reduziert werden soll.
+	 * @param seconds	Die Dauer der Lautstaerkenreduktion.
+	 * @param delay		Bestimmt, ob der weitere Programmverlauf verzoegert werden soll, bis die Reduktion
+	 * 			beendet ist.
 	 */
-	public static void reducePlayingSound(SoundType type) {
-	    	int step = 0;
-	    	Clip clip = getSound(type).getClip();
-	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-
-                if (Settings.getIni_VolMusic() > 0) {
-                    float vol = volume.getValue();
-                    while ((vol>-60) || (step < 25)) {
-                        step++;
-                        // ConsoleHandler.print("reduce step = " + step, MessageType.BACKEND);
-                        vol-=1.5f; 
-                        volume.setValue(vol);
-                        Menu.sleep(150);
-                    }
-                    Menu.sleep(200);
-                    clip.stop();
-	    	} else {
-        	    // ConsoleHandler.print("getDisplayType() = " + GraphicsHandler.getDisplayType(), MessageType.BACKEND);
-        	    if (GraphicsHandler.getDisplayType() == DisplayType.LOBBY)  Menu.sleep(1000);
-        	    if (GraphicsHandler.getDisplayType() == DisplayType.INGAME) Menu.sleep(4000);
-	    	}
+	public static void reducePlayingSound(SoundType type, int seconds, boolean delay) {
+	    Clip clip = getSound(type).getClip();
+	    FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    float vol = volume.getValue();
+	    float factor = (vol + 60f) / (float)(seconds * 100);
+	    if (delay) {
+		AnimationData.vol = vol;
+		int timer = 0;
+		while (timer < (seconds * 100)) {
+		    AnimationData.vol -= factor;
+		    volume.setValue(AnimationData.vol);
+		    Menu.sleep(10);
+		    timer++;
+		}
+		clip.stop();
+	    } else {
+		new Animation(1, seconds * 100) {
+		    @Override
+		    public void initValues() {
+			AnimationData.vol = vol;
+		    }
+		    
+		    @Override
+		    public void changeValues() {
+			AnimationData.vol -= factor;
+			volume.setValue(AnimationData.vol);
+		    }
+		    
+		    @Override
+		    public void finaliseValues() {
+			clip.stop();
+		    }
+		};
+	    }
 	}
                 
 	/**

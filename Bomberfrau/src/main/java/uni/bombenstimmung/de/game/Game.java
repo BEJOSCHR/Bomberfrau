@@ -307,8 +307,24 @@ public class Game {
     }
     
     public static void gameOver() {
+	switch (mapNumber) {
+	case 1:
+	    SoundHandler.reducePlayingSound(SoundType.MAP1, 2, false);
+	    break;
+	    
+	case 2:
+	    SoundHandler.reducePlayingSound(SoundType.MAP2, 2, false);
+	    break;
+	    
+	case 3:
+	    SoundHandler.reducePlayingSound(SoundType.MAP3, 2, false);
+	    break;
+	    
+	default:
+	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+	}
 
-	new Animation(50, 1) {
+	new Animation(400, 1) {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
@@ -323,26 +339,7 @@ public class Game {
 	    }
 	    
 	    @Override
-	    public void changeValues() {}
-	    
-	    @Override
 	    public void finaliseValues() {
-		switch (mapNumber) {
-		case 1:
-		    SoundHandler.reducePlayingSound(SoundType.MAP1);
-		    break;
-		    
-		case 2:
-		    SoundHandler.reducePlayingSound(SoundType.MAP2);
-		    break;
-		    
-		case 3:
-		    SoundHandler.reducePlayingSound(SoundType.MAP3);
-		    break;
-		    
-		default:
-		    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
-		}
 		GraphicsHandler.switchToAftergameFromIngame();
 	    }
 	};
