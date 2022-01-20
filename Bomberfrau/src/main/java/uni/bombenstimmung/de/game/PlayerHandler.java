@@ -280,7 +280,7 @@ public class PlayerHandler {
 			    }
 			}
 		    } else {
-			//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
 		break;
 		
@@ -348,7 +348,7 @@ public class PlayerHandler {
 			    }
 			}
 		    } else {
-			//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
 		break;
 		
@@ -416,7 +416,7 @@ public class PlayerHandler {
 			    }
 			}
 		    } else {
-			//g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
 		break;
 		
