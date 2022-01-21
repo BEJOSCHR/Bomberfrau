@@ -23,12 +23,27 @@ import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
+import uni.bombenstimmung.de.menu.Menu;
 
 public class AftergameButtons extends MouseActionAreaHandler{
     
+    public static MouseActionArea mma_aftergame_1;
+    public static MouseActionArea mma_aftergame_2;
+    public static MouseActionArea mma_aftergame_3;
+    
+    
+    public static void aftergameButtonsReset() {
+	ConsoleHandler.print("reseting Aftergame MAAs", MessageType.AFTERGAME);
+	mma_aftergame_1.remove();
+	mma_aftergame_2.remove();
+	mma_aftergame_3.remove();
+	Menu.sleep(50);
+	initAftergameButtons();
+    }
+    
     public static void initAftergameButtons(){
-
-	new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
+	
+	mma_aftergame_1 = new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 300, 100,
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
@@ -65,7 +80,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 	
 	//REPEAT
-	new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
+	mma_aftergame_2 = new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, 300, 100,
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
@@ -87,7 +102,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	};
 	
 	//EXIT Button
-	new MouseActionArea(GraphicsHandler.getWidth()*3/4-100, GraphicsHandler.getHeight()*6/8, 200, 100,
+	mma_aftergame_3 = new MouseActionArea(GraphicsHandler.getWidth()*3/4-100, GraphicsHandler.getHeight()*6/8, 300, 100,
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT3).getContent(), 20, new Color(225,0,0), new Color(0,0,255)) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {

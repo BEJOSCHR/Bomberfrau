@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import uni.bombenstimmung.de.aftergame.AftergameButtons;
 import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationHandler;
@@ -285,6 +286,8 @@ public class GraphicsHandler {
 	 * Wird aufgerufen wenn im Aftergame die Session verlassen wird
 	 */
 	public static void switchToMenuFromAftergame() {
+	    
+	    	SoundHandler.stopAllSounds();
 
 		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
@@ -402,18 +405,13 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-		SoundHandler.playSound2(SoundType.MENU, true);
+		SoundHandler.playSound(SoundType.AFTERGAME, true);
+		AftergameButtons.aftergameButtonsReset();
 		
-		//ubermittlung der daten des aktuellen Player
-		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
-		
-		
-//		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-//		    //addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin)
-//		    DeadPlayerHandler.addDeadPlayerFromIngame(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getIpAdress(),
-//			    PlayerHandler.getAllPlayer().get(i).getHost(), PlayerHandler.getAllPlayer().get(i).getSkin());
-//		}
-		
+		//ubermittlung der Daten des aktuellen Player
+		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());		
+	
+		//ubermittlung der Daten des aller Player
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
 		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
 		}

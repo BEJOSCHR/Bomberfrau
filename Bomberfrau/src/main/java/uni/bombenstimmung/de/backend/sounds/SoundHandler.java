@@ -44,6 +44,8 @@ public class SoundHandler {
 		new LoadedSound("ingame/dying.wav", SoundType.DYING, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/countdown.wav", SoundType.COUNTDOWN, SoundCategory.INGAME_SOUNDS, 0.2D);
 		
+		new LoadedSound("aftergame/aftergame.wav", SoundType.AFTERGAME, SoundCategory.AFTERGAME_MUSIC, 0.08);
+		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
 	}

@@ -25,7 +25,6 @@ import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
-	//private static ArrayList<DeadPlayer> playerFromIngame = new ArrayList<DeadPlayer>();
 	private static DeadPlayer clientPlayer;	//aktueller Player
 
 	
