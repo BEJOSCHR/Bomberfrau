@@ -402,6 +402,8 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
+		SoundHandler.playSound2(SoundType.MENU, true);
+		
 		//ubermittlung der daten des aktuellen Player
 		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());
 		

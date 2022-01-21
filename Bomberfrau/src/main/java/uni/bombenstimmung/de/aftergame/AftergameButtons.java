@@ -32,6 +32,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
+		ConsoleHandler.print("Back to Menu Button", MessageType.AFTERGAME);
 	    	if (LobbyCreate.client.isHost()) {
 	    	    // Wenn der Host nicht alleine in der Session ist
 	    	    if (LobbyCreate.numberOfMaxPlayers > 1) {
@@ -68,7 +69,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		ConsoleHandler.print("REPEAT Button", MessageType.AFTERGAME);
+		ConsoleHandler.print("Back to Lobby Button", MessageType.AFTERGAME);
 		
 		//Nur der Host darf eine neue Runde starten. Clients wechseln in die Lobby
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
