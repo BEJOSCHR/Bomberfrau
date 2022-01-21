@@ -261,6 +261,7 @@ public class Settings {
 	else if (os.contains("osx")){
 	    ConsoleHandler.print("System = Apple (" + os + ")", MessageType.MENU);
 	}
+	ConsoleHandler.print("Default Encoding = " + System.getProperty("file.encoding"), MessageType.MENU);
     }
     
 
