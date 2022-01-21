@@ -8,6 +8,8 @@
  */
 package uni.bombenstimmung.de.backend.graphics;
 
+import java.util.ConcurrentModificationException;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +19,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
+import uni.bombenstimmung.de.aftergame.DeadPlayerHandler;
 import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -97,9 +100,9 @@ public class Label extends JLabel {
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_TITLE).getImage(), (int)(Settings.getRes_width()*0.05) ,
 		    		(int)(Settings.getRes_height()*0.05) , (int)(2100*Settings.getRes_width()/3840 + 3*AnimationData.title_Modifier), (int)(700*Settings.getRes_height()/2160 + AnimationData.title_Modifier), null);
 		    	
-		    	GraphicsHandler.drawRightText(g, Color.BLACK, 30, "Name:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.48));
+		    	GraphicsHandler.drawRightText(g, Color.BLACK, 30, "Name:", (int)(Settings.getRes_width()*0.48), (int)(Settings.getRes_height()*0.48));
 		    	if (!Settings.getCreate_selected())
-		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.getRes_width()*0.5), (int)(Settings.getRes_height()*0.58));
+		    		GraphicsHandler.drawRightText(g, Color.BLACK, 30,   "IP:", (int)(Settings.getRes_width()*0.48), (int)(Settings.getRes_height()*0.58));
 		    	break;
 		case OPTIONS:
 		    	g.drawImage(ImageHandler.getImage(ImageType.IMAGE_MENU_PIC).getImage(), 0, 0, Settings.getRes_width(), Settings.getRes_height(), null);
@@ -130,15 +133,36 @@ public class Label extends JLabel {
 		    	if(Game.getGameOver()) {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
+		    	switch (Game.getCountdown()) {
+		    	case 1:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 2:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 3:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    break;
+		    	    
+		    	case 4:
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GO!", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	}
 			break;
 		case AFTERGAME:
 			g.setColor(Color.WHITE);
 			Color gold = new Color(255,204,51);
 			GraphicsHandler.drawCentralisedText(g, Color.BLACK, 100, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_TITEL).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/16);
-			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_1).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*2/8);
-			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_2).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*3/8);
-			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_3).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*4/8);
-			GraphicsHandler.drawCentralisedText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_RANKING_4).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()*5/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*2/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*3/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*4/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*5/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*2/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*3/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*4/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), 70, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_4).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*5/8);
+			DeadPlayerHandler.drawImages(g, DeadPlayerHandler.getAllDeadPlayer().size());
 			break;
 		default:
 			ConsoleHandler.print("Illegal displayType! Can't draw for type '"+GraphicsHandler.getDisplayType()+"'", MessageType.ERROR);
@@ -146,20 +170,19 @@ public class Label extends JLabel {
 		}
 		
 		//MAA
-		for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
+		try {
+		    for(MouseActionArea maa : MouseActionAreaHandler.getMAAs()) {
 			if(maa.isActiv()) {
 				maa.draw(g);
 			}
-		}
+		    }
+		}catch(ConcurrentModificationException error) {}
 		
 		//DRAW FPS
 		if(showFPS == true) {
 			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font("Arial", Font.BOLD, (int)(15*Settings.getFactor())));
 			g.drawString(""+getCurrentFPSValue(), 0+3, 0+12);
-			
-			// sch�ner durch ersetzen f�hrender Nuller durch Leerzeichen
-//			g.drawString(""+("  ").repeat(3-String.valueOf(getCurrentFPSValue()).length())+getCurrentFPSValue(), 0+3, 0+12);
 		}
 		
 		//CALCULATE FPS

@@ -22,6 +22,8 @@ public enum SoundType {
     	ITEM,
     	WALL,
     	DYING,
+    	COUNTDOWN,
+    	GO,
     	
 	TEST_START;
 	

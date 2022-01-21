@@ -20,6 +20,11 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
 
@@ -27,6 +32,7 @@ public class Game {
     private static int mapNumber = 1;
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
+    private static int countdown = 0;
 
     /**
      *  Füllt das Map Array mit leeren Feldern
@@ -39,8 +45,8 @@ public class Game {
 		map[x][y] = new Field(x, y, FieldContent.EMPTY);
 	    }
 	}	
-    }	
-
+    }
+    
     /**
      * Malt die aktuelle Map
      * in der Mitte des Bildschirms
@@ -137,7 +143,6 @@ public class Game {
 	Color grayColor = new Color(143,90,90);
 	switch(bgnumber) {
 		case 1:
-		    //FIX Bild für Gras ist anscheinend zu klein...
 		    g.setColor(greenColor);
 		    g.fillRect(0,0,GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		    break;
@@ -164,10 +169,13 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    break;
+		case 3:
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
 	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
@@ -180,14 +188,20 @@ public class Game {
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
 	int counter = 0;
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
+	double gapFactor = (double)GraphicsHandler.getHeight()/720.0;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, 30, "Spielerin " + (i.getId()+1) + ": " + i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap));
-	    if(i.getDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_PLAYER).getContent() + " " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    if (i.getName().length() <= 15) {
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(xOffset/8), 0+((counter+(counter+1))*gap+20), GameData.FIELD_DIMENSION*3, GameData.FIELD_DIMENSION*3, null);
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+	    }
+	    if(i.isDead()) {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+	    } else {
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    }
 	    counter++;
 	}
@@ -284,7 +298,7 @@ public class Game {
     public static void checkIfAllDead() {
 	int livingPlayers = 0;
 	for (Player i : PlayerHandler.getAllPlayer()) {
-	    if (!i.getDead()) {
+	    if (!i.isDead()) {
 		livingPlayers++;
 	    }
 	}
@@ -316,6 +330,7 @@ public class Game {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
+		PlayerHandler.setMovable(false);
 		for (Player i : PlayerHandler.getAllPlayer()) {
 		    i.stopTimer();
 		}
@@ -337,5 +352,13 @@ public class Game {
 	gameOver = false;
 	PlayerHandler.resetPlayerHandler();
 	GameCounter.resetGameCounter();
+    }
+    
+    public static int getCountdown() {
+	return countdown;
+    }
+    
+    public static void setCountdown(int c) {
+	countdown = c;
     }
 }

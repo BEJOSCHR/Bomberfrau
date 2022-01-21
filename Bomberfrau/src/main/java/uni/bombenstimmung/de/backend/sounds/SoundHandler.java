@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
+import uni.bombenstimmung.de.backend.graphics.DisplayType;
+import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -39,11 +41,15 @@ public class SoundHandler {
 		new LoadedSound("menu/menu.wav", SoundType.MENU, SoundCategory.MENU_MUSIC, 0.2D);
 		new LoadedSound("menu/sound.wav", SoundType.OPTIONS, SoundCategory.MENU_SOUND, 0.2D);
 
+		new LoadedSound("ingame/MAP1.wav", SoundType.MAP1, SoundCategory.INGAME_MUSIC, 0.2D);
+		new LoadedSound("ingame/MAP2.wav", SoundType.MAP2, SoundCategory.INGAME_MUSIC, 0.2D);
+		new LoadedSound("ingame/MAP3.wav", SoundType.MAP3, SoundCategory.INGAME_MUSIC, 0.2D);
 		new LoadedSound("ingame/fuse.wav", SoundType.FUSE, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/explosion.wav", SoundType.EXPLOSION, SoundCategory.INGAME_SOUNDS, 0.1D);
 		new LoadedSound("ingame/item.wav", SoundType.ITEM, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/wall.wav", SoundType.WALL, SoundCategory.INGAME_SOUNDS, 0.2D);
 		new LoadedSound("ingame/dying.wav", SoundType.DYING, SoundCategory.INGAME_SOUNDS, 0.2D);
+		new LoadedSound("ingame/countdown.wav", SoundType.COUNTDOWN, SoundCategory.INGAME_SOUNDS, 0.2D);
 		
 		ConsoleHandler.print("Loaded sounds ("+sounds.size()+")", MessageType.BACKEND);
 		
@@ -90,7 +96,7 @@ public class SoundHandler {
 			vol = Menu.VolumeIntToFloat(Settings.getIni_VolSound());
 		if ((vol > -80F) || (type==SoundType.MENU)) {
         		gainControl.setValue(vol);
-        		ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
+        		// ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
         		clip.setFramePosition(0);
         		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
         		clip.start();
