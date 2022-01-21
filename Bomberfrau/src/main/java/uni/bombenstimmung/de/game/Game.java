@@ -18,6 +18,8 @@ import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Game {
 
@@ -293,9 +295,6 @@ public class Game {
     }
     
     public static void gameOver() {
-<<<<<<< HEAD
-	// TODO: hier kommt alles rein, was bei einem Game Over passiert
-=======
 	switch (mapNumber) {
 	case 1:
 	    SoundHandler.reducePlayingSound(SoundType.MAP1, 2, false);
@@ -313,7 +312,6 @@ public class Game {
 	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
 	}
 
->>>>>>> branch 'main' of git@github.com:BEJOSCHR/Bomberfrau.git
 	new Animation(400, 1) {
 	    @Override
 	    public void initValues() {

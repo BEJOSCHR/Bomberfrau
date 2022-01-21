@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Benni
  *
- * Verwaltet alle Sounds (laden, ausgeben, verändern...)
+ * Verwaltet alle Sounds (laden, ausgeben, verï¿½ndern...)
  */
 package uni.bombenstimmung.de.backend.sounds;
 
@@ -28,7 +28,7 @@ public class SoundHandler {
 	public static Clip lastPlayedClip;
 	
 	/**
-	 * Wird am Start aufgerufen und läd alle Sounds
+	 * Wird am Start aufgerufen und lï¿½d alle Sounds
 	 */
 	public static void initSounds() {
 		
@@ -50,7 +50,7 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Spielt den Sound ab, der zum übergebenene Type gehört
+	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 * @param loop - Clip in Schleife wiederholen oder nicht
 	 */
@@ -70,7 +70,7 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Spielt den Sound ab, der zum übergebenene Type gehört
+	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 * @param loop - Clip in Schleife wiederholen oder nicht
 	 */
@@ -98,10 +98,10 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Spielt den Sound ab, der zum übergebenene Type gehört
+	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 * @param loop - Clip in Schleife wiederholen oder nicht
-	 * @param value - Lautstärke [-70F bis 6F]
+	 * @param value - Lautstï¿½rke [-70F bis 6F]
 	 */
 	public static void playSound(SoundType type, boolean loop, float value) {
 		
@@ -118,7 +118,7 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Stopt den Sound, der zum übergebenene Type gehört
+	 * Stopt den Sound, der zum ï¿½bergebenene Type gehï¿½rt
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 */
 	public static void stopSound(SoundType type) {
@@ -138,34 +138,12 @@ public class SoundHandler {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Reduziert die Lautstärke des gerade laufenden Clips kontinuierlich bis zur Stille
-=======
 	 * Reduziert die Lautstaerke des gerade laufenden Clips kontinuierlich bis zur Stille.
 	 * @param type		Der SoundType, bei welchem die Lautstaerke reduziert werden soll.
 	 * @param seconds	Die Dauer der Lautstaerkenreduktion.
 	 * @param delay		Bestimmt, ob der weitere Programmverlauf verzoegert werden soll, bis die Reduktion
 	 * 			beendet ist.
->>>>>>> branch 'main' of git@github.com:BEJOSCHR/Bomberfrau.git
 	 */
-<<<<<<< HEAD
-	public static void reduceLastPlayedSound(SoundType type) {
-	    	Clip clip = getSound(type).getClip();
-	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-	    	if (Settings.getIni_VolMusic() > 0) {
-                    try {
-                        float vol = volume.getValue();
-                        while (vol>-60) {
-                            vol-=1.5f; 
-                            volume.setValue(vol);
-                            Thread.sleep(100);
-                        }
-                        Thread.sleep(500);
-                        clip.stop();
-                    }
-                    catch (InterruptedException ex) {}
-	    	}
-=======
 	public static void reducePlayingSound(SoundType type, int seconds, boolean delay) {
 	    Clip clip = getSound(type).getClip();
 	    FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -200,13 +178,12 @@ public class SoundHandler {
 		    }
 		};
 	    }
->>>>>>> branch 'main' of git@github.com:BEJOSCHR/Bomberfrau.git
 	}
                 
 	/**
-	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehören
-	 * @param category- Die Category die verändert werden soll
-	 * @param volumeModifier - Der modifier [0.02D heißt also das das volume um diesen wert erhöht wird, -0.02D das er geringer wird]
+	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehï¿½ren
+	 * @param category- Die Category die verï¿½ndert werden soll
+	 * @param volumeModifier - Der modifier [0.02D heiï¿½t also das das volume um diesen wert erhï¿½ht wird, -0.02D das er geringer wird]
 	 * @see SoundCategory, {@link LoadedSound}
 	 */
 	public static void changeCategoryVolume(SoundCategory category, double volumeModifier) {
@@ -218,9 +195,9 @@ public class SoundHandler {
 	}
 
 	/**
-	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehören
-	 * @param category- Die Category die verändert werden soll
-	 * @param volume - Die gewünschte Lautstärke
+	 * Passt den Sound bei allen {@link LoadedSound} an, die zu dieser Category gehï¿½ren
+	 * @param category- Die Category die verï¿½ndert werden soll
+	 * @param volume - Die gewï¿½nschte Lautstï¿½rke
 	 * @see SoundCategory, {@link LoadedSound}
 	 */
 	public static void setCategoryVolume(SoundCategory category, double volume) {
@@ -244,10 +221,10 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Gibt den Sound zum zugehörigen Type zurück (Wenn richtig geladen gibt es für jeden Type einen Sound)
+	 * Gibt den Sound zum zugehï¿½rigen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type einen Sound)
 	 * @param type - Der Type der gesucht wird
 	 * @see SoundType
-	 * @return Der {@link LoadedSound} der zum Type gehört, wenn keiner gefunden wird dann null
+	 * @return Der {@link LoadedSound} der zum Type gehï¿½rt, wenn keiner gefunden wird dann null
 	 */
 	public static LoadedSound getSound(SoundType type) {
 		
@@ -261,10 +238,10 @@ public class SoundHandler {
 	}
 	
 	/**
-	 * Gibt die Sounds zur zugehörigen Category zurück (Wenn richtig geladen gibt es für jede Category einen Sound)
+	 * Gibt die Sounds zur zugehï¿½rigen Category zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jede Category einen Sound)
 	 * @param category - Die Category die gesucht wird
 	 * @see SoundCategory
-	 * @return Liste von {@link LoadedSound} die zur Category gehören, wenn keiner gefunden wird dann eine Leere Liste
+	 * @return Liste von {@link LoadedSound} die zur Category gehï¿½ren, wenn keiner gefunden wird dann eine Leere Liste
 	 */
 	public static List<LoadedSound> getSoundCategory(SoundCategory category) {
 		
