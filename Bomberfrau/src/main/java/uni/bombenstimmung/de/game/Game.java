@@ -311,15 +311,15 @@ public class Game {
     public static void gameOver() {
 	switch (mapNumber) {
 	case 1:
-	    SoundHandler.reducePlayingSound(SoundType.MAP1, 2, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP1, 3, false);
 	    break;
 	    
 	case 2:
-	    SoundHandler.reducePlayingSound(SoundType.MAP2, 2, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP2, 3, false);
 	    break;
 	    
 	case 3:
-	    SoundHandler.reducePlayingSound(SoundType.MAP3, 2, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP3, 3, false);
 	    break;
 	    
 	default:
