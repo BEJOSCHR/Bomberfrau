@@ -251,6 +251,7 @@ public class GraphicsHandler {
 	public static void switchToLobbyFromAftergame() {
 		
 	    AnimationHandler.stopAllAnimations();
+	    SoundHandler.stopAllSounds();
 	    
 	    SoundHandler.playSound2(SoundType.MENU, true);
 	    LobbyButtons.lobbyButtonsReset();
