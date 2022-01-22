@@ -169,13 +169,13 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 3:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
 	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
@@ -188,20 +188,20 @@ public class Game {
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
 	int counter = 0;
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
-	double gapFactor = (double)GraphicsHandler.getHeight()/720.0;
+	double resScale = (double)GraphicsHandler.getHeight()/720.0;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_PLAYER).getContent() + " " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
-	    if (i.getName().length() <= 15) {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_PLAYER).getContent() + " " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    if (i.getName().length() <= 13) {
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*resScale)));
 	    } else {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*resScale)));
 	    }
 	    if(i.isDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    }
 	    counter++;
 	}
@@ -311,15 +311,15 @@ public class Game {
     public static void gameOver() {
 	switch (mapNumber) {
 	case 1:
-	    SoundHandler.reducePlayingSound(SoundType.MAP1, 3, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
 	    break;
 	    
 	case 2:
-	    SoundHandler.reducePlayingSound(SoundType.MAP2, 3, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP2, 4, false);
 	    break;
 	    
 	case 3:
-	    SoundHandler.reducePlayingSound(SoundType.MAP3, 3, false);
+	    SoundHandler.reducePlayingSound(SoundType.MAP3, 4, false);
 	    break;
 	    
 	default:

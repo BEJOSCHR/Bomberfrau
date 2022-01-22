@@ -329,7 +329,8 @@ public class GraphicsHandler {
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
 	 */
 	public static void switchToIngameFromLobby() {
-		SoundHandler.reducePlayingSound(SoundType.MENU, 2, true);
+		
+		SoundHandler.reducePlayingSound(SoundType.MENU, 3, true);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		GameData.FIELD_DIMENSION = (int) (height-GameData.MAP_SIDE_BORDER)/GameData.MAP_DIMENSION;
