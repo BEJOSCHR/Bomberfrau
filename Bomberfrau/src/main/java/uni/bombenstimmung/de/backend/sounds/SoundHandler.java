@@ -150,6 +150,12 @@ public class SoundHandler {
 	 * @param delay		Bestimmt, ob der weitere Programmverlauf verzoegert werden soll, bis die Reduktion
 	 * 			beendet ist.
 	 */
+	/*
+	 * TODO: Es gibt wohl einen Bug in Java, wo das Aendern der Lautstaerke gefuehlt eine halbe
+	 * oder ganze Sekunde spaeter registriert wird, obwohl der Volume Wert richtig
+	 * durchgehen aktualisiert wird. Es wird empfohlen, beim Aufrufen der Methode
+	 * die Dauer auf mind. 3 Sekunden zu setzen, damit das nicht so sehr auffaellt.
+	 */
 	public static void reducePlayingSound(SoundType type, int seconds, boolean delay) {
 	    Clip clip = getSound(type).getClip();
 	    FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -160,7 +166,11 @@ public class SoundHandler {
 		int timer = 0;
 		while (timer < (seconds * 100)) {
 		    AnimationData.vol -= factor;
+		    if (AnimationData.vol < -60f) {
+			AnimationData.vol = -60f;
+		    }
 		    volume.setValue(AnimationData.vol);
+		    ConsoleHandler.print("" + AnimationData.vol, MessageType.GAME);
 		    Menu.sleep(10);
 		    timer++;
 		}
@@ -175,7 +185,11 @@ public class SoundHandler {
 		    @Override
 		    public void changeValues() {
 			AnimationData.vol -= factor;
+			if (AnimationData.vol < -60f) {
+			    AnimationData.vol = -60f;
+			}
 			volume.setValue(AnimationData.vol);
+			ConsoleHandler.print("" + AnimationData.vol, MessageType.GAME);
 		    }
 		    
 		    @Override

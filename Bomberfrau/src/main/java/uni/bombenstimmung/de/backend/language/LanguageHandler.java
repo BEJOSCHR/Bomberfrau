@@ -82,9 +82,11 @@ public class LanguageHandler {
 		String[] ready = {"READY?", "BEREIT?"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
 		
+		String[] ingame_go = {"GO!", "LOS!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);
 		String[] ingame_player = {"Player", "Spielerin"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_PLAYER, ingame_player);
-		String[] ingame_time = {"Time left", "uebrige Zeit"};
+		String[] ingame_time = {"Time left", "übrige Zeit"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_TIME, ingame_time);
 		String[] ingame_rod1 = {"CAUTION!!!", "ACHTUNG!!!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD1, ingame_rod1);
@@ -92,6 +94,8 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD2, ingame_rod2);
 		String[] ingame_rod3 = {"is gonna get ya!", "kommt euch holen!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD3, ingame_rod3);
+		String[] ingame_gameover = {"GAME OVER", "SPIEL VORBEI"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER, ingame_gameover);
 		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);

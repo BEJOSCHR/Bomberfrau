@@ -131,23 +131,23 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
 		    	if(Game.getGameOver()) {
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GAME OVER", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
 		    	switch (Game.getCountdown()) {
 		    	case 1:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 2:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 3:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 4:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(300), "GO!", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GO).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
 			break;
 		case AFTERGAME:
