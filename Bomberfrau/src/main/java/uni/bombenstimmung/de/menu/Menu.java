@@ -423,10 +423,15 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		Settings.setMove_up(e.getKeyCode());
+		if (e.getKeyCode() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		} else {
+		    Settings.setMove_up(e.getKeyCode());
+		}
 		control_up.setText(codeToText(Settings.getMove_up()));
 		control_up.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.getFactor())));
+		control_up.requestFocus();
 	    };
 
 	    public void keyTyped(KeyEvent e) {
@@ -446,10 +451,15 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_down.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		Settings.setMove_down(e.getKeyCode());
-		control_down.setText(codeToText(e.getKeyCode()));
+		if (e.getKeyCode() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		} else {
+		    Settings.setMove_down(e.getKeyCode());
+		}
+		control_down.setText(codeToText(Settings.getMove_down()));
 		control_down.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.getFactor())));
+		control_down.requestFocus();
 	    };
 
 	    public void keyTyped(KeyEvent e) {
@@ -469,10 +479,15 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_left.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		Settings.setMove_left(e.getKeyCode());
-		control_left.setText(codeToText(e.getKeyCode()));
+		if (e.getKeyCode() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		} else {
+		    Settings.setMove_left(e.getKeyCode());
+		}
+		control_left.setText(codeToText(Settings.getMove_left()));
 		control_left.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.getFactor())));
+		control_left.requestFocus();
 	    };
 
 	    public void keyTyped(KeyEvent e) {
@@ -492,10 +507,15 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_right.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		Settings.setMove_right(e.getKeyCode());
-		control_right.setText(codeToText(e.getKeyCode()));
+		if (e.getKeyCode() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		} else {
+		    Settings.setMove_right(e.getKeyCode());
+		}
+		control_right.setText(codeToText(Settings.getMove_right()));
 		control_right.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.getFactor())));
+		control_right.requestFocus();
 	    };
 
 	    public void keyTyped(KeyEvent e) {
@@ -515,10 +535,15 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_bomb.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-		Settings.setPlant_bomb(e.getKeyCode());
-		control_bomb.setText(codeToText(e.getKeyCode()));
+		if (e.getKeyCode() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		} else {
+		    Settings.setPlant_bomb(e.getKeyCode());
+		}
+		control_bomb.setText(codeToText(Settings.getPlant_bomb()));
 		control_bomb.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.getFactor())));
+		control_bomb.requestFocus();
 	    };
 
 	    public void keyTyped(KeyEvent e) {
@@ -774,7 +799,12 @@ public class Menu {
 		if (!checkIp(false))
 		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
-		GraphicsHandler.switchToMenuFromOptions();
+		if (Settings.getMove_up() == 0 || Settings.getMove_down() == 0 || Settings.getMove_left() == 0
+			|| Settings.getMove_right() == 0 || Settings.getPlant_bomb() == 0) {
+		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO2).getContent(), "OK");
+		} else {
+		    GraphicsHandler.switchToMenuFromOptions();
+		}
 	    }
 
 	    @Override

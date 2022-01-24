@@ -62,6 +62,12 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT7, options_txt7);
 		String[] options_btn = {"BACK", "ZURUECK"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPTIONS_BTN, options_btn);
+		
+
+		String[] options_info1 = {"Please choose a different key.", "Bitte eine andere Taste waehlen."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_INFO1, options_info1);
+		String[] options_info2 = {"All controls have to be set before leaving.", "Die Steuerung muss vollstaendig belegt sein."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_INFO2, options_info2);
 
 		String[] key_up = {"Up", "Hoch"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_UP, key_up);

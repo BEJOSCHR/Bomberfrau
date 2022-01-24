@@ -21,8 +21,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import uni.bombenstimmung.de.backend.console.ConsoleHandler;
-import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Panes {
@@ -75,9 +73,10 @@ public class Panes {
 	d.pack();
 	double x = GraphicsHandler.getFrame().getLocation().getX();
 	double y = GraphicsHandler.getFrame().getLocation().getY();
-	ConsoleHandler.print("x/y = " + x + "/" + y, MessageType.MENU);
-	d.setLocation((int)(0.5*Settings.getRes_width()+x-0.5*width), (int)(0.5*Settings.getRes_height()+y-0.5*height));
-	//d.setLocationRelativeTo(null);
+	// ConsoleHandler.print("x/y = " + x + "/" + y, MessageType.MENU);
+	d.setLocation((int) (0.5 * Settings.getRes_width() + x - 0.5 * width),
+		(int) (0.5 * Settings.getRes_height() + y - 0.5 * height));
+	// d.setLocationRelativeTo(null);
 	d.setVisible(true);
     }
 
