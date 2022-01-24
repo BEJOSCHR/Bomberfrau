@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Carsten
  *
- * Das Haupt- und Optionsmenï¿½ des Spieles
+ * Das Haupt- und Optionsmenü des Spieles
  */
 
 package uni.bombenstimmung.de.menu;
@@ -56,14 +56,14 @@ public class Menu {
     // "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     /**
-     * Getter fï¿½r Lobby
+     * Getter für Lobby
      */
     public static boolean getIs_host() {
 	return isHost;
     }
 
     /**
-     * Erstellt Swingkomponenten fï¿½r das Hauptmenï¿½
+     * Erstellt Swingkomponenten für das Hauptmenü
      */
     public static void buildMenu() {
 
@@ -145,20 +145,15 @@ public class Menu {
 		    name_info.repaint();
 		}
 		if ((txt.length() < MIN_NAME_LENGTH) && (txt != "?")) {
-		    // name_box.setText(txt.substring(0, MIN_NAME_LENGTH));
-		    // name_box.setText(Settings.getUser_name());
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
 		} else if (txt.length() > MAX_NAME_LENGTH) {
-		    // name_box.setText(txt.substring(0, MAX_NAME_LENGTH));
 		    name_box.setText(Settings.getUser_name());
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
 		    name_info.repaint();
 		} else {
 		    name_info.setText("");
 		    Settings.setUser_name(txt);
-		    // name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(44f *
-		    // Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
 		    name_box.setFont(GraphicsHandler.usedFont(40)
 			    .deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
 		}
@@ -184,7 +179,6 @@ public class Menu {
 	});
 
 	// JTextField ip_box = new JTextField("0.0.0.0");
-	// ip_box = new JTextField(prop.getProperty("ip_address"));
 	ip_box = new JTextField(Settings.getIp());
 	ip_box.setHorizontalAlignment(JTextField.CENTER);
 	ip_box.setFont(GraphicsHandler.usedFont((int) (40 * Settings.getFactor())));
@@ -257,7 +251,7 @@ public class Menu {
      */
     public static void buildOptions() {
 
-	// Der "factor" passt alle Grï¿½ssen und Positionen der Auflï¿½sung an
+	// Der "factor" passt alle Größen und Positionen der Auflösung an
 	Settings.setResolution(Settings.getRes_nr());
 	Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
 
@@ -411,7 +405,7 @@ public class Menu {
 		Settings.setVol_sound(sliderSound.getValue());
 		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
 
-		// wï¿½hrenddessen wird der laufende Sound angepasst
+		// währenddessen wird der laufende Sound angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
 		float vol = VolumeIntToFloat(sliderSound.getValue());
@@ -429,12 +423,6 @@ public class Menu {
 		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
-//		ConsoleHandler.print("control_up: code = " + e.getKeyCode() + " , e.getKeyChar() = " + e.getKeyChar()
-//			+ " , int = " + (int) (e.getKeyChar()), MessageType.MENU);
-//		ConsoleHandler.print("control_up: code ext = " + e.getExtendedKeyCode(), MessageType.MENU);
-//		ConsoleHandler.print("getKeyText = " + KeyEvent.getKeyText(e.getKeyCode())
-//			+ ", getExtendedKeyCodeForChar = " + KeyEvent.getExtendedKeyCodeForChar(e.getKeyCode()),
-//			MessageType.MENU);
 		Settings.setMove_up(e.getKeyCode());
 		control_up.setText(codeToText(Settings.getMove_up()));
 		control_up.setFont(GraphicsHandler
@@ -553,8 +541,6 @@ public class Menu {
 	checkBoxFPS.setSelected(Settings.getShow_fps());
 	checkBoxFPS.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		// ConsoleHandler.print("Checkbox=" + checkBoxFPS.isSelected(),
-		// MessageType.MENU);
 		Settings.setShow_fps(checkBoxFPS.isSelected());
 		if (Settings.getShow_fps())
 		    GraphicsHandler.getLabel().setShowFPS(true);
@@ -602,7 +588,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Hauptmenï¿½s
+     * Setzt oder entfernt die Swing Komponenten des Hauptmenüs
      */
     public static void menuComponentsActive(Boolean bool) {
 	if (bool) {
@@ -632,7 +618,7 @@ public class Menu {
     }
 
     /**
-     * Setzt oder entfernt die Swing Komponenten des Optionsmenï¿½s
+     * Setzt oder entfernt die Swing Komponenten des Optionsmenüs
      */
     public static void optionsComponentsActive(Boolean bool) {
 	if (bool) {
@@ -664,11 +650,11 @@ public class Menu {
     }
 
     /*****************************************************************************************************************
-     * INIT MAA MENï¿½
+     * INIT MAA MENÜ
      *****************************************************************************************************************/
 
     /**
-     * MAA des Intros - Vollbild Klick zum ï¿½berspringen
+     * MAA des Intros - Vollbild Klick zum Überspringen
      */
     public static void initMaaIntro() {
 
@@ -676,11 +662,8 @@ public class Menu {
 		MouseActionAreaType.MAA_INTRO, "", 1, Color.WHITE, Color.WHITE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		// ConsoleHandler.print("Wechsel vom Intro zu Menï¿½ per Klick",
-		// MessageType.MENU);
 		AnimationHandler.stopAllAnimations();
 		intro.remove();
-		// GraphicsHandler.switchToMenuFromIntro();
 	    }
 
 	    @Override
@@ -691,9 +674,9 @@ public class Menu {
     }
 
     /**
-     * Knï¿½pfe/MAAs des Hauptmenï¿½s: - Start: ï¿½bergang in die Lobby nach
-     * ï¿½berprï¿½fung von Namen und IP Adresse - Options: ï¿½bergang zu den
-     * Optionen - Exit: Beenden des Spieles
+     * Knöpfe/MAAs des Hauptmenüs: - Start: Übergang in die Lobby nach Überprüfung
+     * von Namen und IP Adresse - Options: Übergang zu den Optionen - Exit: Beenden
+     * des Spieles
      */
     public static void initMaaMainmenu() {
 
@@ -715,7 +698,6 @@ public class Menu {
 			ip_box.setText("0.0.0.0");
 		    Settings.setIp(ip_box.getText());
 		    Settings.saveIni();
-		    // SoundHandler.reduceAllSounds();
 		    GraphicsHandler.switchToLobbyFromMenu();
 		}
 
@@ -761,8 +743,6 @@ public class Menu {
 		Settings.saveIni();
 		ConsoleHandler.print("Quiting game ...", MessageType.MENU);
 
-		// SoundHandler.stopAllSounds();
-		// SoundHandler.reduceLastPlayedSound();
 		GraphicsHandler.shutdownProgram();
 	    }
 
@@ -775,7 +755,7 @@ public class Menu {
     }
 
     /**
-     * Knï¿½pfe/MAAs des Optionsmenï¿½s - Back: zurï¿½ck ins Hauptmenï¿½
+     * Knöpfe/MAAs des Optionsmenüs - Back: zurück ins Hauptmenü
      */
     public static void initMaaOptions() {
 
@@ -806,11 +786,11 @@ public class Menu {
      *****************************************************************************************************************/
 
     /**
-     * Rechnet linearen Werte zwischen min u. max (fï¿½r Lautstï¿½rken) in Float um
+     * Rechnet linearen Werte zwischen min u. max (für Lautstärken) in Float um
      */
     public static float VolumeIntToFloat(int i) {
 	float vol, min = -40F, max = -6F;
-	// Fï¿½r Werte von -36F (fast aus) bis -6F (laut)
+	// für Werte von -36F (fast aus) bis -6F (laut)
 	vol = (float) (min + (max - min) * Math.log10(1 + i * 0.09));
 	if (vol == min)
 	    vol = -80F;
@@ -820,7 +800,7 @@ public class Menu {
     }
 
     /**
-     * ï¿½berprï¿½fung des eingegebenen Namens false, wenn leer oder "?"
+     * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
      */
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
@@ -829,7 +809,6 @@ public class Menu {
 		|| (name_box.getText().length() < MIN_NAME_LENGTH)) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-	    // name_box.setText("");
 	    name_box.requestFocus();
 	    check = false;
 	}
@@ -837,7 +816,7 @@ public class Menu {
     }
 
     /**
-     * ï¿½berprï¿½fung des Musters der eingegebenen IP-Adresse false, wenn nicht
+     * Überprüfung des Musters der eingegebenen IP-Adresse false, wenn nicht
      * folgendes Muster vorliegt: x.x.x.x mit x von 0 bis 255
      */
     private static boolean isValideIp(final String ip) {
@@ -845,8 +824,8 @@ public class Menu {
     }
 
     /**
-     * ï¿½berprï¿½fung der eingegebenen IP-Adresse false, wenn leer oder
-     * ungï¿½ltiges Muster
+     * Überprüfung der eingegebenen IP-Adresse false, wenn leer oder ungültiges
+     * Muster
      */
     private static Boolean checkIp(Boolean ausgabe) {
 	boolean check = true;
@@ -860,8 +839,8 @@ public class Menu {
     }
 
     /**
-     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in groï¿½e um was
-     * weder Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
+     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in große um was weder
+     * Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
      */
     private static String codeToText(int i) {
 
