@@ -90,7 +90,7 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);
 		String[] ingame_player = {"Player", "Spielerin"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_PLAYER, ingame_player);
-		String[] ingame_time = {"Time left", "�brige Zeit"};
+		String[] ingame_time = {"Time left", "uebrige Zeit"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_TIME, ingame_time);
 		String[] ingame_rod1 = {"CAUTION!!!", "ACHTUNG!!!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD1, ingame_rod1);
