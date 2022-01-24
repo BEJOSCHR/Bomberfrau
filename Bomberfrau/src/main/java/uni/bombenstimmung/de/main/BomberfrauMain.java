@@ -23,7 +23,7 @@ import uni.bombenstimmung.de.menu.Settings;
 public class BomberfrauMain {
 	
 	public static final String AUTHOR = "Bombenstimmung - Uni Wuppertal - C2021";
-	public static final String VERSION = "Release - V1.1";
+	public static final String VERSION = "Release - V1.1.1";
 	
 	/**
 	 * Der Start von allem (in diesem Projekt)
