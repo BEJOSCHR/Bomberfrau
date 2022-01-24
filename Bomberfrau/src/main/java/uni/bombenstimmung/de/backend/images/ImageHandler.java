@@ -139,8 +139,10 @@ public class ImageHandler {
 		new LoadedImage("Ingame/Characters/Demon_Walk_Right_Idle.png", ImageType.IMAGE_INGAME_DEMON_RIGHT_IDLE, GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION);
 		
 		//AFTERGAME
-		new LoadedImage("Ingame/new_skin_left.png", ImageType.IMAGE_AFTERGAME_1, 200, 200);
-		new LoadedImage("Ingame/new_skin_left_wasted.png", ImageType.IMAGE_AFTERGAME_2, 200, 200);
+		new LoadedImage("Ingame/Characters/Priest_Idle.png", ImageType.IMAGE_AFTERGAME_1, 200, 200);
+		new LoadedImage("Ingame/Characters/Skeleton_Idle.png", ImageType.IMAGE_AFTERGAME_2, 200, 200);
+		new LoadedImage("Ingame/Characters/Red_Walk_Idle.png", ImageType.IMAGE_AFTERGAME_3, 200, 200);
+		new LoadedImage("Ingame/Characters/Demon_Walk_Idle.png", ImageType.IMAGE_AFTERGAME_4, 200, 200);
 		
 		ConsoleHandler.print("Loaded images ("+images.size()+")", MessageType.BACKEND);
 	}
