@@ -20,6 +20,10 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundHandler;
+import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
@@ -139,7 +143,6 @@ public class Game {
 	Color grayColor = new Color(143,90,90);
 	switch(bgnumber) {
 		case 1:
-		    //FIX Bild für Gras ist anscheinend zu klein...
 		    g.setColor(greenColor);
 		    g.fillRect(0,0,GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		    break;
@@ -166,13 +169,13 @@ public class Game {
 
 	switch(map) {
 		case 1:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_1_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 2:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_2_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 		case 3:
-		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
+		    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), GameData.MAP_3_NAME, xStart+xOffset/4, yStart+50);
 		    break;
 	}
 	GameCounter.drawCounter(g, xStart+xOffset/4, yStart);
@@ -185,20 +188,20 @@ public class Game {
     public static void drawLeftPartOfMap(Graphics g, int anzPlayer) {
 	int counter = 0;
 	int gap = GraphicsHandler.getHeight()/(anzPlayer+(anzPlayer+1));
-	double gapFactor = (double)GraphicsHandler.getHeight()/720.0;
+	double resScale = (double)GraphicsHandler.getHeight()/720.0;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	
 	for(Player i : PlayerHandler.getAllPlayer()) {
-	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), "Spielerin " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
-	    if (i.getName().length() <= 15) {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_PLAYER).getContent() + " " + (i.getId()+1) + ":", 0+(xOffset/4), 0+((counter+(counter+1))*gap));
+	    if (i.getName().length() <= 13) {
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*resScale)));
 	    } else {
-		GraphicsHandler.drawCentralisedText(g, Color.BLACK, (int)Settings.scaleValue(30f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*gapFactor)));
+		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*resScale)));
 	    }
 	    if(i.isDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*gapFactor)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
 	    }
 	    counter++;
 	}
@@ -306,8 +309,24 @@ public class Game {
     }
     
     public static void gameOver() {
+	switch (mapNumber) {
+	case 1:
+	    SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
+	    break;
+	    
+	case 2:
+	    SoundHandler.reducePlayingSound(SoundType.MAP2, 4, false);
+	    break;
+	    
+	case 3:
+	    SoundHandler.reducePlayingSound(SoundType.MAP3, 4, false);
+	    break;
+	    
+	default:
+	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
+	}
 
-	new Animation(50, 1) {
+	new Animation(400, 1) {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
@@ -322,26 +341,7 @@ public class Game {
 	    }
 	    
 	    @Override
-	    public void changeValues() {}
-	    
-	    @Override
 	    public void finaliseValues() {
-		switch (mapNumber) {
-		case 1:
-		    SoundHandler.reducePlayingSound(SoundType.MAP1);
-		    break;
-		    
-		case 2:
-		    SoundHandler.reducePlayingSound(SoundType.MAP2);
-		    break;
-		    
-		case 3:
-		    SoundHandler.reducePlayingSound(SoundType.MAP3);
-		    break;
-		    
-		default:
-		    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
-		}
 		GraphicsHandler.switchToAftergameFromIngame();
 	    }
 	};

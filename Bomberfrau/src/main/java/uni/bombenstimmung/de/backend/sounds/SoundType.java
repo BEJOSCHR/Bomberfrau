@@ -25,6 +25,8 @@ public enum SoundType {
     	COUNTDOWN,
     	GO,
     	
+    	AFTERGAME,
+    	
 	TEST_START;
 	
 }

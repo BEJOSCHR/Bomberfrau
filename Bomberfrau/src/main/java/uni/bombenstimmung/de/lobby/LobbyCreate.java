@@ -246,25 +246,6 @@ public class LobbyCreate {
 		return hochRunterNavigation;
 	}
 	
-	
-	/**
-	 * Gibt die mittige X Koordinate in Abhaengigkeit der Player wieder.
-	 * Fuer den Parameter int i wird die Anzahl der Player benötigt
-	 * @param player	Integer - Die Nummer des Players im Array LobbyCreate.player[]
-	 */
-	public static int getXValueForDraw(int player) {
-		if (numberOfMaxPlayers != 0) {
-			// Dieser Wert, damit der Screen sich variabel für die Anzahl der Player verändert. Die Buttons sind dann aber halt blöd
-//			return (int)(((GraphicsHandler.getWidth()/numberPlayer)/2) + ((GraphicsHandler.getWidth()/numberPlayer)/2)*player*2);
-			return (int)(((GraphicsHandler.getWidth()/4)/2) + ((GraphicsHandler.getWidth()/4)/2)*player*2);
-		}
-
-		else {
-			return 1;	    
-		}
-	}
-
-	
 	/**
 	 *  numberOfMaxPlayers wird neu gesettet, was fuer neu erstellte clients hilfreich ist.
 	 */
@@ -281,7 +262,11 @@ public class LobbyCreate {
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, GraphicsHandler.getWidth(), GraphicsHandler.getHeight());
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
-
+		
+		if (client.isHost()) {
+		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(40), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(), (int)(GraphicsHandler.getWidth()/8 - (Settings.scaleValue(250)/2)), (int)(GraphicsHandler.getHeight()*0.05));
+		}
+		
 		for(int i=0; i < numberOfMaxPlayers; i++) {
 		    if (player[i] != null) {
 			// Malt die fuer den Host zustaendigen Sachen. 
@@ -297,8 +282,9 @@ public class LobbyCreate {
 			}
 
 			try {
-			// Die Parameter für ImageScaling (x,y,hier,hier,null)
+
 			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
+			
 			if (player[i].getisHost() == false) {
 			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
 			}

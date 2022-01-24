@@ -64,13 +64,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public ConnectedClient(boolean sHost, String IP) {
 		host = sHost;
-		//Is the new created Client the host, a new server will be initialized
+		//Wenn das Objekt kein Host ist, wird ein Host initialisiert.
 		if (host == true) {
 			id = 0;
 			connectedClients = new ConcurrentHashMap<SocketAddress, Integer>();
 			idStack = new Stack<Integer>();
 			addIdsToStack();
-			//hostGetPublicIP();
 			acceptor = new NioDatagramAcceptor();
 			getAcceptor().setHandler(new ServerHandler(this));
 			getAcceptor().getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
@@ -81,28 +80,25 @@ public class ConnectedClient extends IoHandlerAdapter{
 			try {
 				getAcceptor().bind(new InetSocketAddress(ConnectionData.PORT));
 				ConsoleHandler.print("UDP Server started at "+hostGetPublicIP()+":"+ConnectionData.PORT, MessageType.BACKEND);
-				
 			} catch (IOException e) {
-				
+				ConsoleHandler.print("Failed to start server, exiting ...", MessageType.BACKEND);
 				e.printStackTrace();
 			}
-		//Is the new created Client not the host, a new UDP Client will be initialized
+		//Wenn das Objekt kein Host ist, wird ein Client initialisiert.
 		} else if (host == false && IP != null) { 
 			connector = new NioDatagramConnector();
 			connector.setHandler(new ClientHandler(this));
 			connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
 			connector.setConnectTimeoutMillis(20000);
+			
 			ConnectFuture connFuture = connector.connect(new InetSocketAddress(IP, ConnectionData.PORT));
 			connFuture.awaitUninterruptibly();
 			connFuture.addListener(new IoFutureListener<ConnectFuture>() {
 			    public void operationComplete(ConnectFuture future) {
-				//ConsoleHandler.print(Boolean.toString(future.isConnected()), MessageType.BACKEND);
 				if (future.isConnected()) {
 				    conSession = future.getSession();
 				    try {
-					//ConsoleHandler.print("Test", MessageType.BACKEND);
-					//sendMessage(conSession);
-					conSession.write("001-");
+					conSession.write("001-");	//Start der Verbindung zwischen Client und Server
 				    } catch (Exception e) {
 					e.printStackTrace();
 				    }
@@ -111,26 +107,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 				}
 			    }
 			});
-		}
-		else {
+		} else {
 		    ConsoleHandler.print("The IP-Address cannot be null!", MessageType.BACKEND);
 		    return;
 		}
 	}
 
-	/**
-	 * Debug Methode, die vor finaler Version gelöscht werden soll!
-	 * @param session
-	 * @throws InterruptedException
-	 */
-	private void sendMessage(IoSession session) throws InterruptedException {
-		for (int i = 0; i < 5; i++) {
-			String message = "000-Hallo" + i;
-			session.write(message);
-			Thread.sleep(20);
-		}
-	}
-	
 	/**
 	 * Verarbeitet alle erhaltenen Nachrichten vom Server oder Client.
 	 * Das ist das Verbindungsstück zwischen dem Server-Client-Backend und dem Spiel selber. 
@@ -141,82 +123,69 @@ public class ConnectedClient extends IoHandlerAdapter{
 	 */
 	public void receivedMessage(int messageID, String message, IoSession session) {	
 		switch(messageID) {
-		//000 = Debug Message 
+		//000 = Debug Message
 		//Format: "000-[Message]"
 		case 000:
-		    	String[] pMessage000 = message.split("-");
-		    	ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
-		    	break;
-		//001 = Wird gesendet, wenn eine neue Session mit einem Client erstellt wird. 
+		    String[] pMessage000 = message.split("-");
+		    ConsoleHandler.print("DEBUG MESSAGE: " + pMessage000[1], MessageType.BACKEND);
+		    break;
+		    
+		//001 = Wird vom Server empfangen, wenn eine neue Session mit einem Client erstellt wird. 
 		//Format: "001-"
 		case 001:
-		    	addClientToList(session);
-		    	session.write("901-");
-		    	break;
-		//002 = Wird vom Client gesendet, um eine ID zu erhalten.
+		    addClientToList(session);
+		    session.write("901-");
+		    break;
+		    
+		//002 = Wird vom Server empfangen, um eine ID an den Client zu senden.
 		case 002:
-			if (containsClientKey(session.getRemoteAddress())) {
-				for (SocketAddress i : getConnectedClients().keySet()) {
-					if (i == session.getRemoteAddress()) {
-						sendMessage(session, "900-"+ Integer.toString(getConnectedClients().get(i)));
-					}
-					else {
-						ConsoleHandler.print("Error", MessageType.BACKEND);
-					}
+		    if (containsClientKey(session.getRemoteAddress())) {
+			for (SocketAddress i : getConnectedClients().keySet()) {
+			    if (i == session.getRemoteAddress()) {
+					sendMessage(session, "900-"+ Integer.toString(getConnectedClients().get(i)));
+				} else {
+					ConsoleHandler.print("Error", MessageType.BACKEND);
 				}
-			} else {
-				ConsoleHandler.print("Client with remote address: " + session.getRemoteAddress() + " is not in HashMap", MessageType.BACKEND);
 			}
-			break;
+		    } else {
+			ConsoleHandler.print("Client with remote address: " + session.getRemoteAddress() + " is not in HashMap", MessageType.BACKEND);
+		    }
+		    break;
+		    
 		//003 = Ping Anfrage an den Server.
 		case 003:
-			String[] pMessage003 = message.split("-");
-			sendMessage(session, "903-" + pMessage003[1]);
-			break;
-		//007 = Wird gesendet, wenn ein Client das Spiel verlässt. 
+		    String[] pMessage003 = message.split("-");
+		    sendMessage(session, "903-" + pMessage003[1]);
+		    break;
+		    
+		//007 = Wird vom Server empfangen, wenn ein Client das Spiel verlässt. 
 		case 007:
-		    	removeClient(session);
-		    	break;
+		    removeClient(session);
+		    break;
+		    
 		//010 = Wird nie aufgerufen. Muss an den Server gesendet werden, wenn es zu viele Spieler gibt. 
 		case 010:
-		    	session.closeNow();
-		    	break;
-		//100 = Position eines Spieler wird gesendet und an alle anderen Spieler gebroadcastet. 
-		//Format: "100-[ID]-[X-Cord]-[Y-Cord]"
-		case 100:
-		    message.split("-");
-			//sendMessageToAllClients("202-"+pMessage100[1]+"-"+pMessage100[2]+"-"+pMessage100[3]);
-			break;	
-		//101 = Position einer gesetzen Bombe wird gesendet und an alle anderen Spieler gebroadcastet. 
-		//Format: "101-[ID-OF-BOMB-PLANTER]-[X-Cord]-[Y-Cord]"
-		case 101:
-		    message.split("-");
-			//sendMessageToAllClients("203-"+pMessage101[1]+"-"+pMessage101[2]+"-"+pMessage101[3]);
-			//sendMessageToAllClients(message);
-			break;	
-			
-		//ENDE DER SERVER-FAELLE
-			
-		//201 = Erstelle ein neues Spieler-Objekt
-		//Format: "201-//TODO"
-		case 201:
-			//TODO: Neues Spielerobjekt erzeugen
-			break;	
+		    session.closeNow();
+		    break;
+		    
+		/////////////////////////////////////////// 200-299 Ingame Cases ////////////////////////////////////////////////////////
+		    
 		//202 = Setze die Position eines Players. (Client)
 		//Format: "202-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 202:
-			String[] pMessage202 = message.split("-");
-			if (id != Integer.parseInt(pMessage202[1])) {
-			    if (Integer.parseInt(pMessage202[4]) == GraphicsHandler.getHeight()) {
-				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]), Integer.parseInt(pMessage202[5]));
+		    String[] pMessage202 = message.split("-");
+		    if (id != Integer.parseInt(pMessage202[1])) {
+			if (Integer.parseInt(pMessage202[4]) == GraphicsHandler.getHeight()) {
+			    PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(Integer.parseInt(pMessage202[2]), Integer.parseInt(pMessage202[3]), Integer.parseInt(pMessage202[5]));
 			    } else {
 				PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage202[1])).setDisplayCoordinates(
 					(int)( (  Double.parseDouble(pMessage202[2])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
 					(int)( (  Double.parseDouble(pMessage202[3])  /  ( Double.parseDouble(pMessage202[4]) / (double)GraphicsHandler.getHeight()  )  )   + 0.5 ),
 					Integer.parseInt(pMessage202[5]));
 			    }
-			}
-			break;	
+		    	}	
+		    break;
+		    
 		//203 = Setze die Position eines Players. (Server)
 		//Format: "203-[ID]-[X-Cord]-[Y-Cord]-[SCREEN-HEIGHT]-[PLAYER-DIRECTION]"
 		case 203:
@@ -233,6 +202,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			}
 			this.sendMessageToAllClients("202-" + pMessage203[1] + "-" + pMessage203[2] + "-" + pMessage203[3] + "-" + pMessage203[4] + "-" + pMessage203[5]);
 			break;
+			
 		//204 = Bombe legen (Client)
 		//Format: "204-[ID]"
 		case 204:
@@ -241,6 +211,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage204[1])).actionPlantBomb();
 		    }
 		    break;
+		    
 		//205 = Bombe legen (Server)
 		//Format: "205-[ID]"
 		case 205:
@@ -249,6 +220,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage205[1])).actionPlantBomb();
 		    }
 		    break;
+		    
 		//206 = Signalisiere, dass Player tot ist. (Client)
 		//Format: "206-[ID-OF-DEAD-PLAYER]"
 		case 206:
@@ -257,6 +229,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage206[1])).setDead(true);
 		    }
 		    break;
+		    
 		//207 = Signalisiere, dass Player tot ist. (Server)
 		//Format: "207-[ID-OF-DEAD-PLAYER]"
 		case 207:
@@ -265,6 +238,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 			PlayerHandler.getAllPlayer().get(Integer.parseInt(pMessage207[1])).setDead(true);
 		    }
 		    break;
+		    
 		//208 = Spawnt die Items 
 		//Format: "208-[X-Cord]-[Y-Cord]-[FieldContent]"
 		case 208:
@@ -275,22 +249,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    
 		    Game.changeFieldContent(item, x, y);
 		    break;
-		//209 = 
-		//Format: 
-		case 209:
-		    message.split("-");
-		    
-		    break;
-		//300 = Starte das Spiel
-		//Format: "300"
-		case 300:
-			//TODO: Starte Spiel
-			break;
-		//400 = Erhalte die Nachricht vom Server mit der ID für den Client
 		
 		/////////////////////////////////////////// 500-599 Lobby Cases ////////////////////////////////////////////////////////
 			
-
 		//501 = Adde neuen Player im LobbyCreate.player[] des Hosts/Servers, dann uebergebe die Information von allen anderen Playern an den neu-gejointen,
 		// sodass dieser die in seinem LobbyCreate.player[] hinzufuegen kann. (Cases 503-505)
 		// Abschliessend wird die Information des neu-gejointen Player an alle gebroadcasted, sodass diese den Player auch in ihrem jeweiligen LobbyCreate.player[] adden koennen (Case 506)
@@ -471,28 +432,32 @@ public class ConnectedClient extends IoHandlerAdapter{
 //		    	// numberOfMaxPlayers an alle anderen Clients senden
 //		    	sendMessageToAllClients("506-" + LobbyCreate.numberOfMaxPlayers);
 		    	break;
-		    
+		    	
+		    	/////////////////////////////////////////// 900-999 Client-Cases ////////////////////////////////////////////////////////
+		    	
+		//900 = Setzt die ID vom Client
+		//Format: "900-[ID]"
 		case 900:
 			String[] pMessage900 = message.split("-");
 			int clientID  = Integer.parseInt(pMessage900[1]);
 			this.id = clientID;
 			ConsoleHandler.print("Client: Set ID = " + this.id, MessageType.BACKEND);
-			//GraphicsHandler.switchToLobbyFromMenu();
 			break;
 			
+		//901 = Frage die ID vom Server an.
 		case 901:
-		    	String[] pMessage901 = message.split("-");
 		    	session.write("002-");
 		    	break;
-			//ClientID can be used now be used with .getId
+		    	
 		//903 = Berechne den Ping und gebe diesen aus.
 		case 903:
 			String[] pMessage903 = message.split("-");
         	    	long currentTime = System.currentTimeMillis();
         	    	long startTime = Long.parseLong(pMessage903[1]);
         	    	ping = currentTime-startTime;
-        	    	//ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+        	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
         	    	break;
+        	    	
 		//999 = Wird gesendet, wenn der Server die Verbindung beenden will.
 		//Format: "999"
 		case 999:
@@ -537,7 +502,18 @@ public class ConnectedClient extends IoHandlerAdapter{
 	    }
 	}
 	
-	
+	/**
+	 * Überprüft, ob der Stack leer ist.
+	 * @return - Gibt true oder false zurück
+	 */
+	public boolean isIdStackEmpty() {
+	    if (getIdStack().isEmpty()) {
+		return true; 
+	    } else {
+		return false;
+	    }
+	}
+		
 	/**
 	 * Fügt einen Client der HashMap hinzu
 	 * @param remoteAddress - Remote Addresse des Clients
@@ -557,14 +533,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		}
 	} 
 	
-	public boolean isIdStackEmpty() {
-	    if (getIdStack().isEmpty()) {
-		return true; 
-	    } else {
-		return false;
-	    }
-	}
-		
 	/**
 	 * Ausgabe aller Verbundenen Clients.
 	 */
@@ -601,12 +569,16 @@ public class ConnectedClient extends IoHandlerAdapter{
 		session.closeNow();
 	}
 	
+	/**
+	 * Holt sich die eigene Public IP-Adresse über den Amazon Webservice und gibt diese zurück.
+	 * @return - String mit der Public IP, oder null
+	 */
 	public String hostGetPublicIP() {
 	    try {
-	    URL getIP = new URL("http://checkip.amazonaws.com/");
-	    BufferedReader in = new BufferedReader(new InputStreamReader(getIP.openStream()));
-	    String hostIP = in.readLine();
-	    return hostIP;
+		URL getIP = new URL("http://checkip.amazonaws.com/");
+		BufferedReader in = new BufferedReader(new InputStreamReader(getIP.openStream()));
+		String hostIP = in.readLine();
+		return hostIP;
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -661,14 +633,26 @@ public class ConnectedClient extends IoHandlerAdapter{
 	    return ping;
 	}
 
+	/**
+	 * Gibt den Acceptor des Servers zurück.
+	 * @return acceptor
+	 */
 	public NioDatagramAcceptor getAcceptor() {
 	    return acceptor;
 	}
-
+	
+	/**
+	 * Gibt den Stack zur Verwaltung der IDs zurück.
+	 * @return idStack
+	 */
 	public Stack<Integer> getIdStack() {
 	    return idStack;
 	}
 
+	/**
+	 * Gibt die Hashmap, welche die verbundenen Clients verwaltet, zurück .
+	 * @return connectedClients
+	 */
 	public ConcurrentHashMap<SocketAddress, Integer> getConnectedClients() {
 	    return connectedClients;
 	}

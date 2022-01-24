@@ -25,7 +25,6 @@ import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
-	private static ArrayList<DeadPlayer> playerFromIngame = new ArrayList<DeadPlayer>();
 	private static DeadPlayer clientPlayer;	//aktueller Player
 
 	
@@ -41,9 +40,9 @@ public class DeadPlayerHandler {
     	 * @param host		ob Spieler Host ist
     	 * @param skin		Skin-ID des Players
     	 */
-	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin) {
-	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin));
-    	}
+//	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin) {
+//	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin));
+//    	}
 
         /**
          * Player Datensatz hinzufügen oder einen bestehenden Datensatz anpassen.

@@ -25,10 +25,8 @@ public class LanguageHandler {
 	 * @see LoadedLanguageBlock
 	 */
 	public static void initLLBs() {
-
+		
 		String[] intro_skip = {"<<  Click to skip  >>", "<< Klicken zum Ueberspringen >>"};
-//		String[] intro_skip = {"<<  Click to skip  >>", "<< Klicken zum Überspringen >>"};
-//		String[] intro_skip = {"<<  Click to skip  >>", "<< Klicken zum \u00DCberspringen >>"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INTRO_SKIP, intro_skip);
 
 		String[] menu_txt1 = {"Create", "Erstellen"};
@@ -40,26 +38,19 @@ public class LanguageHandler {
 		String[] menu_info2 = {"max. " + Menu.MAX_NAME_LENGTH + " signs", "max. " + Menu.MAX_NAME_LENGTH + " Zeichen"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO2, menu_info2);
 		String[] menu_info3 = {"invalid IP", "ungueltige IP"};
-//		String[] menu_info3 = {"invalid IP", "ung\u00FCltige IP"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO3, menu_info3);
 		String[] menu_btn2 = {"OPTIONS", "OPTIONEN"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN2, menu_btn2);
 		String[] menu_btn3 = {"EXIT", "ENDE"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_BTN3, menu_btn3);
 		
-//		String[] options_txt1 = {"Resolution:", "Aufloesung:"};
-		String[] options_txt1 = {"Resolution:", "Auflösung:"};
-//		String[] options_txt1 = {"Resolution:", "Aufl\u00F6sung:"};
+		String[] options_txt1 = {"Resolution:", "Aufloesung:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT1, options_txt1);
 		String[] options_fullscreen = {"Fullscreen", "Vollbild"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_FULLSCREEN, options_fullscreen);
-//		String[] options_txt2 = {"Volume Music:", "Lautstaerke Musik:"};
-		String[] options_txt2 = {"Volume Music:", "Lautstärke Musik:"};
-//		String[] options_txt2 = {"Volume Music:", "Lautst\u00E4rke Musik:"};
+		String[] options_txt2 = {"Volume Music:", "Lautstaerke Musik:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT2, options_txt2);
-//		String[] options_txt3 = {"Volume Sound:", "Lautstaerke Sound:"};
-		String[] options_txt3 = {"Volume Sound:", "Lautstärke Sound:"};
-//		String[] options_txt3 = {"Volume Sound:", "Lautst\u00E4rke Sound:"};
+		String[] options_txt3 = {"Volume Sound:", "Lautstaerke Sound:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT3, options_txt3);
 		String[] options_txt4 = {"Controls:", "Steuerung:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT4, options_txt4);
@@ -69,9 +60,7 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT6, options_txt6);
 		String[] options_txt7 = {"Language:", "Sprache:"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPT_TXT7, options_txt7);
-//		String[] options_btn = {"BACK", "ZURUECK"};
-		String[] options_btn = {"BACK", "ZURÜCK"};
-//		String[] options_btn = {"BACK", "ZUR\u00DCCK"};
+		String[] options_btn = {"BACK", "ZURUECK"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_OPTIONS_BTN, options_btn);
 
 		String[] key_up = {"Up", "Hoch"};
@@ -84,18 +73,31 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_KEY_RIGHT, key_right);
 
 		String[] bad_name = {"Please enter a valid name before starting ...", "Bitte vor dem Start einen gueltigen Namen eingeben ..."};
-//		String[] bad_name = {"Please enter a valid name before starting ...", "Bitte vor dem Start einen gültigen Namen eingeben ..."};
-//		String[] bad_name = {"Please enter a valid name before starting ...", "Bitte vor dem Start einen g\u00FCltigen Namen eingeben ..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_NAME, bad_name);
 		String[] bad_ip = {"Please enter an IP before starting ...", "Bitte vor dem Start eine IP eingeben ..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_IP, bad_ip);
 		String[] bad_res = {"resolution to high - switching to fullscreen.", "Die Aufloesung ist zu gross - Wechsel zu Vollbild."};
-//		String[] bad_res = {"resolution to high - switching to fullscreen.", "Die Auflösung ist zu groß - Wechsel zu Vollbild."};
-//		String[] bad_res = {"resolution to high - switching to fullscreen.", "Die Aufl\u00F6sung ist zu gro\u00DF - Wechsel zu Vollbild."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MSG_BAD_RESOLUTION, bad_res);
 		
-		String[] ready = {"READY?", "BEREIT?"};
+		String[] ready = {"READY", "BEREIT"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
+		String[] lobby_ip = {"IP address: ", "IP-Adresse: "};
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_IP, lobby_ip);
+		
+		String[] ingame_go = {"GO!", "LOS!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);
+		String[] ingame_player = {"Player", "Spielerin"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_PLAYER, ingame_player);
+		String[] ingame_time = {"Time left", "übrige Zeit"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_TIME, ingame_time);
+		String[] ingame_rod1 = {"CAUTION!!!", "ACHTUNG!!!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD1, ingame_rod1);
+		String[] ingame_rod2 = {"The ring of death", "Der Ring des Todes"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD2, ingame_rod2);
+		String[] ingame_rod3 = {"is gonna get ya!", "kommt euch holen!"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD3, ingame_rod3);
+		String[] ingame_gameover = {"GAME OVER", "SPIEL VORBEI"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER, ingame_gameover);
 		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);
@@ -109,11 +111,9 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, aftergame_Ranking);
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, aftergame_Ranking);
 		
-		String[] aftergame_bt1 = {"BACK TO MENU", "ZURUECK ZUM MENUE"};
-//		String[] aftergame_bt1 = {"BACK TO MENU", "ZURÜCK ZUM MENÜ"};
-//		String[] aftergame_bt1 = {"BACK TO MENU", "ZUR\u00DCCK ZUM MEN\u00DC"};
+		String[] aftergame_bt1 = {"Back to Menu", "Zurueck zum Menue"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT1, aftergame_bt1);
-		String[] aftergame_bt2 = {"REPEAT", "WIEDERHOLEN"};
+		String[] aftergame_bt2 = {"Back to Lobby", "Zurueck zur Lobby"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT2, aftergame_bt2);
 		String[] aftergame_bt3 = {"EXIT", "ENDE"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT3, aftergame_bt3);
@@ -133,7 +133,7 @@ public class LanguageHandler {
 	
 	/**
 	 * Gibt den LLB zum angegebenen Type zurück (Wenn richtig geladen gibt es für jeden Type einen LLB)
-	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehört
+	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehürt
 	 * @return Den {@link LoadedLanguageBlock} der durch den Type identifiziert wird, falls keiner gefunden wird null
 	 */
 	public static LoadedLanguageBlock getLLB(LanguageBlockType type) {

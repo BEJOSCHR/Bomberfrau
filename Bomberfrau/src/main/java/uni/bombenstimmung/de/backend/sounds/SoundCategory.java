@@ -8,6 +8,8 @@ public enum SoundCategory {
 	MENU_SOUND,
 	INGAME_SOUNDS,
 	
+	AFTERGAME_MUSIC,
+	
 	//...
 	TEST;
 	

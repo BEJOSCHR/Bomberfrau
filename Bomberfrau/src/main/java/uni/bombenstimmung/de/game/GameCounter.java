@@ -17,6 +17,9 @@ import java.awt.Color;
 import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
+import uni.bombenstimmung.de.backend.language.LanguageBlockType;
+import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.menu.Settings;
 
 public class GameCounter implements ActionListener{
     
@@ -74,11 +77,18 @@ public class GameCounter implements ActionListener{
     }
     
     public static void drawCounter(Graphics g, int w, int h) {
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 30, "Time left: " + gametime, w, h+200);
-	GraphicsHandler.drawCentralisedText(g, Color.RED, 30, "R of D: " + ringOfDeathNumber, w, h+300);
+	double resScale = (double)GraphicsHandler.getHeight()/720.0;
+	if (ringOfDeathNumber == 0) {
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_TIME).getContent() + ": " + gametime, w, h+(int)(200*resScale));
+	} else {
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD1).getContent(), w, h+(int)(200*resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD2).getContent(), w, h+(int)(250*resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD3).getContent(), w, h+(int)(300*resScale));
+	}
     }
     
     public static void drawCounterBackground(Graphics g) {
+	double resScale = (double)GraphicsHandler.getHeight()/720.0;
 	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
 	int yStart = GameData.MAP_SIDE_BORDER;
 	int xStart = (GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION)+(xOffset/2);
@@ -86,7 +96,7 @@ public class GameCounter implements ActionListener{
 	int rectWidth = xOffset/2 - 50;
 	
 	g.setColor(Color.BLACK);
-	g.fillRect(xStart+25, yStart+150, rectWidth, 200);
+	g.fillRect(xStart+25, yStart+(int)(150*resScale), rectWidth, (int)(200*resScale));
     }
     
     public static void resetGameCounter() {
