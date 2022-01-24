@@ -23,7 +23,6 @@ import uni.bombenstimmung.de.backend.language.LanguageType;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
-import java.awt.Toolkit;
 
 public class Settings {
 
@@ -145,17 +144,17 @@ public class Settings {
     public static float getFactor() {
 	return factor;
     }
-    
+
     /**
-     * "Scalet" den übergebenen Wert entsprechend der Auflösung
-     * Rückgabe als INT für drawImage Methode
+     * "Scalet" den übergebenen Wert entsprechend der Auflösung Rückgabe als INT für
+     * drawImage Methode
      * 
      * @param f steht einen float Wert, es funktioniert aber auch mit double+int
      */
     public static int scaleValue(float f) {
-	return (int)(f*factor);
+	return (int) (f * factor);
     }
-    
+
     /*****************************************************************************************************************
      * SETTER
      *****************************************************************************************************************/
@@ -246,23 +245,20 @@ public class Settings {
 	factor = f;
     }
 
-    
     /**
      * bring das Betriebsystem in Erfahrung
      */
     public static void checkOS() {
 	os = System.getProperty("os.name").toLowerCase();
-	if (os.contains("win")){
+	if (os.contains("win")) {
 	    ConsoleHandler.print("System = Windows (" + os + ")", MessageType.MENU);
-	}
-	else if (os.contains("nix") || os.contains("aix") || os.contains("nux")){
+	} else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) {
 	    ConsoleHandler.print("System = Unix/Linux (" + os + ")", MessageType.MENU);
-	}      
-	else if (os.contains("osx")){
+	} else if (os.contains("osx")) {
 	    ConsoleHandler.print("System = Apple (" + os + ")", MessageType.MENU);
 	}
+	ConsoleHandler.print("Default Encoding = " + System.getProperty("file.encoding"), MessageType.MENU);
     }
-    
 
     /**
      * Entsprechend der Auswahl der ComboBox für die Auflösung im Optionsmenü werden
@@ -300,7 +296,7 @@ public class Settings {
 
 	GraphicsHandler.setWidth(res_width);
 	GraphicsHandler.setHeight(res_height);
-	
+
 	// folgende Abfrage verhindert die Auswahl einer zu hohen Auflösung
 	if (res_width > res_width_max) {
 	    res_width = res_width_max;
@@ -322,7 +318,6 @@ public class Settings {
 	GraphicsHandler.setWidth(res_width);
 	GraphicsHandler.setHeight(res_height);
     }
-    
 
 //    public static void setAllVolumes() {
 //
@@ -349,11 +344,10 @@ public class Settings {
 //	SoundHandler.setCategoryVolume(SoundCategory.INGAME_SOUNDS, -0.2D + Settings.getIni_VolSound()/125);
 //    }
 
-    
     /*****************************************************************************************************************
      * INI METHODEN
      *****************************************************************************************************************/
-    
+
     /**
      * Gibt alle Werte aus der ini-Datei im Terminal aus
      */
@@ -416,9 +410,8 @@ public class Settings {
     }
 
     /**
-     * Besorgt die Monitorauflösung. Dabei wird berücksichtigt:
-     * - mehrere Monitore
-     * - Position des Fensters (durch die aktuelle Mauszeigerposition)
+     * Besorgt die Monitorauflösung. Dabei wird berücksichtigt: - mehrere Monitore -
+     * Position des Fensters (durch die aktuelle Mauszeigerposition)
      */
     public static void getMonitorResoltion() {
 
@@ -458,40 +451,46 @@ public class Settings {
 //	ConsoleHandler.print("resolution (screen with mouse new): " + res_width_max + " x " + res_height_max, MessageType.MENU);
 //	ConsoleHandler.print("*************************************************", MessageType.MENU);
 //	
-	
+
 	int i;
 	GraphicsDevice myDevice = MouseInfo.getPointerInfo().getDevice();
 	ConsoleHandler.print("***************************************************", MessageType.MENU);
-        ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
+	ConsoleHandler.print("Device with Mouse = " + myDevice, MessageType.MENU);
 	ConsoleHandler.print("***************************************************", MessageType.MENU);
-        
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice[] gs = ge.getScreenDevices();
+
+	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	GraphicsDevice[] gs = ge.getScreenDevices();
 	double[] scalingWidth = new double[gs.length];
 	double[] scalingHeight = new double[gs.length];
 	int myScreenIndex = 0;
-	
-        for (i = 0; i < gs.length; i++) {
-            ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth() + " x " + gs[i].getDisplayMode().getHeight(), MessageType.MENU);
-            scalingWidth[i] = gs[i].getDisplayMode().getWidth() / (double) gs[i].getDefaultConfiguration().getBounds().width;
-    	    ConsoleHandler.print("Scaling Factor Width:  " + scalingWidth[i], MessageType.MENU);
-    	    scalingHeight[i] = gs[i].getDisplayMode().getHeight() / (double) gs[i].getDefaultConfiguration().getBounds().height;
-    	    ConsoleHandler.print("Scaling Factor Height: " + scalingHeight[i], MessageType.MENU);
-    	    if (gs[i].equals(myDevice)) myScreenIndex = i;
-    	    ConsoleHandler.print("***************************************************", MessageType.MENU);
-        }
-        
-        res_width_max = gs[myScreenIndex].getDisplayMode().getWidth();
-        res_height_max = gs[myScreenIndex].getDisplayMode().getHeight();
-	res_width_max = (int)(res_width_max/scalingWidth[myScreenIndex]);
-	res_height_max = (int)(res_height_max/scalingHeight[myScreenIndex]);
+
+	for (i = 0; i < gs.length; i++) {
+	    ConsoleHandler.print("Screen " + i + " Resolution: " + gs[i].getDisplayMode().getWidth() + " x "
+		    + gs[i].getDisplayMode().getHeight(), MessageType.MENU);
+	    scalingWidth[i] = gs[i].getDisplayMode().getWidth()
+		    / (double) gs[i].getDefaultConfiguration().getBounds().width;
+	    ConsoleHandler.print("Scaling Factor Width:  " + scalingWidth[i], MessageType.MENU);
+	    scalingHeight[i] = gs[i].getDisplayMode().getHeight()
+		    / (double) gs[i].getDefaultConfiguration().getBounds().height;
+	    ConsoleHandler.print("Scaling Factor Height: " + scalingHeight[i], MessageType.MENU);
+	    if (gs[i].equals(myDevice))
+		myScreenIndex = i;
+	    ConsoleHandler.print("***************************************************", MessageType.MENU);
+	}
+
+	res_width_max = gs[myScreenIndex].getDisplayMode().getWidth();
+	res_height_max = gs[myScreenIndex].getDisplayMode().getHeight();
+	res_width_max = (int) (res_width_max / scalingWidth[myScreenIndex]);
+	res_height_max = (int) (res_height_max / scalingHeight[myScreenIndex]);
 	ConsoleHandler.print("Using this Resolution:", MessageType.MENU);
-	ConsoleHandler.print("Monitor " + myScreenIndex + " with Scaling " + scalingWidth[myScreenIndex] + "/" + scalingHeight[myScreenIndex]
-		+ " : " + res_width_max + " x " + res_height_max , MessageType.MENU);
+	ConsoleHandler.print(
+		"Monitor " + myScreenIndex + " with Scaling " + scalingWidth[myScreenIndex] + "/"
+			+ scalingHeight[myScreenIndex] + " : " + res_width_max + " x " + res_height_max,
+		MessageType.MENU);
 	ConsoleHandler.print("***************************************************", MessageType.MENU);
-	
+
     }
-    
+
     /**
      * Prüft anfangs die Existenz der ini-Datei. Ist sie vorhanden, werden die Werte
      * ausgelesen. Falls nicht, wird eine Datei mit Standard-Werten erstellt.
