@@ -43,6 +43,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
     
     public static void initAftergameButtons(){
 	
+	//Back to Menu Button
 	mma_aftergame_1 = new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, 300, 100,
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
@@ -55,12 +56,18 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	    		LobbyCreate.client.getAcceptor().dispose();
 	    		ConsoleHandler.print("Server disposed " + LobbyCreate.client.getAcceptor().isDisposed() + " ... ", MessageType.BACKEND);
 	    	    }
+	    	    else {
+			LobbyCreate.client.getAcceptor().dispose();
+	    	    }
 	    	}
 	    	else {
 	    	    // Wenn der Client nicht alleine in der Session ist
         	    if (LobbyCreate.numberOfMaxPlayers > 1) {
         		LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(), "512-" + LobbyCreate.client.getId());
         	    	LobbyCreate.client.getConnector().dispose();
+        	    }
+        	    else {
+			LobbyCreate.client.getConnector().dispose();
         	    }
 	    	}
 	    	
@@ -79,7 +86,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	    }
 	};
 	
-	//REPEAT
+	//Back to Lobby Button
 	mma_aftergame_2 = new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, 300, 100,
 		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
 	    @Override
@@ -89,8 +96,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		//Nur der Host darf eine neue Runde starten. Clients wechseln in die Lobby
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
 		    GraphicsHandler.switchToLobbyFromAftergame();
-		    LobbyCreate.client.sendMessageToAllClients("600-");
-
+		    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("600-");
 		}
 
 	    }
@@ -111,6 +117,7 @@ public class AftergameButtons extends MouseActionAreaHandler{
 		//Wenn Host EXIT druekt, sollen alle anderen Spieler ins Menu wechseln und das Programm vom Host wird beendet.
 	    	if (DeadPlayerHandler.getClientPlayer().isHost()) {
 	    	    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("602-");
+	    	    DeadPlayerHandler.getClientPlayer().getCC().getAcceptor().dispose();
 	    	    GraphicsHandler.shutdownProgram();
 	    	}
 	    	//Wenn ein Client EXIT druekt, soll der Host über das Verlassen informiert weden und das Programm wird beendet.

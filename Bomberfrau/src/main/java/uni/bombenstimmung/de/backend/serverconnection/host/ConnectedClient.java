@@ -403,15 +403,19 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//Format: "600-"    	
 		case 600: 
 		    	GraphicsHandler.switchToLobbyFromAftergame();
-		    	break;    	
+		    	break;    
+		    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
 		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
 		case 601: 
 		    	String[] pMessage601 = message.split("-");
 		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4]);
 		    	break;
-		    	
+		    
+		//602 = Wird aufgerufen, wenn Der Host EXIT druekt
+		//Format: "602-"
 		case 602: 
+		    	DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
 		    	GraphicsHandler.switchToMenuFromAftergame();
 		    	break;
 		
