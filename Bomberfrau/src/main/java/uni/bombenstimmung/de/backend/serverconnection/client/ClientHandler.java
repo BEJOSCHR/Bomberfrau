@@ -43,11 +43,8 @@ public class ClientHandler extends IoHandlerAdapter implements Runnable{
 	public void sessionOpened(IoSession session) throws Exception {
 		ConsoleHandler.print("Client connected with Server" + session.getRemoteAddress(), MessageType.BACKEND);
 		try {
-			//session.write((String) "001-");			//Sende 001 zum Server um den Client der HashMap des Servers hinzuzufügen.
 			client.setSession(session);
-			Thread.sleep(50);
-			//session.write((String) "002-");			//Sende 002 um die Client ID vom Server zu erhalten.
-			Thread.sleep(50);
+			Thread.sleep(100);
 			Thread pingThread = new Thread (this);
 			pingThread.start();
 		} catch (Exception e) {
