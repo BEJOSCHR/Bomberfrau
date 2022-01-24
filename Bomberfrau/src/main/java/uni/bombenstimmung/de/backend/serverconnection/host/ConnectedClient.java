@@ -454,7 +454,7 @@ public class ConnectedClient extends IoHandlerAdapter{
         	    	long currentTime = System.currentTimeMillis();
         	    	long startTime = Long.parseLong(pMessage903[1]);
         	    	ping = currentTime-startTime;
-        	    	ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
+        	    	//ConsoleHandler.print("Ping: " + ping, MessageType.BACKEND);
         	    	break;
         	    	
 		//999 = Wird gesendet, wenn der Server die Verbindung beenden will.
