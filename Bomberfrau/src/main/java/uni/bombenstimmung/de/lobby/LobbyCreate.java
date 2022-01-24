@@ -21,6 +21,7 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.menu.Panes;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class LobbyCreate {
@@ -31,8 +32,7 @@ public class LobbyCreate {
 	static int hochRunterNavigation = 0;
 	public static int numberOfMaxPlayers = 0;
 	public static ConnectedClient client;
-	
-	
+
 	/**
 	 * Wird aufgerufen, wenn der Host die Lobby erstellt.
 	 * @param player	Ein Objekt der Klasse LobbyPlayer. Wird in dem GraphicsHandler erstellt und uebergeben.
@@ -64,7 +64,6 @@ public class LobbyCreate {
 	    // Also von dem Menu aufgerufen wird
 	    if(fromAfterGame == false) {
 		try {
-//			client = new ConnectedClient(false, "127.0.0.1"); // Noch aendern, damit die IP von dem Menu gezogen wird
 		    client = new ConnectedClient(false, Settings.getIp());
 		    Thread.sleep(300);
 		} catch (Exception e) {
@@ -75,10 +74,12 @@ public class LobbyCreate {
 	    // Eigentlich sollte der gejointe Player nie Host sein!
 	    if (client.getId() != -1) {
 		client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
+		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(), "OK");
 		initializeImages();
 	    }
 	    else {
 		ConsoleHandler.print("There is no reachable server, switching back to Lobby ...", MessageType.BACKEND);
+		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_JOIN).getContent(), "OK");
 		GraphicsHandler.switchToMenuFromLobby();
 		if (client.getSession() != null) {
 		    client.getConnector().dispose();
@@ -86,16 +87,10 @@ public class LobbyCreate {
 	    }
 	}
 	
-//	public static void vomAfterGame(LobbyPlayer player, boolean isHost) {
-//	    
-//	    client.sendMessage(client.getSession(), "501-" + client.getId() + "-" + player.getName() + "-" + player.getisHost());
-//	    initializeImages();
-//	    
-//	}
-	
 	
 	/**
-	 * Wird aufgerufen, wenn der Host seinen Clients mitteilt, dass ein neuer Player der Lobby gejoint ist, sodass diese auf ihrem lokalen Rechner diese darstellen koennen.
+	 * Wird aufgerufen, wenn der Host seinen Clients mitteilt, dass ein neuer Player der Lobby gejoint ist, 
+	 * sodass diese auf ihrem lokalen Rechner diese darstellen koennen.
 	 * Diese Methode muss natuerlich vorher auch vom Host aufgerufen werden, damit dieser auch lokal die Player speichert.
 	 * @param id		Die ID von zu erstellenden Player (Muss auch der ID des Players im ConnectedClient client entsprechen)
 	 * @param name		Der Name des zu erstellenden Players
@@ -116,17 +111,15 @@ public class LobbyCreate {
 		if(numberOfMaxPlayers < 4) {
 		    numberOfMaxPlayers++;	
 		}
-		
 	}
-
 	
 	/**
 	 * Laed alle Images der Mapauswahl in einem Array. Die Mapauswahl wird vom Host gesteuert.
 	 */
 	public static void initializeImages() {
-		LobbyCreate.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
-		LobbyCreate.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
-		LobbyCreate.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		LobbyCreate.mapSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAP_1);
+		LobbyCreate.mapSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAP_2);
+		LobbyCreate.mapSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_MAP_3);
 	}
 	
 	
@@ -222,7 +215,8 @@ public class LobbyCreate {
 	
 	
 	/**
-	 * Ist fuer die Navigation mit Pfeiltasten gedacht, dass jede Auswahl (Skin, Map, Start, Lobby verlassen) mit den Hoch-Runter Pfeiltasten gesteuert werden kann.
+	 * Ist fuer die Navigation mit Pfeiltasten gedacht, dass jede Auswahl (Skin, Map, Start, Lobby verlassen)
+	 * mit den Hoch-Runter Pfeiltasten gesteuert werden kann.
 	 * Diese Methode wird aufgerufen, wenn die naechste Auswahl (unten) mit den Pfeiltasten ausgewaehlt wird.
 	 */
 	public static void setIncrementHochRunterNavigation() {
@@ -264,36 +258,40 @@ public class LobbyCreate {
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
 		
 		if (client.isHost()) {
-		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(40), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(), (int)(GraphicsHandler.getWidth()/8 - (Settings.scaleValue(250)/2)), (int)(GraphicsHandler.getHeight()*0.05));
+		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(40), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(),
+			    (int)(GraphicsHandler.getWidth()/8 - (Settings.scaleValue(250)/2)), (int)(GraphicsHandler.getHeight()*0.05));
 		}
 		
 		for(int i=0; i < numberOfMaxPlayers; i++) {
 		    if (player[i] != null) {
 			// Malt die fuer den Host zustaendigen Sachen. 
 			if (player[i].getisHost() == true) {
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), (int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
-				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
+				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), 
+					(int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
+				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), 
+					(int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
 			}
 			// Loest den viel zu grossen Namen, bei einem Namen unter 3 Zeichen
 			if(player[i].getName().length() < 3) {
 			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
 			} else {
-			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(300/player[i].getName().length()), player[i].getName(), 
+				    GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.2));    
 			}
 
 			try {
 
-			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28), Settings.scaleValue(250), Settings.scaleValue(250), null);
+			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28),
+				Settings.scaleValue(250), Settings.scaleValue(250), null);
 			
 			if (player[i].getisHost() == false) {
-			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
+			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), 
+				    GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
 			}
 			} catch(Exception e) {
 			    e.printStackTrace();
 			}
 		}
-//			GraphicsHandler.drawCentralisedText(g, Color.WHITE, 30, player[i].toString(), GraphicsHandler.getWidth()/4, GraphicsHandler.getHeight()/4 + 40*i);
 		}
 	}
-
 }

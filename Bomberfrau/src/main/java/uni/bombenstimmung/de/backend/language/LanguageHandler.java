@@ -21,7 +21,7 @@ public class LanguageHandler {
 	private static LanguageType activeLanguage = LanguageType.ENGLISH;
 	
 	/**
-	 * Wird am Start aufgerufen und initialisiert alle SprachBlöcke
+	 * Wird am Start aufgerufen und initialisiert alle SprachBlï¿½cke
 	 * @see LoadedLanguageBlock
 	 */
 	public static void initLLBs() {
@@ -83,12 +83,16 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
 		String[] lobby_ip = {"IP address: ", "IP-Adresse: "};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_IP, lobby_ip);
+		String[] lobby_full = {"The lobby is full! Returning to main menu...", "Die Lobby ist voll! Zurueck ins Hauptmenu..."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_FULL, lobby_full);
+		String[] lobby_join = {"This lobby does not exist! Returning to main menu...", "Diese Lobby existiert nicht! Zurueck ins Hauptmenu..."};
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_JOIN, lobby_join);
 		
 		String[] ingame_go = {"GO!", "LOS!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);
 		String[] ingame_player = {"Player", "Spielerin"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_PLAYER, ingame_player);
-		String[] ingame_time = {"Time left", "übrige Zeit"};
+		String[] ingame_time = {"Time left", "ï¿½brige Zeit"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_TIME, ingame_time);
 		String[] ingame_rod1 = {"CAUTION!!!", "ACHTUNG!!!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD1, ingame_rod1);
@@ -122,8 +126,8 @@ public class LanguageHandler {
 	}
 	
 	/**
-	 * Fügt den LLB zur languageBlocks Liste hinzu (Wird eigentlich nur aus einem LLB aufgerufen)
-	 * @param llb - Der {@link LoadedLanguageBlock} der hinzugefügt werden soll
+	 * Fï¿½gt den LLB zur languageBlocks Liste hinzu (Wird eigentlich nur aus einem LLB aufgerufen)
+	 * @param llb - Der {@link LoadedLanguageBlock} der hinzugefï¿½gt werden soll
 	 */
 	public static void addLLB(LoadedLanguageBlock llb) {
 		
@@ -132,8 +136,8 @@ public class LanguageHandler {
 	}
 	
 	/**
-	 * Gibt den LLB zum angegebenen Type zurück (Wenn richtig geladen gibt es für jeden Type einen LLB)
-	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehürt
+	 * Gibt den LLB zum angegebenen Type zurï¿½ck (Wenn richtig geladen gibt es fï¿½r jeden Type einen LLB)
+	 * @param type - Der {@link LanguageBlockType} zu dem der gesuchte LLB gehï¿½rt
 	 * @return Den {@link LoadedLanguageBlock} der durch den Type identifiziert wird, falls keiner gefunden wird null
 	 */
 	public static LoadedLanguageBlock getLLB(LanguageBlockType type) {
