@@ -28,10 +28,7 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
-		// LOBBY
-		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
-			LobbyButtons.keyIsPressed(keyCode);
-		}
+
 		if(GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
 		    PlayerHandler.handleKeyEventPressed(keyCode);
 		}

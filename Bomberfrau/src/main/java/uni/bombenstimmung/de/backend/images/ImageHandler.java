@@ -36,14 +36,14 @@ public class ImageHandler {
 		// Arrow Location: https://pixabay.com/illustrations/arrow-choose-select-next-button-1217949/
 		new LoadedImage("Lobby/arrow-Left.png", ImageType.IMAGE_LOBBY_ARROW_LEFT);
 		new LoadedImage("Lobby/arrow-Right.png", ImageType.IMAGE_LOBBY_ARROW_RIGHT);
-		new LoadedImage("Lobby/MapSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_1);
-		new LoadedImage("Lobby/MapSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_2);
-		new LoadedImage("Lobby/MapSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_MAPSELECTION_PLATZHALTER_3);
+		new LoadedImage("Lobby/Map_1.png", ImageType.IMAGE_LOBBY_MAP_1);
+		new LoadedImage("Lobby/Map_2.png", ImageType.IMAGE_LOBBY_MAP_2);
+		new LoadedImage("Lobby/Map_3.png", ImageType.IMAGE_LOBBY_MAP_3);
 		
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_1.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_1);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_2.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_2);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_3.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_3);
-		new LoadedImage("Lobby/SkinSelection_Platzhalter_4.png", ImageType.IMAGE_LOBBY_SKINSELECTION_PLATZHALTER_4);
+		new LoadedImage("Lobby/Skin_0.png", ImageType.IMAGE_LOBBY_SKIN_0);
+		new LoadedImage("Lobby/Skin_1.png", ImageType.IMAGE_LOBBY_SKIN_1);
+		new LoadedImage("Lobby/Skin_2.png", ImageType.IMAGE_LOBBY_SKIN_2);
+		new LoadedImage("Lobby/Skin_3.png", ImageType.IMAGE_LOBBY_SKIN_3);
 		//https://toppng.com/photo/99910/green-check-mark
 		new LoadedImage("Lobby/checkmark.png", ImageType.IMAGE_LOBBY_CHECKMARK);
 		
