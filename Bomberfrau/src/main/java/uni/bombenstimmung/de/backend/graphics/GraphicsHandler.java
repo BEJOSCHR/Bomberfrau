@@ -429,13 +429,13 @@ public class GraphicsHandler {
 	
 		//ubermittlung der Daten des aller Player
 		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime()); 
+		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime(), PlayerHandler.getAllPlayer().get(i).getSkin()); 
 		}
 		
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
 		    //Host uebermittelt aktuelle Punktzahl an die Clients
 		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
-			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore());
+			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getSkin());
 		    }
 		}
 		else {

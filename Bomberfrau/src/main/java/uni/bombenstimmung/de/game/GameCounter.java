@@ -21,84 +21,92 @@ import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.menu.Settings;
 
-public class GameCounter implements ActionListener{
-    
+public class GameCounter implements ActionListener {
+
     private static int gametime = 240;
     private static int ringOfDeathNumber = 0;
     private Timer gameTimer;
     private static int clock = 0;
-    
+
     public GameCounter() {
-	gameTimer = new Timer(1000,this);
+	gameTimer = new Timer(1000, this);
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-	    if(Game.getGameOver() == true) {
-		gameTimer.stop();
-		gametime = 0;
-	    }else {
-		if (gametime == 0 && (ringOfDeathNumber < 6)) {
-		    ringOfDeathNumber++;
-			Game.ringOfDeath(ringOfDeathNumber);
-			gametime = 10;
-		}else {
-		    GameCounter.gametime--;
-		}
+	if (Game.getGameOver() == true) {
+	    gameTimer.stop();
+	    gametime = 0;
+	} else {
+	    if (gametime == 0 && (ringOfDeathNumber < 6)) {
+		ringOfDeathNumber++;
+		Game.ringOfDeath(ringOfDeathNumber);
+		gametime = 10;
+	    } else {
+		GameCounter.gametime--;
 	    }
-	    clock++;
+	}
+	clock++;
     }
-    
+
     public static int getClock() {
 	return clock;
     }
-    
+
     public static int getGameTime() {
 	return gametime;
     }
-    
+
     public void startCounter() {
 	gameTimer.start();
     }
-    
+
     public void stopCounter() {
 	gameTimer.stop();
     }
-    
+
     public void setGameTime(int t) {
 	gametime = t;
     }
-    
+
     public static void setRingOfDeathNumber(int up) {
 	ringOfDeathNumber = up;
     }
-    
+
     public static int getRingOfDeathNumber() {
 	return ringOfDeathNumber;
     }
-    
+
     public static void drawCounter(Graphics g, int w, int h) {
-	double resScale = (double)GraphicsHandler.getHeight()/720.0;
+	double resScale = (double) GraphicsHandler.getHeight() / 720.0;
 	if (ringOfDeathNumber == 0) {
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_TIME).getContent() + ": " + gametime, w, h+(int)(200*resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_TIME).getContent() + ": " + gametime, w,
+		    h + (int) (200 * resScale));
 	} else {
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD1).getContent(), w, h+(int)(200*resScale));
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD2).getContent(), w, h+(int)(250*resScale));
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD3).getContent(), w, h+(int)(300*resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD1).getContent(), w,
+		    h + (int) (200 * resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD2).getContent(), w,
+		    h + (int) (250 * resScale));
+	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD3).getContent(), w,
+		    h + (int) (300 * resScale));
 	}
     }
-    
+
     public static void drawCounterBackground(Graphics g) {
-	double resScale = (double)GraphicsHandler.getHeight()/720.0;
-	int xOffset = GraphicsHandler.getWidth()-(GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION);
+	double resScale = (double) GraphicsHandler.getHeight() / 720.0;
+	int xOffset = GraphicsHandler.getWidth() - (GameData.FIELD_DIMENSION * GameData.MAP_DIMENSION);
 	int yStart = GameData.MAP_SIDE_BORDER;
-	int xStart = (GameData.FIELD_DIMENSION*GameData.MAP_DIMENSION)+(xOffset/2);
-	
-	int rectWidth = xOffset/2 - 50;
-	
+	int xStart = (GameData.FIELD_DIMENSION * GameData.MAP_DIMENSION) + (xOffset / 2);
+
+	int rectWidth = xOffset / 2 - 50;
+
 	g.setColor(Color.BLACK);
-	g.fillRect(xStart+25, yStart+(int)(150*resScale), rectWidth, (int)(200*resScale));
+	g.fillRect(xStart + 25, yStart + (int) (150 * resScale), rectWidth, (int) (200 * resScale));
     }
-    
+
     public static void resetGameCounter() {
 	gametime = 240;
 	ringOfDeathNumber = 0;

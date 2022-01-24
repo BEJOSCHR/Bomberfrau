@@ -25,24 +25,13 @@ import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 
 public class DeadPlayerHandler {
 	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
+	private static ArrayList<DeadPlayer> ranking = new ArrayList<DeadPlayer>();
 	private static DeadPlayer clientPlayer;	//aktueller Player
 
 	
 	public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
 	    clientPlayer = new DeadPlayer(id, name, ipAdress, host, skin, cC);
 	}	
-	
-    	 /**
-    	 * zur uebergabe von PlayerDaten an das Aftergame
-    	 * @param id		ID des Players
-    	 * @param name		Name des Players
-    	 * @param ipAdress	IP-Adresse vom Player
-    	 * @param host		ob Spieler Host ist
-    	 * @param skin		Skin-ID des Players
-    	 */
-//	public static void addDeadPlayerFromIngame(int id, String name, String ipAdress, boolean host, int skin) {
-//	    playerFromIngame.add(new DeadPlayer(id, name, ipAdress, host, skin));
-//    	}
 
         /**
          * Player Datensatz hinzufügen oder einen bestehenden Datensatz anpassen.
@@ -50,13 +39,13 @@ public class DeadPlayerHandler {
          * @param name		Name des Players
          * @param deathTime	Todeszeitpunkt des Players
          */
-	public static void addDeadPlayer(int id, String name, int deathTime) {
+	public static void addDeadPlayer(int id, String name, int deathTime, int skin) {
 	    if (allPlayer.size() == id) {
-		allPlayer.add(id, new DeadPlayer(id, name , deathTime));
+		allPlayer.add(id, new DeadPlayer(id, name , deathTime, skin));
 		ConsoleHandler.print("new Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 	    }
 	    else if(allPlayer.size() > id) {
-		allPlayer.get(id).setDeathPlayer(id, name, deathTime, allPlayer.get(id).getScore());
+		allPlayer.get(id).setDeathPlayer(id, name, deathTime, allPlayer.get(id).getScore(), skin);
 		ConsoleHandler.print("updated Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 	    }
 	    else {
@@ -71,12 +60,12 @@ public class DeadPlayerHandler {
          * @param deathTime	Todeszeitpunkt des Players
          * @param score		Punktzahl des Players
          */
-	public static void updateDeadPlayer(String id, String name, String deathTime, String score) {
+	public static void updateDeadPlayer(String id, String name, String deathTime, String score, String skin) {
 	    if (allPlayer.size() == Integer.parseInt(id)) {
-		    allPlayer.add(Integer.parseInt(id), new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score)));
+		    allPlayer.add(Integer.parseInt(id), new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin)));
 	    }
 	    else if(allPlayer.size() > Integer.parseInt(id)) {
-		allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score));
+		allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin));
 	    }
 	}
 
@@ -84,43 +73,43 @@ public class DeadPlayerHandler {
      	* Punkte für die Partie bestimmen und Plazierung anpassen.
      	*/
 	public static void calculateScore() {
-	    ArrayList<DeadPlayer> Ranking = allPlayer;
+	    ranking = allPlayer;
 
 	    //sortieren nach deathTime
-	    Collections.sort(Ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
 		    return Integer.valueOf(p1.getDeathTime()).compareTo(p2.getDeathTime());
 		}
 	    });
 
 	    //Punktevergabe für die besten drei Player
-	    for(int i = 0; i < Ranking.size(); i++) {
+	    for(int i = 0; i < ranking.size(); i++) {
 		switch(i) {
-		case 0: Ranking.get(0).addScore((Ranking.size()-1)*100);
+		case 0: ranking.get(0).addScore((ranking.size()-1)*100);
 		break;
-		case 1: Ranking.get(1).addScore((Ranking.size()-2)*100);
+		case 1: ranking.get(1).addScore((ranking.size()-2)*100);
 		break;
-		case 2: Ranking.get(2).addScore((Ranking.size()-3)*100);
+		case 2: ranking.get(2).addScore((ranking.size()-3)*100);
 		break;
 		}
 	    }
 
 	    //DeadPlayer sortieren nach Score
-	    Collections.sort(Ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
 		    return Integer.valueOf(p2.getScore()).compareTo(p1.getScore());
 		}
 	    });
 
 	    //Ranking zuweisen
-	    for(int i = 0; i < Ranking.size(); i++) {
-		Ranking.get(i).setRanking(i+1);
+	    for(int i = 0; i < ranking.size(); i++) {
+		ranking.get(i).setRanking(i+1);
 	    }
 
 	    //Ergebnisanzeige Aftergame
-	    for(int i = 0; i < Ranking.size(); i++) {
-		String[] aftergame_name = {Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName(), Ranking.get(i).getRanking()+ ": " + Ranking.get(i).getName()};
-		String[] aftergame_score = {"" + Ranking.get(i).getScore(), "" + Ranking.get(i).getScore()};
+	    for(int i = 0; i < ranking.size(); i++) {
+		String[] aftergame_name = {ranking.get(i).getRanking()+ ": " + ranking.get(i).getName(), ranking.get(i).getRanking()+ ": " + ranking.get(i).getName()};
+		String[] aftergame_score = {"" + ranking.get(i).getScore(), "" + ranking.get(i).getScore()};
 		switch(i) {
 		case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).setLanguageContent(aftergame_score); 
 			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_name); 
@@ -138,25 +127,87 @@ public class DeadPlayerHandler {
 	    }
 
 	    //auf urspruengliche Sortierung zurueksetzen und AllPlayer updaten
-	    Collections.sort(Ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
 		    return Integer.valueOf(p1.getId()).compareTo(p2.getId());
 		}
-	    });
+	    });    
+	    allPlayer = ranking;
 	    
-	    allPlayer = Ranking;
+	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
+		public int compare(DeadPlayer p1, DeadPlayer p2) {
+		    return Integer.valueOf(p1.getRanking()).compareTo(p2.getRanking());
+		}
+	    });
+
 	}
 	
-	public static void drawImages(Graphics g, int x) {
-	    for(int i = 0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
+	public static void drawImages(Graphics g) {
+	    for(int i = 0; i < ranking.size(); i++) {
 		switch(i) {
-		case 0: g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+		case 0: 
+		    switch(ranking.get(i).getSkin()) {
+		    case 0:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			break;
+		    case 1:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			break;
+		    case 2:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			break;
+		    case 3:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			break;
+		    }
 		break;
-		case 1: g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+		case 1:
+		    switch(ranking.get(i).getSkin()) {
+		    case 0:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			break;
+		    case 1:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			break;
+		    case 2:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			break;
+		    case 3:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			break;
+		    }
 		break;
-		case 2: g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-35, 80, 80, null);
+		case 2:
+		    switch(ranking.get(i).getSkin()) {
+		    case 0:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-35, 80, 80, null);
+			break;
+		    case 1:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-35, 80, 80, null);
+			break;
+		    case 2:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-35, 80, 80, null);
+			break;
+		    case 3:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-35, 80, 80, null);
+			break;
+		    }
 		break;
-		case 3: g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-35, 80, 80, null);
+		case 3:
+		    switch(ranking.get(i).getSkin()) {
+		    case 0:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-35, 80, 80, null);
+			break;
+		    case 1:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-35, 80, 80, null);
+			break;
+		    case 2:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-35, 80, 80, null);
+			break;
+		    case 3:
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-35, 80, 80, null);
+			break;
+		    }
 		break;
 		}
 	    }
