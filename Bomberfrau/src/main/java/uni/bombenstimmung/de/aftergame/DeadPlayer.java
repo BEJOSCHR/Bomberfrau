@@ -29,20 +29,21 @@ public class DeadPlayer {
 	
 	
 	//Konstruktor
-	public DeadPlayer(int id, String name, int deathTime) {
+	public DeadPlayer(int id, String name, int deathTime, int skin) {
 	    this.id = id;
 	    this.name = name;
 	    this.deathTime = deathTime;
+	    this.skin = skin;
 	}
 	
-	//alter Konstruktor
-	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin) {
-	    this.id = id;
-	    this.name = name;
-	    this.ipAdress = ipAdress;
-	    this.host = host;
-	    this.skin = skin;		
-	    }
+//	//alter Konstruktor
+//	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin) {
+//	    this.id = id;
+//	    this.name = name;
+//	    this.ipAdress = ipAdress;
+//	    this.host = host;
+//	    this.skin = skin;		
+//	    }
 	
 	//Konstruktor
 	public DeadPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
@@ -54,19 +55,21 @@ public class DeadPlayer {
 	    this.connectedClient = cC;
 	}
 	
-	public DeadPlayer(int id, String name, int deathTime, int score) {
+	public DeadPlayer(int id, String name, int deathTime, int score, int skin) {
 	    this.id = id;
 	    this.name = name;
 	    this.deathTime = deathTime;
 	    this.score = score;
+	    this.skin = skin;
 	}
 
-	public void setDeathPlayer(int id, String name, int deathTime, int score) {
+	public void setDeathPlayer(int id, String name, int deathTime, int score, int skin) {
 	    this.id = id;
 	    this.name = name;
 	    this.deathTime = deathTime;
 	    this.score = score;
 	    this.ranking = 0;
+	    this.skin = skin;
 	}
 	
 	public int getId() {

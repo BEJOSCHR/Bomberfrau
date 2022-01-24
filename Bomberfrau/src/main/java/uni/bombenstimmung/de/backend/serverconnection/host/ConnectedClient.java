@@ -406,10 +406,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	break;    
 		    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
-		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]"
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]-[Skin]"
 		case 601: 
 		    	String[] pMessage601 = message.split("-");
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4]);
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4], pMessage601[5]);
 		    	break;
 		    
 		//602 = Wird aufgerufen, wenn Der Host EXIT druekt
