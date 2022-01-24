@@ -172,7 +172,6 @@ public class SoundHandler {
 			AnimationData.vol = -60f;
 		    }
 		    volume.setValue(AnimationData.vol);
-		    ConsoleHandler.print("" + AnimationData.vol, MessageType.GAME);
 		    Menu.sleep(10);
 		    timer++;
 		}
@@ -191,7 +190,6 @@ public class SoundHandler {
 			    AnimationData.vol = -60f;
 			}
 			volume.setValue(AnimationData.vol);
-			ConsoleHandler.print("" + AnimationData.vol, MessageType.GAME);
 		    }
 		    
 		    @Override
