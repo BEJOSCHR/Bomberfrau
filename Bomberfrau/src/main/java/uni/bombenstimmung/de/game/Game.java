@@ -22,8 +22,6 @@ import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
-import uni.bombenstimmung.de.backend.sounds.SoundHandler;
-import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
