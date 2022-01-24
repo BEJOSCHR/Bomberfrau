@@ -27,6 +27,10 @@ public class Panes {
 
     /**
      * Erstellt ein selbstgemachtes Info Fenster
+     * 
+     * @param txt1 für die Überschrift
+     * @param txt2 für den Text
+     * @param txt3 für die Knopf Beschriftung
      */
     public static void InfoPane(String txt1, String txt2, String btn_txt) {
 	JDialog d = new JDialog((java.awt.Frame) null, txt1, true);
@@ -44,13 +48,13 @@ public class Panes {
 	btn.setBackground(Color.RED);
 	btn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		//ConsoleHandler.print("button 1 pressed", MessageType.MENU);
+		// ConsoleHandler.print("button 1 pressed", MessageType.MENU);
 		d.dispose();
 	    }
 	});
 	panel.add(btn);
 	btn.requestFocus(true);
-        d.getRootPane().setDefaultButton(btn);
+	d.getRootPane().setDefaultButton(btn);
 
 	JLabel label = new JLabel(txt2);
 	label.setHorizontalAlignment(JLabel.CENTER);

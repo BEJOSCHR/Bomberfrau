@@ -127,7 +127,8 @@ public class Menu {
 
 	name_box = new JTextField(Settings.getUser_name());
 	name_box.setHorizontalAlignment(JTextField.CENTER);
-	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+	name_box.setFont(GraphicsHandler.usedFont(40)
+		.deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
 	name_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.44),
 		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
 	name_box.addKeyListener(new KeyListener() {
@@ -156,8 +157,10 @@ public class Menu {
 		} else {
 		    name_info.setText("");
 		    Settings.setUser_name(txt);
-		    //name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(44f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
-		    name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
+		    // name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(44f *
+		    // Settings.getFactor() * (1f - 0.022f * (txt.length() - 7))));
+		    name_box.setFont(GraphicsHandler.usedFont(40)
+			    .deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
 		}
 	    }
 	});
@@ -174,7 +177,8 @@ public class Menu {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
 		}
-		name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+		name_box.setFont(GraphicsHandler.usedFont(40)
+			.deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
 		name_box.repaint();
 	    }
 	});
@@ -243,7 +247,8 @@ public class Menu {
 	GraphicsHandler.getLabel().add(name_info);
 	GraphicsHandler.getLabel().add(ip_box);
 	GraphicsHandler.getLabel().add(ip_info);
-	name_box.setFont(GraphicsHandler.usedFont(40).deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
+	name_box.setFont(GraphicsHandler.usedFont(40)
+		.deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
 	name_box.repaint();
     }
 
@@ -381,7 +386,7 @@ public class Menu {
 	    public void mouseReleased(MouseEvent e) {
 		ConsoleHandler.print("mouseReleased", MessageType.MENU);
 		SoundHandler.getSound(SoundType.OPTIONS).getClip().stop();
-		
+
 		// am Ende wird die 'Sound Category' Lautst�rke angepasst
 		SoundHandler.setCategoryVolume(SoundCategory.MENU_MUSIC, -0.2D + sliderMusic.getValue() / 125);
 		SoundHandler.setCategoryVolume(SoundCategory.INGAME_MUSIC, -0.2D + sliderMusic.getValue() / 125);
@@ -686,9 +691,9 @@ public class Menu {
     }
 
     /**
-     * Kn�pfe/MAAs des Hauptmen�s: - Start: �bergang in die Lobby nach �berpr�fung
-     * von Namen und IP Adresse - Options: �bergang zu den Optionen - Exit: Beenden
-     * des Spieles
+     * Kn�pfe/MAAs des Hauptmen�s: - Start: �bergang in die Lobby nach
+     * �berpr�fung von Namen und IP Adresse - Options: �bergang zu den
+     * Optionen - Exit: Beenden des Spieles
      */
     public static void initMaaMainmenu() {
 
@@ -806,22 +811,25 @@ public class Menu {
     public static float VolumeIntToFloat(int i) {
 	float vol, min = -40F, max = -6F;
 	// F�r Werte von -36F (fast aus) bis -6F (laut)
-	vol = (float)(min + (max-min)*Math.log10(1+i*0.09));
-	if (vol == min) vol = -80F;
-	if (vol > 6F) vol = 6F;
+	vol = (float) (min + (max - min) * Math.log10(1 + i * 0.09));
+	if (vol == min)
+	    vol = -80F;
+	if (vol > 6F)
+	    vol = 6F;
 	return vol;
     }
-    
+
     /**
      * �berpr�fung des eingegebenen Namens false, wenn leer oder "?"
      */
     private static Boolean checkName(Boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
-	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?")) || (name_box.getText().length() < MIN_NAME_LENGTH)) {
+	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))
+		|| (name_box.getText().length() < MIN_NAME_LENGTH)) {
 	    if (ausgabe)
 		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
-	    //name_box.setText("");
+	    // name_box.setText("");
 	    name_box.requestFocus();
 	    check = false;
 	}
@@ -837,8 +845,8 @@ public class Menu {
     }
 
     /**
-     * �berpr�fung der eingegebenen IP-Adresse false, wenn leer oder ung�ltiges
-     * Muster
+     * �berpr�fung der eingegebenen IP-Adresse false, wenn leer oder
+     * ung�ltiges Muster
      */
     private static Boolean checkIp(Boolean ausgabe) {
 	boolean check = true;
@@ -852,8 +860,8 @@ public class Menu {
     }
 
     /**
-     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in gro�e um was weder
-     * Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
+     * Ersetzt Zeichen der Steuerungen wandelt Kleinbuchstaben in gro�e um was
+     * weder Buchstabe noch Zahl ist wird durch ein passendes Wort ersetzt
      */
     private static String codeToText(int i) {
 
