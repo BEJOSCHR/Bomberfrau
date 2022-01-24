@@ -198,11 +198,47 @@ public class Game {
 	    } else {
 		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(25f-((float)i.getName().length())/1.5f), i.getName() , 0+(xOffset/4), 0+((counter+(counter+1))*gap+(int)(25.0*resScale)));
 	    }
-	    if(i.isDead()) {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
-	    } else {
-		g.drawImage(ImageHandler.getImage(ImageType.INGAME_SKIN_01).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+	    switch (i.getSkin()) {
+	    case 0:
+		if(i.isDead()) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		}
+		break;
+		
+	    case 1:
+		if(i.isDead()) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		}
+		break;
+		
+	    case 2:
+		if(i.isDead()) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		}
+		break;
+		
+	    case 3:
+		if(i.isDead()) {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3).getImage(), 0+(int)(xOffset/5.6), 0+((counter+(counter+1))*gap+(int)(40.0*resScale)), (int)(GameData.FIELD_DIMENSION*2.1), (int)(GameData.FIELD_DIMENSION*2.1), null);
+		}
+		break;
+		
+	    default:
+		ConsoleHandler.print("Wrong Skin ID!", MessageType.GAME);
 	    }
+	    
 	    counter++;
 	}
     }
