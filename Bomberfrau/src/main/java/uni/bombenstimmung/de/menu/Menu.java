@@ -674,9 +674,12 @@ public class Menu {
     }
 
     /**
-     * Knöpfe/MAAs des Hauptmenüs: - Start: Übergang in die Lobby nach Überprüfung
-     * von Namen und IP Adresse - Options: Übergang zu den Optionen - Exit: Beenden
-     * des Spieles
+     * <<<<<<< HEAD Knöpfe/MAAs des Hauptmenüs: - Start: Übergang in die Lobby nach
+     * Überprüfung von Namen und IP Adresse - Options: Übergang zu den Optionen -
+     * Exit: Beenden des Spieles ======= Knï¿½pfe/MAAs des Hauptmenï¿½s: - Start:
+     * ï¿½bergang in die Lobby nach ï¿½berprï¿½fung von Namen und IP Adresse -
+     * Options: ï¿½bergang zu den Optionen - Exit: Beenden des Spieles >>>>>>>
+     * refs/remotes/origin/main
      */
     public static void initMaaMainmenu() {
 
