@@ -41,37 +41,39 @@ public class PlayerHandler {
     private static boolean movable = false;
     // Bestimmt die Zeit zwischen den Animationen
     private static final int ANI_TIMER = 20;
-    
+
     // vorlaeufige ArrayList mit allen Playern aus der Lobby
     private static ArrayList<Player> playerFromLobby = new ArrayList<Player>();
-    
+
     /**
      * Gibt die Gesamtzahl der am Spiel teilnehmenden Players zurueck.
+     * 
      * @return Integer mit opponentPlayers + 1
      */
     public static int getPlayerAmount() {
-    return opponentPlayers.size()+1;
+	return opponentPlayers.size() + 1;
     }
-    
+
     public static Player getClientPlayer() {
 	return clientPlayer;
     }
-    
+
     public static ArrayList<Player> getOpponentPlayers() {
 	return opponentPlayers;
     }
-    
+
     public static int getOpponentCount() {
 	return opponentCount;
     }
-    
+
     /**
-     * Fuehrt den clientPlayer und eine zugegebene Player-ArrayList zusammen
-     * und speichert diese in die ArrayList 'allPlayer'.
-     * @param array	beliebige Player-ArrayList zum Zusammenfuehren
+     * Fuehrt den clientPlayer und eine zugegebene Player-ArrayList zusammen und
+     * speichert diese in die ArrayList 'allPlayer'.
+     * 
+     * @param array beliebige Player-ArrayList zum Zusammenfuehren
      */
     public static void addToAllPlayers(ArrayList<Player> array) {
-	if(allPlayer.contains(clientPlayer)) {
+	if (allPlayer.contains(clientPlayer)) {
 	    allPlayer.addAll(array);
 	} else {
 	    int id = clientPlayer.getId();
@@ -79,50 +81,59 @@ public class PlayerHandler {
 	    allPlayer.add(id, clientPlayer);
 	}
     }
+
     /**
-     * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde Player ist.
-     * @param id	ID des Players
-     * @param name	Name des Player
-     * @param ipAdress	IP-Adresse zugehoerig zu dem Player
-     * @param host	Boolean, ob dieser Player der Host des Spiels ist
-     * @param skin	Skin-ID des Players
-     * @param pos	Position des Players
+     * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde
+     * Player ist.
+     * 
+     * @param id       ID des Players
+     * @param name     Name des Player
+     * @param ipAdress IP-Adresse zugehoerig zu dem Player
+     * @param host     Boolean, ob dieser Player der Host des Spiels ist
+     * @param skin     Skin-ID des Players
+     * @param pos      Position des Players
      */
-    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+    public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos,
+	    ConnectedClient cC) {
 	clientPlayer = new Player(id, name, ipAdress, host, skin, pos, cC);
     }
-    
+
     /**
-     * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde Player ist.
-     * @param p	Player-Objekt, welcher der Client sein soll.
+     * Setzt den Player, welcher auf der eigenen Programminstanz der zu steuernde
+     * Player ist.
+     * 
+     * @param p Player-Objekt, welcher der Client sein soll.
      */
     public static void setClientPlayer(Player p) {
 	clientPlayer = p;
     }
-    
+
     /**
      * Fuegt einen Player hinzu, der aus Sicht des Benutzers sein Gegenspieler ist.
-     * @param id	ID des Players
-     * @param name	Name des Player
-     * @param ipAdress	IP-Adresse zugehoerig zu dem Player
-     * @param host	Boolean, ob dieser Player der Host des Spiels ist
-     * @param skin	Skin-ID des Players
-     * @param pos	Position des Players
+     * 
+     * @param id       ID des Players
+     * @param name     Name des Player
+     * @param ipAdress IP-Adresse zugehoerig zu dem Player
+     * @param host     Boolean, ob dieser Player der Host des Spiels ist
+     * @param skin     Skin-ID des Players
+     * @param pos      Position des Players
      */
-    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+    public static void addOpponentPlayer(int id, String name, String ipAdress, boolean host, int skin, Point pos,
+	    ConnectedClient cC) {
 	opponentPlayers.add(new Player(id, name, ipAdress, host, skin, pos, cC));
 	opponentCount++;
     }
-    
+
     /**
      * Fuegt einen Player hinzu, der aus Sicht des Benutzers sein Gegenspieler ist.
-     * @param p	Player-Objekt, welcher ein Gegenspieler sein soll.
+     * 
+     * @param p Player-Objekt, welcher ein Gegenspieler sein soll.
      */
     public static void addOpponentPlayer(Player p) {
 	opponentPlayers.add(p);
 	opponentCount++;
     }
-    
+
     /**
      * Loescht die Gegenspieler-Liste vollstaendig.
      */
@@ -130,356 +141,549 @@ public class PlayerHandler {
 	opponentPlayers.clear();
 	opponentCount = 0;
     }
-    
+
     /**
-     * Setzt jegliche Tasteneingaben fuer die Bewegung zurueck,
-     * indem der inputBuffer geleert wird und die Booleans fuer
-     * playerMoving und multiPress auf false gesetzt werden.
+     * Setzt jegliche Tasteneingaben fuer die Bewegung zurueck, indem der
+     * inputBuffer geleert wird.
      */
     public static void resetMovement() {
 	inputBuffer.clear();
     }
-    
+
     /**
-     * Draw-Methode mit allen Player-bezogenen Grafiken. Wird vom GraphicsHandler aufgerufen.
-     * @param g	Graphics-Variable, auf welcher die neuen Elemente gemalt werden sollen.
+     * Draw-Methode mit allen Player-bezogenen Grafiken. Wird vom GraphicsHandler
+     * aufgerufen.
+     * 
+     * @param g Graphics-Variable, auf welcher die neuen Elemente gemalt werden
+     *          sollen.
      */
     public static void drawPlayers(Graphics g) {
-	
+
 	for (Player player : allPlayer) {
 	    switch (player.getSkin()) {
 	    case 0:
 		if (player.isDead() == false) {
-			if (player.getDirection() == 0) {
-			    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
-			    if (remember_move[player.getId()] == 0)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 1)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 2)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 3)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 4)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			}
-			if (player.getDirection() == 1) {
-			    remember_move[player.getId()] = 1;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int >= ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 2) {
-			    remember_move[player.getId()] = 2;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 3) {
-			    remember_move[player.getId()] = 3;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 4) {
-			    remember_move[player.getId()] = 4;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-		    } else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    if (player.getDirection() == 0) {
+			// Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+			if (remember_move[player.getId()] == 0)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 1)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 2)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 3)
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 4)
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1)
+					    .getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
+		    if (player.getDirection() == 1) {
+			remember_move[player.getId()] = 1;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_NORTH_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int >= ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 2) {
+			remember_move[player.getId()] = 2;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_2).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 3) {
+			remember_move[player.getId()] = 3;
+			if (change_ani)
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_LEFT_IDLE)
+					    .getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 4) {
+			remember_move[player.getId()] = 4;
+			if (change_ani)
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_1)
+					    .getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(
+				    ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_WALK_SIDE_RIGHT_IDLE)
+					    .getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_CHARACTER_DEAD).getImage(),
+			    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+			    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+			    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
 		break;
-		
+
 	    case 1:
 		if (player.isDead() == false) {
-			if (player.getDirection() == 0) {
-			    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
-			    if (remember_move[player.getId()] == 0)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 1)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 2)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 3)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 4)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			}
-			if (player.getDirection() == 1) {
-			    remember_move[player.getId()] = 1;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int >= ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 2) {
-			    remember_move[player.getId()] = 2;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 3) {
-			    remember_move[player.getId()] = 3;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 4) {
-			    remember_move[player.getId()] = 4;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-		    } else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    if (player.getDirection() == 0) {
+			// Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+			if (remember_move[player.getId()] == 0)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 1)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 2)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 3)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 4)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
+		    if (player.getDirection() == 1) {
+			remember_move[player.getId()] = 1;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_NORTH_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int >= ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 2) {
+			remember_move[player.getId()] = 2;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_WALK_2).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 3) {
+			remember_move[player.getId()] = 3;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_LEFT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 4) {
+			remember_move[player.getId()] = 4;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_RIGHT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_SKELETON_DEAD).getImage(),
+			    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+			    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+			    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
 		break;
-		
+
 	    case 2:
 		if (player.isDead() == false) {
-			if (player.getDirection() == 0) {
-			    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
-			    if (remember_move[player.getId()] == 0)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 1)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 2)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 3)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 4)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			}
-			if (player.getDirection() == 1) {
-			    remember_move[player.getId()] = 1;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int >= ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 2) {
-			    remember_move[player.getId()] = 2;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 3) {
-			    remember_move[player.getId()] = 3;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 4) {
-			    remember_move[player.getId()] = 4;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-		    } else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    if (player.getDirection() == 0) {
+			// Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+			if (remember_move[player.getId()] == 0)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 1)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 2)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 3)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 4)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
+		    if (player.getDirection() == 1) {
+			remember_move[player.getId()] = 1;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_NORTH_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int >= ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 2) {
+			remember_move[player.getId()] = 2;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_WALK_2).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 3) {
+			remember_move[player.getId()] = 3;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_LEFT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 4) {
+			remember_move[player.getId()] = 4;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_RIGHT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_RED_DEAD).getImage(),
+			    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+			    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+			    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
 		break;
-		
+
 	    case 3:
 		if (player.isDead() == false) {
-			if (player.getDirection() == 0) {
-			    // Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
-			    if (remember_move[player.getId()] == 0)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 1)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 2)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 3)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else if (remember_move[player.getId()] == 4)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			}
-			if (player.getDirection() == 1) {
-			    remember_move[player.getId()] = 1;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int >= ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 2) {
-			    remember_move[player.getId()] = 2;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_2).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 3) {
-			    remember_move[player.getId()] = 3;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-			if (player.getDirection() == 4) {
-			    remember_move[player.getId()] = 4;
-			    if (change_ani)
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_1).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    else
-				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_IDLE).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
-			    change_int++;
-			    if (change_int==ANI_TIMER) {
-				change_int = 0;
-				change_ani = !change_ani;
-			    }
-			}
-		    } else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_DEAD).getImage(), (int)(player.getPosition().getX()-(GameData.FIELD_DIMENSION/2)), (int)(player.getPosition().getY()-(GameData.FIELD_DIMENSION/2)), GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		    if (player.getDirection() == 0) {
+			// Die letzte Animation wird sich gemerkt und beim Stehenbleiben angezeigt
+			if (remember_move[player.getId()] == 0)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 1)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 2)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 3)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else if (remember_move[player.getId()] == 4)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
 		    }
+		    if (player.getDirection() == 1) {
+			remember_move[player.getId()] = 1;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_NORTH_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int >= ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 2) {
+			remember_move[player.getId()] = 2;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_WALK_2).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 3) {
+			remember_move[player.getId()] = 3;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_LEFT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		    if (player.getDirection() == 4) {
+			remember_move[player.getId()] = 4;
+			if (change_ani)
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_1).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			else
+			    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_RIGHT_IDLE).getImage(),
+				    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+				    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+				    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+			change_int++;
+			if (change_int == ANI_TIMER) {
+			    change_int = 0;
+			    change_ani = !change_ani;
+			}
+		    }
+		} else {
+		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_DEMON_DEAD).getImage(),
+			    (int) (player.getPosition().getX() - (GameData.FIELD_DIMENSION / 2)),
+			    (int) (player.getPosition().getY() - (GameData.FIELD_DIMENSION / 2)),
+			    GameData.FIELD_DIMENSION, GameData.FIELD_DIMENSION, null);
+		}
 		break;
-		
+
 	    default:
 		ConsoleHandler.print("Wrong Skin ID!", MessageType.GAME);
 	    }
-	    
+
 	}
     }
-    
+
     /**
      * Hier werden Ereignisse ausgefuehrt die auftreten sollen, wenn eine bestimmte
      * Taste gedrueckt wird.
-     * @param keyCode	Tasten-Code in Integer-Form
+     * 
+     * @param keyCode Tasten-Code in Integer-Form
      */
     public static void handleKeyEventPressed(int keyCode) {
 	if (clientPlayer.isDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && inputBuffer.contains(keyCode) == false) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()
+		    && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && inputBuffer.contains(keyCode) == false) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()
+		    && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && inputBuffer.contains(keyCode) == false) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()
+		    && inputBuffer.contains(keyCode) == false) {
 		inputBuffer.add(keyCode);
 		updateMovement();
 	    }
 	}
     }
-    
+
     /**
-     * Hier werden Ereignisse ausgefuehrt die auftreten sollen, wenn eine
-     * bereits runtergedrueckte Taste losgelassen wird.
-     * @param keyCode	Tasten-Code in Integer-Form
+     * Hier werden Ereignisse ausgefuehrt die auftreten sollen, wenn eine bereits
+     * runtergedrueckte Taste losgelassen wird.
+     * 
+     * @param keyCode Tasten-Code in Integer-Form
      */
     public static void handleKeyEventReleased(int keyCode) {
 	if (clientPlayer.isDead() == false && Game.getGameOver() == false && movable == true) {
 	    if (keyCode == clientPlayer.getCurrentButtonConfig().getUp() && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown() && inputBuffer.contains(keyCode) == true) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getDown()
+		    && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft() && inputBuffer.contains(keyCode) == true) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getLeft()
+		    && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
-	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight() && inputBuffer.contains(keyCode) == true) {
+	    } else if (keyCode == clientPlayer.getCurrentButtonConfig().getRight()
+		    && inputBuffer.contains(keyCode) == true) {
 		inputBuffer.remove(Integer.valueOf(keyCode));
 		updateMovement();
 	    }
 	}
-	/* 
-	 * Abfrage nach 'Bombe legen' geschieht unabhaengig von der Bewegungstastenabfrage
-	 * (ergo kein InputBuffer noetig).
-	 * Bombe wird erst bei Loslassen der Taste gelegt.
+	/*
+	 * Abfrage nach 'Bombe legen' geschieht unabhaengig von der
+	 * Bewegungstastenabfrage (ergo kein InputBuffer noetig). Bombe wird erst bei
+	 * Loslassen der Taste gelegt.
 	 */
-	if (clientPlayer.isDead() == false && movable == true && Game.getGameOver() == false && keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
+	if (clientPlayer.isDead() == false && movable == true && Game.getGameOver() == false
+		&& keyCode == clientPlayer.getCurrentButtonConfig().getPlantBomb()) {
 	    clientPlayer.actionPlantBomb();
 	}
-	/* Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey an-/abgeschaltet werden. */
+	/*
+	 * Debug Tasten zum Testen von Funktionen. Koennen mit dem Boolean debugKey
+	 * an-/abgeschaltet werden.
+	 */
 	if (debugKeys) {
 	    if (keyCode == KeyEvent.VK_O) {
 		clientPlayer.increaseBombRadius();
@@ -510,7 +714,7 @@ public class PlayerHandler {
 	    }
 	}
     }
-    
+
     public static void updateMovement() {
 	if (inputBuffer.isEmpty()) {
 	    clientPlayer.actionStop();
@@ -524,45 +728,46 @@ public class PlayerHandler {
 	    clientPlayer.actionRight();
 	}
     }
-    
-    public static ArrayList<Player> getAllPlayer(){
+
+    public static ArrayList<Player> getAllPlayer() {
 	return allPlayer;
     }
-    
+
     public static boolean getDebugKeysState() {
 	return debugKeys;
     }
-    
+
     /**
-     * Fuegt Player in die Liste playerFromLobby hinzu. Diese Methode ist fuer die Lobby
-     * konzipiert und dient als Ausgangspunkt der Player-Organisation fuer das Ingame.
-     * @param id	ID des Players
-     * @param name	Name des Player
-     * @param ipAdress	IP-Adresse zugehoerig zu dem Player
-     * @param host	Boolean, ob dieser Player der Host des Spiels ist
-     * @param skin	Skin-ID des Players
-     * @param pos	Position des Players
+     * Fuegt Player in die Liste playerFromLobby hinzu. Diese Methode ist fuer die
+     * Lobby konzipiert und dient als Ausgangspunkt der Player-Organisation fuer das
+     * Ingame.
+     * 
+     * @param id       ID des Players
+     * @param name     Name des Player
+     * @param ipAdress IP-Adresse zugehoerig zu dem Player
+     * @param host     Boolean, ob dieser Player der Host des Spiels ist
+     * @param skin     Skin-ID des Players
+     * @param pos      Position des Players
      */
-    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos, ConnectedClient cC) {
+    public static void addPlayerFromLobby(int id, String name, String ipAdress, boolean host, int skin, Point pos,
+	    ConnectedClient cC) {
 	playerFromLobby.add(new Player(id, name, ipAdress, host, skin, pos, cC));
     }
-    
+
     /**
-     * Verteilt die von der Lobby uebergebenen Players in die PlayerHandler Variablen/Listen
-     * clientPlayer und opponentPlayers.
+     * Verteilt die von der Lobby uebergebenen Players in die PlayerHandler
+     * Variablen/Listen clientPlayer und opponentPlayers.
      */
     public static void initPlayers() {
-	// TODO: Verteilung mit IP-Adressen Vergleich anpassen, wenn ServerConnection implementiert wird.
-	
-	for(Player p : playerFromLobby) {
-	    if(p.getId() == LobbyCreate.client.getId()) {	// TODO: wenn Lobby connectedClient implementiert hat, dann hier ID von ConnectedClient abfragen
+	for (Player p : playerFromLobby) {
+	    if (p.getId() == LobbyCreate.client.getId()) {
 		setClientPlayer(p);
 	    } else {
 		addOpponentPlayer(p);
 	    }
 	}
     }
-    
+
     public static void resetPlayerHandler() {
 	clientPlayer = null;
 	opponentPlayers.clear();
@@ -574,11 +779,11 @@ public class PlayerHandler {
 	    remember_move[i] = 0;
 	}
     }
-    
+
     public static boolean isMovable() {
 	return movable;
     }
-    
+
     public static void setMovable(boolean m) {
 	movable = m;
     }

@@ -4,7 +4,7 @@
  * Version 1.0
  * Author: Dennis
  *
- * Zaehlt die einzelnen Typen für Felder auf
+ * Zaehlt die einzelnen Typen fuer Felder auf
  */
 
 package uni.bombenstimmung.de.game;
@@ -25,5 +25,4 @@ public enum FieldContent {
     EXPLOSION3_W,
     EXPLOSION3_O,
     EMPTY;
-}	
-
+}
