@@ -131,6 +131,9 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			LobbyCreate.client.getAcceptor().dispose();
 			ConsoleHandler.print("Server disposed " + LobbyCreate.client.getAcceptor().isDisposed() + " ... ", MessageType.BACKEND);
 		    }
+		    else {
+			LobbyCreate.client.getAcceptor().dispose();
+		    }
 		}
 		else {
 		    // Wenn der Client nicht alleine in der Lobby ist

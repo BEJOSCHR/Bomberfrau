@@ -395,7 +395,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	String[] pMessage512 = message.split("-");
 		    	LobbyCreate.player[Integer.parseInt(pMessage512[1])] = null;
 		    	// Befiehlt dem am verlassenden Client zu verlassen
-//		    	sendMessage(session, "999-");
 		    	removeClient(session);
 		    	// Checken ob der verlassene Player der letzte Player war
 		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {

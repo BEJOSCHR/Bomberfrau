@@ -83,10 +83,8 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_READY, ready);
 		String[] lobby_ip = {"IP address: ", "IP-Adresse: "};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_IP, lobby_ip);
-		String[] lobby_full = {"The lobby is full! Returning to main menu...", "Die Lobby ist voll! Zurueck ins Hauptmenu..."};
+		String[] lobby_full = {"This lobby is full or does not exist! Returning to main menu...", "Diese Lobby ist entweder voll oder sie existiert nicht! Gehe zurueck ins Hauptmenu..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_FULL, lobby_full);
-		String[] lobby_join = {"This lobby does not exist! Returning to main menu...", "Diese Lobby existiert nicht! Zurueck ins Hauptmenu..."};
-		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_JOIN, lobby_join);
 		
 		String[] ingame_go = {"GO!", "LOS!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);
