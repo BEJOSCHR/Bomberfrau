@@ -21,6 +21,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class Panes {
@@ -35,9 +37,9 @@ public class Panes {
     public static void InfoPane(String txt1, String txt2, String btn_txt) {
 	JDialog d = new JDialog((java.awt.Frame) null, txt1, true);
 	d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	d.setPreferredSize(new Dimension((int) (txt2.length() * 22 * Settings.getFactor()),
-		(int) (Settings.getRes_height() / 5 * Settings.getFactor())));
-
+	int width = (int) (txt2.length() * 22 * Settings.getFactor());
+	int height = (int) (Settings.getRes_height() / 5 * Settings.getFactor());
+	d.setPreferredSize(new Dimension(width, height));
 	JPanel panel = new JPanel();
 	panel.setBackground(Color.ORANGE);
 
@@ -71,7 +73,11 @@ public class Panes {
 
 	d.setUndecorated(true);
 	d.pack();
-	d.setLocationRelativeTo(null);
+	double x = GraphicsHandler.getFrame().getLocation().getX();
+	double y = GraphicsHandler.getFrame().getLocation().getY();
+	ConsoleHandler.print("x/y = " + x + "/" + y, MessageType.MENU);
+	d.setLocation((int)(0.5*Settings.getRes_width()+x-0.5*width), (int)(0.5*Settings.getRes_height()+y-0.5*height));
+	//d.setLocationRelativeTo(null);
 	d.setVisible(true);
     }
 
