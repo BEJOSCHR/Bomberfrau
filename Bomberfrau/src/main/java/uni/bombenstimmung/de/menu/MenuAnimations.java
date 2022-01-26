@@ -18,7 +18,7 @@ import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 
 public class MenuAnimations {
 
-    private static Boolean grow = true;
+    private static boolean grow = true;
 
     /**
      * Animation Intro Bild Zooming

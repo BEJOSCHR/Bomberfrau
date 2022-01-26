@@ -55,7 +55,7 @@ public class Settings {
     private static int move_down;
     private static int plant_bomb;
 
-    private static Float factor;
+    private static float factor;
 
     /*****************************************************************************************************************
      * GETTER
@@ -159,19 +159,19 @@ public class Settings {
      * SETTER
      *****************************************************************************************************************/
 
-    public static void setShow_fps(Boolean b) {
+    public static void setShow_fps(boolean b) {
 	show_fps = b;
     }
 
-    public static void setCreate_selected(Boolean b) {
+    public static void setCreate_selected(boolean b) {
 	create_selected = b;
     }
 
-    public static void setBoxes_main_valid(Boolean b) {
+    public static void setBoxes_main_valid(boolean b) {
 	boxes_main_valid = b;
     }
 
-    public static void setEnde(Boolean b) {
+    public static void setEnde(boolean b) {
 	ende = b;
     }
 
