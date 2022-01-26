@@ -35,8 +35,8 @@ import uni.bombenstimmung.de.backend.sounds.SoundType;
 
 public class Menu {
 
-    public static final int MIN_NAME_LENGTH = 1;
-    public static final int MAX_NAME_LENGTH = 30;
+    private static final int MIN_NAME_LENGTH = 1;
+    private static final int MAX_NAME_LENGTH = 30;
 
     private static JRadioButton create, join;
     private static boolean isHost = true;
@@ -56,8 +56,16 @@ public class Menu {
     // "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     /**
-     * Getter für Lobby
+     * Getter
      */
+    public static int getMin_Name_Length() {
+	return MIN_NAME_LENGTH;
+    }
+
+    public static int getMax_Name_Length() {
+	return MAX_NAME_LENGTH;
+    }
+    
     public static boolean getIs_host() {
 	return isHost;
     }

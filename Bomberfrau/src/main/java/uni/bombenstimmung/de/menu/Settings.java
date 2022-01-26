@@ -27,9 +27,9 @@ import java.awt.MouseInfo;
 public class Settings {
 
     private static final String INI = "save.ini";
-    public static String os;
+    private static String os;
 
-    public static Properties prop;
+    private static Properties prop;
 
     private static boolean show_fps;
     private static boolean create_selected;
