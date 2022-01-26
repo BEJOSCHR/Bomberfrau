@@ -58,15 +58,15 @@ public class Menu {
     /**
      * Getter
      */
-    public static int getMin_Name_Length() {
+    public static int getMinNameLength() {
 	return MIN_NAME_LENGTH;
     }
 
-    public static int getMax_Name_Length() {
+    public static int getMaxNameLength() {
 	return MAX_NAME_LENGTH;
     }
     
-    public static boolean getIs_host() {
+    public static boolean getIsHost() {
 	return isHost;
     }
 
@@ -77,12 +77,12 @@ public class Menu {
 
 	create = new JRadioButton();
 	create.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT1).getContent());
-	create.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.485),
-		(int) (Settings.getRes_width() / 10), (int) (Settings.getRes_height() / 20));
+	create.setBounds((int) (Settings.getResWidth() * 0.3), (int) (Settings.getResHeight() * 0.485),
+		(int) (Settings.getResWidth() / 10), (int) (Settings.getResHeight() / 20));
 	create.setBackground(Color.WHITE);
 	create.setFont(GraphicsHandler.usedFont(30));
 	create.setFocusable(false);
-	if (Settings.getCreate_selected()) {
+	if (Settings.getCreateSelected()) {
 	    create.setSelected(true);
 	    isHost = true;
 	}
@@ -90,7 +90,7 @@ public class Menu {
 	create.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		ConsoleHandler.print("remove ip box", MessageType.MENU);
-		Settings.setCreate_selected(true);
+		Settings.setCreateSelected(true);
 		isHost = true;
 		ConsoleHandler.print("isHost = " + isHost, MessageType.MENU);
 		ip_box.setVisible(false);
@@ -100,12 +100,12 @@ public class Menu {
 
 	join = new JRadioButton();
 	join.setText(" " + LanguageHandler.getLLB(LanguageBlockType.LB_MENU_TXT2).getContent());
-	join.setBounds((int) (Settings.getRes_width() * 0.3), (int) (Settings.getRes_height() * 0.528),
-		(int) (Settings.getRes_width() / 9), (int) (Settings.getRes_height() / 20));
+	join.setBounds((int) (Settings.getResWidth() * 0.3), (int) (Settings.getResHeight() * 0.528),
+		(int) (Settings.getResWidth() / 9), (int) (Settings.getResHeight() / 20));
 	join.setBackground(Color.WHITE);
 	join.setFont(GraphicsHandler.usedFont(30));
 	join.setFocusable(false);
-	if (!Settings.getCreate_selected()) {
+	if (!Settings.getCreateSelected()) {
 	    join.setSelected(true);
 	    isHost = false;
 	}
@@ -113,7 +113,7 @@ public class Menu {
 	join.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		ConsoleHandler.print("add ip box", MessageType.MENU);
-		Settings.setCreate_selected(false);
+		Settings.setCreateSelected(false);
 		isHost = false;
 		ConsoleHandler.print("isHost = " + isHost, MessageType.MENU);
 		ip_box.setVisible(true);
@@ -130,15 +130,15 @@ public class Menu {
 	name_info.setForeground(Color.RED);
 	name_info.setFont(GraphicsHandler.usedFont(20));
 	name_info.setHorizontalAlignment(JLabel.CENTER);
-	name_info.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.37),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	name_info.setBounds((int) (Settings.getResWidth() * 0.5), (int) (Settings.getResHeight() * 0.37),
+		(int) (Settings.getResWidth() / 4.7), (int) (Settings.getResHeight() / 12));
 
-	name_box = new JTextField(Settings.getUser_name());
+	name_box = new JTextField(Settings.getUserName());
 	name_box.setHorizontalAlignment(JTextField.CENTER);
 	name_box.setFont(GraphicsHandler.usedFont(40)
 		.deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (name_box.getText().length() - 8))));
-	name_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.44),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	name_box.setBounds((int) (Settings.getResWidth() * 0.5), (int) (Settings.getResHeight() * 0.44),
+		(int) (Settings.getResWidth() / 4.7), (int) (Settings.getResHeight() / 12));
 	name_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
@@ -156,12 +156,12 @@ public class Menu {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
 		    name_info.repaint();
 		} else if (txt.length() > MAX_NAME_LENGTH) {
-		    name_box.setText(Settings.getUser_name());
+		    name_box.setText(Settings.getUserName());
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
 		    name_info.repaint();
 		} else {
 		    name_info.setText("");
-		    Settings.setUser_name(txt);
+		    Settings.setUserName(txt);
 		    name_box.setFont(GraphicsHandler.usedFont(40)
 			    .deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
 		}
@@ -190,12 +190,12 @@ public class Menu {
 	ip_box = new JTextField(Settings.getIp());
 	ip_box.setHorizontalAlignment(JTextField.CENTER);
 	ip_box.setFont(GraphicsHandler.usedFont((int) (40 * Settings.getFactor())));
-	if (Settings.getCreate_selected())
+	if (Settings.getCreateSelected())
 	    ip_box.setVisible(false);
 	else
 	    ip_box.setVisible(true);
-	ip_box.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 4.7), (int) (Settings.getRes_height() / 12));
+	ip_box.setBounds((int) (Settings.getResWidth() * 0.5), (int) (Settings.getResHeight() * 0.54),
+		(int) (Settings.getResWidth() / 4.7), (int) (Settings.getResHeight() / 12));
 	ip_box.addKeyListener(new KeyListener() {
 	    public void keyPressed(KeyEvent e) {
 	    };
@@ -233,15 +233,15 @@ public class Menu {
 
 	ip_info = new JLabel("");
 	ip_info.setHorizontalAlignment(JLabel.CENTER);
-	if (Settings.getCreate_selected())
+	if (Settings.getCreateSelected())
 	    ip_info.setVisible(false);
 	if (!checkIp(false))
 	    ip_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
 	ip_info.setBackground(Color.WHITE);
 	ip_info.setForeground(Color.RED);
 	ip_info.setFont(GraphicsHandler.usedFont(20));
-	ip_info.setBounds((int) (Settings.getRes_width() * 0.52), (int) (Settings.getRes_height() * 0.6),
-		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
+	ip_info.setBounds((int) (Settings.getResWidth() * 0.52), (int) (Settings.getResHeight() * 0.6),
+		(int) (Settings.getResWidth() / 5), (int) (Settings.getResHeight() / 12));
 
 	GraphicsHandler.getLabel().add(create);
 	GraphicsHandler.getLabel().add(join);
@@ -260,8 +260,8 @@ public class Menu {
     public static void buildOptions() {
 
 	// Der "factor" passt alle Größen und Positionen der Auflösung an
-	Settings.setResolution(Settings.getRes_nr());
-	Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
+	Settings.setResolution(Settings.getResNr());
+	Settings.setFactor((float) (Settings.getResHeight()) / Settings.getResHeightMax());
 
 	String[] res = { " " + LanguageHandler.getLLB(LanguageBlockType.LB_OPT_FULLSCREEN).getContent(),
 		" HD    1280 x 720", " WSXGA 1600 x 900", " FHD   1920 x 1080", " WQHD  2560 x 1440",
@@ -270,27 +270,27 @@ public class Menu {
 	comboboxReso = new JComboBox<>(res);
 	comboboxReso.setBackground(Color.WHITE);
 	comboboxReso.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
-	comboboxReso.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.1),
-		(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 18));
-	comboboxReso.setSelectedItem(res[Settings.getRes_nr()]);
+	comboboxReso.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.1),
+		(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 18));
+	comboboxReso.setSelectedItem(res[Settings.getResNr()]);
 
 	comboboxReso.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 
 		int t = (int) comboboxReso.getSelectedIndex();
 		t = Settings.setResolution(t);
-		Settings.setFactor((float) (Settings.getRes_height()) / Settings.getRes_height_max());
+		Settings.setFactor((float) (Settings.getResHeight()) / Settings.getResHeightMax());
 
-		GraphicsHandler.getFrame().setSize(Settings.getRes_width(), Settings.getRes_height());
-		GraphicsHandler.getFrame().setLocation((Settings.getRes_width_max() - Settings.getRes_width()) / 2,
-			(Settings.getRes_height_max() - Settings.getRes_height()) / 2);
+		GraphicsHandler.getFrame().setSize(Settings.getResWidth(), Settings.getResHeight());
+		GraphicsHandler.getFrame().setLocation((Settings.getResWidthMax() - Settings.getResWidth()) / 2,
+			(Settings.getResHeightMax() - Settings.getResHeight()) / 2);
 		comboboxReso.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
-		comboboxReso.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.1),
-			(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 18));
-		sliderMusic.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.2),
-			(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
-		sliderSound.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.3),
-			(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
+		comboboxReso.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.1),
+			(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 18));
+		sliderMusic.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.2),
+			(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 12));
+		sliderSound.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.3),
+			(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 12));
 
 		control_up.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.getFactor())));
@@ -303,22 +303,22 @@ public class Menu {
 		control_bomb.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.getFactor())));
 
-		control_up.setBounds((int) (Settings.getRes_width() * 0.33), (int) (Settings.getRes_height() * 0.44),
-			(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
-		control_down.setBounds((int) (Settings.getRes_width() * 0.33), (int) (Settings.getRes_height() * 0.64),
-			(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
-		control_left.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.54),
-			(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
-		control_right.setBounds((int) (Settings.getRes_width() * 0.38), (int) (Settings.getRes_height() * 0.54),
-			(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
-		control_bomb.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.54),
-			(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+		control_up.setBounds((int) (Settings.getResWidth() * 0.33), (int) (Settings.getResHeight() * 0.44),
+			(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
+		control_down.setBounds((int) (Settings.getResWidth() * 0.33), (int) (Settings.getResHeight() * 0.64),
+			(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
+		control_left.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.54),
+			(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
+		control_right.setBounds((int) (Settings.getResWidth() * 0.38), (int) (Settings.getResHeight() * 0.54),
+			(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
+		control_bomb.setBounds((int) (Settings.getResWidth() * 0.5), (int) (Settings.getResHeight() * 0.54),
+			(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 		checkBoxFPS.setFont(GraphicsHandler.usedFont((int) (30f * Settings.getFactor())));
-		checkBoxFPS.setBounds((int) (Settings.getRes_width() * 0.1), (int) (Settings.getRes_height() * 0.7),
-			(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
+		checkBoxFPS.setBounds((int) (Settings.getResWidth() * 0.1), (int) (Settings.getResHeight() * 0.7),
+			(int) (Settings.getResWidth() / 5), (int) (Settings.getResHeight() / 12));
 		comboboxLang.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
-		comboboxLang.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.81),
-			(int) (Settings.getRes_width() / 7), (int) (Settings.getRes_height() / 18));
+		comboboxLang.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.81),
+			(int) (Settings.getResWidth() / 7), (int) (Settings.getResHeight() / 18));
 		start.remove();
 		options.remove();
 		exit.remove();
@@ -328,15 +328,15 @@ public class Menu {
 		GraphicsHandler.getLabel().repaint();
 
 		comboboxReso.setSelectedItem(res[t]);
-		Settings.setRes_nr(t);
+		Settings.setResNr(t);
 		GraphicsHandler.setMoveable();
 	    }
 	});
 
-	sliderMusic = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIni_VolMusic());
+	sliderMusic = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIniVolMusic());
 	sliderMusic.setBackground(Color.WHITE);
-	sliderMusic.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.2),
-		(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
+	sliderMusic.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.2),
+		(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 12));
 	sliderMusic.setMinorTickSpacing(5);
 	sliderMusic.setMajorTickSpacing(10);
 	sliderMusic.setPaintTicks(true);
@@ -344,7 +344,7 @@ public class Menu {
 	sliderMusic.setSnapToTicks(true);
 	sliderMusic.addChangeListener(new ChangeListener() {
 	    public void stateChanged(ChangeEvent event) {
-		Settings.setVol_music(sliderMusic.getValue());
+		Settings.setVolMusic(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume = " + sliderMusic.getValue(), MessageType.MENU);
 
 		// zuerst wird die laufende Musik angepasst
@@ -361,10 +361,10 @@ public class Menu {
 	    }
 	});
 
-	sliderSound = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIni_VolSound());
+	sliderSound = new JSlider(JSlider.HORIZONTAL, 0, 100, Settings.getIniVolSound());
 	sliderSound.setBackground(Color.WHITE);
-	sliderSound.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.3),
-		(int) (Settings.getRes_width() / 4.5), (int) (Settings.getRes_height() / 12));
+	sliderSound.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.3),
+		(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 12));
 	sliderSound.setMinorTickSpacing(5);
 	sliderSound.setMajorTickSpacing(10);
 	sliderSound.setPaintTicks(true);
@@ -410,7 +410,7 @@ public class Menu {
 
 	sliderSound.addChangeListener(new ChangeListener() {
 	    public void stateChanged(ChangeEvent event) {
-		Settings.setVol_sound(sliderSound.getValue());
+		Settings.setVolSound(sliderSound.getValue());
 		ConsoleHandler.print("Sound Volume = " + sliderSound.getValue(), MessageType.MENU);
 
 		// währenddessen wird der laufende Sound angepasst
@@ -424,19 +424,19 @@ public class Menu {
 
 	control_up = new JTextField();
 	control_up.setHorizontalAlignment(JTextField.CENTER);
-	control_up.setText(codeToText(Settings.getMove_up()));
+	control_up.setText(codeToText(Settings.getMoveUp()));
 	control_up.setFont(
 		GraphicsHandler.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.getFactor())));
-	control_up.setBounds((int) (Settings.getRes_width() * 0.33), (int) (Settings.getRes_height() * 0.44),
-		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+	control_up.setBounds((int) (Settings.getResWidth() * 0.33), (int) (Settings.getResHeight() * 0.44),
+		(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
-		    Settings.setMove_up(e.getKeyCode());
+		    Settings.setMoveUp(e.getKeyCode());
 		}
-		control_up.setText(codeToText(Settings.getMove_up()));
+		control_up.setText(codeToText(Settings.getMoveUp()));
 		control_up.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_up.getText().length()) * Settings.getFactor())));
 		control_up.requestFocus();
@@ -452,19 +452,19 @@ public class Menu {
 
 	control_down = new JTextField();
 	control_down.setHorizontalAlignment(JTextField.CENTER);
-	control_down.setText(codeToText(Settings.getMove_down()));
+	control_down.setText(codeToText(Settings.getMoveDown()));
 	control_down.setFont(
 		GraphicsHandler.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.getFactor())));
-	control_down.setBounds((int) (Settings.getRes_width() * 0.33), (int) (Settings.getRes_height() * 0.64),
-		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+	control_down.setBounds((int) (Settings.getResWidth() * 0.33), (int) (Settings.getResHeight() * 0.64),
+		(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 	control_down.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
-		    Settings.setMove_down(e.getKeyCode());
+		    Settings.setMoveDown(e.getKeyCode());
 		}
-		control_down.setText(codeToText(Settings.getMove_down()));
+		control_down.setText(codeToText(Settings.getMoveDown()));
 		control_down.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_down.getText().length()) * Settings.getFactor())));
 		control_down.requestFocus();
@@ -480,19 +480,19 @@ public class Menu {
 
 	control_left = new JTextField();
 	control_left.setHorizontalAlignment(JTextField.CENTER);
-	control_left.setText(codeToText(Settings.getMove_left()));
+	control_left.setText(codeToText(Settings.getMoveLeft()));
 	control_left.setFont(
 		GraphicsHandler.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.getFactor())));
-	control_left.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+	control_left.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.54),
+		(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 	control_left.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
-		    Settings.setMove_left(e.getKeyCode());
+		    Settings.setMoveLeft(e.getKeyCode());
 		}
-		control_left.setText(codeToText(Settings.getMove_left()));
+		control_left.setText(codeToText(Settings.getMoveLeft()));
 		control_left.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_left.getText().length()) * Settings.getFactor())));
 		control_left.requestFocus();
@@ -508,19 +508,19 @@ public class Menu {
 
 	control_right = new JTextField();
 	control_right.setHorizontalAlignment(JTextField.CENTER);
-	control_right.setText(codeToText(Settings.getMove_right()));
+	control_right.setText(codeToText(Settings.getMoveRight()));
 	control_right.setFont(
 		GraphicsHandler.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.getFactor())));
-	control_right.setBounds((int) (Settings.getRes_width() * 0.38), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+	control_right.setBounds((int) (Settings.getResWidth() * 0.38), (int) (Settings.getResHeight() * 0.54),
+		(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 	control_right.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
-		    Settings.setMove_right(e.getKeyCode());
+		    Settings.setMoveRight(e.getKeyCode());
 		}
-		control_right.setText(codeToText(Settings.getMove_right()));
+		control_right.setText(codeToText(Settings.getMoveRight()));
 		control_right.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_right.getText().length()) * Settings.getFactor())));
 		control_right.requestFocus();
@@ -536,19 +536,19 @@ public class Menu {
 
 	control_bomb = new JTextField();
 	control_bomb.setHorizontalAlignment(JTextField.CENTER);
-	control_bomb.setText(codeToText(Settings.getPlant_bomb()));
+	control_bomb.setText(codeToText(Settings.getPlantBomb()));
 	control_bomb.setFont(
 		GraphicsHandler.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.getFactor())));
-	control_bomb.setBounds((int) (Settings.getRes_width() * 0.5), (int) (Settings.getRes_height() * 0.54),
-		(int) (Settings.getRes_width() / 12), (int) (Settings.getRes_height() / 16));
+	control_bomb.setBounds((int) (Settings.getResWidth() * 0.5), (int) (Settings.getResHeight() * 0.54),
+		(int) (Settings.getResWidth() / 12), (int) (Settings.getResHeight() / 16));
 	control_bomb.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
-		    Settings.setPlant_bomb(e.getKeyCode());
+		    Settings.setPlantBomb(e.getKeyCode());
 		}
-		control_bomb.setText(codeToText(Settings.getPlant_bomb()));
+		control_bomb.setText(codeToText(Settings.getPlantBomb()));
 		control_bomb.setFont(GraphicsHandler
 			.usedFont((int) ((46 - 3 * control_bomb.getText().length()) * Settings.getFactor())));
 		control_bomb.requestFocus();
@@ -569,13 +569,13 @@ public class Menu {
 	checkBoxFPS.setBackground(Color.WHITE);
 	checkBoxFPS.setForeground(Color.RED);
 	checkBoxFPS.setFocusable(false);
-	checkBoxFPS.setBounds((int) (Settings.getRes_width() * 0.1), (int) (Settings.getRes_height() * 0.7),
-		(int) (Settings.getRes_width() / 5), (int) (Settings.getRes_height() / 12));
-	checkBoxFPS.setSelected(Settings.getShow_fps());
+	checkBoxFPS.setBounds((int) (Settings.getResWidth() * 0.1), (int) (Settings.getResHeight() * 0.7),
+		(int) (Settings.getResWidth() / 5), (int) (Settings.getResHeight() / 12));
+	checkBoxFPS.setSelected(Settings.getShowFps());
 	checkBoxFPS.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		Settings.setShow_fps(checkBoxFPS.isSelected());
-		if (Settings.getShow_fps())
+		Settings.setShowFps(checkBoxFPS.isSelected());
+		if (Settings.getShowFps())
 		    GraphicsHandler.getLabel().setShowFPS(true);
 		else
 		    GraphicsHandler.getLabel().setShowFPS(false);
@@ -585,26 +585,26 @@ public class Menu {
 	String[] lang = { " English", " Deutsch" };
 	comboboxLang = new JComboBox<>(lang);
 	comboboxLang.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
-	comboboxLang.setSelectedItem(lang[Settings.getLang_nr()]);
+	comboboxLang.setSelectedItem(lang[Settings.getLangNr()]);
 	comboboxLang.setBackground(Color.WHITE);
 	comboboxLang.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		Settings.setLang_nr(comboboxLang.getSelectedIndex());
-		if (Settings.getLang_nr() == 0)
+		Settings.setLangNr(comboboxLang.getSelectedIndex());
+		if (Settings.getLangNr() == 0)
 		    LanguageHandler.setActiveLanguage(LanguageType.ENGLISH);
-		if (Settings.getLang_nr() == 1)
+		if (Settings.getLangNr() == 1)
 		    LanguageHandler.setActiveLanguage(LanguageType.GERMAN);
 
 		comboboxReso.insertItemAt(
 			" " + LanguageHandler.getLLB(LanguageBlockType.LB_OPT_FULLSCREEN).getContent(), 0);
 		comboboxReso.removeItemAt(1);
-		if (Settings.getRes_nr() == 0)
+		if (Settings.getResNr() == 0)
 		    comboboxReso.setSelectedIndex(0);
-		control_up.setText(codeToText(Settings.getMove_up()));
-		control_down.setText(codeToText(Settings.getMove_down()));
-		control_left.setText(codeToText(Settings.getMove_left()));
-		control_right.setText(codeToText(Settings.getMove_right()));
-		control_bomb.setText(codeToText(Settings.getPlant_bomb()));
+		control_up.setText(codeToText(Settings.getMoveUp()));
+		control_down.setText(codeToText(Settings.getMoveDown()));
+		control_left.setText(codeToText(Settings.getMoveLeft()));
+		control_right.setText(codeToText(Settings.getMoveRight()));
+		control_bomb.setText(codeToText(Settings.getPlantBomb()));
 		checkBoxFPS.setText(LanguageHandler.getLLB(LanguageBlockType.LB_OPT_TXT6).getContent() + "  ");
 		start.remove();
 		options.remove();
@@ -615,8 +615,8 @@ public class Menu {
 		GraphicsHandler.getLabel().repaint();
 	    }
 	});
-	comboboxLang.setBounds((int) (Settings.getRes_width() * 0.28), (int) (Settings.getRes_height() * 0.81),
-		(int) (Settings.getRes_width() / 7), (int) (Settings.getRes_height() / 18));
+	comboboxLang.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.81),
+		(int) (Settings.getResWidth() / 7), (int) (Settings.getResHeight() / 18));
 
     }
 
@@ -630,7 +630,7 @@ public class Menu {
 	    GraphicsHandler.getLabel().add(join);
 	    GraphicsHandler.getLabel().add(name_box);
 	    GraphicsHandler.getLabel().add(name_info);
-	    if (!Settings.getCreate_selected()) {
+	    if (!Settings.getCreateSelected()) {
 		GraphicsHandler.getLabel().add(ip_box);
 		GraphicsHandler.getLabel().add(ip_info);
 	    }
@@ -641,7 +641,7 @@ public class Menu {
 	    GraphicsHandler.getLabel().remove(join);
 	    GraphicsHandler.getLabel().remove(name_box);
 	    GraphicsHandler.getLabel().remove(name_info);
-	    if (!Settings.getCreate_selected()) {
+	    if (!Settings.getCreateSelected()) {
 		GraphicsHandler.getLabel().remove(ip_box);
 		GraphicsHandler.getLabel().remove(ip_info);
 	    }
@@ -691,7 +691,7 @@ public class Menu {
      */
     public static void initMaaIntro() {
 
-	intro = new MouseActionArea(-1, -1, Settings.getRes_width() + 1, Settings.getRes_height() + 1,
+	intro = new MouseActionArea(-1, -1, Settings.getResWidth() + 1, Settings.getResHeight() + 1,
 		MouseActionAreaType.MAA_INTRO, "", 1, Color.WHITE, Color.WHITE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
@@ -716,8 +716,8 @@ public class Menu {
      */
     public static void initMaaMainmenu() {
 
-	start = new MouseActionArea((int) (Settings.getRes_width() * 0.08), (int) (Settings.getRes_height() * 0.49),
-		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
+	start = new MouseActionArea((int) (Settings.getResWidth() * 0.08), (int) (Settings.getResHeight() * 0.49),
+		(int) (Settings.getResWidth() * 0.2), (int) (Settings.getResHeight() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN1, "START", (int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
@@ -729,7 +729,7 @@ public class Menu {
 		    ok = false;
 
 		if (ok) {
-		    Settings.setUser_name(name_box.getText());
+		    Settings.setUserName(name_box.getText());
 		    if (!checkIp(false))
 			ip_box.setText("0.0.0.0");
 		    Settings.setIp(ip_box.getText());
@@ -746,14 +746,14 @@ public class Menu {
 	    }
 	};
 
-	options = new MouseActionArea((int) (Settings.getRes_width() * 0.22), (int) (Settings.getRes_height() * 0.65),
-		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
+	options = new MouseActionArea((int) (Settings.getResWidth() * 0.22), (int) (Settings.getResHeight() * 0.65),
+		(int) (Settings.getResWidth() * 0.2), (int) (Settings.getResHeight() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN2, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN2).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		if (!checkName(false))
-		    Settings.setUser_name("?");
+		    Settings.setUserName("?");
 		if (!checkIp(false))
 		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
@@ -766,14 +766,14 @@ public class Menu {
 	    }
 	};
 
-	exit = new MouseActionArea((int) (Settings.getRes_width() * 0.36), (int) (Settings.getRes_height() * 0.81),
-		(int) (Settings.getRes_width() * 0.2), (int) (Settings.getRes_height() * 0.085),
+	exit = new MouseActionArea((int) (Settings.getResWidth() * 0.36), (int) (Settings.getResHeight() * 0.81),
+		(int) (Settings.getResWidth() * 0.2), (int) (Settings.getResHeight() * 0.085),
 		MouseActionAreaType.MAA_MENU_BTN3, LanguageHandler.getLLB(LanguageBlockType.LB_MENU_BTN3).getContent(),
 		(int) (50 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		if (!checkName(false))
-		    Settings.setUser_name("?");
+		    Settings.setUserName("?");
 		if (!checkIp(false))
 		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
@@ -795,20 +795,20 @@ public class Menu {
      */
     public static void initMaaOptions() {
 
-	back = new MouseActionArea((int) (Settings.getRes_width() * 0.55), (int) (Settings.getRes_height() * 0.85),
-		(int) (Settings.getRes_width() * 0.16), (int) (Settings.getRes_height() * 0.065),
+	back = new MouseActionArea((int) (Settings.getResWidth() * 0.55), (int) (Settings.getResHeight() * 0.85),
+		(int) (Settings.getResWidth() * 0.16), (int) (Settings.getResHeight() * 0.065),
 		MouseActionAreaType.MAA_OPTIONS_BTN,
 		"" + LanguageHandler.getLLB(LanguageBlockType.LB_OPTIONS_BTN).getContent(),
 		(int) (30 * Settings.getFactor()), Color.RED, Color.BLUE) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		if (!checkName(false))
-		    Settings.setUser_name("?");
+		    Settings.setUserName("?");
 		if (!checkIp(false))
 		    Settings.setIp("0.0.0.0");
 		Settings.saveIni();
-		if (Settings.getMove_up() == 0 || Settings.getMove_down() == 0 || Settings.getMove_left() == 0
-			|| Settings.getMove_right() == 0 || Settings.getPlant_bomb() == 0) {
+		if (Settings.getMoveUp() == 0 || Settings.getMoveDown() == 0 || Settings.getMoveLeft() == 0
+			|| Settings.getMoveRight() == 0 || Settings.getPlantBomb() == 0) {
 		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO2).getContent(), "OK");
 		} else {
 		    GraphicsHandler.switchToMenuFromOptions();

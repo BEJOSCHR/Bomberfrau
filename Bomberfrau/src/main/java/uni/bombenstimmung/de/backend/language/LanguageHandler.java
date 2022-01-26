@@ -33,9 +33,9 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT1, menu_txt1);
 		String[] menu_txt2 = {"Join", "Beitreten"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_TXT2, menu_txt2);
-		String[] menu_info1 = {"min. " + Menu.getMin_Name_Length() + " signs", "min. " + Menu.getMin_Name_Length() + " Zeichen"};
+		String[] menu_info1 = {"min. " + Menu.getMinNameLength() + " signs", "min. " + Menu.getMinNameLength() + " Zeichen"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO1, menu_info1);
-		String[] menu_info2 = {"max. " + Menu.getMax_Name_Length() + " signs", "max. " + Menu.getMax_Name_Length() + " Zeichen"};
+		String[] menu_info2 = {"max. " + Menu.getMaxNameLength() + " signs", "max. " + Menu.getMaxNameLength() + " Zeichen"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO2, menu_info2);
 		String[] menu_info3 = {"invalid IP", "ungueltige IP"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_MENU_INFO3, menu_info3);

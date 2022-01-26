@@ -65,7 +65,7 @@ public class GraphicsHandler {
 		
 		frame.setLocationRelativeTo(null);
 		//frame.setLocation(0, 0);
-		frame.setLocation((Settings.getRes_width_max()-Settings.getRes_width())/2, (Settings.getRes_height_max()-Settings.getRes_height())/2);
+		frame.setLocation((Settings.getResWidthMax()-Settings.getResWidth())/2, (Settings.getResHeightMax()-Settings.getResHeight())/2);
 		frame.setUndecorated(true);
 		
 		frame.setTitle("BomberFrau - "+BomberfrauMain.VERSION);
@@ -87,7 +87,7 @@ public class GraphicsHandler {
 		
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //		frame.setSize(1920, 1080);
-		frame.setSize(Settings.getRes_width(), Settings.getRes_height());
+		frame.setSize(Settings.getResWidth(), Settings.getResHeight());
 		//frame.setPreferredSize(frame.getSize());
 		//frame.setMinimumSize(frame.getSize());
 		//frame.setMaximumSize(frame.getSize());
@@ -141,7 +141,7 @@ public class GraphicsHandler {
 	public static void setMoveable() {
         	frame.removeMouseListener(frameDragListener);
         	frame.removeMouseMotionListener(frameDragListener);
-            	if (Settings.getRes_nr() != 0) {
+            	if (Settings.getResNr() != 0) {
         	    frame.addMouseListener(frameDragListener);
         	    frame.addMouseMotionListener(frameDragListener);
         	    ConsoleHandler.print("window moveable = on", MessageType.MENU);
@@ -185,8 +185,8 @@ public class GraphicsHandler {
 		    }
 		} , 200);
 		
-	        Settings.setCreate_selected(true);
-		ConsoleHandler.print("isHost = " + Menu.getIs_host(), MessageType.BACKEND);
+	        Settings.setCreateSelected(true);
+		ConsoleHandler.print("isHost = " + Menu.getIsHost(), MessageType.BACKEND);
 //	        Menu.titlePulseAni();
 
 	        Menu.buildOptions();
@@ -316,12 +316,12 @@ public class GraphicsHandler {
 		
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);
 
-		if (Menu.getIs_host()) {
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name()), Menu.getIs_host(), false);
+		if (Menu.getIsHost()) {
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUserName()), Menu.getIsHost(), false);
 		}
 		else {
-//		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), Settings.getIp()));
-		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUser_name(), "127.0.0.1"), false);
+//		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUserName(), Settings.getIp()));
+		    lobby = new LobbyCreate(new LobbyPlayer(Settings.getUserName(), "127.0.0.1"), false);
 		}
 	}
 	
@@ -461,7 +461,7 @@ public class GraphicsHandler {
  	 */
 	public static Font usedFont(int textSize) {
 
-	    Float factor = (float)(Settings.getRes_height())/Settings.getRes_height_max();
+	    Float factor = (float)(Settings.getResHeight())/Settings.getResHeightMax();
 	    Font font;
 	    font = new Font("Arial", Font.BOLD, (int)(40*factor));
 	    try {

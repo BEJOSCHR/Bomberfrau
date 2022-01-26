@@ -36,7 +36,7 @@ public class Panes {
 	JDialog d = new JDialog((java.awt.Frame) null, txt1, true);
 	d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	int width = (int) (txt2.length() * 22 * Settings.getFactor());
-	int height = (int) (Settings.getRes_height() / 5 * Settings.getFactor());
+	int height = (int) (Settings.getResHeight() / 5 * Settings.getFactor());
 	d.setPreferredSize(new Dimension(width, height));
 	JPanel panel = new JPanel();
 	panel.setBackground(Color.ORANGE);
@@ -74,8 +74,8 @@ public class Panes {
 	double x = GraphicsHandler.getFrame().getLocation().getX();
 	double y = GraphicsHandler.getFrame().getLocation().getY();
 	// ConsoleHandler.print("x/y = " + x + "/" + y, MessageType.MENU);
-	d.setLocation((int) (0.5 * Settings.getRes_width() + x - 0.5 * width),
-		(int) (0.5 * Settings.getRes_height() + y - 0.5 * height));
+	d.setLocation((int) (0.5 * Settings.getResWidth() + x - 0.5 * width),
+		(int) (0.5 * Settings.getResHeight() + y - 0.5 * height));
 	// d.setLocationRelativeTo(null);
 	d.setVisible(true);
     }
