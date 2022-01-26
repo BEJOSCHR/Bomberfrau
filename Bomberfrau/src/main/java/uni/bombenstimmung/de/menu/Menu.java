@@ -432,7 +432,7 @@ public class Menu {
 	control_up.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
 		    Settings.setMoveUp(e.getKeyCode());
 		}
@@ -460,7 +460,7 @@ public class Menu {
 	control_down.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
 		    Settings.setMoveDown(e.getKeyCode());
 		}
@@ -488,7 +488,7 @@ public class Menu {
 	control_left.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
 		    Settings.setMoveLeft(e.getKeyCode());
 		}
@@ -516,7 +516,7 @@ public class Menu {
 	control_right.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
 		    Settings.setMoveRight(e.getKeyCode());
 		}
@@ -544,7 +544,7 @@ public class Menu {
 	control_bomb.addKeyListener(new KeyListener() {
 	    public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO1).getContent(), "OK");
 		} else {
 		    Settings.setPlantBomb(e.getKeyCode());
 		}
@@ -809,7 +809,7 @@ public class Menu {
 		Settings.saveIni();
 		if (Settings.getMoveUp() == 0 || Settings.getMoveDown() == 0 || Settings.getMoveLeft() == 0
 			|| Settings.getMoveRight() == 0 || Settings.getPlantBomb() == 0) {
-		    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO2).getContent(), "OK");
+		    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_OPT_INFO2).getContent(), "OK");
 		} else {
 		    GraphicsHandler.switchToMenuFromOptions();
 		}
@@ -859,7 +859,7 @@ public class Menu {
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))
 		|| (name_box.getText().length() < MIN_NAME_LENGTH)) {
 	    if (ausgabe)
-		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
+		Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_NAME).getContent(), "OK");
 	    name_box.requestFocus();
 	    check = false;
 	}
@@ -882,7 +882,7 @@ public class Menu {
 	boolean check = true;
 	if ((ip_box.getText().isEmpty()) || (!isValideIp(ip_box.getText()))) {
 	    if (ausgabe)
-		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_IP).getContent(), "OK");
+		Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_IP).getContent(), "OK");
 	    check = false;
 	    ip_box.requestFocus();
 	}

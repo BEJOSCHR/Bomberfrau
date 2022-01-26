@@ -304,7 +304,7 @@ public class Settings {
 	    res_nr = 0;
 	    GraphicsHandler.setWidth(res_width);
 	    GraphicsHandler.setHeight(res_height);
-	    Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_RESOLUTION).getContent(), "OK");
+	    Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_MSG_BAD_RESOLUTION).getContent(), "OK");
 	    ConsoleHandler.print("resolution to high - switching to lower one for fullscreen", MessageType.MENU);
 	    return 0;
 	} else

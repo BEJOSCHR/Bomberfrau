@@ -78,7 +78,7 @@ public class LobbyCreate {
 	    }
 	    else {
 		ConsoleHandler.print("There is no reachable server, switching back to Lobby ...", MessageType.BACKEND);
-		Panes.InfoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(), "OK");
+		Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(), "OK");
 		GraphicsHandler.switchToMenuFromLobby();
 		if (client.getSession() != null) {
 		    client.getConnector().dispose();

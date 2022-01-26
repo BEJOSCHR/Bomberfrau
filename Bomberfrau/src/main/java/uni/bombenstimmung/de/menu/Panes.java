@@ -32,7 +32,7 @@ public class Panes {
      * @param txt2 für den Text
      * @param txt3 für die Knopf Beschriftung
      */
-    public static void InfoPane(String txt1, String txt2, String btn_txt) {
+    public static void infoPane(String txt1, String txt2, String btn_txt) {
 	JDialog d = new JDialog((java.awt.Frame) null, txt1, true);
 	d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	int width = (int) (txt2.length() * 22 * Settings.getFactor());
