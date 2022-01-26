@@ -45,6 +45,7 @@ public class Settings {
     private static int res_height;
     private static int res_width_max;
     private static int res_height_max;
+    private static float factor;
     // volumes
     private static int vol_music;
     private static int vol_sound;
@@ -55,21 +56,20 @@ public class Settings {
     private static int move_down;
     private static int plant_bomb;
 
-    private static float factor;
 
     /*****************************************************************************************************************
      * GETTER
      *****************************************************************************************************************/
 
-    public static boolean getShow_fps() {
+    public static boolean getShowFps() {
 	return show_fps;
     }
 
-    public static boolean getCreate_selected() {
+    public static boolean getCreateSelected() {
 	return create_selected;
     }
 
-    public static boolean getBoxes_main_valid() {
+    public static boolean getBoxesMainValid() {
 	return boxes_main_valid;
     }
 
@@ -77,7 +77,7 @@ public class Settings {
 	return ende;
     }
 
-    public static String getUser_name() {
+    public static String getUserName() {
 	return user_name;
     }
 
@@ -85,7 +85,7 @@ public class Settings {
 	return language;
     }
 
-    public static int getLang_nr() {
+    public static int getLangNr() {
 	return lang_nr;
     }
 
@@ -93,51 +93,51 @@ public class Settings {
 	return ip;
     }
 
-    public static int getRes_nr() {
+    public static int getResNr() {
 	return res_nr;
     }
 
-    public static int getRes_width() {
+    public static int getResWidth() {
 	return res_width;
     }
 
-    public static int getRes_height() {
+    public static int getResHeight() {
 	return res_height;
     }
 
-    public static int getRes_width_max() {
+    public static int getResWidthMax() {
 	return res_width_max;
     }
 
-    public static int getRes_height_max() {
+    public static int getResHeightMax() {
 	return res_height_max;
     }
 
-    public static int getIni_VolMusic() {
+    public static int getIniVolMusic() {
 	return vol_music;
     }
 
-    public static int getIni_VolSound() {
+    public static int getIniVolSound() {
 	return vol_sound;
     }
 
-    public static int getMove_left() {
+    public static int getMoveLeft() {
 	return move_left;
     }
 
-    public static int getMove_up() {
+    public static int getMoveUp() {
 	return move_up;
     }
 
-    public static int getMove_right() {
+    public static int getMoveRight() {
 	return move_right;
     }
 
-    public static int getMove_down() {
+    public static int getMoveDown() {
 	return move_down;
     }
 
-    public static int getPlant_bomb() {
+    public static int getPlantBomb() {
 	return plant_bomb;
     }
 
@@ -159,15 +159,15 @@ public class Settings {
      * SETTER
      *****************************************************************************************************************/
 
-    public static void setShow_fps(boolean b) {
+    public static void setShowFps(boolean b) {
 	show_fps = b;
     }
 
-    public static void setCreate_selected(boolean b) {
+    public static void setCreateSelected(boolean b) {
 	create_selected = b;
     }
 
-    public static void setBoxes_main_valid(boolean b) {
+    public static void setBoxesMainValid(boolean b) {
 	boxes_main_valid = b;
     }
 
@@ -175,7 +175,7 @@ public class Settings {
 	ende = b;
     }
 
-    public static void setUser_name(String s) {
+    public static void setUserName(String s) {
 	user_name = s;
     }
 
@@ -183,7 +183,7 @@ public class Settings {
 	language = s;
     }
 
-    public static void setLang_nr(int i) {
+    public static void setLangNr(int i) {
 	lang_nr = i;
     }
 
@@ -191,53 +191,53 @@ public class Settings {
 	ip = s;
     }
 
-    public static void setRes_nr(int i) {
+    public static void setResNr(int i) {
 	res_nr = i;
     }
 
-    public static void setRes_width(int i) {
+    public static void setResWidth(int i) {
 	res_width = i;
 	GraphicsHandler.setWidth(i);
     }
 
-    public static void setRes_height(int i) {
+    public static void setResHeight(int i) {
 	res_height = i;
 	GraphicsHandler.setHeight(i);
     }
 
-    public static void setRes_width_max(int i) {
+    public static void setResWidthMax(int i) {
 	res_width_max = i;
     }
 
-    public static void setRes_height_max(int i) {
+    public static void setResHeightMax(int i) {
 	res_height_max = i;
     }
 
-    public static void setVol_music(int i) {
+    public static void setVolMusic(int i) {
 	vol_music = i;
     }
 
-    public static void setVol_sound(int i) {
+    public static void setVolSound(int i) {
 	vol_sound = i;
     }
 
-    public static void setMove_left(int i) {
+    public static void setMoveLeft(int i) {
 	move_left = i;
     }
 
-    public static void setMove_up(int i) {
+    public static void setMoveUp(int i) {
 	move_up = i;
     }
 
-    public static void setMove_right(int i) {
+    public static void setMoveRight(int i) {
 	move_right = i;
     }
 
-    public static void setMove_down(int i) {
+    public static void setMoveDown(int i) {
 	move_down = i;
     }
 
-    public static void setPlant_bomb(int i) {
+    public static void setPlantBomb(int i) {
 	plant_bomb = i;
     }
 
