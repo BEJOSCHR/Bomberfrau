@@ -38,8 +38,8 @@ public class Menu {
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 30;
 
-    private static JRadioButton create, join;
     private static boolean isHost = true;
+    private static JRadioButton create, join;
     private static JLabel name_info, ip_info;
     private static JTextField name_box, ip_box;
     private static JComboBox<String> comboboxReso, comboboxLang;
@@ -350,7 +350,7 @@ public class Menu {
 		// zuerst wird die laufende Musik angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.MENU).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = VolumeIntToFloat(sliderMusic.getValue());
+		float vol = volumeIntToFloat(sliderMusic.getValue());
 		ConsoleHandler.print("Music Volume2 = " + vol, MessageType.MENU);
 		volume.setValue(vol);
 
@@ -379,7 +379,7 @@ public class Menu {
 		ConsoleHandler.print("Sound gestartet", MessageType.MENU);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = VolumeIntToFloat(sliderSound.getValue());
+		float vol = volumeIntToFloat(sliderSound.getValue());
 		volume.setValue(vol);
 
 	    }
@@ -416,7 +416,7 @@ public class Menu {
 		// währenddessen wird der laufende Sound angepasst
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
-		float vol = VolumeIntToFloat(sliderSound.getValue());
+		float vol = volumeIntToFloat(sliderSound.getValue());
 		volume.setValue(vol);
 
 	    }
@@ -623,8 +623,8 @@ public class Menu {
     /**
      * Setzt oder entfernt die Swing Komponenten des Hauptmenüs
      */
-    public static void menuComponentsActive(Boolean bool) {
-	if (bool) {
+    public static void menuComponentsActive(boolean choice) {
+	if (choice) {
 	    ConsoleHandler.print("adding Mainmenu Componenten", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(create);
 	    GraphicsHandler.getLabel().add(join);
@@ -653,8 +653,8 @@ public class Menu {
     /**
      * Setzt oder entfernt die Swing Komponenten des Optionsmenüs
      */
-    public static void optionsComponentsActive(Boolean bool) {
-	if (bool) {
+    public static void optionsComponentsActive(Boolean choice) {
+	if (choice) {
 	    ConsoleHandler.print("adding Optionsmenu Components", MessageType.MENU);
 	    GraphicsHandler.getLabel().add(comboboxReso);
 	    GraphicsHandler.getLabel().add(sliderMusic);
@@ -829,7 +829,7 @@ public class Menu {
     /**
      * Rechnet linearen Werte zwischen min u. max (für Lautstärken) in Float um
      */
-    public static float VolumeIntToFloat(int i) {
+    public static float volumeIntToFloat(int i) {
 	float vol, min = -40F, max = -6F;
 	// für Werte von -36F (fast aus) bis -6F (laut)
 	vol = (float) (min + (max - min) * Math.log10(1 + i * 0.09));
@@ -841,9 +841,19 @@ public class Menu {
     }
 
     /**
+     * Methode zum Warten in Millisekunden
+     */
+    public static void sleep(long millis) {
+	try {
+	    Thread.sleep(millis);
+	} catch (InterruptedException iex) {
+	}
+    }
+
+    /**
      * Überprüfung des eingegebenen Namens false, wenn leer oder "?"
      */
-    private static Boolean checkName(Boolean ausgabe) {
+    private static boolean checkName(boolean ausgabe) {
 	boolean check = true;
 	name_box.setText(name_box.getText().trim());
 	if ((name_box.getText().isEmpty()) || (name_box.getText().equals("?"))
@@ -868,7 +878,7 @@ public class Menu {
      * Überprüfung der eingegebenen IP-Adresse false, wenn leer oder ungültiges
      * Muster
      */
-    private static Boolean checkIp(Boolean ausgabe) {
+    private static boolean checkIp(boolean ausgabe) {
 	boolean check = true;
 	if ((ip_box.getText().isEmpty()) || (!isValideIp(ip_box.getText()))) {
 	    if (ausgabe)
@@ -896,16 +906,6 @@ public class Menu {
 	    return LanguageHandler.getLLB(LanguageBlockType.LB_KEY_DOWN).getContent();
 
 	return (KeyEvent.getKeyText(i));
-    }
-
-    /**
-     * Methode zum Warten in Millisekunden
-     */
-    public static void sleep(long millis) {
-	try {
-	    Thread.sleep(millis);
-	} catch (InterruptedException iex) {
-	}
     }
 
 }

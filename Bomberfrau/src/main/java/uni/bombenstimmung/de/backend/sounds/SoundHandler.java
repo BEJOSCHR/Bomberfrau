@@ -87,13 +87,12 @@ public class SoundHandler {
 		Clip clip = sound.getClip();
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		if (sound.getCategory() == SoundCategory.MENU_MUSIC)
-			vol = Menu.VolumeIntToFloat(Settings.getIni_VolMusic());
+			vol = Menu.volumeIntToFloat(Settings.getIni_VolMusic());
 		if (sound.getCategory() == SoundCategory.MENU_SOUND)
-			vol = Menu.VolumeIntToFloat(Settings.getIni_VolSound());
+			vol = Menu.volumeIntToFloat(Settings.getIni_VolSound());
 		if (sound.getCategory() == SoundCategory.INGAME_MUSIC)
-			vol = Menu.VolumeIntToFloat(Settings.getIni_VolMusic());
-		if (sound.getCategory() == SoundCategory.INGAME_SOUNDS)
-			vol = Menu.VolumeIntToFloat(Settings.getIni_VolSound());
+			vol = Menu.volumeIntToFloat(Settings.getIni_VolMusic());
+			vol = Menu.volumeIntToFloat(Settings.getIni_VolSound());
 		if ((vol > -80F) || (type==SoundType.MENU)) {
         		gainControl.setValue(vol);
         		// ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
