@@ -20,6 +20,7 @@ import uni.bombenstimmung.de.backend.images.ImageHandler;
 import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.menu.Settings;
@@ -375,6 +376,9 @@ public class Game {
 	ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
 	    gameOver();
+	    if (LobbyCreate.client.isHost()) {
+		LobbyCreate.client.sendMessageToAllClients("209-");
+	    }
 	}
     }
 
