@@ -154,6 +154,7 @@ public class Menu {
 		}
 		if ((txt.length() < MIN_NAME_LENGTH) && (txt != "?")) {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
+		    if (getMinNameLength() == 1) name_info.setText(name_info.getText().replace("signs", "sign"));
 		    name_info.repaint();
 		} else if (txt.length() > MAX_NAME_LENGTH) {
 		    name_box.setText(Settings.getUserName());
@@ -178,6 +179,7 @@ public class Menu {
 		if (name_box.getText().equals("?")) {
 		    name_box.setText("");
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
+		    if (getMinNameLength() == 1) name_info.setText(name_info.getText().replace("signs", "sign"));
 		    name_info.repaint();
 		}
 		name_box.setFont(GraphicsHandler.usedFont(40)
