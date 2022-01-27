@@ -147,7 +147,10 @@ public class Menu {
 	    };
 
 	    public void keyReleased(KeyEvent e) {
-		String txt = name_box.getText();
+		// String txt = name_box.getText();
+		String txt = name_box.getText().replace("-", "");
+		name_box.setText(txt);
+		// ConsoleHandler.print("txt = " + txt, MessageType.MENU);
 		if (!txt.isEmpty()) {
 		    name_info.setText("");
 		    name_info.repaint();
