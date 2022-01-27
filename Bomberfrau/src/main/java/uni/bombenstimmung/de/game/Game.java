@@ -396,7 +396,7 @@ public class Game {
 	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
 	}
 
-	new Animation(400, 1) {
+	new Animation(50, 8) {
 	    @Override
 	    public void initValues() {
 		PlayerHandler.getClientPlayer().actionStop();
@@ -404,10 +404,16 @@ public class Game {
 		for (Player i : PlayerHandler.getAllPlayer()) {
 		    i.stopTimer();
 		}
-		for (Bomb i : placedBombs) {
-		    i.stopTimer();
-		}
 		gameOver = true;
+	    }
+
+	    @Override
+	    public void changeValues() {
+		if (getSteps() >= 1) {
+		    for (Bomb i : placedBombs) {
+			i.stopTimer();
+		    }
+		}
 	    }
 
 	    @Override
