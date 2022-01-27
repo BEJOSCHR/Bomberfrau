@@ -238,7 +238,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		//LobbyButtons.lobbyButtonsRemove();
-		Menu.menuComponentsActive(false);
+		//Menu.menuComponentsActive(false);
 
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();

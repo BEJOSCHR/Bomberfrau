@@ -29,9 +29,11 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
+import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
+import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class Menu {
 
@@ -65,7 +67,7 @@ public class Menu {
     public static int getMaxNameLength() {
 	return MAX_NAME_LENGTH;
     }
-    
+
     public static boolean getIsHost() {
 	return isHost;
     }
@@ -157,7 +159,8 @@ public class Menu {
 		}
 		if ((txt.length() < MIN_NAME_LENGTH) && (txt != "?")) {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
-		    if (getMinNameLength() == 1) name_info.setText(name_info.getText().replace("signs", "sign"));
+		    if (getMinNameLength() == 1)
+			name_info.setText(name_info.getText().replace("signs", "sign"));
 		    name_info.repaint();
 		} else if (txt.length() > MAX_NAME_LENGTH) {
 		    name_box.setText(Settings.getUserName());
@@ -182,7 +185,8 @@ public class Menu {
 		if (name_box.getText().equals("?")) {
 		    name_box.setText("");
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO1).getContent());
-		    if (getMinNameLength() == 1) name_info.setText(name_info.getText().replace("signs", "sign"));
+		    if (getMinNameLength() == 1)
+			name_info.setText(name_info.getText().replace("signs", "sign"));
 		    name_info.repaint();
 		}
 		name_box.setFont(GraphicsHandler.usedFont(40)
@@ -733,16 +737,30 @@ public class Menu {
 		else if (join.isSelected() && !checkIp(true))
 		    ok = false;
 
+//		// Testet Join IP vor der Lobby
+//		if (!getIsHost()) {
+//		    LobbyCreate.client = new ConnectedClient(false, Settings.getIp());
+//		    ConsoleHandler.print("Testing to join IP " + Settings.getIp(), MessageType.MENU);
+//		    Menu.sleep(300);
+//		    if (LobbyCreate.client.getId() == -1) {
+//			Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(),
+//				"OK");
+//			ok = false;
+//		    }
+//		    if (LobbyCreate.client.getSession() != null) {
+//			LobbyCreate.client.getConnector().dispose();
+//		    }
+//		}
+
 		if (ok) {
 		    Settings.setUserName(name_box.getText());
 		    if (!checkIp(false))
 			ip_box.setText("0.0.0.0");
 		    Settings.setIp(ip_box.getText());
 		    Settings.saveIni();
+		    ConsoleHandler.print("Switching from Menu to Lobby ...", MessageType.MENU);
 		    GraphicsHandler.switchToLobbyFromMenu();
 		}
-
-		ConsoleHandler.print("Switching from Menu to Lobby ...", MessageType.MENU);
 	    }
 
 	    @Override
