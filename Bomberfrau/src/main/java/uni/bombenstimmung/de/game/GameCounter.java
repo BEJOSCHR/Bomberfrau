@@ -109,19 +109,19 @@ public class GameCounter implements ActionListener {
 	case 1:
 	    g.setColor(new Color(130, 170, 62));
 	    break;
-	    
+
 	case 2:
 	    g.setColor(new Color(237, 232, 183));
 	    break;
-	    
+
 	case 3:
 	    g.setColor(new Color(163, 110, 110));
 	    break;
-	    
+
 	default:
 	    ConsoleHandler.print("Wrong MapNumber for drawCounterBackground!", MessageType.GAME);
 	}
-	
+
 	if (ringOfDeathNumber == 0) {
 	    g.fillRect(xStart + 25, yStart + (int) (220 * resScale), rectWidth, (int) (60 * resScale));
 	    g.setColor(Color.BLACK);

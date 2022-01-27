@@ -249,6 +249,12 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    
 		    Game.changeFieldContent(item, x, y);
 		    break;
+		    
+		//209 = GameOver Message fuer Clients
+		//Format: "209-"
+		case 209:
+		    Game.gameOver();
+		    break;
 		
 		/////////////////////////////////////////// 500-599 Lobby Cases ////////////////////////////////////////////////////////
 			
