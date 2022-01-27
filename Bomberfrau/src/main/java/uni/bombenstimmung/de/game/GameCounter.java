@@ -16,6 +16,8 @@ import java.awt.Color;
 
 import javax.swing.Timer;
 
+import uni.bombenstimmung.de.backend.console.ConsoleHandler;
+import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
@@ -79,17 +81,17 @@ public class GameCounter implements ActionListener {
     public static void drawCounter(Graphics g, int w, int h) {
 	double resScale = (double) GraphicsHandler.getHeight() / 720.0;
 	if (ringOfDeathNumber == 0) {
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+	    GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(20f),
 		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_TIME).getContent() + ": " + gametime, w,
-		    h + (int) (200 * resScale));
+		    h + (int) (250 * resScale));
 	} else {
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+	    GraphicsHandler.drawCentralisedText(g, new Color(204, 0, 0), Settings.scaleValue(20f),
 		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD1).getContent(), w,
 		    h + (int) (200 * resScale));
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+	    GraphicsHandler.drawCentralisedText(g, new Color(204, 0, 0), Settings.scaleValue(20f),
 		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD2).getContent(), w,
 		    h + (int) (250 * resScale));
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(25f),
+	    GraphicsHandler.drawCentralisedText(g, new Color(204, 0, 0), Settings.scaleValue(20f),
 		    LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_ROD3).getContent(), w,
 		    h + (int) (300 * resScale));
 	}
@@ -103,12 +105,40 @@ public class GameCounter implements ActionListener {
 
 	int rectWidth = xOffset / 2 - 50;
 
-	g.setColor(Color.BLACK);
-	g.fillRect(xStart + 25, yStart + (int) (150 * resScale), rectWidth, (int) (200 * resScale));
+	switch (Game.getMapNumber()) {
+	case 1:
+	    g.setColor(new Color(130, 170, 62));
+	    break;
+
+	case 2:
+	    g.setColor(new Color(237, 232, 183));
+	    break;
+
+	case 3:
+	    g.setColor(new Color(163, 110, 110));
+	    break;
+
+	default:
+	    ConsoleHandler.print("Wrong MapNumber for drawCounterBackground!", MessageType.GAME);
+	}
+
+	if (ringOfDeathNumber == 0) {
+	    g.fillRect(xStart + 25, yStart + (int) (220 * resScale), rectWidth, (int) (60 * resScale));
+	    g.setColor(Color.BLACK);
+	    g.drawRect(xStart + 24, yStart + (int) (220 * resScale) - 1, rectWidth, (int) (60 * resScale));
+	    g.drawRect(xStart + 25, yStart + (int) (220 * resScale), rectWidth, (int) (60 * resScale));
+	    g.drawRect(xStart + 26, yStart + (int) (220 * resScale) + 1, rectWidth, (int) (60 * resScale));
+	} else {
+	    g.fillRect(xStart + 25, yStart + (int) (150 * resScale), rectWidth, (int) (200 * resScale));
+	    g.setColor(Color.BLACK);
+	    g.drawRect(xStart + 24, yStart + (int) (150 * resScale) - 1, rectWidth, (int) (200 * resScale));
+	    g.drawRect(xStart + 25, yStart + (int) (150 * resScale), rectWidth, (int) (200 * resScale));
+	    g.drawRect(xStart + 26, yStart + (int) (150 * resScale) + 1, rectWidth, (int) (200 * resScale));
+	}
     }
 
     public static void resetGameCounter() {
-	gametime = 240;
+	gametime = 60;
 	ringOfDeathNumber = 0;
 	clock = 0;
     }
