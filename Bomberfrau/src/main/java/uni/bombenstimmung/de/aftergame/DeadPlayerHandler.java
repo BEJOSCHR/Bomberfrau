@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -21,6 +22,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.lobby.LobbyPlayer;
 
 
 public class DeadPlayerHandler {
@@ -148,32 +150,40 @@ public class DeadPlayerHandler {
 		case 0: 
 		    switch(ranking.get(i).getSkin()) {
 		    case 0:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-55, 120, 120, null);
 			break;
 		    case 1:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[1][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-55, 120, 120, null);
 			break;
 		    case 2:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[2][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-55, 120, 120, null);
 			break;
 		    case 3:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[3][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-55, 120, 120, null);
 			break;
 		    }
 		break;
 		case 1:
 		    switch(ranking.get(i).getSkin()) {
 		    case 0:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_1).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-55, 120, 120, null);
 			break;
 		    case 1:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_2).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[1][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-55, 120, 120, null);
 			break;
 		    case 2:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_3).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[2][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-55, 120, 120, null);
 			break;
 		    case 3:
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+//			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_AFTERGAME_4).getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-35, 80, 80, null);
+			g.drawImage(LobbyPlayer.skinSelection[3][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-55, 120, 120, null);
 			break;
 		    }
 		break;

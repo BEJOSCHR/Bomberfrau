@@ -125,8 +125,8 @@ public class MenuAnimations {
 	    public void changeValues() {
 		if (getSteps() % 2 == 0) {
 		    int stepSize = 1;
-		    AnimationData.title_posXModifier += r.nextInt(stepSize * 2) - stepSize;
-		    AnimationData.title_posYModifier += r.nextInt(stepSize * 2) - stepSize;
+		    AnimationData.title_posXModifier += r.nextInt(stepSize * 6) - stepSize;
+		    AnimationData.title_posYModifier += r.nextInt(stepSize * 6) - stepSize;
 		    int limit = 10;
 		    if (AnimationData.title_posXModifier < -limit) {
 			AnimationData.title_posXModifier = -limit;

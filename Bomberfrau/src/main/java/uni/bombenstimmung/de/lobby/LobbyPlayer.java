@@ -19,7 +19,7 @@ public class LobbyPlayer {
     private int id;
     private boolean isHost;
     private boolean isReady = false;
-    public LoadedImage skinSelection[][] = new LoadedImage[4][2];
+    public static LoadedImage skinSelection[][] = new LoadedImage[4][2];
     private int zaehlerSkinSelection = 0;
 
     /**

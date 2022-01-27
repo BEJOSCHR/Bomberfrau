@@ -422,6 +422,9 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
+
+		MenuAnimations.titleShakeAni();
+		MenuAnimations.lobbyWalk();
 		
 		SoundHandler.playSound2(SoundType.AFTERGAME, true);
 		AftergameButtons.aftergameButtonsReset();
