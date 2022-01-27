@@ -395,6 +395,7 @@ public class GraphicsHandler {
 			Game.setCountdown(0);
 			zaehler.startCounter();
 			PlayerHandler.setMovable(true);
+			MenuAnimations.lobbyWalk();
 			switch (Game.getMapNumber()) {
 			case 1:
 			    SoundHandler.playSound2(SoundType.MAP1, true);

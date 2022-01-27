@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 
 import uni.bombenstimmung.de.backend.animation.Animation;
+import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.*;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.images.ImageHandler;
@@ -21,6 +22,7 @@ import uni.bombenstimmung.de.backend.images.ImageType;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
+import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.menu.Settings;
@@ -214,14 +216,14 @@ public class Game {
 	    switch (i.getSkin()) {
 	    case 0:
 		if (i.isDead()) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0).getImage(),
-			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
+		    g.drawImage(LobbyPlayer.skinSelection[0][0].getImage(), 0 + (int) (xOffset / 5.6),
+			    0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		} else {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0).getImage(),
+		    g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		}
@@ -229,14 +231,14 @@ public class Game {
 
 	    case 1:
 		if (i.isDead()) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1).getImage(),
-			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
+		    g.drawImage(LobbyPlayer.skinSelection[1][0].getImage(), 0 + (int) (xOffset / 5.6),
+			    0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		} else {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1).getImage(),
+		    g.drawImage(LobbyPlayer.skinSelection[1][AnimationData.lobby_walk].getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		}
@@ -244,14 +246,14 @@ public class Game {
 
 	    case 2:
 		if (i.isDead()) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2).getImage(),
-			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
+		    g.drawImage(LobbyPlayer.skinSelection[2][0].getImage(), 0 + (int) (xOffset / 5.6),
+			    0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		} else {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2).getImage(),
+		    g.drawImage(LobbyPlayer.skinSelection[2][AnimationData.lobby_walk].getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		}
@@ -259,14 +261,14 @@ public class Game {
 
 	    case 3:
 		if (i.isDead()) {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3).getImage(),
-			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
+		    g.drawImage(LobbyPlayer.skinSelection[3][0].getImage(), 0 + (int) (xOffset / 5.6),
+			    0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_INGAME_WASTED).getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		} else {
-		    g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3).getImage(),
+		    g.drawImage(LobbyPlayer.skinSelection[3][AnimationData.lobby_walk].getImage(),
 			    0 + (int) (xOffset / 5.6), 0 + ((counter + (counter + 1)) * gap + (int) (40.0 * resScale)),
 			    (int) (GameData.FIELD_DIMENSION * 2.1), (int) (GameData.FIELD_DIMENSION * 2.1), null);
 		}
