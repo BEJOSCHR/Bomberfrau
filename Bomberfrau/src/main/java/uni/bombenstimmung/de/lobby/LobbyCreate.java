@@ -12,6 +12,7 @@ package uni.bombenstimmung.de.lobby;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import uni.bombenstimmung.de.backend.animation.AnimationData;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -280,7 +281,7 @@ public class LobbyCreate {
 
 			try {
 
-			g.drawImage(player[i].skinSelection[player[i].getSkin()].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28),
+			g.drawImage(player[i].skinSelection[player[i].getSkin()][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28),
 				Settings.scaleValue(250), Settings.scaleValue(250), null);
 			
 			if (player[i].getisHost() == false) {

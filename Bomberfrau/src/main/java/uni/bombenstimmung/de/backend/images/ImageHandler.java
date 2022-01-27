@@ -39,11 +39,19 @@ public class ImageHandler {
 		new LoadedImage("Lobby/Map_1.png", ImageType.IMAGE_LOBBY_MAP_1);
 		new LoadedImage("Lobby/Map_2.png", ImageType.IMAGE_LOBBY_MAP_2);
 		new LoadedImage("Lobby/Map_3.png", ImageType.IMAGE_LOBBY_MAP_3);
-		
-		new LoadedImage("Lobby/Skin_0.png", ImageType.IMAGE_LOBBY_SKIN_0);
-		new LoadedImage("Lobby/Skin_1.png", ImageType.IMAGE_LOBBY_SKIN_1);
-		new LoadedImage("Lobby/Skin_2.png", ImageType.IMAGE_LOBBY_SKIN_2);
-		new LoadedImage("Lobby/Skin_3.png", ImageType.IMAGE_LOBBY_SKIN_3);
+
+		new LoadedImage("Lobby/Skin_0.png",   ImageType.IMAGE_LOBBY_SKIN_0);
+		new LoadedImage("Lobby/Skin_0_0.png", ImageType.IMAGE_LOBBY_SKIN_0_0);
+		new LoadedImage("Lobby/Skin_0_1.png", ImageType.IMAGE_LOBBY_SKIN_0_1);
+		new LoadedImage("Lobby/Skin_0.png",   ImageType.IMAGE_LOBBY_SKIN_1);
+		new LoadedImage("Lobby/Skin_1_0.png", ImageType.IMAGE_LOBBY_SKIN_1_0);
+		new LoadedImage("Lobby/Skin_1_1.png", ImageType.IMAGE_LOBBY_SKIN_1_1);
+		new LoadedImage("Lobby/Skin_0.png",   ImageType.IMAGE_LOBBY_SKIN_2);
+		new LoadedImage("Lobby/Skin_2_0.png", ImageType.IMAGE_LOBBY_SKIN_2_0);
+		new LoadedImage("Lobby/Skin_2_1.png", ImageType.IMAGE_LOBBY_SKIN_2_1);
+		new LoadedImage("Lobby/Skin_0.png",   ImageType.IMAGE_LOBBY_SKIN_3);
+		new LoadedImage("Lobby/Skin_3_0.png", ImageType.IMAGE_LOBBY_SKIN_3_0);
+		new LoadedImage("Lobby/Skin_3_1.png", ImageType.IMAGE_LOBBY_SKIN_3_1);
 		//https://toppng.com/photo/99910/green-check-mark
 		new LoadedImage("Lobby/checkmark.png", ImageType.IMAGE_LOBBY_CHECKMARK);
 		

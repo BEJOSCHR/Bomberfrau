@@ -152,4 +152,29 @@ public class MenuAnimations {
 	};
 
     }
+    
+
+    /**
+     * Animation Intro Text "click to skip"
+     */
+    public static void lobbyWalk() {
+	new Animation(50, -1) {
+	    @Override
+	    public void initValues() {
+		AnimationData.lobby_walk = 0;
+	    }
+
+	    @Override
+	    public void changeValues() {
+		AnimationData.lobby_walk = (AnimationData.lobby_walk + 1) % 2;
+
+	    }
+
+	    @Override
+	    public void finaliseValues() {
+		AnimationData.lobby_walk = 0;
+	    }
+	};
+
+    }
 }

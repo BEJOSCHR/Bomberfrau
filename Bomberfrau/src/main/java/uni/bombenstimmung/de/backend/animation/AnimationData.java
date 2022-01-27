@@ -20,6 +20,8 @@ public class AnimationData {
 	public static int title_posXModifier = 0;
 	public static int title_posYModifier = 0;
 	
+	public static int lobby_walk = 0;
+	
 	public static float vol = 0;
 
 }

@@ -254,6 +254,7 @@ public class GraphicsHandler {
 	    SoundHandler.stopAllSounds();
 	    
 	    SoundHandler.playSound2(SoundType.MENU, true);
+	    MenuAnimations.lobbyWalk();
 	    LobbyButtons.lobbyButtonsReset();
 	    
 	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
@@ -312,6 +313,7 @@ public class GraphicsHandler {
 		
 		Menu.menuComponentsActive(false);
 		
+		MenuAnimations.lobbyWalk();
 		displayType = DisplayType.LOBBY;
 		
 		ConsoleHandler.print("Switched to 'LOBBY' from 'MENU'!", MessageType.BACKEND);

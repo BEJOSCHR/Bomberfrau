@@ -19,7 +19,7 @@ public class LobbyPlayer {
     private int id;
     private boolean isHost;
     private boolean isReady = false;
-    public LoadedImage skinSelection[] = new LoadedImage[4];
+    public LoadedImage skinSelection[][] = new LoadedImage[4][2];
     private int zaehlerSkinSelection = 0;
 
     /**
@@ -54,10 +54,14 @@ public class LobbyPlayer {
      * Player gesteuert.
      */
     public void initializeImages() {
-	skinSelection[0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0);
-	skinSelection[1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1);
-	skinSelection[2] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2);
-	skinSelection[3] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3);
+	skinSelection[0][0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0_0);
+	skinSelection[0][1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_0_1);
+	skinSelection[1][0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1_0);
+	skinSelection[1][1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_1_1);
+	skinSelection[2][0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2_0);
+	skinSelection[2][1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_2_1);
+	skinSelection[3][0] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3_0);
+	skinSelection[3][1] = ImageHandler.getImage(ImageType.IMAGE_LOBBY_SKIN_3_1);
     }
 
     public int getSkin() {
