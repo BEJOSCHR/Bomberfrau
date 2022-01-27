@@ -11,6 +11,9 @@ package uni.bombenstimmung.de.lobby;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
@@ -47,6 +50,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
     public static MouseActionArea player2check;
     public static MouseActionArea player3check;
     public static MouseActionArea player4check;
+    public static MouseActionArea ip_nbr;
 
 
     /**
@@ -561,6 +565,25 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		}	
 	    }
 	};
+	
+	ip_nbr = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.14), (int)(GraphicsHandler.getHeight()*0.03), (int)(GraphicsHandler.getWidth()*0.17), (int)(GraphicsHandler.getHeight()*0.05),
+		MouseActionAreaType.MAA_LOBBY_IP_NBR, "", Settings.scaleValue(30), Color.DARK_GRAY, Color.GREEN) {
+	    @Override
+	    public void performAction_LEFT_RELEASE() {
+		// ConsoleHandler.print("IP Number = " + LobbyCreate.client.hostGetPublicIP(), MessageType.LOBBY);
+		StringSelection stringSelection = new StringSelection(LobbyCreate.client.hostGetPublicIP());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
+		ConsoleHandler.print("Copied <" + LobbyCreate.client.hostGetPublicIP() + "> to Clipboard", MessageType.LOBBY);
+	    }
+	    @Override
+	    public boolean isActiv() {	
+		return GraphicsHandler.getDisplayType() == DisplayType.LOBBY;
+	    }
+	    @Override
+	    public void draw(Graphics g){	
+	    }
+	};
 
 
 	///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
@@ -583,6 +606,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	player2check.remove();
 	player3check.remove();
 	player4check.remove();
+	ip_nbr.remove();
 	Menu.sleep(50);
 	initLobbyButtons();
     }
