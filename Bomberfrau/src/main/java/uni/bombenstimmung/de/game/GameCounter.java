@@ -138,7 +138,7 @@ public class GameCounter implements ActionListener {
     }
 
     public static void resetGameCounter() {
-	gametime = 20;
+	gametime = 60;
 	ringOfDeathNumber = 0;
 	clock = 0;
     }
