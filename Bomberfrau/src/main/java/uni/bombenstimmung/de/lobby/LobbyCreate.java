@@ -257,7 +257,7 @@ public class LobbyCreate {
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
 		
 		if (client.isHost()) {
-		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(40), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(),
+		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(36), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(),
 			    (int)(GraphicsHandler.getWidth()/8 - (Settings.scaleValue(250)/2)), (int)(GraphicsHandler.getHeight()*0.05));
 		}
 		

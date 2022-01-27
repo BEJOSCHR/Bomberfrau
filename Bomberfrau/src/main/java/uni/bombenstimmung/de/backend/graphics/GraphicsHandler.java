@@ -238,7 +238,7 @@ public class GraphicsHandler {
 		ConsoleHandler.print("Switched to 'MENU' from 'LOBBY'!", MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		//LobbyButtons.lobbyButtonsRemove();
-		Menu.menuComponentsActive(false);
+		//Menu.menuComponentsActive(false);
 
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
@@ -421,7 +421,7 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-		SoundHandler.playSound(SoundType.AFTERGAME, true);
+		SoundHandler.playSound2(SoundType.AFTERGAME, true);
 		AftergameButtons.aftergameButtonsReset();
 		
 		//ubermittlung der Daten des aktuellen Player
