@@ -747,11 +747,10 @@ public class Menu {
 //				"OK");
 //			ok = false;
 //		    }
-//		    if (LobbyCreate.client.getSession() != null) {
-//			LobbyCreate.client.getConnector().dispose();
-//		    }
+//		    LobbyCreate.client.getConnector().dispose();
+//		    LobbyCreate.client = null;
 //		}
-
+		
 		if (ok) {
 		    Settings.setUserName(name_box.getText());
 		    if (!checkIp(false))

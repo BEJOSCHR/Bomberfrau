@@ -421,7 +421,7 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		
-		SoundHandler.playSound(SoundType.AFTERGAME, true);
+		SoundHandler.playSound2(SoundType.AFTERGAME, true);
 		AftergameButtons.aftergameButtonsReset();
 		
 		//ubermittlung der Daten des aktuellen Player
