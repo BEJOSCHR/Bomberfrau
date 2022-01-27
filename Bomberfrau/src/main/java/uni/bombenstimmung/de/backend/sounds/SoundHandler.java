@@ -92,6 +92,8 @@ public class SoundHandler {
 			vol = Menu.volumeIntToFloat(Settings.getIniVolSound());
 		if (sound.getCategory() == SoundCategory.INGAME_MUSIC)
 			vol = Menu.volumeIntToFloat(Settings.getIniVolMusic());
+		if (sound.getCategory() == SoundCategory.INGAME_SOUNDS)
+			vol = Menu.volumeIntToFloat(Settings.getIniVolSound());
 		if ((vol > -80F) || (type==SoundType.MENU)) {
         		gainControl.setValue(vol);
         		// ConsoleHandler.print("playing sound '" + type + "' with Volume " + vol, MessageType.BACKEND);
