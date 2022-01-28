@@ -22,7 +22,6 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
-import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.menu.Panes;
 import uni.bombenstimmung.de.menu.Settings;
 
