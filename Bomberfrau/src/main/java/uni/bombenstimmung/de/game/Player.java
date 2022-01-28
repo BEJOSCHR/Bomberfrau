@@ -226,22 +226,25 @@ public class Player extends Entity implements ActionListener {
 	    }
 	}
 	if (this.dead == false && dead == true) {
+	    this.dead = dead;
 	    SoundHandler.playSound2(SoundType.DYING, false);
 	    this.deathTime = GameCounter.getClock();
 	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T",
 		    MessageType.GAME);
 	    this.t.stop();
 	    // ConnectedClient-Nachricht fuer Player-Tod
-	    if (this.connectedClient.isHost()) {
+	    if (this.connectedClient.isHost() && this == PlayerHandler.getClientPlayer()) {
 		this.connectedClient.sendMessageToAllClients("206-" + this.id);
-	    } else {
+	    } else if (!this.connectedClient.isHost() && this == PlayerHandler.getClientPlayer()) {
 		this.connectedClient.sendMessage(this.connectedClient.getSession(), "207-" + this.id);
 	    }
 	} else if (this.dead == true && dead == false) {
 	    this.t.start();
 	}
 	this.dead = dead;
-	Game.checkIfAllDead();
+	if (this.connectedClient.isHost()) {
+	    Game.checkIfAllDead();
+	}
     }
 
     public void setConnectedClient(ConnectedClient cC) {
