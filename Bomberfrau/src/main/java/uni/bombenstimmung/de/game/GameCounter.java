@@ -142,8 +142,8 @@ public class GameCounter implements ActionListener {
     }
 
     public static void resetGameCounter() {
-	gametime = 60;
-	if (LobbyButtons.SETTIME) gametime = LobbyButtons.getTimer();
+//	gametime = 60;
+	gametime = LobbyButtons.getTimer();
 	ringOfDeathNumber = 0;
 	clock = 0;
     }

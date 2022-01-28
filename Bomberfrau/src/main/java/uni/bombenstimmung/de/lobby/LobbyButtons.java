@@ -35,7 +35,6 @@ public class LobbyButtons extends MouseActionAreaHandler{
     private static int yPlayer, yPlayerMap, yPlayerTimer;
     private static int xPlayer1Left, xPlayer2Left, xPlayer3Left, xPlayer4Left;
     private static int xPlayer1Right, xPlayer2Right, xPlayer3Right, xPlayer4Right;
-    public static final boolean SETTIME = false;
     private static int[] timer = {0, 60, 90, 180, 240};
     private static int timerchoice = 2;
 
@@ -195,7 +194,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	    }
 	};
 
-	//LOBBY RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
+	//LOBBY RIGHT Button fuer Pfeil fuer Timer -> MAA_LOBBY_PFEILBUTTON_RIGHT
 	mapright = new MouseActionArea(GraphicsHandler.getWidth()/8 + Settings.scaleValue(150), yPlayerMap, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
 		MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
 	    @Override
@@ -225,7 +224,6 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	};
 	
 
-	if (SETTIME) {
 	    //LOBBY LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
 	    timerleft = new MouseActionArea(xPlayer1Left, yPlayerTimer, 45, 44,
 		    MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
@@ -236,7 +234,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		    timerchoice %= timer.length;
 		    GameCounter.setGameTime(timer[timerchoice]);
 		    ConsoleHandler.print(" timerchoice = " + timerchoice + ", timer = " + timer[timerchoice], MessageType.LOBBY);
-		// 	LobbyCreate.setDecrementMap();
+		    
+		    LobbyCreate.client.sendMessageToAllClients("516-" + timerchoice);
 		}
 		@Override
 		public boolean isActiv() {
@@ -258,7 +257,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		}
 	    };
 
-	    //LOBBY RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
+	    //LOBBY RIGHT Button fuer Pfeil fuer Timer -> MAA_LOBBY_PFEILBUTTON_RIGHT
 	    timerright = new MouseActionArea(GraphicsHandler.getWidth()/8 + Settings.scaleValue(150), yPlayerTimer, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
 		    MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
 		@Override
@@ -268,7 +267,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		    timerchoice %= timer.length;
 		    GameCounter.setGameTime(timer[timerchoice]);
 		    ConsoleHandler.print(" timerchoice = " + timerchoice + ", timer = " + timer[timerchoice], MessageType.LOBBY);
-		    // LobbyCreate.setIncrementMap();
+		    LobbyCreate.client.sendMessageToAllClients("516-" + timerchoice);
 		}
 		@Override
 		public boolean isActiv() {
@@ -290,7 +289,6 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		    }
 		}
 	    };
-	}
 
 	///////////////////////////////// ALLE BUTTONS FÜR DIE SKIN SELECTION ////////////////////////////////////////////////////////
 
@@ -668,16 +666,22 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	return timer[timerchoice];
     }
     
+    public static int getTimerChoice() {
+	return timerchoice;
+    }
+    
+    public static void setTimer(int timerNr) {
+	timerchoice = timerNr;
+    }
+    
     public static void lobbyButtonsReset() {
 	ConsoleHandler.print("reseting Lobbymenu MAAs", MessageType.LOBBY);
 	startLobby.remove();
 	exitLobby.remove();
 	mapleft.remove();
 	mapright.remove();
-	if (SETTIME) {
-	    timerleft.remove();
-	    timerright.remove();
-	}
+	timerleft.remove();
+	timerright.remove();
 	player1left.remove();
 	player1right.remove();
 	player2left.remove();

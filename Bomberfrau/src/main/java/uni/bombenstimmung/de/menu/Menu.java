@@ -746,9 +746,10 @@ public class Menu {
 //			Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(),
 //				"OK");
 //			ok = false;
+//			LobbyCreate.client.getConnector().dispose();
+//			LobbyCreate.client = null;
 //		    }
-//		    LobbyCreate.client.getConnector().dispose();
-//		    LobbyCreate.client = null;
+//
 //		}
 		
 		if (ok) {
