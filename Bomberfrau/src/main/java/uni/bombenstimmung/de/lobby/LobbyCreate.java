@@ -22,6 +22,7 @@ import uni.bombenstimmung.de.backend.images.LoadedImage;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
+import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.menu.Panes;
 import uni.bombenstimmung.de.menu.Settings;
 
@@ -269,7 +270,13 @@ public class LobbyCreate {
 				g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROWN).getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(25), 
 					(int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), 
-					(int)(GraphicsHandler.getHeight()*0.55), Settings.scaleValue(250), Settings.scaleValue(250), null);
+					(int)(GraphicsHandler.getHeight()*0.5), Settings.scaleValue(250), Settings.scaleValue(250), null);
+				if (LobbyButtons.SETTIME) {
+				    String show = "" + LobbyButtons.getTimer();
+				    if (show.equals("0")) show = LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_ENDLESS_TIME).getContent();
+				    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(96-4*show.length()), show, GraphicsHandler.getWidth()/8*(2*i+1), 
+					    (int)(GraphicsHandler.getHeight()*0.808));
+				}
 			}
 			// Loest den viel zu grossen Namen, bei einem Namen unter 3 Zeichen
 			if(player[i].getName().length() < 3) {
@@ -281,12 +288,12 @@ public class LobbyCreate {
 
 			try {
 
-			g.drawImage(player[i].skinSelection[player[i].getSkin()][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28),
+			g.drawImage(LobbyPlayer.skinSelection[player[i].getSkin()][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28),
 				Settings.scaleValue(250), Settings.scaleValue(250), null);
 			
 			if (player[i].getisHost() == false) {
 			    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(50), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_READY).getContent(), 
-				    GraphicsHandler.getWidth()/8*(2*i+1) - Settings.scaleValue(125) + Settings.scaleValue(125), (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(370));  
+				    GraphicsHandler.getWidth()/8*(2*i+1), (int)(GraphicsHandler.getHeight()*0.65));  
 			}
 			} catch(Exception e) {
 			    e.printStackTrace();

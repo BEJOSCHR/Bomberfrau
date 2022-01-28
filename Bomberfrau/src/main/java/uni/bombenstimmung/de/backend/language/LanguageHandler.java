@@ -91,6 +91,8 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_IP, lobby_ip);
 		String[] lobby_full = {"This lobby is full or does not exist! Returning to main menu...", "Diese Lobby ist entweder voll oder sie existiert nicht! Gehe zurueck ins Hauptmenu..."};
 		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_FULL, lobby_full);
+		String[] limit = {"no limit", "ohne Limit"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_LOBBY_ENDLESS_TIME, limit);
 		
 		String[] ingame_go = {"GO!", "LOS!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GO, ingame_go);

@@ -26,19 +26,25 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaHandler;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
+import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class LobbyButtons extends MouseActionAreaHandler{
 
-    private static int yPlayer, yPlayerMap;
+    private static int yPlayer, yPlayerMap, yPlayerTimer;
     private static int xPlayer1Left, xPlayer2Left, xPlayer3Left, xPlayer4Left;
     private static int xPlayer1Right, xPlayer2Right, xPlayer3Right, xPlayer4Right;
+    public static final boolean SETTIME = false;
+    private static int[] timer = {0, 60, 90, 180, 240};
+    private static int timerchoice = 2;
 
     public static MouseActionArea startLobby;
     public static MouseActionArea exitLobby;
     public static MouseActionArea mapleft;
     public static MouseActionArea mapright;
+    public static MouseActionArea timerleft;
+    public static MouseActionArea timerright;
     public static MouseActionArea player1left;
     public static MouseActionArea player1right;
     public static MouseActionArea player2left;
@@ -59,7 +65,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
     public static void initLobbyButtons(){
 
 	yPlayer = (int)(GraphicsHandler.getHeight()*0.28) + Settings.scaleValue(100);
-	yPlayerMap = (int)(GraphicsHandler.getHeight()*0.55) + Settings.scaleValue(100);
+	yPlayerMap = (int)(GraphicsHandler.getHeight()*0.5) + Settings.scaleValue(100);
+	yPlayerTimer = (int)(GraphicsHandler.getHeight()*0.7) + Settings.scaleValue(100);
 
 	xPlayer1Left = GraphicsHandler.getWidth()/8   - Settings.scaleValue(205);
 	xPlayer2Left = GraphicsHandler.getWidth()/8*3 - Settings.scaleValue(205);
@@ -216,6 +223,74 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		}
 	    }
 	};
+	
+
+	if (SETTIME) {
+	    //LOBBY LEFT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_LEFT
+	    timerleft = new MouseActionArea(xPlayer1Left, yPlayerTimer, 45, 44,
+		    MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_LEFT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) { //Diese Werte sind belanglos, da ich die in draw sowieso überschreibe und nicht brauche
+		@Override
+		public void performAction_LEFT_RELEASE() {
+		    ConsoleHandler.print(" Left Pfeilbutton TIMER Button was Clicked", MessageType.LOBBY);
+		    timerchoice += timer.length-1;
+		    timerchoice %= timer.length;
+		    GameCounter.setGameTime(timer[timerchoice]);
+		    ConsoleHandler.print(" timerchoice = " + timerchoice + ", timer = " + timer[timerchoice], MessageType.LOBBY);
+		// 	LobbyCreate.setDecrementMap();
+		}
+		@Override
+		public boolean isActiv() {
+		    if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost()) {
+			return true; 
+		    }
+		    else {
+			return false;				    
+		    }
+
+		}
+		@Override
+		public void draw(Graphics g) { 
+		    if(isHovered()) {
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left - Settings.scaleValue(5), yPlayerTimer - (int)(GraphicsHandler.getHeight()*0.003), Settings.scaleValue(70), Settings.scaleValue(70), null);
+		    }else {
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_LEFT).getImage(), xPlayer1Left, yPlayerTimer, Settings.scaleValue(60), Settings.scaleValue(60), null);
+		    }
+		}
+	    };
+
+	    //LOBBY RIGHT Button fuer Pfeil fuer MAP -> MAA_LOBBY_PFEILBUTTON_RIGHT
+	    timerright = new MouseActionArea(GraphicsHandler.getWidth()/8 + Settings.scaleValue(150), yPlayerTimer, 45, 44,//Diese Werte sind nicht sichtbar, aber das sind die Werte wo ich dann klicke
+		    MouseActionAreaType.MAA_LOBBY_PFEILBUTTON_RIGHT, "Pfeil", 20, Color.DARK_GRAY, Color.ORANGE) {
+		@Override
+		public void performAction_LEFT_RELEASE() {
+		    ConsoleHandler.print("Right Pfeilbutton TIMER Button was Clicked", MessageType.LOBBY);
+		    timerchoice += 1;
+		    timerchoice %= timer.length;
+		    GameCounter.setGameTime(timer[timerchoice]);
+		    ConsoleHandler.print(" timerchoice = " + timerchoice + ", timer = " + timer[timerchoice], MessageType.LOBBY);
+		    // LobbyCreate.setIncrementMap();
+		}
+		@Override
+		public boolean isActiv() {
+		    if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY && LobbyCreate.client.isHost()) {
+			return true;	    
+		    }
+
+		    else {
+			return false;				    
+		    }
+		}
+		@Override
+		public void draw(Graphics g) { 
+		    if(isHovered()) {
+			// Die y Koordinate -3, weil ja von oben links das Bild geprinted wird und der Button so leicht nach unten verschoben wird
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right - Settings.scaleValue(5), yPlayerTimer - (int)(GraphicsHandler.getHeight()*0.003), Settings.scaleValue(70), Settings.scaleValue(70), null);
+		    }else {
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_ARROW_RIGHT).getImage(), xPlayer1Right, yPlayerTimer, Settings.scaleValue(60), Settings.scaleValue(60), null);
+		    }
+		}
+	    };
+	}
 
 	///////////////////////////////// ALLE BUTTONS FÜR DIE SKIN SELECTION ////////////////////////////////////////////////////////
 
@@ -468,14 +543,14 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			else {
 			    g.setColor(Color.DARK_GRAY);
 			}
-			g.drawRect(xPlayer2Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			g.drawRect(xPlayer2Left+Settings.scaleValue(166), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
 		    }
 
 		    if(LobbyCreate.player[1].getisReady() == true) {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer2Left+Settings.scaleValue(172), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 		    }
 		    else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer2Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer2Left+Settings.scaleValue(174), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 		    }
 		}
 	    }
@@ -510,14 +585,14 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			else {
 			    g.setColor(Color.DARK_GRAY);
 			}
-			g.drawRect(xPlayer3Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			g.drawRect(xPlayer3Left+Settings.scaleValue(166), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
 		    }
 
 		    if(LobbyCreate.player[2].getisReady() == true) {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(), xPlayer3Left+Settings.scaleValue(172), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
 		    }
 		    else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer3Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer3Left+Settings.scaleValue(174), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null); 
 		    }
 		}				
 	    }
@@ -552,15 +627,15 @@ public class LobbyButtons extends MouseActionAreaHandler{
 			else {
 			    g.setColor(Color.DARK_GRAY);
 			}
-			g.drawRect(xPlayer4Left+Settings.scaleValue(158), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
+			g.drawRect(xPlayer4Left+Settings.scaleValue(166), yPlayerMap-Settings.scaleValue(50), Settings.scaleValue(80), Settings.scaleValue(80));
 		    }
 
 		    if(LobbyCreate.player[3].getisReady() == true) {
 			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CHECKMARK).getImage(),
-				xPlayer4Left+Settings.scaleValue(168), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+				xPlayer4Left+Settings.scaleValue(172), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 		    }
 		    else {
-			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer4Left+Settings.scaleValue(167), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
+			g.drawImage(ImageHandler.getImage(ImageType.IMAGE_LOBBY_CROSS).getImage(), xPlayer4Left+Settings.scaleValue(174), yPlayerMap-Settings.scaleValue(46), Settings.scaleValue(70), Settings.scaleValue(70), null);
 		    }
 		}	
 	    }
@@ -589,12 +664,20 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	///////////////////////////////// ALLE BUTTONS FÜR DIE CHECKBOXEN PLAYER 2-4 ////////////////////////////////////////////////////////	
     }
 
+    public static int getTimer() {
+	return timer[timerchoice];
+    }
+    
     public static void lobbyButtonsReset() {
 	ConsoleHandler.print("reseting Lobbymenu MAAs", MessageType.LOBBY);
 	startLobby.remove();
 	exitLobby.remove();
 	mapleft.remove();
 	mapright.remove();
+	if (SETTIME) {
+	    timerleft.remove();
+	    timerright.remove();
+	}
 	player1left.remove();
 	player1right.remove();
 	player2left.remove();
