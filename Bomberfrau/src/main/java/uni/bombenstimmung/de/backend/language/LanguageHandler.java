@@ -106,8 +106,10 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD2, ingame_rod2);
 		String[] ingame_rod3 = {"is gonna get ya!", "kommt euch holen!"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD3, ingame_rod3);
-		String[] ingame_gameover = {"GAME OVER", "SPIEL VORBEI"};
-		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER, ingame_gameover);
+		String[] ingame_gameover1 = {"GAME", "SPIEL"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER1, ingame_gameover1);
+		String[] ingame_gameover2 = {"OVER", "VORBEI"};
+		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER2, ingame_gameover2);
 		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);

@@ -424,7 +424,7 @@ public class GraphicsHandler {
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 
-		MenuAnimations.titleShakeAni();
+		MenuAnimations.titleShakeAni(10, 6);
 		MenuAnimations.lobbyWalk();
 		
 		SoundHandler.playSound2(SoundType.AFTERGAME, true);

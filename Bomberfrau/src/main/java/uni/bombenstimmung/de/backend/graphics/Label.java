@@ -131,7 +131,8 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
 		    	if(Game.getGameOver()) {
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER1).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER2).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
 		    	}
 		    	switch (Game.getCountdown()) {
 		    	case 1:
