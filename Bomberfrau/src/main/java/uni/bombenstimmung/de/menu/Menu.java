@@ -293,7 +293,7 @@ public class Menu {
 		GraphicsHandler.getFrame().setSize(Settings.getResWidth(), Settings.getResHeight());
 		GraphicsHandler.getFrame().setLocation((Settings.getResWidthMax() - Settings.getResWidth()) / 2,
 			(Settings.getResHeightMax() - Settings.getResHeight()) / 2);
-		comboboxReso.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
+		comboboxReso.setFont(new Font("Consolas", Font.BOLD, Settings.scaleValue(40)));
 		comboboxReso.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.1),
 			(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 18));
 		sliderMusic.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.2),

@@ -81,7 +81,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	ConsoleHandler.print("starting: initLobbyButtons", MessageType.LOBBY);
 
 	//LOBBY STARTBUTTON
-	startLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
+	startLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.35 - Settings.scaleValue(110)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(220), Settings.scaleValue(100),
 		MouseActionAreaType.MAA_LOBBY_STARTBUTTON, "START", Settings.scaleValue(40), Color.WHITE, Color.GREEN) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
@@ -129,7 +129,7 @@ public class LobbyButtons extends MouseActionAreaHandler{
 	};
 
 	//LOBBY EXITBUTTON
-	exitLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.65 - Settings.scaleValue(100)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(200), Settings.scaleValue(100),
+	exitLobby = new MouseActionArea((int)(GraphicsHandler.getWidth()*0.65 - Settings.scaleValue(110)), GraphicsHandler.getHeight()/4 + (GraphicsHandler.getHeight()/5)*3, Settings.scaleValue(220), Settings.scaleValue(100),
 		MouseActionAreaType.MAA_LOBBY_STARTBUTTON, LanguageHandler.getLLB(LanguageBlockType.LB_OPTIONS_BTN).getContent(), Settings.scaleValue(40), Color.WHITE, Color.RED) {
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
