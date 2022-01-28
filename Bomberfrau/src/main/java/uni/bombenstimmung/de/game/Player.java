@@ -140,7 +140,8 @@ public class Player extends Entity implements ActionListener {
 	    if (block == false && (tempField.getContent() != FieldContent.WALL
 		    && tempField.getContent() != FieldContent.BLOCK && tempField.getContent() != FieldContent.BORDER
 		    && (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-			    && this.currentField.getContent() == FieldContent.BOMB)))) {
+			    && this.currentField.getContent() == FieldContent.BOMB
+			    && this.currentField == tempField)))) {
 		this.realPosX += this.velX;
 		this.realPosY += this.velY;
 	    } else {
