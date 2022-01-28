@@ -40,6 +40,7 @@ import uni.bombenstimmung.de.backend.serverconnection.client.ClientHandler;
 import uni.bombenstimmung.de.game.FieldContent;
 import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.PlayerHandler;
+import uni.bombenstimmung.de.lobby.LobbyButtons;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 
@@ -275,6 +276,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	    }
 		    	    sendMessageToAllClients("502-" + pMessage501[1] + "-" + pMessage501[2] + "-" + pMessage501[3]);
 		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
+		    	    sendMessage(session, "516-" + LobbyButtons.getTimerChoice());
 		    	break;
 		    	
 		// 502 = Aufruf an alle Clients den neu-gejointen Player zu adden
@@ -400,6 +402,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 		case 515:
 		    	GraphicsHandler.switchToIngameFromLobby();
 		    	break;
+		    	
+		//507 = Wird von dem Host in dem Timeraenderungen aufgerufen, sodass alle Player die Timerchoice aendern	
+		//Format: "516-[timerchoice]"
+		case 516:
+			String[] pMessage516 = message.split("-");
+			LobbyCreate.setTimer(Integer.parseInt(pMessage516[1]));
+			break;
 		    	
 	
 		    	

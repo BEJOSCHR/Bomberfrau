@@ -17,7 +17,6 @@ import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 import uni.bombenstimmung.de.game.PlayerHandler;
-import uni.bombenstimmung.de.lobby.LobbyButtons;
 
 public class KeyHandler implements KeyListener {
 

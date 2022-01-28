@@ -33,7 +33,6 @@ import uni.bombenstimmung.de.game.Game;
 import uni.bombenstimmung.de.game.GameCounter;
 import uni.bombenstimmung.de.game.PlayerHandler;
 import uni.bombenstimmung.de.lobby.LobbyCreate;
-import uni.bombenstimmung.de.menu.MenuAnimations;
 import uni.bombenstimmung.de.menu.Settings;
 
 @SuppressWarnings("serial")
@@ -132,23 +131,24 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
 		    	if(Game.getGameOver()) {
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER1).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER2).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
 		    	}
 		    	switch (Game.getCountdown()) {
 		    	case 1:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(1000), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 2:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.ORANGE, Settings.scaleValue(1000), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 3:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(1000), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 4:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(150), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GO).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.GREEN, Settings.scaleValue(1000), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GO).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
 			break;
 		case AFTERGAME:

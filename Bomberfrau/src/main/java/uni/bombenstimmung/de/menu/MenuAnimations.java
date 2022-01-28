@@ -112,9 +112,9 @@ public class MenuAnimations {
     /**
      * Animation Title Text Shaking
      */
-    public static void titleShakeAni() {
+    public static void titleShakeAni(int delay, int strenght) {
 	Random r = new Random();
-	new Animation(10, -1) {
+	new Animation(delay, -1) {
 	    @Override
 	    public void initValues() {
 		AnimationData.title_posXModifier = 0;
@@ -125,8 +125,8 @@ public class MenuAnimations {
 	    public void changeValues() {
 		if (getSteps() % 2 == 0) {
 		    int stepSize = 1;
-		    AnimationData.title_posXModifier += r.nextInt(stepSize * 6) - stepSize;
-		    AnimationData.title_posYModifier += r.nextInt(stepSize * 6) - stepSize;
+		    AnimationData.title_posXModifier += r.nextInt(stepSize * strenght) - stepSize;
+		    AnimationData.title_posYModifier += r.nextInt(stepSize * strenght) - stepSize;
 		    int limit = 10;
 		    if (AnimationData.title_posXModifier < -limit) {
 			AnimationData.title_posXModifier = -limit;

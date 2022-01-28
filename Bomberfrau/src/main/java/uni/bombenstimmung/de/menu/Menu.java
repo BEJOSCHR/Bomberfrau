@@ -29,11 +29,9 @@ import uni.bombenstimmung.de.backend.language.LanguageHandler;
 import uni.bombenstimmung.de.backend.language.LanguageType;
 import uni.bombenstimmung.de.backend.maa.MouseActionArea;
 import uni.bombenstimmung.de.backend.maa.MouseActionAreaType;
-import uni.bombenstimmung.de.backend.serverconnection.host.ConnectedClient;
 import uni.bombenstimmung.de.backend.sounds.SoundCategory;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
-import uni.bombenstimmung.de.lobby.LobbyCreate;
 
 public class Menu {
 
@@ -49,7 +47,7 @@ public class Menu {
     private static JTextField control_up, control_down, control_left, control_right, control_bomb;
     private static JCheckBox checkBoxFPS;
     private static MouseActionArea intro, start, options, exit, back;
-
+    
     /**
      * correct pattern for IPv4 address - 4 times 0-255 without leading zeros.
      */
@@ -293,7 +291,7 @@ public class Menu {
 		GraphicsHandler.getFrame().setSize(Settings.getResWidth(), Settings.getResHeight());
 		GraphicsHandler.getFrame().setLocation((Settings.getResWidthMax() - Settings.getResWidth()) / 2,
 			(Settings.getResHeightMax() - Settings.getResHeight()) / 2);
-		comboboxReso.setFont(new Font("Consolas", Font.BOLD, (int) (40 * Settings.getFactor())));
+		comboboxReso.setFont(new Font("Consolas", Font.BOLD, Settings.scaleValue(40)));
 		comboboxReso.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.1),
 			(int) (Settings.getResWidth() / 4.5), (int) (Settings.getResHeight() / 18));
 		sliderMusic.setBounds((int) (Settings.getResWidth() * 0.28), (int) (Settings.getResHeight() * 0.2),
@@ -746,9 +744,10 @@ public class Menu {
 //			Panes.infoPane(null, LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_FULL).getContent(),
 //				"OK");
 //			ok = false;
+//			LobbyCreate.client.getConnector().dispose();
+//			LobbyCreate.client = null;
 //		    }
-//		    LobbyCreate.client.getConnector().dispose();
-//		    LobbyCreate.client = null;
+//
 //		}
 		
 		if (ok) {

@@ -21,11 +21,12 @@ import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.lobby.LobbyButtons;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class GameCounter implements ActionListener {
 
-    private static int gametime = 240;
+    private static int gametime = 90;
     private static int ringOfDeathNumber = 0;
     private Timer gameTimer;
     private static int clock = 0;
@@ -39,12 +40,15 @@ public class GameCounter implements ActionListener {
 	    gameTimer.stop();
 	    gametime = 0;
 	} else {
-	    if (gametime == 0 && (ringOfDeathNumber < 6)) {
+	    if ((gametime == 0) && (LobbyButtons.getTimer() != 0) && (ringOfDeathNumber < 6)) {
 		ringOfDeathNumber++;
 		Game.ringOfDeath(ringOfDeathNumber);
 		gametime = 10;
 	    } else {
-		GameCounter.gametime--;
+		if (LobbyButtons.getTimer() == 0)
+		    GameCounter.gametime++;
+		else
+		    GameCounter.gametime--;
 	    }
 	}
 	clock++;
@@ -66,7 +70,7 @@ public class GameCounter implements ActionListener {
 	gameTimer.stop();
     }
 
-    public void setGameTime(int t) {
+    public static void setGameTime(int t) {
 	gametime = t;
     }
 
@@ -138,7 +142,8 @@ public class GameCounter implements ActionListener {
     }
 
     public static void resetGameCounter() {
-	gametime = 60;
+//	gametime = 60;
+	gametime = LobbyButtons.getTimer();
 	ringOfDeathNumber = 0;
 	clock = 0;
     }

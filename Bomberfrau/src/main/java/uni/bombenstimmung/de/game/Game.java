@@ -25,6 +25,7 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.lobby.LobbyPlayer;
 import uni.bombenstimmung.de.backend.language.LanguageBlockType;
 import uni.bombenstimmung.de.backend.language.LanguageHandler;
+import uni.bombenstimmung.de.menu.MenuAnimations;
 import uni.bombenstimmung.de.menu.Settings;
 
 public class Game {
@@ -377,6 +378,7 @@ public class Game {
 	}
 	ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
+	    MenuAnimations.titleShakeAni(5, 12);
 	    gameOver();
 	    if (LobbyCreate.client.isHost()) {
 		LobbyCreate.client.sendMessageToAllClients("209-");
