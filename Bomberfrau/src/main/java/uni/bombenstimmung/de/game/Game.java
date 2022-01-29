@@ -35,6 +35,7 @@ public class Game {
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
     private static int countdown = 0;
+    private static int lastPlayer;
 
     /**
      * Fuellt das Map Array mit leeren Feldern X baut auf von West nach Ost Y baut
@@ -371,18 +372,25 @@ public class Game {
 
     public static void checkIfAllDead() {
 	int livingPlayers = 0;
+	lastPlayer = -1;
 	for (Player i : PlayerHandler.getAllPlayer()) {
 	    if (!i.isDead()) {
 		livingPlayers++;
+		lastPlayer = i.getId();
 	    }
 	}
-	ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
+	// ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
 	    MenuAnimations.titleShakeAni(5, 12);
 	    gameOver();
 	    if (LobbyCreate.client.isHost()) {
 		LobbyCreate.client.sendMessageToAllClients("209-");
 	    }
+	} else {
+	    if (livingPlayers == 1)
+		ConsoleHandler.print("winner is player " + lastPlayer, MessageType.GAME);
+	    else
+		ConsoleHandler.print("no one survived, lastPlayer = " + lastPlayer, MessageType.GAME);
 	}
     }
 
@@ -440,6 +448,10 @@ public class Game {
 
     public static int getCountdown() {
 	return countdown;
+    }
+    
+    public static int getLastPlayer() {
+	return lastPlayer;
     }
 
     public static void setCountdown(int c) {

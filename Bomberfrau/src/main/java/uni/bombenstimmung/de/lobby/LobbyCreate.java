@@ -273,10 +273,10 @@ public class LobbyCreate {
 					(int)(GraphicsHandler.getHeight()*0.13), Settings.scaleValue(50), Settings.scaleValue(50), null);
 				g.drawImage(LobbyCreate.mapSelection[zaehlerMapSelection].getImage(), GraphicsHandler.getWidth()/8*(2*i+1)- Settings.scaleValue(125), 
 					(int)(GraphicsHandler.getHeight()*0.5), Settings.scaleValue(250), Settings.scaleValue(250), null);
-				    String show = "" + LobbyButtons.getTimer();
-				    if (show.equals("0")) show = LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_ENDLESS_TIME).getContent();
-				    GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(96-4*show.length()), show, GraphicsHandler.getWidth()/8*(2*i+1), 
-					    (int)(GraphicsHandler.getHeight()*0.808));
+				String show = "" + LobbyButtons.getTimer();
+				if (show.equals("0")) show = LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_ENDLESS_TIME).getContent();
+				GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(96-4*show.length()), show, GraphicsHandler.getWidth()/8*(2*i+1), 
+				    (int)(GraphicsHandler.getHeight()*0.808));
 			}
 			// Loest den viel zu grossen Namen, bei einem Namen unter 3 Zeichen
 			if(player[i].getName().length() < 3) {

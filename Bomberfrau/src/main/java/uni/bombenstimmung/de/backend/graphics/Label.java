@@ -131,8 +131,14 @@ public class Label extends JLabel {
 		    	    GraphicsHandler.drawCentralisedText(g, Color.WHITE, 10, "VelX: " + PlayerHandler.getClientPlayer().getVelX() + " VelY: " + PlayerHandler.getClientPlayer().getVelY(), 200, 48);
 		    	}
 		    	if(Game.getGameOver()) {
-		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER1).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
-		    	    GraphicsHandler.drawCentralisedText(g, Color.BLUE, Settings.scaleValue(600), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER2).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
+		    	    if (Game.getLastPlayer() == -1) {
+		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(400), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_NO_SURVIVORS).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
+		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(400), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
+		    	    } else {
+		    		String name = PlayerHandler.getAllPlayer().get(Game.getLastPlayer()).getName();
+		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(500 * (1f - name.length()*0.026f)), name, (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.3));
+		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(500), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_WINS).getContent(), (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.7));
+		    	    }
 		    	}
 		    	switch (Game.getCountdown()) {
 		    	case 1:
@@ -154,11 +160,16 @@ public class Label extends JLabel {
 		case AFTERGAME:
 			g.setColor(Color.WHITE);
 			Color gold = new Color(255,204,51);
+			String name;
 			GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(100), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_TITEL).getContent(), GraphicsHandler.getWidth()/2 + AnimationData.title_posYModifier, GraphicsHandler.getHeight()/16 + AnimationData.title_posXModifier);
-			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*2/8);
-			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*3/8);
-			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*4/8);
-			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).getContent(), GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*5/8);
+			name = LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).getContent();
+			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(75 - name.length()), name, GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*2/8);
+			name = LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).getContent();
+			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(75 - name.length()), name, GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*3/8);
+			name = LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).getContent();
+			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(75 - name.length()), name, GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*4/8);
+			name = LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).getContent();
+			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(75 - name.length()), name, GraphicsHandler.getWidth()*1/4, GraphicsHandler.getHeight()*5/8);
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*2/8);
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*3/8);
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*4/8);
