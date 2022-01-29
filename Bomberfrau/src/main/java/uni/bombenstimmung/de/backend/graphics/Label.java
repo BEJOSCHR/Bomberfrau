@@ -132,8 +132,8 @@ public class Label extends JLabel {
 		    	}
 		    	if(Game.getGameOver()) {
 		    	    if (Game.getLastPlayer() == -1) {
-		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(400), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_NO_SURVIVORS).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
-		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(400), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
+		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(250), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_NO_SURVIVORS).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
+		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(250), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
 		    	    } else {
 		    		String name = PlayerHandler.getAllPlayer().get(Game.getLastPlayer()).getName();
 		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(500 * (1f - name.length()*0.026f)), name, (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.3));

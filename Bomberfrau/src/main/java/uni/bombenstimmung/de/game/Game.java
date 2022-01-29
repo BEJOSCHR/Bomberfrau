@@ -35,7 +35,8 @@ public class Game {
     private static ArrayList<Bomb> placedBombs = new ArrayList<Bomb>();
     private static boolean gameOver = false;
     private static int countdown = 0;
-    private static int lastPlayer;
+    private static int lastPlayer = -1;
+//    private static int livingPlayers;
 
     /**
      * Fuellt das Map Array mit leeren Feldern X baut auf von West nach Ost Y baut
@@ -379,24 +380,29 @@ public class Game {
 		lastPlayer = i.getId();
 	    }
 	}
+	
 	// ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
 	    MenuAnimations.titleShakeAni(5, 12);
+	    if (livingPlayers == 1) {
+		ConsoleHandler.print("winner is player " + lastPlayer, MessageType.GAME);
+	    } else {
+		ConsoleHandler.print("no one survived, lastPlayer = " + lastPlayer, MessageType.GAME);
+	    }
 	    gameOver();
 	    if (LobbyCreate.client.isHost()) {
 		LobbyCreate.client.sendMessageToAllClients("209-");
 	    }
-	} else {
-	    if (livingPlayers == 1)
-		ConsoleHandler.print("winner is player " + lastPlayer, MessageType.GAME);
-	    else
-		ConsoleHandler.print("no one survived, lastPlayer = " + lastPlayer, MessageType.GAME);
 	}
+
     }
 
     public static void gameOver() {
 	if (!gameOver) {
 	    gameOver = true;
+	    
+	    checkIfAllDead();
+	    
 	    switch (mapNumber) {
 	    case 1:
 		SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
