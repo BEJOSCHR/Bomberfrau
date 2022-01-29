@@ -271,12 +271,13 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    		if (LobbyCreate.player[i] != null) {
 		    		    // Cases in Abhaenigkeit der ID des zu speichernden Players werden aufgerufen
 			    	    sendMessage(session, "50" + Integer.toString(3+i) + "-" +  LobbyCreate.player[i].getId() + "-" + LobbyCreate.player[i].getName() + "-" + String.valueOf(LobbyCreate.player[i].getisHost())
-			    	    	+ "-" + LobbyCreate.getMap() + "-" + LobbyCreate.player[i].getSkin()); 
+			    	    	+ "-" + String.valueOf(LobbyCreate.player[i].getisReady()) + "-" + LobbyCreate.player[i].getSkin()); 
 		    		}
 		    	    }
 		    	    sendMessageToAllClients("502-" + pMessage501[1] + "-" + pMessage501[2] + "-" + pMessage501[3]);
 		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
 		    	    sendMessage(session, "516-" + LobbyButtons.getTimerChoice());
+		    	    sendMessage(session, "507-" + LobbyCreate.getMap());
 		    	break;
 		    	
 		// 502 = Aufruf an alle Clients den neu-gejointen Player zu adden

@@ -98,15 +98,15 @@ public class LobbyCreate {
 	 * @param mapNr		Die aktuelle Auswahl der Map des Players
 	 * @param skinNr	Die aktuelle Auswahl des Skin des Players
 	 */
-	public static void addPlayer(String id, String name, String isHost, String mapNr, String skinNr) {
+	public static void addPlayer(String id, String name, String isHost, String isReady, String skinNr) {
 		// Ein weiterer Player wird als naechstes im Array erstellt
 	    	LobbyCreate.player[Integer.parseInt(id)] = new LobbyPlayer(name, "");
 		LobbyCreate.player[Integer.parseInt(id)].setId(Integer.parseInt(id));
 		LobbyCreate.player[Integer.parseInt(id)].setisHost(Boolean.parseBoolean(isHost));
 		// Skin und Map Nummern werden gesettet
-		if (mapNr != "" && skinNr != "") {
+		if (skinNr != "") {
 		    LobbyCreate.player[Integer.parseInt(id)].setSkin(Integer.parseInt(skinNr));
-		    LobbyCreate.setMap(Integer.parseInt(mapNr));
+		    LobbyCreate.player[Integer.parseInt(id)].setisReadyForClients(isReady);
 		}
 		if(numberOfMaxPlayers < 4) {
 		    numberOfMaxPlayers++;	
