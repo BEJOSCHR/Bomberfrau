@@ -380,7 +380,7 @@ public class Game {
 		lastPlayer = i.getId();
 	    }
 	}
-	
+
 	// ConsoleHandler.print("Living Players: " + livingPlayers, MessageType.GAME);
 	if (gameOver == false && livingPlayers <= 1) {
 	    MenuAnimations.titleShakeAni(5, 12);
@@ -400,9 +400,9 @@ public class Game {
     public static void gameOver() {
 	if (!gameOver) {
 	    gameOver = true;
-	    
+
 	    checkIfAllDead();
-	    
+
 	    switch (mapNumber) {
 	    case 1:
 		SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
@@ -420,7 +420,7 @@ public class Game {
 		ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
 	    }
 
-	    new Animation(50, 8) {
+	    new Animation(10, 40) {
 		@Override
 		public void initValues() {
 		    PlayerHandler.getClientPlayer().actionStop();
@@ -432,10 +432,11 @@ public class Game {
 
 		@Override
 		public void changeValues() {
-		    if (getSteps() >= 1) {
+		    if (getSteps() == 1) {
 			for (Bomb i : placedBombs) {
 			    i.stopTimer();
 			}
+			checkIfAllDead();
 		    }
 		}
 
@@ -457,7 +458,7 @@ public class Game {
     public static int getCountdown() {
 	return countdown;
     }
-    
+
     public static int getLastPlayer() {
 	return lastPlayer;
     }
