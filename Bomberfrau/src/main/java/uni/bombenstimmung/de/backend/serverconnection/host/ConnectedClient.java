@@ -276,6 +276,7 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	    }
 		    	    sendMessageToAllClients("502-" + pMessage501[1] + "-" + pMessage501[2] + "-" + pMessage501[3]);
 		    	    sendMessage(session, "506-" + LobbyCreate.numberOfMaxPlayers);
+		    	    // Das der gejointe Client die Timer und Map Selection uebertraegt bekommt
 		    	    sendMessage(session, "516-" + LobbyButtons.getTimerChoice());
 		    	    sendMessage(session, "507-" + LobbyCreate.getMap());
 		    	break;
@@ -283,33 +284,30 @@ public class ConnectedClient extends IoHandlerAdapter{
 		// 502 = Aufruf an alle Clients den neu-gejointen Player zu adden
 		//Format: "502-[ID]-[Name]-[isHost]"
 		case 502:
-//		    	ConsoleHandler.print("Der case 502 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage502 = message.split("-");
+		    	// Am Anfang sind die Werte "isReady" und "SkinNr" noch Standard
 			LobbyCreate.addPlayer(pMessage502[1], pMessage502[2], pMessage502[3], "", "");
 		    	break;
 		
-		// Case 503-505 wird vom Server in 501 aufgerufen, sodass der zu joinende Client alle schon existierenen Player erstmal einfügt
+		// Case 503-505 wird vom Server in 501 aufgerufen, sodass der zu joinende Client alle schon existierenen Player erstmal einfuegt
 		    	
 		//503 = Fuer LobbyCreate.player[0]
-		//Format: "503-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]" 
+		//Format: "503-[ID]-[Name]-[isHost]-[isReady]-[SkinNr]" 
 		case 503:
-//		    	ConsoleHandler.print("Der case 503 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage503 = message.split("-");
 		    	LobbyCreate.addPlayer(pMessage503[1], pMessage503[2], pMessage503[3], pMessage503[4], pMessage503[5]);
 		    	break;
 		    	
 		//504 = Fuer LobbyCreate.player[1]
-		//Format: "504-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]"    	
+		//Format: "504-[ID]-[Name]-[isHost]-[isReady]-[SkinNr]"    	
 		case 504:
-//		    	ConsoleHandler.print("Der case 504 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage504 = message.split("-");
 		    	LobbyCreate.addPlayer(pMessage504[1], pMessage504[2], pMessage504[3], pMessage504[4], pMessage504[5]);
 		    	break;
 		    	
 		//505 = Fuer LobbyCreate.player[2]
-		//Format: "505-[ID]-[Name]-[isHost]-[MapNr]-[SkinNr]" 
+		//Format: "505-[ID]-[Name]-[isHost]-[isReady]-[SkinNr]" 
 		case 505:
-//		    	ConsoleHandler.print("Der case 505 wurde aufgerufen vom Backend", MessageType.LOBBY);
 		    	String[] pMessage505 = message.split("-");
 		    	LobbyCreate.addPlayer(pMessage505[1], pMessage505[2], pMessage505[3], pMessage505[4], pMessage505[5]);
 		    	break;

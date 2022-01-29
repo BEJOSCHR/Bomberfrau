@@ -95,7 +95,7 @@ public class LobbyCreate {
 	 * @param id		Die ID von zu erstellenden Player (Muss auch der ID des Players im ConnectedClient client entsprechen)
 	 * @param name		Der Name des zu erstellenden Players
 	 * @param isHost	Boolean ob der zu erstellende Player Host ist (Ist auch im ConnectedClient client).
-	 * @param mapNr		Die aktuelle Auswahl der Map des Players
+	 * @param isReady	Die boolean, ob der Player ready ist
 	 * @param skinNr	Die aktuelle Auswahl des Skin des Players
 	 */
 	public static void addPlayer(String id, String name, String isHost, String isReady, String skinNr) {
