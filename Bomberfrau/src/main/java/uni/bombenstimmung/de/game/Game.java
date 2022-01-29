@@ -395,48 +395,50 @@ public class Game {
     }
 
     public static void gameOver() {
-	switch (mapNumber) {
-	case 1:
-	    SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
-	    break;
+	if (!gameOver) {
+	    gameOver = true;
+	    switch (mapNumber) {
+	    case 1:
+		SoundHandler.reducePlayingSound(SoundType.MAP1, 4, false);
+		break;
 
-	case 2:
-	    SoundHandler.reducePlayingSound(SoundType.MAP2, 4, false);
-	    break;
+	    case 2:
+		SoundHandler.reducePlayingSound(SoundType.MAP2, 4, false);
+		break;
 
-	case 3:
-	    SoundHandler.reducePlayingSound(SoundType.MAP3, 4, false);
-	    break;
+	    case 3:
+		SoundHandler.reducePlayingSound(SoundType.MAP3, 4, false);
+		break;
 
-	default:
-	    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
-	}
-
-	new Animation(50, 8) {
-	    @Override
-	    public void initValues() {
-		PlayerHandler.getClientPlayer().actionStop();
-		PlayerHandler.setMovable(false);
-		for (Player i : PlayerHandler.getAllPlayer()) {
-		    i.stopTimer();
-		}
-		gameOver = true;
+	    default:
+		ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
 	    }
 
-	    @Override
-	    public void changeValues() {
-		if (getSteps() >= 1) {
-		    for (Bomb i : placedBombs) {
+	    new Animation(50, 8) {
+		@Override
+		public void initValues() {
+		    PlayerHandler.getClientPlayer().actionStop();
+		    PlayerHandler.setMovable(false);
+		    for (Player i : PlayerHandler.getAllPlayer()) {
 			i.stopTimer();
 		    }
 		}
-	    }
 
-	    @Override
-	    public void finaliseValues() {
-		GraphicsHandler.switchToAftergameFromIngame();
-	    }
-	};
+		@Override
+		public void changeValues() {
+		    if (getSteps() >= 1) {
+			for (Bomb i : placedBombs) {
+			    i.stopTimer();
+			}
+		    }
+		}
+
+		@Override
+		public void finaliseValues() {
+		    GraphicsHandler.switchToAftergameFromIngame();
+		}
+	    };
+	}
     }
 
     public static void resetIngame() {
