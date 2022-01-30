@@ -132,29 +132,29 @@ public class Label extends JLabel {
 		    	}
 		    	if(Game.getGameOver()) {
 		    	    if (Game.getLastPlayer() == -1) {
-		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(250), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_NO_SURVIVORS).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
+		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(180), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_NO_SURVIVORS).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.3) + AnimationData.title_posYModifier);
 		    		GraphicsHandler.drawCentralisedText(g, Color.BLACK, Settings.scaleValue(250), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GAMEOVER).getContent(), (int)(GraphicsHandler.getWidth()*0.5) + AnimationData.title_posXModifier, (int)(GraphicsHandler.getHeight()*0.7) + AnimationData.title_posYModifier);
 		    	    } else {
 		    		String name = PlayerHandler.getAllPlayer().get(Game.getLastPlayer()).getName();
 		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(500 * (1f - name.length()*0.026f)), name, (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.3));
-		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(500), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_WINS).getContent(), (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.7));
+		    		GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(250), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_WINS).getContent(), (int)(GraphicsHandler.getWidth()*0.5), (int)(GraphicsHandler.getHeight()*0.7));
 		    	    }
 		    	}
 		    	switch (Game.getCountdown()) {
 		    	case 1:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(1000), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.RED, Settings.scaleValue(800), "3", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 2:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.ORANGE, Settings.scaleValue(1000), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.ORANGE, Settings.scaleValue(800), "2", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 3:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(1000), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.YELLOW, Settings.scaleValue(800), "1", GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	    break;
 		    	    
 		    	case 4:
-		    	    GraphicsHandler.drawCentralisedText(g, Color.GREEN, Settings.scaleValue(1000), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GO).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
+		    	    GraphicsHandler.drawCentralisedText(g, Color.GREEN, Settings.scaleValue(800), LanguageHandler.getLLB(LanguageBlockType.LB_INGAME_GO).getContent(), GraphicsHandler.getWidth()/2, GraphicsHandler.getHeight()/2);
 		    	}
 			break;
 		case AFTERGAME:
