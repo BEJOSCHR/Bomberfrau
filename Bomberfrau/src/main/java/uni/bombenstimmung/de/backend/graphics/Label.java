@@ -174,6 +174,11 @@ public class Label extends JLabel {
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*3/8);
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*4/8);
 			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_4).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*5/8);
+			GraphicsHandler.drawLeftText(g, gold.darker(), Settings.scaleValue(70), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).getContent(), GraphicsHandler.getWidth()*3/4, GraphicsHandler.getHeight()*2/8);
+			GraphicsHandler.drawLeftText(g, Color.RED, Settings.scaleValue(30), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_PLUS_1).getContent(), GraphicsHandler.getWidth()*5/6, GraphicsHandler.getHeight()*2/8);
+			GraphicsHandler.drawLeftText(g, Color.RED, Settings.scaleValue(30), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_PLUS_2).getContent(), GraphicsHandler.getWidth()*5/6, GraphicsHandler.getHeight()*3/8);
+			GraphicsHandler.drawLeftText(g, Color.RED, Settings.scaleValue(30), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_PLUS_3).getContent(), GraphicsHandler.getWidth()*5/6, GraphicsHandler.getHeight()*4/8);
+			GraphicsHandler.drawLeftText(g, Color.RED, Settings.scaleValue(30), LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_PLUS_4).getContent(), GraphicsHandler.getWidth()*5/6, GraphicsHandler.getHeight()*5/8);
 			DeadPlayerHandler.drawImages(g);
 			break;
 		default:
