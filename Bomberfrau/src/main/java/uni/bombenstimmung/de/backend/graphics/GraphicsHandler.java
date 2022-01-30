@@ -304,6 +304,9 @@ public class GraphicsHandler {
 		Menu.buildMenu();
 		
 	    	SoundHandler.playSound(SoundType.MENU, true);
+    	
+	    	DeadPlayerHandler.resetDeadPlayerHandler();
+	    	
 		displayType = DisplayType.MENU;
 	}
 	
