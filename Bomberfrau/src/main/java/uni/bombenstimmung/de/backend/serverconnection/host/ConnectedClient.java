@@ -49,7 +49,7 @@ public class ConnectedClient extends IoHandlerAdapter {
     private long ping;
     private IoSession conSession = null;
     private IoConnector connector = null;
-    NioDatagramAcceptor acceptor;
+    private NioDatagramAcceptor acceptor;
 
     private ConcurrentHashMap<SocketAddress, Integer> connectedClients;
     private Stack<Integer> idStack;
