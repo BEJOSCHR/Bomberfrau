@@ -25,14 +25,9 @@ import uni.bombenstimmung.de.menu.Settings;
 
 
 public class DeadPlayerHandler {
-	private static ArrayList<DeadPlayer> allPlayer = new ArrayList<DeadPlayer>();
-	private static ArrayList<DeadPlayer> ranking = new ArrayList<DeadPlayer>();
+	private static ArrayList<DeadPlayer> allDeadPlayer = new ArrayList<DeadPlayer>();
 	private static DeadPlayer clientPlayer;	//aktueller Player
 
-	
-	public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
-	    clientPlayer = new DeadPlayer(id, name, ipAdress, host, skin, cC);
-	}	
 
         /**
          * Player Datensatz hinzufügen oder einen bestehenden Datensatz anpassen.
@@ -41,12 +36,13 @@ public class DeadPlayerHandler {
          * @param deathTime	Todeszeitpunkt des Players
          */
 	public static void addDeadPlayer(int id, String name, int deathTime, int skin) {
-	    if (allPlayer.size() == id) {
-		allPlayer.add(id, new DeadPlayer(id, name , deathTime, skin));
+	    if (deathTime==0) deathTime=Integer.MAX_VALUE;
+	    if (allDeadPlayer.size() == id) {
+		allDeadPlayer.add(id, new DeadPlayer(id, name , deathTime, skin));
 		ConsoleHandler.print("new Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 	    }
-	    else if(allPlayer.size() > id) {
-		allPlayer.get(id).setDeathPlayer(id, name, deathTime, allPlayer.get(id).getScore(), skin);
+	    else if(allDeadPlayer.size() > id) {
+		allDeadPlayer.get(id).setDeadPlayer(id, name, deathTime, allDeadPlayer.get(id).getScore(), skin, allDeadPlayer.get(id).getRanking());
 		ConsoleHandler.print("updated Player: " + id + " ,Name: "+ name + ", deathTime: " + deathTime, MessageType.AFTERGAME);
 	    }
 	    else {
@@ -61,93 +57,113 @@ public class DeadPlayerHandler {
          * @param deathTime	Todeszeitpunkt des Players
          * @param score		Punktzahl des Players
          */
-	public static void updateDeadPlayer(String id, String name, String deathTime, String score, String skin) {
-	    if (allPlayer.size() == Integer.parseInt(id)) {
-		    allPlayer.add(Integer.parseInt(id), new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin)));
+	public static void updateDeadPlayer(String id, String name, String deathTime, String score, String skin, String rank) {
+	    if (allDeadPlayer.size() == Integer.parseInt(id)) {
+		allDeadPlayer.add(Integer.parseInt(id), new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin), Integer.parseInt(rank)));
 	    }
-	    else if(allPlayer.size() > Integer.parseInt(id)) {
-		allPlayer.get(Integer.parseInt(id)).setDeathPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin));
+	    else if(allDeadPlayer.size() > Integer.parseInt(id)) {
+		allDeadPlayer.get(Integer.parseInt(id)).setDeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin), Integer.parseInt(rank));
 	    }
 	}
 
+	public static void setClientPlayer(int id, String name, String ipAdress, boolean host, int skin, ConnectedClient cC) {
+	    clientPlayer = new DeadPlayer(id, name, ipAdress, host, skin, cC);
+	}	
+	
 	/**
      	* Punkte für die Partie bestimmen und Plazierung anpassen.
      	*/
 	public static void calculateScore() {
-	    ranking = allPlayer;
 
 	    //sortieren nach deathTime
-	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(allDeadPlayer, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
-		    return Integer.valueOf(p1.getDeathTime()).compareTo(p2.getDeathTime());
+		    return Integer.valueOf(p2.getDeathTime()).compareTo(p1.getDeathTime());
 		}
 	    });
 
 	    //Punktevergabe für die besten drei Player
-	    for(int i = 0; i < ranking.size(); i++) {
+	    for(int i = 0; i < allDeadPlayer.size(); i++) {
 		switch(i) {
-		case 0: ranking.get(0).addScore((ranking.size()-1)*100);
+		case 0: allDeadPlayer.get(0).addScore((allDeadPlayer.size()-1)*100);
 		break;
-		case 1: ranking.get(1).addScore((ranking.size()-2)*100);
+		case 1: allDeadPlayer.get(1).addScore((allDeadPlayer.size()-2)*100);
 		break;
-		case 2: ranking.get(2).addScore((ranking.size()-3)*100);
+		case 2: allDeadPlayer.get(2).addScore((allDeadPlayer.size()-3)*100);
 		break;
 		}
 	    }
 
 	    //DeadPlayer sortieren nach Score
-	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(allDeadPlayer, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
 		    return Integer.valueOf(p2.getScore()).compareTo(p1.getScore());
 		}
 	    });
 
 	    //Ranking zuweisen
-	    for(int i = 0; i < ranking.size(); i++) {
-		ranking.get(i).setRanking(i+1);
-	    }
-
-	    //Ergebnisanzeige Aftergame
-	    for(int i = 0; i < ranking.size(); i++) {
-		String[] aftergame_name = {ranking.get(i).getRanking()+ ": " + ranking.get(i).getName(), ranking.get(i).getRanking()+ ": " + ranking.get(i).getName()};
-		String[] aftergame_score = {"" + ranking.get(i).getScore(), "" + ranking.get(i).getScore()};
-		switch(i) {
-		case 0: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).setLanguageContent(aftergame_score); 
-			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_name); 
-		break;
-		case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).setLanguageContent(aftergame_score);
-			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).setLanguageContent(aftergame_name); 
-		break;
-		case 2: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).setLanguageContent(aftergame_score);
-			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).setLanguageContent(aftergame_name); 
-		break;
-		case 3: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_4).setLanguageContent(aftergame_score);
-			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).setLanguageContent(aftergame_name); 
-		break;
-		}
-	    }
-
-	    //auf urspruengliche Sortierung zurueksetzen und AllPlayer updaten
-	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
-		public int compare(DeadPlayer p1, DeadPlayer p2) {
-		    return Integer.valueOf(p1.getId()).compareTo(p2.getId());
-		}
-	    });    
-	    allPlayer = ranking;
+	    for(int i = 0; i < allDeadPlayer.size(); i++) {
+		allDeadPlayer.get(i).setRanking(i+1);
+	    }  
 	    
-	    Collections.sort(ranking, new Comparator<DeadPlayer>() {
+	    Collections.sort(allDeadPlayer, new Comparator<DeadPlayer>() {
 		public int compare(DeadPlayer p1, DeadPlayer p2) {
 		    return Integer.valueOf(p1.getRanking()).compareTo(p2.getRanking());
 		}
 	    });
+	    
 
+
+	    //auf urspruengliche Sortierung zurueksetzen
+	    Collections.sort(allDeadPlayer, new Comparator<DeadPlayer>() {
+		public int compare(DeadPlayer p1, DeadPlayer p2) {
+		    return Integer.valueOf(p1.getId()).compareTo(p2.getId());
+		}
+	    });  
+	    
+	    //Host uebermittelt aktuelle Punktzahl an die Clients
+	    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
+		DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getSkin() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getRanking());
+	    }
+	    
+	    showResult();
+	    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("603-");
+	    
 	}
 	
+	/**
+     	* Punktestand anzeigen
+     	*/
+	public static void showResult() {
+	    //Ergebnisanzeige Aftergame
+	    for(int i = 0; i < allDeadPlayer.size(); i++) {
+		String[] aftergame_name = {allDeadPlayer.get(i).getRanking()+ ": " + allDeadPlayer.get(i).getName(), allDeadPlayer.get(i).getRanking()+ ": " + allDeadPlayer.get(i).getName()};
+		String[] aftergame_score = {"" + allDeadPlayer.get(i).getScore(), "" + allDeadPlayer.get(i).getScore()};
+		switch(allDeadPlayer.get(i).getRanking()) {
+		case 1: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).setLanguageContent(aftergame_score); 
+			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(aftergame_name); 
+		break;
+		case 2: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).setLanguageContent(aftergame_score);
+			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).setLanguageContent(aftergame_name); 
+		break;
+		case 3: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).setLanguageContent(aftergame_score);
+			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).setLanguageContent(aftergame_name); 
+		break;
+		case 4: LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_4).setLanguageContent(aftergame_score);
+			LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).setLanguageContent(aftergame_name); 
+		break;
+		}
+	    }
+	}
+	
+	/**
+     	* Skins anzeigen
+     	*/
 	public static void drawImages(Graphics g) {
-	    for(int i = 0; i < ranking.size(); i++) {
-		switch(i) {
-		case 0: 
-		    switch(ranking.get(i).getSkin()) {
+	    for(int i = 0; i < allDeadPlayer.size(); i++) {
+		switch(allDeadPlayer.get(i).getRanking()) {
+		case 1: 
+		    switch(allDeadPlayer.get(i).getSkin()) {
 		    case 0:
 			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*2/8-Settings.scaleValue(65), Settings.scaleValue(140), Settings.scaleValue(140), null);
 			break;
@@ -162,8 +178,8 @@ public class DeadPlayerHandler {
 			break;
 		    }
 		break;
-		case 1:
-		    switch(ranking.get(i).getSkin()) {
+		case 2:
+		    switch(allDeadPlayer.get(i).getSkin()) {
 		    case 0:
 			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*3/8-Settings.scaleValue(65), Settings.scaleValue(140), Settings.scaleValue(140), null);
 			break;
@@ -178,8 +194,8 @@ public class DeadPlayerHandler {
 			break;
 		    }
 		break;
-		case 2:
-		    switch(ranking.get(i).getSkin()) {
+		case 3:
+		    switch(allDeadPlayer.get(i).getSkin()) {
 		    case 0:
 			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*4/8-Settings.scaleValue(65), Settings.scaleValue(140), Settings.scaleValue(140), null);
 			break;
@@ -194,8 +210,8 @@ public class DeadPlayerHandler {
 			break;
 		    }
 		break;
-		case 3:
-		    switch(ranking.get(i).getSkin()) {
+		case 4:
+		    switch(allDeadPlayer.get(i).getSkin()) {
 		    case 0:
 			g.drawImage(LobbyPlayer.skinSelection[0][AnimationData.lobby_walk].getImage(), GraphicsHandler.getWidth()*1/8, GraphicsHandler.getHeight()*5/8-Settings.scaleValue(65), Settings.scaleValue(140), Settings.scaleValue(140), null);
 			break;
@@ -215,11 +231,33 @@ public class DeadPlayerHandler {
 	}
 	
 	public static ArrayList<DeadPlayer> getAllDeadPlayer(){
-	    return allPlayer;
+	    return allDeadPlayer;
 	}
 	    
 	public static DeadPlayer getClientPlayer() {
 	    return clientPlayer;
+	}
+	
+	public static void resetDeadPlayerHandler() {
+	    allDeadPlayer.clear();
+	    String[] x = {"",""};
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).setLanguageContent(x);
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_1).setLanguageContent(x); 
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_2).setLanguageContent(x);
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_2).setLanguageContent(x); 
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_3).setLanguageContent(x);
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_3).setLanguageContent(x); 
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_4).setLanguageContent(x);
+	    LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_NAME_4).setLanguageContent(x); 
+	}
+	
+	public static void removeDeadPlayer(String id) {
+	    for (int i = 0; i < allDeadPlayer.size(); i++) {
+		if (allDeadPlayer.get(i).getId() == Integer.parseInt(id)) {
+		    allDeadPlayer.remove(i);
+		}
+	    }
+
 	}
 
 }

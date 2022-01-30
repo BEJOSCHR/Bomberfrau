@@ -420,35 +420,37 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	break;    
 		    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
-		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]-[Skin]"
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]-[Skin]-[Rank]"
 		case 601: 
 		    	String[] pMessage601 = message.split("-");
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4], pMessage601[5]);
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4], pMessage601[5], pMessage601[6]);
 		    	break;
 		    
-		//602 = Wird aufgerufen, wenn Der Host EXIT druekt
+		//602 = wird aufgerufen, wenn Der Host EXIT druekt
 		//Format: "602-"
-		case 602: 
+		case 602:
 		    	DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
-		    	GraphicsHandler.switchToMenuFromAftergame();
 		    	break;
 		
-		//512 = Wird vom Client gesendet, wenn dieser QUIT per BUTTON drueckt
-		//Format: "603-[ID]"    	
-		case 603: 
-//		    	String[] pMessage603 = message.split("-");
-//		    	LobbyCreate.player[Integer.parseInt(pMessage603[1])] = null;
-//		    	// Befiehlt dem am verlassenden Client zu verlassen
-////		    	sendMessage(session, "999-");
-//		    	removeClient(session);
-//		    	// Checken ob der verlassene Player der letzte Player war
-//		    	if (LobbyCreate.numberOfMaxPlayers-1 == Integer.parseInt(pMessage512[1])) {
-//			    LobbyCreate.numberOfMaxPlayers--;
-//		    	}
-//		    	sendMessageToAllClients("513-" + pMessage512[1]);
-//		    	// numberOfMaxPlayers an alle anderen Clients senden
-//		    	sendMessageToAllClients("506-" + LobbyCreate.numberOfMaxPlayers);
+		//603 = wird aufgerufen, wenn die Clients den Punktestand anzeigen sollen 
+		//Format: "603-"    	
+		case 603:
+		    	DeadPlayerHandler.showResult();
 		    	break;
+		    	
+		//wird vom Host aufgerufen, wenn ein Client verlaesst
+		//Format: "603-[id]"    	
+		case 604:
+		    	String[] pMessage604 = message.split("-");
+		    	DeadPlayerHandler.removeDeadPlayer(pMessage604[1]);
+			break;
+		    	
+//		//614 = Wird aufgerufen, sobald der Host leaved
+//		//Format: "614-"
+//		case 614:
+//			LobbyCreate.client.getConnector().dispose();
+//			GraphicsHandler.switchToMenuFromLobby();
+//		break;
 		    	
 		    	/////////////////////////////////////////// 900-999 Client-Cases ////////////////////////////////////////////////////////
 		    	

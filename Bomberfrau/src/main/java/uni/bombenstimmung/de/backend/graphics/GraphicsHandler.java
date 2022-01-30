@@ -160,7 +160,7 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		
-	    	SoundHandler.playSound(SoundType.INTRO, false);
+	    	SoundHandler.playSound2(SoundType.INTRO, false);
 	    	//SoundHandler.playSound(SoundType.INTRO, false,  Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 
 		MenuAnimations.introTextAni();
@@ -258,13 +258,20 @@ public class GraphicsHandler {
 	    LobbyButtons.lobbyButtonsReset();
 	    
 	    if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		lobby = new LobbyCreate(new LobbyPlayer(DeadPlayerHandler.getClientPlayer().getName()), true, true);
+		lobby = new LobbyCreate(new LobbyPlayer(
+			DeadPlayerHandler.getClientPlayer().getName()),
+			true,
+			true);
 	    }else {
-		lobby = new LobbyCreate(new LobbyPlayer( DeadPlayerHandler.getClientPlayer().getName(), DeadPlayerHandler.getClientPlayer().getIp()), true);
+		lobby = new LobbyCreate(new LobbyPlayer(
+			DeadPlayerHandler.getClientPlayer().getName(),
+			DeadPlayerHandler.getClientPlayer().getIp()),
+			true);
 	    }
 
 	    displayType = DisplayType.LOBBY;
-	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!", MessageType.BACKEND);
+	    ConsoleHandler.print("Switched to 'LOBBY' from 'AFTERGAME'!",
+		    MessageType.BACKEND);
 
 	}
 	
@@ -289,9 +296,8 @@ public class GraphicsHandler {
 	 */
 	public static void switchToMenuFromAftergame() {
 	    
-	    	SoundHandler.stopAllSounds();
-
-		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!", MessageType.BACKEND);
+		ConsoleHandler.print("Switched to 'MENU' from 'AFTERGAME'!",
+			MessageType.BACKEND);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 		MenuAnimations.titlePulseAni();
@@ -299,7 +305,6 @@ public class GraphicsHandler {
 		
 	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
-		
 	}
 	
 	/**
@@ -421,6 +426,8 @@ public class GraphicsHandler {
 	 */
 	public static void switchToAftergameFromIngame() {
 		
+		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
+	    
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
 
@@ -431,31 +438,28 @@ public class GraphicsHandler {
 		AftergameButtons.aftergameButtonsReset();
 		
 		//ubermittlung der Daten des aktuellen Player
-		DeadPlayerHandler.setClientPlayer(PlayerHandler.getClientPlayer().getId(), PlayerHandler.getClientPlayer().getName(), PlayerHandler.getClientPlayer().getIpAdress() ,PlayerHandler.getClientPlayer().getHost(), PlayerHandler.getClientPlayer().getSkin(), PlayerHandler.getClientPlayer().getConnectedClient());		
-	
-		//ubermittlung der Daten des aller Player
-		for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
-		    DeadPlayerHandler.addDeadPlayer(PlayerHandler.getAllPlayer().get(i).getId(), PlayerHandler.getAllPlayer().get(i).getName(), PlayerHandler.getAllPlayer().get(i).getDeathTime(), PlayerHandler.getAllPlayer().get(i).getSkin()); 
-		}
-		
+		DeadPlayerHandler.setClientPlayer(
+			PlayerHandler.getClientPlayer().getId(),
+			PlayerHandler.getClientPlayer().getName(),
+			PlayerHandler.getClientPlayer().getIpAdress(),
+			PlayerHandler.getClientPlayer().getHost(),
+			PlayerHandler.getClientPlayer().getSkin(),
+			PlayerHandler.getClientPlayer().getConnectedClient());
+
+		//Host soll mit den Daten aus dem Ingame die Punkte berechnen
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
-		    //Host uebermittelt aktuelle Punktzahl an die Clients
-		    for(int i=0; i < DeadPlayerHandler.getAllDeadPlayer().size(); i++) {
-			DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("601-"+ i + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getName()+ "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore() + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getSkin());
-		    }
+			for(int i=0; i < PlayerHandler.getPlayerAmount(); i++) {
+			    DeadPlayerHandler.addDeadPlayer(
+				    PlayerHandler.getAllPlayer().get(i).getId(),
+				    PlayerHandler.getAllPlayer().get(i).getName(),
+				    PlayerHandler.getAllPlayer().get(i).getDeathTime(),
+				    PlayerHandler.getAllPlayer().get(i).getSkin()); 
+			}
+			
+			DeadPlayerHandler.calculateScore();
 		}
-		else {
-		    //Clients sollen kurz warten, bis aktuelle Punktzahl vom Host uebermittelt wurde
-		    try {
-			Thread.sleep(1000);
-		    } catch (InterruptedException iex) {}
-		}
-		
-		//Punktzahl und Plazierung berechnen
-		DeadPlayerHandler.calculateScore();
         		
 		displayType = DisplayType.AFTERGAME;
-		ConsoleHandler.print("Switched to 'AFTERGAME' from 'INGAME'!", MessageType.BACKEND);
 		
 	}
 	//SWITCH TO SECTION
