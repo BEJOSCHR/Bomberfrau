@@ -115,15 +115,19 @@ public class LanguageHandler {
 		
 		String[] aftergame_Titel = {"A F T E R G A M E", "A F T E R G A M E"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_TITEL, aftergame_Titel);
-		String[] aftergame_Ranking = {"",""};
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_1, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_2, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_3, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_4, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_1, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_2, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, aftergame_Ranking);
-		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, aftergame_Ranking);
+		String[] zero = {"",""};
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_1, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_2, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_3, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_SCORE_4, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_1, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_2, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_3, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_NAME_4, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_PLUS_1, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_PLUS_2, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_PLUS_3, zero);
+		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_PLUS_4, zero);
 		
 		String[] aftergame_bt1 = {"Back to Menu", "Zurueck zum Menue"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_AFTERGAME_BT1, aftergame_bt1);

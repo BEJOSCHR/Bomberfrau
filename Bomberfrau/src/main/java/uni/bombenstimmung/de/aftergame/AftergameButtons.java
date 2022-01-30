@@ -26,13 +26,12 @@ import uni.bombenstimmung.de.lobby.LobbyCreate;
 import uni.bombenstimmung.de.menu.Menu;
 import uni.bombenstimmung.de.menu.Settings;
 
-public class AftergameButtons extends MouseActionAreaHandler{
-    
+public class AftergameButtons extends MouseActionAreaHandler {
+
     public static MouseActionArea mma_aftergame_1;
     public static MouseActionArea mma_aftergame_2;
     public static MouseActionArea mma_aftergame_3;
-    
-    
+
     public static void aftergameButtonsReset() {
 	ConsoleHandler.print("reseting Aftergame MAAs", MessageType.AFTERGAME);
 	mma_aftergame_1.remove();
@@ -41,105 +40,110 @@ public class AftergameButtons extends MouseActionAreaHandler{
 	Menu.sleep(50);
 	initAftergameButtons();
     }
-    
-    public static void initAftergameButtons(){
-	
-	//Back to Menu Button
-	mma_aftergame_1 = new MouseActionArea(GraphicsHandler.getWidth()*1/4-100, GraphicsHandler.getHeight()*6/8, Settings.scaleValue(300), Settings.scaleValue(100),
-		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
-	    
+
+    public static void initAftergameButtons() {
+
+	// Back to Menu Button
+	mma_aftergame_1 = new MouseActionArea(GraphicsHandler.getWidth() * 1 / 4 - 100,
+		GraphicsHandler.getHeight() * 6 / 8, Settings.scaleValue(300), Settings.scaleValue(100),
+		MouseActionAreaType.MAA_AFTERGAME,
+		LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT1).getContent(), 20, new Color(225, 0, 0),
+		new Color(0, 0, 255).darker()) {
+
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
-		
-	    	if (DeadPlayerHandler.getClientPlayer().isHost()) {
-	    	    DeadPlayerHandler.resetDeadPlayerHandler();
-	    	    DeadPlayerHandler.getClientPlayer().getCC().
-	    	    	sendMessageToAllClients("602-");
-	    	    Menu.sleep(1000);
-	    	    DeadPlayerHandler.getClientPlayer().getCC().getAcceptor().
-	    	    	dispose();
-	    	}
 
-	    	else {
-	    	    DeadPlayerHandler.getClientPlayer().getCC().sendMessage(
-	    		    DeadPlayerHandler.getClientPlayer().getCC().getSession(),
-	    		    "604-" +
-	    		    DeadPlayerHandler.getClientPlayer().getCC().getId());
-	    	    
-	    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(),
-	    		    "512-" +
-	                    LobbyCreate.client.getId());
-	    	    
-	    	    DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
-	    	}
-		
+		if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		    DeadPlayerHandler.resetDeadPlayerHandler();
+		    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("602-");
+		    Menu.sleep(1000);
+		    DeadPlayerHandler.getClientPlayer().getCC().getAcceptor().dispose();
+		}
+
+		else {
+		    DeadPlayerHandler.getClientPlayer().getCC().sendMessage(
+			    DeadPlayerHandler.getClientPlayer().getCC().getSession(),
+			    "604-" + DeadPlayerHandler.getClientPlayer().getCC().getId());
+
+		    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(),
+			    "512-" + LobbyCreate.client.getId());
+
+		    DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
+		}
+
 		GraphicsHandler.switchToMenuFromAftergame();
 	    }
-	    
+
 	    @Override
 	    public boolean isActiv() {
-		//Button soll nur im Aftergame angezeigt werden
+		// Button soll nur im Aftergame angezeigt werden
 		return GraphicsHandler.getDisplayType() == DisplayType.AFTERGAME;
 	    }
 	};
-	
-	//Back to Lobby Button
-	mma_aftergame_2 = new MouseActionArea(GraphicsHandler.getWidth()*2/4-100, GraphicsHandler.getHeight()*6/8, Settings.scaleValue(300), Settings.scaleValue(100),
-		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225,0,0), new Color(0,0,255).darker()) {
-	    
+
+	// Back to Lobby Button
+	mma_aftergame_2 = new MouseActionArea(GraphicsHandler.getWidth() * 2 / 4 - 100,
+		GraphicsHandler.getHeight() * 6 / 8, Settings.scaleValue(300), Settings.scaleValue(100),
+		MouseActionAreaType.MAA_AFTERGAME,
+		LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT2).getContent(), 20, new Color(225, 0, 0),
+		new Color(0, 0, 255).darker()) {
+
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		ConsoleHandler.print("Back to Lobby Button", MessageType.AFTERGAME);
-		
-		//Nur der Host darf eine neue Runde starten. Clients wechseln in die Lobby
+
+		// Nur der Host darf eine neue Runde starten. Clients wechseln in die Lobby
 		if (DeadPlayerHandler.getClientPlayer().isHost()) {
 		    GraphicsHandler.switchToLobbyFromAftergame();
 		    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("600-");
 		}
 
 	    }
-	    
+
 	    @Override
 	    public boolean isActiv() {
-		//Button soll nur im Aftergame angezeigt werden
+		// Button soll nur im Aftergame angezeigt werden
 		return GraphicsHandler.getDisplayType() == DisplayType.AFTERGAME;
 	    }
 	};
-	
-	//EXIT Button
-	mma_aftergame_3 = new MouseActionArea(GraphicsHandler.getWidth()*3/4-100, GraphicsHandler.getHeight()*6/8, Settings.scaleValue(300), Settings.scaleValue(100),
-		MouseActionAreaType.MAA_AFTERGAME, LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT3).getContent(), 20, new Color(225,0,0), new Color(0,0,255)) {
-	    
+
+	// EXIT Button
+	mma_aftergame_3 = new MouseActionArea(GraphicsHandler.getWidth() * 3 / 4 - 100,
+		GraphicsHandler.getHeight() * 6 / 8, Settings.scaleValue(300), Settings.scaleValue(100),
+		MouseActionAreaType.MAA_AFTERGAME,
+		LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_BT3).getContent(), 20, new Color(225, 0, 0),
+		new Color(0, 0, 255)) {
+
 	    @Override
 	    public void performAction_LEFT_RELEASE() {
 		ConsoleHandler.print("EXIT Button", MessageType.AFTERGAME);
-		
-		//Wenn Host EXIT druekt, sollen alle anderen Spieler ins Menu wechseln und das Programm vom Host wird beendet.
-	    	if (DeadPlayerHandler.getClientPlayer().isHost()) {
-	    	    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("602-");
-	    	    //DeadPlayerHandler.getClientPlayer().getCC().getAcceptor().dispose();
-	    	    GraphicsHandler.shutdownProgram();
-	    	}
-	    	//Wenn ein Client EXIT druekt, soll der Host über das Verlassen informiert weden und das Programm wird beendet.
-	    	else {
-	    	    DeadPlayerHandler.getClientPlayer().getCC().sendMessage(
-	    		    DeadPlayerHandler.getClientPlayer().getCC().getSession(),
-	    		    "604-" +
-	    		    DeadPlayerHandler.getClientPlayer().getCC().getId());
-	    	    
-	    	    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(),
-	    		    "512-" +
-	    	            LobbyCreate.client.getId());
-	    	 
-	    	    DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
-	    	    
-	    	    GraphicsHandler.shutdownProgram();
-	    	}
+
+		// Wenn Host EXIT druekt, sollen alle anderen Spieler ins Menu wechseln und das
+		// Programm vom Host wird beendet.
+		if (DeadPlayerHandler.getClientPlayer().isHost()) {
+		    DeadPlayerHandler.getClientPlayer().getCC().sendMessageToAllClients("602-");
+		    // DeadPlayerHandler.getClientPlayer().getCC().getAcceptor().dispose();
+		    GraphicsHandler.shutdownProgram();
+		}
+		// Wenn ein Client EXIT druekt, soll der Host über das Verlassen informiert
+		// weden und das Programm wird beendet.
+		else {
+		    DeadPlayerHandler.getClientPlayer().getCC().sendMessage(
+			    DeadPlayerHandler.getClientPlayer().getCC().getSession(),
+			    "604-" + DeadPlayerHandler.getClientPlayer().getCC().getId());
+
+		    LobbyCreate.client.sendMessage(LobbyCreate.client.getSession(),
+			    "512-" + LobbyCreate.client.getId());
+
+		    DeadPlayerHandler.getClientPlayer().getCC().getConnector().dispose();
+
+		    GraphicsHandler.shutdownProgram();
+		}
 	    }
-	    
+
 	    @Override
 	    public boolean isActiv() {
-		//Button soll nur im Aftergame angezeigt werden
+		// Button soll nur im Aftergame angezeigt werden
 		return GraphicsHandler.getDisplayType() == DisplayType.AFTERGAME;
 	    }
 	};
