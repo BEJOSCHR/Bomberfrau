@@ -9,8 +9,6 @@
 
 package uni.bombenstimmung.de.game;
 
-import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +18,6 @@ import javax.swing.Timer;
 
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
-import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundHandler;
 import uni.bombenstimmung.de.backend.sounds.SoundType;
 
@@ -67,9 +64,9 @@ public class Bomb implements ActionListener {
     }
 
     /**
-     * Bei Bombenlegung wird ein Zaehler gestartet und dieser wird hochgezaehlt
-     * dann werden nacheinander die Explosion erzeugt und anschließend wieder 
-     * die Felder frei und begehbar gemacht
+     * Bei Bombenlegung wird ein Zaehler gestartet und dieser wird hochgezaehlt dann
+     * werden nacheinander die Explosion erzeugt und anschließend wieder die Felder
+     * frei und begehbar gemacht
      */
     public void actionPerformed(ActionEvent e) {
 	this.counter++;
@@ -102,8 +99,9 @@ public class Bomb implements ActionListener {
 
     /**
      * Ist zustaendig fuer die Feuer Explosion und tastet die Felder in die vier
-     * Himmelsrichtungen Norden, Sueden, Westen und Osten ab. Malt dann die Explosion und prueft
-     * auf moegliche Kettenreaktionen die anschließend gezuendet werden.
+     * Himmelsrichtungen Norden, Sueden, Westen und Osten ab. Malt dann die
+     * Explosion und prueft auf moegliche Kettenreaktionen die anschließend
+     * gezuendet werden.
      */
     public void explodeFire() {
 
@@ -178,23 +176,29 @@ public class Bomb implements ActionListener {
 			chainreaction(this.placedField.xPosition, this.placedField.yPosition + r);
 			break;
 		    }
-		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
-		    if(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION1
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION2
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION3_W
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION3_O
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION3_S
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				.getContent() == FieldContent.EXPLOSION2_NS) {
-			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition + r);
+		    /*
+		     * Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen
+		     */
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+			    .getContent() == FieldContent.EXPLOSION1
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				    .getContent() == FieldContent.EXPLOSION2
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				    .getContent() == FieldContent.EXPLOSION3_W
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				    .getContent() == FieldContent.EXPLOSION3_O
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				    .getContent() == FieldContent.EXPLOSION3_S
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				    .getContent() == FieldContent.EXPLOSION2_NS) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition,
+				this.placedField.yPosition + r);
 			r++;
 			break;
-			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+			/*
+			 * Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die
+			 * entsprechende Flamme
+			 */
 		    } else if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r + 1))
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r + 1))
@@ -250,7 +254,7 @@ public class Bomb implements ActionListener {
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
 			PlayerHandler.getClientPlayer().setDead(true);
-		    }		
+		    }
 		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition,
@@ -264,23 +268,29 @@ public class Bomb implements ActionListener {
 			chainreaction(this.placedField.xPosition, this.placedField.yPosition - r);
 			break;
 		    }
-		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
-		    if(Game.getFieldFromMap(this.placedField.xPosition , this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION1
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION2
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION2_NS
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION3_W
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION3_O
-			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				.getContent() == FieldContent.EXPLOSION3_S) {
-			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition - r);
+		    /*
+		     * Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen
+		     */
+		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+			    .getContent() == FieldContent.EXPLOSION1
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				    .getContent() == FieldContent.EXPLOSION2
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				    .getContent() == FieldContent.EXPLOSION2_NS
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				    .getContent() == FieldContent.EXPLOSION3_W
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				    .getContent() == FieldContent.EXPLOSION3_O
+			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				    .getContent() == FieldContent.EXPLOSION3_S) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition,
+				this.placedField.yPosition - r);
 			r++;
 			break;
-			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+			/*
+			 * Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die
+			 * entsprechende Flamme
+			 */
 		    } else if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r + 1))
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r + 1))
@@ -336,7 +346,7 @@ public class Bomb implements ActionListener {
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
 			PlayerHandler.getClientPlayer().setDead(true);
-		    }		
+		    }
 		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r,
@@ -351,23 +361,29 @@ public class Bomb implements ActionListener {
 			// b.setCounter(b.getTimer());
 			break;
 		    }
-		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
-		    if(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION1
-				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION2_NS
-				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION2
-				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION3_N
-				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION3_S
-				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION3_W){
-			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition + r, this.placedField.yPosition);
+		    /*
+		     * Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen
+		     */
+		    if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+			    .getContent() == FieldContent.EXPLOSION1
+			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION2_NS
+			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION2
+			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_N
+			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_S
+			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_W) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition + r,
+				this.placedField.yPosition);
 			r++;
 			break;
-			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+			/*
+			 * Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die
+			 * entsprechende Flamme
+			 */
 		    } else if ((Game.getFieldFromMap(this.placedField.xPosition + (r + 1), this.placedField.yPosition)
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition + (r + 1), this.placedField.yPosition)
@@ -437,23 +453,29 @@ public class Bomb implements ActionListener {
 			chainreaction(this.placedField.xPosition - r, this.placedField.yPosition);
 			break;
 		    }
-		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
-		    if(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION1
-			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION2_NS
-			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION2
-			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION3_N
-			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION3_S
-			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION3_O){
-			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition - r, this.placedField.yPosition);
+		    /*
+		     * Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen
+		     */
+		    if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+			    .getContent() == FieldContent.EXPLOSION1
+			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION2_NS
+			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION2
+			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_N
+			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_S
+			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				    .getContent() == FieldContent.EXPLOSION3_O) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition - r,
+				this.placedField.yPosition);
 			r++;
 			break;
-			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+			/*
+			 * Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die
+			 * entsprechende Flamme
+			 */
 		    } else if ((Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
@@ -461,9 +483,9 @@ public class Bomb implements ActionListener {
 			    || (Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
 				    .getContent() == FieldContent.BOMB && (this.radius - r == 0))
 			    || (this.radius - r == 0)) {
-				Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r,
-					this.placedField.yPosition);
-				r++;
+			Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r,
+				this.placedField.yPosition);
+			r++;
 			break;
 			/* Wenn kein Sonderfall eintritt, wird eine normale Flamme nach unten gemalt */
 		    } else {
@@ -474,7 +496,10 @@ public class Bomb implements ActionListener {
 		}
 	    }
 	}
-	/* Die Anzahl der Bomben die von einem Spieler gelegt werden koennen, wird reduziert */
+	/*
+	 * Die Anzahl der Bomben die von einem Spieler gelegt werden koennen, wird
+	 * reduziert
+	 */
 	/* Fuer den eigenen Spieler */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
@@ -631,7 +656,9 @@ public class Bomb implements ActionListener {
     }
 
     /**
-     * Laesst eine Bombe vorzeitig explodieren, wenn diese z.B. von einer anderen Bombe getroffen wird
+     * Laesst eine Bombe vorzeitig explodieren, wenn diese z.B. von einer anderen
+     * Bombe getroffen wird
+     * 
      * @param x, X-Position die auf eine Bombe geprueft werden soll
      * @param y, Y-Position die auf eine Bombe geprueft werden soll
      */
