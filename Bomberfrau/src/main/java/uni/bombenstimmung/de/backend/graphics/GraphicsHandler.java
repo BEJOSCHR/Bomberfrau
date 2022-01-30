@@ -302,6 +302,8 @@ public class GraphicsHandler {
 		SoundHandler.stopAllSounds();
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
+		
+		
 	    	SoundHandler.playSound2(SoundType.MENU, true);
 	    	
 	    	DeadPlayerHandler.resetDeadPlayerHandler();
