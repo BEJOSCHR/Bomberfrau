@@ -87,11 +87,11 @@ public class Bomb implements ActionListener {
 
 	if (this.counter < this.timer) {
 	    if (!fuse)
-		SoundHandler.playSound2(SoundType.FUSE, false);
+		SoundHandler.playSound(SoundType.FUSE, false);
 	    fuse = true;
 	} else if (this.counter == this.timer) {
 	    fuse = false;
-	    SoundHandler.playSound2(SoundType.EXPLOSION, false);
+	    SoundHandler.playSound(SoundType.EXPLOSION, false);
 	    this.explodeFire();
 	    SoundHandler.stopSound(SoundType.FUSE);
 	} else if (this.counter >= this.timer + 20) {

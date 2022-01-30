@@ -55,32 +55,32 @@ public class SoundHandler {
 		
 	}
 	
+//	/**
+//	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
+//	 * @param type - Der {@link SoundType} der den Sound identifziert
+//	 * @param loop - Clip in Schleife wiederholen oder nicht
+//	 */
+//	public static void playSound_alt(SoundType type, boolean loop) {
+//		
+//		LoadedSound sound = getSound(type);
+//		Clip clip = sound.getClip();
+//		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//		float value = 20f * (float) Math.log10(sound.getVolume());
+//		if(value < -70) { value = -70; } //MINIMUM VOLUME
+//		else if(value > 6) { value = 6; } //MAXIMUM VOLUME
+//		gainControl.setValue(value);
+//		clip.setFramePosition(0);
+//		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
+//		clip.start();
+//		lastPlayedClip = clip;	
+//	}
+	
 	/**
-	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
+	 * Spielt den Sound ab, der zum übergebenene Type gehört
 	 * @param type - Der {@link SoundType} der den Sound identifziert
 	 * @param loop - Clip in Schleife wiederholen oder nicht
 	 */
 	public static void playSound(SoundType type, boolean loop) {
-		
-		LoadedSound sound = getSound(type);
-		Clip clip = sound.getClip();
-		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		float value = 20f * (float) Math.log10(sound.getVolume());
-		if(value < -70) { value = -70; } //MINIMUM VOLUME
-		else if(value > 6) { value = 6; } //MAXIMUM VOLUME
-		gainControl.setValue(value);
-		clip.setFramePosition(0);
-		if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
-		clip.start();
-		lastPlayedClip = clip;	
-	}
-	
-	/**
-	 * Spielt den Sound ab, der zum ï¿½bergebenene Type gehï¿½rt
-	 * @param type - Der {@link SoundType} der den Sound identifziert
-	 * @param loop - Clip in Schleife wiederholen oder nicht
-	 */
-	public static void playSound2(SoundType type, boolean loop) {
 		float vol = -80F;
 		
 		LoadedSound sound = getSound(type);

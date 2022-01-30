@@ -152,7 +152,6 @@ public class MenuAnimations {
 	};
 
     }
-    
 
     /**
      * Animation Intro Text "click to skip"

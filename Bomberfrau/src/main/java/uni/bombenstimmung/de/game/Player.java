@@ -147,7 +147,7 @@ public class Player extends Entity implements ActionListener {
 	    } else {
 		// Abfrage, damit Tod in RoD nicht Dauerton ergibt
 		if (playWallSound && !this.dead && !Game.getGameOver() && this == PlayerHandler.getClientPlayer())
-		    SoundHandler.playSound2(SoundType.WALL, false);
+		    SoundHandler.playSound(SoundType.WALL, false);
 		playWallSound = false;
 	    }
 	}
@@ -185,18 +185,18 @@ public class Player extends Entity implements ActionListener {
 	 */
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_BOMB) {
 	    this.increaseMaxBombs();
-	    SoundHandler.playSound2(SoundType.ITEM, false);
+	    SoundHandler.playSound(SoundType.ITEM, false);
 
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_FIRE) {
 	    this.increaseBombRadius();
-	    SoundHandler.playSound2(SoundType.ITEM, false);
+	    SoundHandler.playSound(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
 	if (this.currentField.getContent() == FieldContent.UPGRADE_ITEM_SHOE) {
 	    this.increaseMovementSpeed();
-	    SoundHandler.playSound2(SoundType.ITEM, false);
+	    SoundHandler.playSound(SoundType.ITEM, false);
 	    Game.changeFieldContent(FieldContent.EMPTY, this.currentField.xPosition, this.currentField.yPosition);
 	}
     }
@@ -227,7 +227,7 @@ public class Player extends Entity implements ActionListener {
 	}
 	if (this.dead == false && dead == true) {
 	    this.dead = dead;
-	    SoundHandler.playSound2(SoundType.DYING, false);
+	    SoundHandler.playSound(SoundType.DYING, false);
 	    this.deathTime = GameCounter.getClock();
 	    ConsoleHandler.print("RIP Player " + this.id + ". She died at " + this.deathTime + " seconds. T.T",
 		    MessageType.GAME);

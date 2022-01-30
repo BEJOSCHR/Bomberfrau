@@ -160,7 +160,7 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		
-	    	SoundHandler.playSound2(SoundType.INTRO, false);
+	    	SoundHandler.playSound(SoundType.INTRO, false);
 	    	//SoundHandler.playSound(SoundType.INTRO, false,  Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 
 		MenuAnimations.introTextAni();
@@ -194,7 +194,7 @@ public class GraphicsHandler {
 		Menu.optionsComponentsActive(false);
 		//Menu.menuComponentsActive(true);
 		
-	    	SoundHandler.playSound2(SoundType.MENU, true);
+	    	SoundHandler.playSound(SoundType.MENU, true);
 	    	//SoundHandler.playSound(SoundType.MENU, false, Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 		
 		displayType = DisplayType.MENU;
@@ -253,7 +253,7 @@ public class GraphicsHandler {
 	    AnimationHandler.stopAllAnimations();
 	    SoundHandler.stopAllSounds();
 	    
-	    SoundHandler.playSound2(SoundType.MENU, true);
+	    SoundHandler.playSound(SoundType.MENU, true);
 	    MenuAnimations.lobbyWalk();
 	    LobbyButtons.lobbyButtonsReset();
 	    
@@ -279,7 +279,7 @@ public class GraphicsHandler {
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
 		
-	    	SoundHandler.playSound2(SoundType.MENU, true);
+	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
 	}
@@ -297,7 +297,7 @@ public class GraphicsHandler {
 		MenuAnimations.titlePulseAni();
 		Menu.buildMenu();
 		
-	    	SoundHandler.playSound2(SoundType.MENU, true);
+	    	SoundHandler.playSound(SoundType.MENU, true);
 		displayType = DisplayType.MENU;
 		
 	}
@@ -382,7 +382,7 @@ public class GraphicsHandler {
 		    @Override
 		    public void initValues() {
 			Game.setCountdown(1);
-			SoundHandler.playSound2(SoundType.COUNTDOWN, false);
+			SoundHandler.playSound(SoundType.COUNTDOWN, false);
 		    }
 		    
 		    @Override
@@ -398,15 +398,15 @@ public class GraphicsHandler {
 			MenuAnimations.lobbyWalk();
 			switch (Game.getMapNumber()) {
 			case 1:
-			    SoundHandler.playSound2(SoundType.MAP1, true);
+			    SoundHandler.playSound(SoundType.MAP1, true);
 			    break;
 			    
 			case 2:
-			    SoundHandler.playSound2(SoundType.MAP2, true);
+			    SoundHandler.playSound(SoundType.MAP2, true);
 			    break;
 			    
 			case 3:
-			    SoundHandler.playSound2(SoundType.MAP3, true);
+			    SoundHandler.playSound(SoundType.MAP3, true);
 			    break;
 			    
 			default:
@@ -427,7 +427,7 @@ public class GraphicsHandler {
 		MenuAnimations.titleShakeAni(10, 6);
 		MenuAnimations.lobbyWalk();
 		
-		SoundHandler.playSound2(SoundType.AFTERGAME, true);
+		SoundHandler.playSound(SoundType.AFTERGAME, true);
 		AftergameButtons.aftergameButtonsReset();
 		
 		//ubermittlung der Daten des aktuellen Player

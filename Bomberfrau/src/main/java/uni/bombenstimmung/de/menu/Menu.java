@@ -47,7 +47,7 @@ public class Menu {
     private static JTextField control_up, control_down, control_left, control_right, control_bomb;
     private static JCheckBox checkBoxFPS;
     private static MouseActionArea intro, start, options, exit, back;
-    
+
     /**
      * correct pattern for IPv4 address - 4 times 0-255 without leading zeros.
      */
@@ -382,7 +382,7 @@ public class Menu {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
 		ConsoleHandler.print("mousePressed", MessageType.MENU);
-		SoundHandler.playSound2(SoundType.OPTIONS, true);
+		SoundHandler.playSound(SoundType.OPTIONS, true);
 		ConsoleHandler.print("Sound gestartet", MessageType.MENU);
 		FloatControl volume = (FloatControl) SoundHandler.getSound(SoundType.OPTIONS).getClip()
 			.getControl(FloatControl.Type.MASTER_GAIN);
@@ -749,7 +749,7 @@ public class Menu {
 //		    }
 //
 //		}
-		
+
 		if (ok) {
 		    Settings.setUserName(name_box.getText());
 		    if (!checkIp(false))
