@@ -34,7 +34,7 @@ public class PlayerHandler {
     private static ArrayList<Player> allPlayer = new ArrayList<Player>();
     private static int opponentCount = 0;
     private static ArrayList<Integer> inputBuffer = new ArrayList<Integer>();
-    private static boolean debugKeys = true;
+    private static boolean debugKeys = false;
     private static boolean change_ani = false;
     private static int change_int = 0;
     private static int[] remember_move = new int[4];
