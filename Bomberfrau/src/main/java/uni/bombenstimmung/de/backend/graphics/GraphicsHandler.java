@@ -160,7 +160,7 @@ public class GraphicsHandler {
 		
 		AnimationHandler.stopAllAnimations();
 		
-	    	SoundHandler.playSound2(SoundType.INTRO, false);
+	    	SoundHandler.playSound(SoundType.INTRO, false);
 	    	//SoundHandler.playSound(SoundType.INTRO, false,  Menu.VolumeIntToFloat(Settings.getIni_VolMusic()));
 
 		MenuAnimations.introTextAni();
