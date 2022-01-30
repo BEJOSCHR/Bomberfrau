@@ -108,7 +108,7 @@ public class LanguageHandler {
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_ROD3, ingame_rod3);
 		String[] ingame_gameover = {"GAME OVER", "SPIELENDE"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_GAMEOVER, ingame_gameover);
-		String[] ingame_survivors = {"NO SURVIVORS", "KEINE ÜBERLEBENDEN"};
+		String[] ingame_survivors = {"NO SURVIVORS", "KEINE UEBERLEBENDEN"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_NO_SURVIVORS, ingame_survivors);
 		String[] ingame_wins = {"WINS", "GEWINNT"};
 		new LoadedLanguageBlock(LanguageBlockType.LB_INGAME_WINS, ingame_wins);
