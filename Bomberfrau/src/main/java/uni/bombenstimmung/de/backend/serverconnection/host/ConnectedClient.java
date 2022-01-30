@@ -420,10 +420,10 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	break;    
 		    	
 		//601 = DeadPlayerHandler.updateDeadPlayer
-		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]-[Skin]-[Rank]"
+		//Format: "601-[ID]-[NAME]-[deathTime]-[Score]-[Skin]-[Rank]-[oldScore]"
 		case 601: 
 		    	String[] pMessage601 = message.split("-");
-		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4], pMessage601[5], pMessage601[6]);
+		    	DeadPlayerHandler.updateDeadPlayer(pMessage601[1], pMessage601[2], pMessage601[3], pMessage601[4], pMessage601[5], pMessage601[6], pMessage601[7]);
 		    	break;
 		    
 		//602 = wird aufgerufen, wenn Der Host EXIT druekt
@@ -444,13 +444,6 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    	String[] pMessage604 = message.split("-");
 		    	DeadPlayerHandler.removeDeadPlayer(pMessage604[1]);
 			break;
-		    	
-//		//614 = Wird aufgerufen, sobald der Host leaved
-//		//Format: "614-"
-//		case 614:
-//			LobbyCreate.client.getConnector().dispose();
-//			GraphicsHandler.switchToMenuFromLobby();
-//		break;
 		    	
 		    	/////////////////////////////////////////// 900-999 Client-Cases ////////////////////////////////////////////////////////
 		    	

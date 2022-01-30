@@ -43,7 +43,7 @@ public class DeadPlayerHandler {
 		    MessageType.AFTERGAME);
 	} else if (allDeadPlayer.size() > id) {
 	    allDeadPlayer.get(id).setDeadPlayer(id, name, deathTime, allDeadPlayer.get(id).getScore(), skin,
-		    allDeadPlayer.get(id).getRanking());
+		    allDeadPlayer.get(id).getRanking(), allDeadPlayer.get(id).getOldScore());
 	    ConsoleHandler.print("updated Player: " + id + " ,Name: " + name + ", deathTime: " + deathTime,
 		    MessageType.AFTERGAME);
 	} else {
@@ -60,15 +60,15 @@ public class DeadPlayerHandler {
      * @param score     Punktzahl des Players
      */
     public static void updateDeadPlayer(String id, String name, String deathTime, String score, String skin,
-	    String rank) {
+	    String rank, String oldScore) {
 	if (allDeadPlayer.size() == Integer.parseInt(id)) {
 	    allDeadPlayer.add(Integer.parseInt(id),
 		    new DeadPlayer(Integer.parseInt(id), name, Integer.parseInt(deathTime), Integer.parseInt(score),
-			    Integer.parseInt(skin), Integer.parseInt(rank)));
+			    Integer.parseInt(skin), Integer.parseInt(rank), Integer.parseInt(oldScore)));
 	} else if (allDeadPlayer.size() > Integer.parseInt(id)) {
 	    allDeadPlayer.get(Integer.parseInt(id)).setDeadPlayer(Integer.parseInt(id), name,
 		    Integer.parseInt(deathTime), Integer.parseInt(score), Integer.parseInt(skin),
-		    Integer.parseInt(rank));
+		    Integer.parseInt(rank), Integer.parseInt(oldScore));
 	}
     }
 
@@ -136,7 +136,8 @@ public class DeadPlayerHandler {
 			    + "-" + DeadPlayerHandler.getAllDeadPlayer().get(i).getDeathTime() + "-"
 			    + DeadPlayerHandler.getAllDeadPlayer().get(i).getScore() + "-"
 			    + DeadPlayerHandler.getAllDeadPlayer().get(i).getSkin() + "-"
-			    + DeadPlayerHandler.getAllDeadPlayer().get(i).getRanking());
+			    + DeadPlayerHandler.getAllDeadPlayer().get(i).getRanking() + "-"
+			    + DeadPlayerHandler.getAllDeadPlayer().get(i).getOldScore());
 	}
 
 	showResult();
@@ -155,6 +156,7 @@ public class DeadPlayerHandler {
 	    String[] aftergame_score = { "" + allDeadPlayer.get(i).getScore(), "" + allDeadPlayer.get(i).getScore() };
 	    int difference = (allDeadPlayer.get(i).getScore()) - (allDeadPlayer.get(i).getOldScore());
 	    String[] plus = { "+" + difference, "+" + difference };
+
 	    switch (allDeadPlayer.get(i).getRanking()) {
 	    case 1:
 		LanguageHandler.getLLB(LanguageBlockType.LB_AFTERGAME_SCORE_1).setLanguageContent(aftergame_score);

@@ -37,11 +37,12 @@ public class DeadPlayer {
     }
     
     // Konstruktor fuer allDeadPlayer
-    public DeadPlayer(int id, String name, int deathTime, int score, int skin, int rank) {
+    public DeadPlayer(int id, String name, int deathTime, int score, int skin, int rank, int oldScore) {
 	this.id = id;
 	this.name = name;
 	this.deathTime = deathTime;
 	this.score = score;
+	this.oldScore = oldScore;
 	this.skin = skin;
 	this.ranking = rank;
     }
@@ -57,11 +58,12 @@ public class DeadPlayer {
     }
 
 
-    public void setDeadPlayer(int id, String name, int deathTime, int score, int skin, int rank) {
+    public void setDeadPlayer(int id, String name, int deathTime, int score, int skin, int rank, int oldScore) {
 	this.id = id;
 	this.name = name;
 	this.deathTime = deathTime;
 	this.score = score;
+	this.oldScore = oldScore;
 	this.ranking = rank;
 	this.skin = skin;
     }
