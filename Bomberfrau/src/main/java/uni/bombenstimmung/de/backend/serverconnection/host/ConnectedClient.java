@@ -442,8 +442,8 @@ public class ConnectedClient extends IoHandlerAdapter{
 		//wird vom Host aufgerufen, wenn ein Client verlaesst
 		//Format: "603-[id]"    	
 		case 604:
-		    	//String[] pMessage604 = message.split("-");
-		    	//DeadPlayerHandler.removeDeadPlayer(pMessage604[1]);
+		    	String[] pMessage604 = message.split("-");
+		    	DeadPlayerHandler.removeDeadPlayer(pMessage604[1]);
 			break;
 		    	
 //		//614 = Wird aufgerufen, sobald der Host leaved
