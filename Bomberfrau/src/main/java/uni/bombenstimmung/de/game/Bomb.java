@@ -1,7 +1,7 @@
 /*
  * Bomb
  *
- * Version 2.0
+ * Version 3.0
  * Author: Dennis
  *
  * Verwaltet die Bombe im Spiel
@@ -67,8 +67,9 @@ public class Bomb implements ActionListener {
     }
 
     /**
-     * Bei Bombenlegung wird hochgezaehlt bis zur Explosion Es wird einmal die
-     * Explosion mit Feuer erzeugt und einmal die Felder wieder leer gemacht
+     * Bei Bombenlegung wird ein Zaehler gestartet und dieser wird hochgezaehlt
+     * dann werden nacheinander die Explosion erzeugt und anschließend wieder 
+     * die Felder frei und begehbar gemacht
      */
     public void actionPerformed(ActionEvent e) {
 	this.counter++;
@@ -100,8 +101,9 @@ public class Bomb implements ActionListener {
     }
 
     /**
-     * Tastet die Felder in allen Himmelsrichtungen ab, und malt die Explosion,
-     * prueft ob Spieler im Radius der Explosion liegen.
+     * Ist zustaendig fuer die Feuer Explosion und tastet die Felder in die vier
+     * Himmelsrichtungen Norden, Sueden, Westen und Osten ab. Malt dann die Explosion und prueft
+     * auf moegliche Kettenreaktionen die anschließend gezuendet werden.
      */
     public void explodeFire() {
 
@@ -109,23 +111,25 @@ public class Bomb implements ActionListener {
 
 	for (int direction = 0; direction < 5; direction++) {
 	    int r = 1;
-	    // Stelle der Bombe wird ueberprueft auf Spieler, und Explosion wird eingefuegt
+	    /* Hier wird die Stelle an der die Bombe gelegt wurder geprueft */
 	    if (direction == 0) {
+		/* Stirbt der eigene Spieler */
 		if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
 		    PlayerHandler.getClientPlayer().setDead(true);
 		}
+		/* Stirbt ein anderer Spieler */
 		for (Player player : PlayerHandler.getOpponentPlayers()) {
 		    if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition,
 			    this.placedField.yPosition)) {
 			player.setDead(true);
 		    }
 		}
+		/* Die Explosion wird gemalt */
 		Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition,
 			this.placedField.yPosition);
 	    } else if (direction == 1) {
-		// Stellen suedlich der Bombe wird ueberprueft auf Spieler, und Explosion wird
-		// eingefuegt
+		/* Hier wird der Sueden ueberprueft */
 		while (r <= this.radius
 			&& (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
 				.getContent() == FieldContent.WALL
@@ -138,7 +142,15 @@ public class Bomb implements ActionListener {
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
 					.getContent() == FieldContent.UPGRADE_ITEM_SHOE
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-					.getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
+					.getContent() == FieldContent.UPGRADE_ITEM_FIRE
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_O)) {
 		    /* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
 			    .getContent() == FieldContent.WALL) {
@@ -148,30 +160,42 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition + r);
 			break;
 		    }
-		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-			    .getContent() == FieldContent.EXPLOSION1
-			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				    .getContent() == FieldContent.EXPLOSION2_NS
-			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-				    .getContent() == FieldContent.EXPLOSION3_N) {
-			break;
-		    }
+		    /* Stirbt der eigene Spieler */
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)) {
 			PlayerHandler.getClientPlayer().setDead(true);
 		    }
+		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition,
 				this.placedField.yPosition + r)) {
 			    player.setDead(true);
 			}
 		    }
+		    /* Ist untendran eine Bombe, wird eine Kettenreaktion ausgeloest */
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
 			    .getContent() == FieldContent.BOMB) {
 			chainreaction(this.placedField.xPosition, this.placedField.yPosition + r);
 			break;
 		    }
-		    if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r + 1))
+		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
+		    if(Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION1
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION2
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION3_W
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION3_O
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION3_S
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+				.getContent() == FieldContent.EXPLOSION2_NS) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition + r);
+			r++;
+			break;
+			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+		    } else if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r + 1))
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + (r + 1))
 				    .getContent() == FieldContent.BLOCK)
@@ -182,7 +206,7 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition + r);
 			r++;
 			break;
-
+			/* Wenn kein Sonderfall eintritt, wird eine normale Flamme nach unten gemalt */
 		    } else {
 			Game.changeFieldContent(FieldContent.EXPLOSION2_NS, this.placedField.xPosition,
 				this.placedField.yPosition + r);
@@ -204,7 +228,15 @@ public class Bomb implements ActionListener {
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
 					.getContent() == FieldContent.UPGRADE_ITEM_SHOE
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-					.getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
+					.getContent() == FieldContent.UPGRADE_ITEM_FIRE
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_O)) {
 		    /* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
 			    .getContent() == FieldContent.WALL) {
@@ -214,30 +246,42 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition - r);
 			break;
 		    }
-		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-			    .getContent() == FieldContent.EXPLOSION1
-			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				    .getContent() == FieldContent.EXPLOSION2_NS
-			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-				    .getContent() == FieldContent.EXPLOSION3_S) {
-			break;
-		    }
+		    /* Stirbt der eigene Spieler */
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)) {
 			PlayerHandler.getClientPlayer().setDead(true);
-		    }
+		    }		
+		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition,
 				this.placedField.yPosition - r)) {
 			    player.setDead(true);
 			}
 		    }
+		    /* Ist obendran eine Bombe, wird eine Kettenreaktion ausgeloest */
 		    if (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
 			    .getContent() == FieldContent.BOMB) {
 			chainreaction(this.placedField.xPosition, this.placedField.yPosition - r);
 			break;
 		    }
-		    if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r + 1))
+		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
+		    if(Game.getFieldFromMap(this.placedField.xPosition , this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION1
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION2
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION2_NS
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION3_W
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION3_O
+			|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+				.getContent() == FieldContent.EXPLOSION3_S) {
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition, this.placedField.yPosition - r);
+			r++;
+			break;
+			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+		    } else if ((Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r + 1))
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - (r + 1))
 				    .getContent() == FieldContent.BLOCK)
@@ -248,6 +292,7 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition - r);
 			r++;
 			break;
+			/* Wenn kein Sonderfall eintritt, wird eine normale Flamme nach unten gemalt */
 		    } else {
 			Game.changeFieldContent(FieldContent.EXPLOSION2_NS, this.placedField.xPosition,
 				this.placedField.yPosition - r);
@@ -269,7 +314,15 @@ public class Bomb implements ActionListener {
 				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
 					.getContent() == FieldContent.UPGRADE_ITEM_SHOE
 				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
+					.getContent() == FieldContent.UPGRADE_ITEM_FIRE
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2_NS
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_S)) {
 		    /* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 		    if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
 			    .getContent() == FieldContent.WALL) {
@@ -279,31 +332,43 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition);
 			break;
 		    }
-		    if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-			    .getContent() == FieldContent.EXPLOSION1
-			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-				    .getContent() == FieldContent.EXPLOSION2
-			    || Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-				    .getContent() == FieldContent.EXPLOSION3_W) {
-			break;
-		    }
+		    /* Stirbt der eigene Spieler */
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)) {
 			PlayerHandler.getClientPlayer().setDead(true);
-		    }
+		    }		
+		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition + r,
 				this.placedField.yPosition)) {
 			    player.setDead(true);
 			}
 		    }
+		    /* Ist nebenan eine Bombe, wird eine Kettenreaktion ausgeloest */
 		    if (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
 			    .getContent() == FieldContent.BOMB) {
 			chainreaction(this.placedField.xPosition + r, this.placedField.yPosition);
 			// b.setCounter(b.getTimer());
 			break;
 		    }
-		    if ((Game.getFieldFromMap(this.placedField.xPosition + (r + 1), this.placedField.yPosition)
+		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
+		    if(Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2_NS
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_S
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_W){
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition + r, this.placedField.yPosition);
+			r++;
+			break;
+			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+		    } else if ((Game.getFieldFromMap(this.placedField.xPosition + (r + 1), this.placedField.yPosition)
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition + (r + 1), this.placedField.yPosition)
 				    .getContent() == FieldContent.BLOCK)
@@ -314,6 +379,7 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition);
 			r++;
 			break;
+			/* Wenn kein Sonderfall eintritt, wird eine normale Flamme nach unten gemalt */
 		    } else {
 			Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition + r,
 				this.placedField.yPosition);
@@ -335,7 +401,15 @@ public class Bomb implements ActionListener {
 				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
 					.getContent() == FieldContent.UPGRADE_ITEM_SHOE
 				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-					.getContent() == FieldContent.UPGRADE_ITEM_FIRE)) {
+					.getContent() == FieldContent.UPGRADE_ITEM_FIRE
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2_NS
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_S)) {
 		    /* Erzeugen eines Wall-Objekts fuer Drop-Moeglichkeit eines Upgrades. */
 		    if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
 			    .getContent() == FieldContent.WALL) {
@@ -345,40 +419,53 @@ public class Bomb implements ActionListener {
 				this.placedField.yPosition);
 			break;
 		    }
-		    if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-			    .getContent() == FieldContent.EXPLOSION1
-			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				    .getContent() == FieldContent.EXPLOSION2
-			    || Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				    .getContent() == FieldContent.EXPLOSION3_O) {
-			break;
-		    }
+		    /* Stirbt der eigene Spieler */
 		    if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			    .getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)) {
 			PlayerHandler.getClientPlayer().setDead(true);
 		    }
+		    /* Stirbt ein anderer Spieler */
 		    for (Player player : PlayerHandler.getOpponentPlayers()) {
 			if (player.getCurrentField() == Game.getFieldFromMap(this.placedField.xPosition - r,
 				this.placedField.yPosition)) {
 			    player.setDead(true);
 			}
 		    }
+		    /* Ist nebenan eine Bombe, wird eine Kettenreaktion ausgeloest */
 		    if (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
 			    .getContent() == FieldContent.BOMB) {
 			chainreaction(this.placedField.xPosition - r, this.placedField.yPosition);
 			break;
 		    }
-		    if ((Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
+		    /* Die erste If-Abfrage prueft auf andere Feuerstrahlen und malt ggf Kreuzungen */
+		    if(Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				.getContent() == FieldContent.EXPLOSION1
+			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				.getContent() == FieldContent.EXPLOSION2_NS
+			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2
+			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				.getContent() == FieldContent.EXPLOSION3_N
+			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				.getContent() == FieldContent.EXPLOSION3_S
+			|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+				.getContent() == FieldContent.EXPLOSION3_O){
+			Game.changeFieldContent(FieldContent.EXPLOSION1, this.placedField.xPosition - r, this.placedField.yPosition);
+			r++;
+			break;
+			/* Die Abzweigung schaut ob ein Rand im naechsten Feld ist und malt die entsprechende Flamme */
+		    } else if ((Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
 			    .getContent() == FieldContent.BORDER
 			    || Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
 				    .getContent() == FieldContent.BLOCK)
 			    || (Game.getFieldFromMap(this.placedField.xPosition - (r + 1), this.placedField.yPosition)
 				    .getContent() == FieldContent.BOMB && (this.radius - r == 0))
 			    || (this.radius - r == 0)) {
-			Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r,
-				this.placedField.yPosition);
-			r++;
+				Game.changeFieldContent(FieldContent.EXPLOSION3_W, this.placedField.xPosition - r,
+					this.placedField.yPosition);
+				r++;
 			break;
+			/* Wenn kein Sonderfall eintritt, wird eine normale Flamme nach unten gemalt */
 		    } else {
 			Game.changeFieldContent(FieldContent.EXPLOSION2, this.placedField.xPosition - r,
 				this.placedField.yPosition);
@@ -387,33 +474,30 @@ public class Bomb implements ActionListener {
 		}
 	    }
 	}
-	/*
-	 * Dekrement der gelegten Bombe bei Players & Aendern des FieldContent auf
-	 * EXPLOSION1.
-	 */
+	/* Die Anzahl der Bomben die von einem Spieler gelegt werden koennen, wird reduziert */
+	/* Fuer den eigenen Spieler */
 	if (PlayerHandler.getClientPlayer().getId() == this.ownerId) {
 	    PlayerHandler.getClientPlayer().decreasePlacedBombs();
-	    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 	} else {
+	    /* Fuer die anderen Spieler */
 	    for (Player player : PlayerHandler.getOpponentPlayers()) {
 		if (player.getId() == this.ownerId) {
 		    player.decreasePlacedBombs();
-		    Game.changeFieldContent(FieldContent.EXPLOSION1, placedField.xPosition, placedField.yPosition);
 		}
 	    }
 	}
     }
 
     /**
-     * Muss nach explodeFire() aufgerufen werden um die mit Feuer bemalten Felder
-     * wieder leer zu machen
+     * Wird nach dem malen der Flammen aufgerufen und entfernt entsprechende wieder
      */
     public void explode() {
 	sysTimer.stop();
 
 	for (int direction = 0; direction < 5; direction++) {
 	    int r = 1;
-	    if (direction == 0) { // Stelle der Bombe
+	    /* Stelle der Bombe wird EMPTY gesetzt */
+	    if (direction == 0) {
 		if (PlayerHandler.getClientPlayer().getCurrentField() == Game
 			.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition)) {
 		    PlayerHandler.getClientPlayer().setDead(true);
@@ -424,43 +508,95 @@ public class Bomb implements ActionListener {
 			player.setDead(true);
 		    }
 		}
-	    } else if (direction == 1) { // SUEDEN
+		/* Sueden der Bombe wird EMPTY gesetzt */
+	    } else if (direction == 1) {
 		while (r <= this.radius
 			&& (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
 				.getContent() == FieldContent.EXPLOSION2_NS
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
-					.getContent() == FieldContent.EXPLOSION3_S)) {
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_O
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EXPLOSION3_S
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition + r)
+					.getContent() == FieldContent.EMPTY)) {
 		    Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition,
 			    this.placedField.yPosition + r);
 		    r++;
 
 		}
-	    } else if (direction == 2) { // NORDEN
+		/* Norden der Bombe wird EMPTY gesetzt */
+	    } else if (direction == 2) {
 		while (r <= this.radius
 			&& (Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
 				.getContent() == FieldContent.EXPLOSION2_NS
 				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
-					.getContent() == FieldContent.EXPLOSION3_N)) {
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_O
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EXPLOSION3_S
+				|| Game.getFieldFromMap(this.placedField.xPosition, this.placedField.yPosition - r)
+					.getContent() == FieldContent.EMPTY)) {
 		    Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition,
 			    this.placedField.yPosition - r);
 		    r++;
 		}
-	    } else if (direction == 3) { // OSTEN
+		/* Osten der Bombe wird EMPTY gesetzt */
+	    } else if (direction == 3) {
 		while (r <= this.radius
 			&& (Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION2
+				.getContent() == FieldContent.EXPLOSION2_NS
 				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION3_O)) {
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_O
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_S
+				|| Game.getFieldFromMap(this.placedField.xPosition + r, this.placedField.yPosition)
+					.getContent() == FieldContent.EMPTY)) {
 		    Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition + r,
 			    this.placedField.yPosition);
 		    r++;
 		}
-	    } else if (direction == 4) { // WESTEN
+		/* Westen der Bombe wird Empty gesetzt */
+	    } else if (direction == 4) {
 		while (r <= this.radius
 			&& (Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-				.getContent() == FieldContent.EXPLOSION2
+				.getContent() == FieldContent.EXPLOSION2_NS
 				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
-					.getContent() == FieldContent.EXPLOSION3_W)) {
+					.getContent() == FieldContent.EXPLOSION1
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION2
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_N
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_W
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_O
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EXPLOSION3_S
+				|| Game.getFieldFromMap(this.placedField.xPosition - r, this.placedField.yPosition)
+					.getContent() == FieldContent.EMPTY)) {
 		    Game.changeFieldContent(FieldContent.EMPTY, this.placedField.xPosition - r,
 			    this.placedField.yPosition);
 		    r++;
@@ -494,6 +630,11 @@ public class Bomb implements ActionListener {
 	return placedField;
     }
 
+    /**
+     * Laesst eine Bombe vorzeitig explodieren, wenn diese z.B. von einer anderen Bombe getroffen wird
+     * @param x, X-Position die auf eine Bombe geprueft werden soll
+     * @param y, Y-Position die auf eine Bombe geprueft werden soll
+     */
     public void chainreaction(int x, int y) {
 	ArrayList<Bomb> placed = Game.getPlacedBombs();
 	for (Bomb bomb : placed) {
@@ -509,18 +650,6 @@ public class Bomb implements ActionListener {
 
     public ArrayList<Wall> getTargetedWalls() {
 	return targetedWalls;
-    }
-
-    public void drawCounter(Graphics g) {
-	if (this.getCounter() > 0) {
-	    int xOffset = GraphicsHandler.getWidth() - (GameData.FIELD_DIMENSION * GameData.MAP_DIMENSION);
-	    int yOffset = GameData.MAP_SIDE_BORDER;
-	    GraphicsHandler.drawCentralisedText(g, Color.RED, 30, this.getCounter() + "",
-		    (this.placedField.xPosition * GameData.FIELD_DIMENSION) + (xOffset / 2)
-			    + (GameData.FIELD_DIMENSION / 2),
-		    (this.placedField.yPosition * GameData.FIELD_DIMENSION) + (yOffset / 2)
-			    + (GameData.FIELD_DIMENSION / 2));
-	}
     }
 
     public void stopTimer() {
