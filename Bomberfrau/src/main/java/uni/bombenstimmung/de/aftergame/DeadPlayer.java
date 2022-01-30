@@ -55,20 +55,21 @@ public class DeadPlayer {
 	    this.connectedClient = cC;
 	}
 	
-	public DeadPlayer(int id, String name, int deathTime, int score, int skin) {
+	public DeadPlayer(int id, String name, int deathTime, int score, int skin, int rank) {
 	    this.id = id;
 	    this.name = name;
 	    this.deathTime = deathTime;
 	    this.score = score;
 	    this.skin = skin;
+	    this.ranking = rank;
 	}
 
-	public void setDeathPlayer(int id, String name, int deathTime, int score, int skin) {
+	public void setDeadPlayer(int id, String name, int deathTime, int score, int skin, int rank) {
 	    this.id = id;
 	    this.name = name;
 	    this.deathTime = deathTime;
 	    this.score = score;
-	    this.ranking = 0;
+	    this.ranking = rank;
 	    this.skin = skin;
 	}
 	
