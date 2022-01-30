@@ -55,6 +55,7 @@ public class GraphicsHandler {
 	private static boolean shuttingDown = false;
 	private static FrameDragListener frameDragListener;
 	public static LobbyCreate lobby;
+	private static boolean switchToIngame = false;
 	
 	/**
 	 * Wird am anfang aufgerufen um sowohl den Frame als auch das Label zu erzeugen und zuzuordnen
@@ -339,7 +340,9 @@ public class GraphicsHandler {
 	 * Wird aufgerufen wenn das Spiel aus der Lobby gestartet wird
 	 */
 	public static void switchToIngameFromLobby() {
-		
+	    
+	    if (!switchToIngame) {
+		switchToIngame = true;
 		SoundHandler.reducePlayingSound(SoundType.MENU, 3, true);
 		AnimationHandler.stopAllAnimations();
 		SoundHandler.stopAllSounds();
@@ -420,8 +423,10 @@ public class GraphicsHandler {
 			default:
 			    ConsoleHandler.print("No music track available for this map!", MessageType.GAME);
 			}
+			switchToIngame = false;
 		    }
 		};
+	    }
 	}
 	
 	/**

@@ -97,6 +97,8 @@ public class LobbyButtons extends MouseActionAreaHandler{
 		    if (counterForReady == LobbyCreate.numberOfMaxPlayers) {
 			ConsoleHandler.print("Ja, alle Player sind ready", MessageType.LOBBY);
 			LobbyCreate.client.sendMessageToAllClients("515-");
+			LobbyCreate.client.sendMessageToAllClients("515-");
+			LobbyCreate.client.sendMessageToAllClients("515-");
 			GraphicsHandler.switchToIngameFromLobby();
 		    }
 		}
