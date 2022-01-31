@@ -10,7 +10,6 @@ package uni.bombenstimmung.de.backend.serverconnection;
 
 public enum ConnectionType {
 
-	HOST,
-	CLIENT;
-	
+    HOST, CLIENT;
+
 }
