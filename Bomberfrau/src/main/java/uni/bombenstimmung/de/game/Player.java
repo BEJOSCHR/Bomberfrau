@@ -235,7 +235,11 @@ public class Player extends Entity implements ActionListener {
 	    // ConnectedClient-Nachricht fuer Player-Tod
 	    if (this.connectedClient.isHost() && this == PlayerHandler.getClientPlayer()) {
 		this.connectedClient.sendMessageToAllClients("206-" + this.id);
+		this.connectedClient.sendMessageToAllClients("206-" + this.id);
+		this.connectedClient.sendMessageToAllClients("206-" + this.id);
 	    } else if (!this.connectedClient.isHost() && this == PlayerHandler.getClientPlayer()) {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "207-" + this.id);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "207-" + this.id);
 		this.connectedClient.sendMessage(this.connectedClient.getSession(), "207-" + this.id);
 	    }
 	} else if (this.dead == true && dead == false) {
@@ -405,7 +409,11 @@ public class Player extends Entity implements ActionListener {
 		    MessageType.GAME);
 	    if (this.connectedClient.isHost()) {
 		this.connectedClient.sendMessageToAllClients("204-" + this.id);
-	    } else {
+		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+		this.connectedClient.sendMessageToAllClients("204-" + this.id);
+	    } else if (this.id != 0) {
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
+		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
 		this.connectedClient.sendMessage(this.connectedClient.getSession(), "205-" + this.id);
 	    }
 	}
@@ -584,7 +592,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosX += (this.xHitbox * 0.1);
 		} else {
 		    // this.realPosX -= (this.xHitbox * 0.1);
@@ -602,7 +611,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosX -= (this.xHitbox * 0.1);
 		} else {
 		    // this.realPosX += (this.xHitbox * 0.1);
@@ -632,7 +642,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosX -= (this.xHitbox * 0.1);
 		} else {
 		    // this.realPosX += (this.xHitbox * 0.1);
@@ -650,7 +661,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosX += (this.xHitbox * 0.1);
 		} else {
 		    // this.realPosX -= (this.xHitbox * 0.1);
@@ -680,7 +692,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosY -= (this.yHitbox * 0.1);
 		} else {
 		    // this.realPosY += (this.yHitbox * 0.1);
@@ -698,7 +711,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosY += (this.yHitbox * 0.1);
 		} else {
 		    // this.realPosY -= (this.yHitbox * 0.1);
@@ -728,7 +742,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosY += (this.yHitbox * 0.1);
 		} else {
 		    // this.realPosY -= (this.yHitbox * 0.1);
@@ -746,7 +761,8 @@ public class Player extends Entity implements ActionListener {
 		if (tempField.getContent() != FieldContent.WALL && tempField.getContent() != FieldContent.BLOCK
 			&& tempField.getContent() != FieldContent.BORDER
 			&& (tempField.getContent() != FieldContent.BOMB || (tempField.getContent() == FieldContent.BOMB
-				&& this.currentField.getContent() == FieldContent.BOMB))) {
+				&& this.currentField.getContent() == FieldContent.BOMB
+				&& this.currentField == tempField))) {
 		    this.realPosY -= (this.yHitbox * 0.1);
 		} else {
 		    // this.realPosY += (this.yHitbox * 0.1);
