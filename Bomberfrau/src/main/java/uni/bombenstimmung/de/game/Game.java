@@ -392,6 +392,8 @@ public class Game {
 	    gameOver();
 	    if (LobbyCreate.client.isHost()) {
 		LobbyCreate.client.sendMessageToAllClients("209-");
+		LobbyCreate.client.sendMessageToAllClients("209-");
+		LobbyCreate.client.sendMessageToAllClients("209-");
 	    }
 	}
 

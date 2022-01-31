@@ -248,7 +248,9 @@ public class ConnectedClient extends IoHandlerAdapter{
 		    int y = Integer.parseInt(pMessage208[2]);
 		    FieldContent item = FieldContent.valueOf(pMessage208[3]);
 		    
-		    Game.changeFieldContent(item, x, y);
+		    if (Game.getFieldFromMap(x, y).getContent() != item) {
+			Game.changeFieldContent(item, x, y);
+		    }
 		    break;
 		    
 		//209 = GameOver Message fuer Clients

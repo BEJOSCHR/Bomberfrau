@@ -371,13 +371,6 @@ public class GraphicsHandler {
 				LobbyCreate.player[i].getisHost(), LobbyCreate.player[i].getSkin(), new Point(15,15), LobbyCreate.client);
 		    }
 		}
-		
-		// Alle Player Objekte der Lobby löschen, sodass man es resettet ist fuers Aftergame
-	    	// Setze alle Objekte = null und switche ins Menu
-	    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
-		    LobbyCreate.player[i] = null;
-	    	}
-	    	LobbyCreate.numberOfMaxPlayers = 0;
 	    	
 		PlayerHandler.initPlayers();
 	    	PlayerHandler.addToAllPlayers(PlayerHandler.getOpponentPlayers());
@@ -389,6 +382,14 @@ public class GraphicsHandler {
 	    	
 		displayType = DisplayType.INGAME;
 		ConsoleHandler.print("Switched to 'INGAME' from 'LOBBY'!", MessageType.BACKEND);
+		
+		// Alle Player Objekte der Lobby löschen, sodass man es resettet ist fuers Aftergame
+	    	// Setze alle Objekte = null und switche ins Menu
+	    	for (int i=0; i< LobbyCreate.numberOfMaxPlayers; i++) {
+		    LobbyCreate.player[i] = null;
+	    	}
+	    	LobbyCreate.numberOfMaxPlayers = 0;
+		
 		new Animation(100, 4) {
 		    @Override
 		    public void initValues() {

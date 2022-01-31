@@ -30,9 +30,17 @@ public class Wall {
 		    Game.changeFieldContent(FieldContent.UPGRADE_ITEM_BOMB, this.field.xPosition, this.field.yPosition);
 		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
 			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_BOMB);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_BOMB);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_BOMB);
 		}
 		if (tmp == 2) {
 		    Game.changeFieldContent(FieldContent.UPGRADE_ITEM_FIRE, this.field.xPosition, this.field.yPosition);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_FIRE);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_FIRE);
 		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
 			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_FIRE);
 		}
@@ -40,9 +48,17 @@ public class Wall {
 		    Game.changeFieldContent(FieldContent.UPGRADE_ITEM_SHOE, this.field.xPosition, this.field.yPosition);
 		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
 			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_SHOE);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_SHOE);
+		    LobbyCreate.client.sendMessageToAllClients("208-" + this.field.xPosition + "-"
+			    + this.field.yPosition + "-" + FieldContent.UPGRADE_ITEM_SHOE);
 		}
 	    } else {
 		Game.changeFieldContent(FieldContent.EMPTY, this.field.xPosition, this.field.yPosition);
+		LobbyCreate.client.sendMessageToAllClients(
+			"208-" + this.field.xPosition + "-" + this.field.yPosition + "-" + FieldContent.EMPTY);
+		LobbyCreate.client.sendMessageToAllClients(
+			"208-" + this.field.xPosition + "-" + this.field.yPosition + "-" + FieldContent.EMPTY);
 		LobbyCreate.client.sendMessageToAllClients(
 			"208-" + this.field.xPosition + "-" + this.field.yPosition + "-" + FieldContent.EMPTY);
 	    }

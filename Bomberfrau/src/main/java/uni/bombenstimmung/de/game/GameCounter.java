@@ -16,6 +16,7 @@ import java.awt.Color;
 
 import javax.swing.Timer;
 
+import uni.bombenstimmung.de.backend.animation.Animation;
 import uni.bombenstimmung.de.backend.console.ConsoleHandler;
 import uni.bombenstimmung.de.backend.console.MessageType;
 import uni.bombenstimmung.de.backend.graphics.GraphicsHandler;
@@ -37,8 +38,13 @@ public class GameCounter implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 	if (Game.getGameOver() == true) {
-	    gameTimer.stop();
-	    gametime = 0;
+	    new Animation(10, 1) {
+		@Override
+		public void finaliseValues() {
+		    gameTimer.stop();
+		    gametime = 0;
+		}
+	    };
 	} else {
 	    if ((gametime == 0) && (LobbyButtons.getTimer() != 0) && (ringOfDeathNumber < 6)) {
 		ringOfDeathNumber++;
