@@ -30,7 +30,6 @@ public class LobbyCreate {
 	public static LobbyPlayer player[] = new LobbyPlayer[4];
 	static LoadedImage mapSelection[] = new LoadedImage[3];
 	static int zaehlerMapSelection = 0;
-	static int hochRunterNavigation = 0;
 	public static int numberOfMaxPlayers = 0;
 	public static ConnectedClient client;
 
@@ -44,12 +43,14 @@ public class LobbyCreate {
 	 */
 	public LobbyCreate (LobbyPlayer player, boolean isHost, boolean fromAfterGame) {
 	    	// Also von dem Menu aufgerufen wird
+	    String ip;
 	    	if(fromAfterGame == false) {
 	    	    client = new ConnectedClient(true, null);
 	    	}
 		// Host wird als player, der die selbe ID hat wie im ConnectedClient im Array gespeichert.
 		LobbyCreate.player[client.getId()] = player;
 		LobbyCreate.player[client.getId()].setId(client.getId());
+		LobbyCreate.player[client.getId()].setIpAdress(client.hostGetPublicIP());
 		numberOfMaxPlayers++;
 		initializeImages();
 	}
@@ -215,34 +216,6 @@ public class LobbyCreate {
 	    client.sendMessage(client.getSession(), "510-" + player + "-" + LobbyCreate.player[player].getisReady());
 	}
 	
-	
-	
-	/**
-	 * Ist fuer die Navigation mit Pfeiltasten gedacht, dass jede Auswahl (Skin, Map, Start, Lobby verlassen)
-	 * mit den Hoch-Runter Pfeiltasten gesteuert werden kann.
-	 * Diese Methode wird aufgerufen, wenn die naechste Auswahl (unten) mit den Pfeiltasten ausgewaehlt wird.
-	 */
-	public static void setIncrementHochRunterNavigation() {
-		hochRunterNavigation = (hochRunterNavigation + 1)%3;
-	}
-	/**
-	 * Diese Methode wird aufgerufen, wenn die vorherige Auswahl (oben) mit den Pfeiltasten ausgewaehlt wird.
-	 */
-	public static void setDecrementHochRunterNavigation() {
-		if (hochRunterNavigation == 0) {
-			hochRunterNavigation = 2;
-		}
-		else {
-			hochRunterNavigation = (hochRunterNavigation - 1)%3;	
-		}
-	}
-	/**
-	 * Gibt die Auswahlnummer der Pfeiltasten zurück
-	 */
-	public static int getHochRunterNavigation() {
-		return hochRunterNavigation;
-	}
-	
 	/**
 	 *  numberOfMaxPlayers wird neu gesettet, was fuer neu erstellte clients hilfreich ist.
 	 */
@@ -261,7 +234,7 @@ public class LobbyCreate {
 		GraphicsHandler.drawCentralisedText(g, Color.WHITE, Settings.scaleValue(100), "LOBBY", GraphicsHandler.getWidth()/2, (int)(GraphicsHandler.getHeight()*0.05));
 		
 		if (client.isHost()) {
-		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(36), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + client.hostGetPublicIP(),
+		    GraphicsHandler.drawLeftText(g, Color.WHITE, Settings.scaleValue(36), LanguageHandler.getLLB(LanguageBlockType.LB_LOBBY_IP).getContent() + LobbyCreate.player[client.getId()].getIpAdress(),
 			    (int)(GraphicsHandler.getWidth()/8 - (Settings.scaleValue(250)/2)), (int)(GraphicsHandler.getHeight()*0.05));
 		}
 		
