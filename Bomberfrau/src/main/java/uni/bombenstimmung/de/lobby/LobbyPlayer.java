@@ -87,7 +87,7 @@ public class LobbyPlayer {
     public String getIpAdress() {
 	return ip;
     }
-    
+
     public void setIpAdress(String ipAdress) {
 	ip = ipAdress;
     }
