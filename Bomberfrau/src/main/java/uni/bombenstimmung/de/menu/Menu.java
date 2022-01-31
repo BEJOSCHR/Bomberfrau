@@ -147,9 +147,11 @@ public class Menu {
 	    };
 
 	    public void keyReleased(KeyEvent e) {
-		// String txt = name_box.getText();
-		String txt = name_box.getText().replace("-", "");
-		name_box.setText(txt);
+		String txt = name_box.getText();
+		if (txt.contains("-")) {
+		    txt = txt.replace("-", "");
+		    name_box.setText(txt);
+		}
 		// ConsoleHandler.print("txt = " + txt, MessageType.MENU);
 		if (!txt.isEmpty()) {
 		    name_info.setText("");
@@ -165,8 +167,8 @@ public class Menu {
 		    name_info.setText(LanguageHandler.getLLB(LanguageBlockType.LB_MENU_INFO2).getContent());
 		    name_info.repaint();
 		} else {
-		    name_info.setText("");
-		    Settings.setUserName(txt);
+//		    name_info.setText("");
+//		    Settings.setUserName(txt);
 		    name_box.setFont(GraphicsHandler.usedFont(40)
 			    .deriveFont(42f * Settings.getFactor() * (1f - 0.022f * (txt.length() - 8))));
 		}
