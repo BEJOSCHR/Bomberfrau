@@ -10,23 +10,13 @@ package uni.bombenstimmung.de.backend.sounds;
 
 public enum SoundType {
 
-    	INTRO,
-    	MENU,
-    	OPTIONS,
-    	
-    	MAP1,
-    	MAP2,
-    	MAP3,
-    	FUSE,          //Z�ndschnur
-    	EXPLOSION,
-    	ITEM,
-    	WALL,
-    	DYING,
-    	COUNTDOWN,
-    	GO,
-    	
-    	AFTERGAME,
-    	
-	TEST_START;
-	
+    INTRO, MENU, OPTIONS,
+
+    MAP1, MAP2, MAP3, FUSE, // Z�ndschnur
+    EXPLOSION, ITEM, WALL, DYING, COUNTDOWN, GO,
+
+    AFTERGAME,
+
+    TEST_START;
+
 }

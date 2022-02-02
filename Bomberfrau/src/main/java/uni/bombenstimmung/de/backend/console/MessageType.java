@@ -10,14 +10,8 @@ package uni.bombenstimmung.de.backend.console;
 
 public enum MessageType {
 
-	NONESPECIFIC,
-	IMPORTANT,
-	ERROR,
-	
-	MENU,
-	LOBBY,
-	GAME,
-	AFTERGAME,
-	BACKEND;
-	
+    NONESPECIFIC, IMPORTANT, ERROR,
+
+    MENU, LOBBY, GAME, AFTERGAME, BACKEND;
+
 }

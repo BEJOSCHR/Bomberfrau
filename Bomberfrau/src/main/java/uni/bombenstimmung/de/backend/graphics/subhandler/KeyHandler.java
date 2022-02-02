@@ -20,72 +20,72 @@ import uni.bombenstimmung.de.game.PlayerHandler;
 
 public class KeyHandler implements KeyListener {
 
-	@Override
-	public void keyTyped(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		int keyCode = e.getKeyCode();
+    @Override
+    public void keyPressed(KeyEvent e) {
 
-		if(GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
-		    PlayerHandler.handleKeyEventPressed(keyCode);
-		}
-		
-		if(keyCode == KeyEvent.VK_W) {
-			//W
-			
-		}else if(keyCode == KeyEvent.VK_A) {
-			//A
-			
-		}else if(keyCode == KeyEvent.VK_S) {
-			//S
-			
-		}else if(keyCode == KeyEvent.VK_D) {
-			//D
-			
-		}
-		
+	int keyCode = e.getKeyCode();
+
+	if (GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
+	    PlayerHandler.handleKeyEventPressed(keyCode);
 	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-		int keyCode = e.getKeyCode();
-		
-		// LOBBY
-		if(GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
+	if (keyCode == KeyEvent.VK_W) {
+	    // W
+
+	} else if (keyCode == KeyEvent.VK_A) {
+	    // A
+
+	} else if (keyCode == KeyEvent.VK_S) {
+	    // S
+
+	} else if (keyCode == KeyEvent.VK_D) {
+	    // D
+
+	}
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+	int keyCode = e.getKeyCode();
+
+	// LOBBY
+	if (GraphicsHandler.getDisplayType() == DisplayType.LOBBY) {
 //		    OwnButtons.keyIsReleased(keyCode);
-		}
-		
-		if(GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
-		    PlayerHandler.handleKeyEventReleased(keyCode);
-		}
-		
-		
-		if(keyCode == KeyEvent.VK_W) {
-			//W
-			
-		}else if(keyCode == KeyEvent.VK_A) {
-			//A
-			
-		}else if(keyCode == KeyEvent.VK_S) {
-			//S
-			
-		}else if(keyCode == KeyEvent.VK_D) {
-			//D
-			
-		}else if(keyCode == KeyEvent.VK_T) {
-			//T  TODO JUST TESTING REMOVE LATER
-			SoundHandler.playSound(SoundType.TEST_START, false);
-		}else if(keyCode == KeyEvent.VK_PLUS) {
-			//+  TODO JUST TESTING REMOVE LATER
-			SoundHandler.changeCategoryVolume(SoundCategory.TEST, 0.1D);
-		}else if(keyCode == KeyEvent.VK_MINUS) {
-			//-  TODO JUST TESTING REMOVE LATER
-			SoundHandler.changeCategoryVolume(SoundCategory.TEST, -0.1D);
-		}
-		
 	}
+
+	if (GraphicsHandler.getDisplayType() == DisplayType.INGAME) {
+	    PlayerHandler.handleKeyEventReleased(keyCode);
+	}
+
+	if (keyCode == KeyEvent.VK_W) {
+	    // W
+
+	} else if (keyCode == KeyEvent.VK_A) {
+	    // A
+
+	} else if (keyCode == KeyEvent.VK_S) {
+	    // S
+
+	} else if (keyCode == KeyEvent.VK_D) {
+	    // D
+
+	} else if (keyCode == KeyEvent.VK_T) {
+	    // T TODO JUST TESTING REMOVE LATER
+	    SoundHandler.playSound(SoundType.TEST_START, false);
+	} else if (keyCode == KeyEvent.VK_PLUS) {
+	    // + TODO JUST TESTING REMOVE LATER
+	    SoundHandler.changeCategoryVolume(SoundCategory.TEST, 0.1D);
+	} else if (keyCode == KeyEvent.VK_MINUS) {
+	    // - TODO JUST TESTING REMOVE LATER
+	    SoundHandler.changeCategoryVolume(SoundCategory.TEST, -0.1D);
+	}
+
+    }
 
 }

@@ -10,19 +10,18 @@ package uni.bombenstimmung.de.backend.language;
 
 public enum LanguageType {
 
-	ENGLISH(0),
-	GERMAN(1);
+    ENGLISH(0), GERMAN(1);
 
-	private final int pos;
-	
-	LanguageType(int pos) {
-		
-		this.pos = pos;
-		
-	}
-	
-	public int getPos() {
-		return pos;
-	}
-	
+    private final int pos;
+
+    LanguageType(int pos) {
+
+	this.pos = pos;
+
+    }
+
+    public int getPos() {
+	return pos;
+    }
+
 }
