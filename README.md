@@ -11,3 +11,5 @@ Vorraussetzungen:
   - [Java SDK 17](https://docs.microsoft.com/en-us/java/openjdk/download)
 
 Einfach die aktuelle [Release-Version](https://github.com/BEJOSCHR/Bomberfrau/releases) des Spieles herunterladen und mit Java ausführen! 
+
+Eine ausführliche Erklärung über Hardware- und Softwareanforderungen, Spielelemente- und Regeln finden Sie auf unserer [Wiki Page](https://github.com/BEJOSCHR/Bomberfrau.wiki.git)
