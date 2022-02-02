@@ -88,6 +88,7 @@ public class Player extends Entity implements ActionListener {
 	this.direction = 0;
 	this.speedFactor = 360.0;
 	this.connectedClient = cC;
+	this.deathTime = 0;
 	this.t = new Timer(8, this);
 	this.t.start();
 	ConsoleHandler.print("Created Player. ID: " + id + ", Name: " + name + ", Pos(" + currentField.xPosition + ", "
